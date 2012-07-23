@@ -270,7 +270,7 @@ namespace AliRank
                     DataGridViewCell cell = row.Cells[5];
                     cell.Value = item.Clicked;
                     toolStripStatusLabel1.Text = e.Msg;
-                    keywordDAO.UpdateRank(item);
+                    keywordDAO.UpdateClicked(item);
                 }
             }
         }

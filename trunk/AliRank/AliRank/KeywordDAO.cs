@@ -98,25 +98,6 @@ namespace AliRank
             dbHelper.ExecuteNonQuery(sql, parameters);        
         }
 
-        public void UpdateRank(List<Keywords> list)
-        {
-            string sql = @"UPDATE keywords SET rank = @rank, keyAdNum = @keyAdNum,keyP4Num = @keyP4Num,  updateTime = @updateTime where id = @id";
-            List<SQLiteParameter[]> parameters = new List<SQLiteParameter[]>();
-            foreach (Keywords item in list)
-            {
-                SQLiteParameter[] parameter = new SQLiteParameter[]
-                {
-                    new SQLiteParameter("@rank",item.Rank), 
-                    new SQLiteParameter("@keyAdNum",item.KeyAdNum), 
-                    new SQLiteParameter("@keyP4Num",item.KeyP4Num), 
-                    new SQLiteParameter("@updateTime", DateTime.Now), 
-                    new SQLiteParameter("@id",item.Id)
-                };
-                parameters.Add(parameter);
-            }
-            dbHelper.ExecuteNonQuery(sql, parameters);
-        }
-
         public void UpdateRank(Keywords item)
         {
             string sql = @"UPDATE keywords SET rank = @rank, keyAdNum = @keyAdNum,keyP4Num = @keyP4Num,  updateTime = @updateTime where id = @id";
@@ -138,7 +119,7 @@ namespace AliRank
             string sql = @"UPDATE keywords SET clicked = @clicked, updateTime = @updateTime where id = @id";
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {
-                new SQLiteParameter("@clicked",kw.Rank), 
+                new SQLiteParameter("@clicked",kw.Clicked), 
                 new SQLiteParameter("@updateTime", DateTime.Now), 
                 new SQLiteParameter("@id",kw.Id)
             };            
