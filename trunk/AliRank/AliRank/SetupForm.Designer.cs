@@ -38,7 +38,7 @@
             // 
             // ImportBtn
             // 
-            this.ImportBtn.Location = new System.Drawing.Point(100, 149);
+            this.ImportBtn.Location = new System.Drawing.Point(70, 135);
             this.ImportBtn.Name = "ImportBtn";
             this.ImportBtn.Size = new System.Drawing.Size(69, 23);
             this.ImportBtn.TabIndex = 0;
@@ -48,9 +48,9 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(100, 69);
+            this.textBox1.Location = new System.Drawing.Point(79, 59);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(141, 21);
+            this.textBox1.Size = new System.Drawing.Size(123, 21);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "50";
             this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress);
@@ -58,7 +58,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(98, 39);
+            this.label2.Location = new System.Drawing.Point(77, 29);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(113, 12);
             this.label2.TabIndex = 3;
@@ -67,7 +67,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(247, 74);
+            this.label1.Location = new System.Drawing.Point(212, 62);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(17, 12);
             this.label1.TabIndex = 4;
@@ -75,7 +75,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(234, 149);
+            this.button1.Location = new System.Drawing.Point(159, 135);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 5;
@@ -87,7 +87,7 @@
             // 
             this.errorMsg.AutoSize = true;
             this.errorMsg.ForeColor = System.Drawing.Color.Red;
-            this.errorMsg.Location = new System.Drawing.Point(98, 117);
+            this.errorMsg.Location = new System.Drawing.Point(77, 107);
             this.errorMsg.Name = "errorMsg";
             this.errorMsg.Size = new System.Drawing.Size(0, 12);
             this.errorMsg.TabIndex = 6;
@@ -96,7 +96,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(434, 202);
+            this.ClientSize = new System.Drawing.Size(311, 188);
             this.Controls.Add(this.errorMsg);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
