@@ -22,8 +22,12 @@ namespace AliRank
             InitializeComponent();
             this.Load += new EventHandler(MainForm_Load);
             IniFile = FileUtils.CreateAppDataFolderEmptyTextFile(Constants.INI_FILE);
-            FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, 50 + "", IniFile);
             FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, "0", IniFile);
+            string clickNum = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, IniFile);
+            if (string.IsNullOrEmpty(clickNum))
+            {
+                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, 50 + "", IniFile);
+            }            
             keywordDAO = DAOFactory.Instance.GetKeywordDAO();
         }
 

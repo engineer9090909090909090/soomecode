@@ -11,9 +11,18 @@ namespace AliRank
 {
     public partial class SetupForm : Form
     {
+        private string IniFile;
         public SetupForm()
         {
             InitializeComponent();
+            this.Load += new EventHandler(SetupForm_Load);
+            IniFile = FileUtils.CreateAppDataFolderEmptyTextFile(Constants.INI_FILE);
+        }
+
+        void SetupForm_Load(object sender, EventArgs e)
+        {
+            string clickNum = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, IniFile);
+            this.textBox1.Text = clickNum;
         }
 
         private void TextBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -34,11 +43,11 @@ namespace AliRank
             string str = textBox1.Text;
             if (string.IsNullOrEmpty(str))
             {
-                errorMsg.Text = "图片文件夹不能为空！";
+                errorMsg.Text = "点击次数不能为空！";
                 return;
             }
-            string IniFile = FileUtils.CreateAppDataFolderEmptyTextFile(Constants.INI_FILE);
             FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, str, IniFile);
+            this.Close();
         }
 
         private void button1_Click(object sender, EventArgs e)
