@@ -14,5 +14,8 @@ namespace AliRank
         public static string CLICK_SECTIONS = "Click Section";
         public static string AUTO_CLICK_NUM = "AutoClickNum";
         public static string COMPANY_URL = "CompanyUrl";
+        public static string AUTO_SHUTDOWN = "AutoShutDown";
+        public static string YES = "1";
+        public static string NO =  "0";
     }
 }
