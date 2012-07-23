@@ -23,6 +23,7 @@ namespace AliRank
             this.Load += new EventHandler(MainForm_Load);
             IniFile = FileUtils.CreateAppDataFolderEmptyTextFile(Constants.INI_FILE);
             FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, 50 + "", IniFile);
+            FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, "0", IniFile);
             keywordDAO = DAOFactory.Instance.GetKeywordDAO();
         }
 
@@ -39,6 +40,19 @@ namespace AliRank
             f.StartPosition = FormStartPosition.CenterParent;
             f.ShowDialog(this);
         }
+        private void ClickToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetupForm f = new SetupForm();
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
+        }
+
+        #region 关机菜单
+        private void shutdownStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
 
         #region DataGridView 初始化处理
         void LoadDataview()
@@ -149,14 +163,17 @@ namespace AliRank
         {
             List<Keywords> productList = keywordDAO.GetKeywordList();
             MaxCount = productList.Count;
-            eventX = new ManualResetEvent(false);
-            ThreadPool.SetMinThreads(4, 40);
-            ThreadPool.SetMaxThreads(10, 200);
-            for (int i = 0; i < MaxCount; i++)
+            if (MaxCount > 0)
             {
-                ThreadPool.QueueUserWorkItem(new WaitCallback(DoRankSearch), (object)productList[i]);
+                eventX = new ManualResetEvent(false);
+                ThreadPool.SetMinThreads(4, 40);
+                ThreadPool.SetMaxThreads(10, 200);
+                for (int i = 0; i < MaxCount; i++)
+                {
+                    ThreadPool.QueueUserWorkItem(new WaitCallback(DoRankSearch), (object)productList[i]);
+                }
+                eventX.WaitOne(Timeout.Infinite, true);
             }
-            eventX.WaitOne(Timeout.Infinite, true);
             toolStripButton4.Enabled = true;
             AsToolStripMenuItem.Enabled = true;
             Console.WriteLine("线程池结束！");
@@ -211,8 +228,6 @@ namespace AliRank
 
         #endregion
 
-       
-
         #region 点击处理事件
 
         private void clickRunBtn_Click(object sender, EventArgs e)
@@ -255,6 +270,11 @@ namespace AliRank
             }
             clickRunBtn.Enabled = true;
             clickStopBtn.Enabled = false;
+            string sdflag = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, IniFile);
+            if (sdflag.Equals(Constants.YES))
+            {
+                SoomesUtils.Shutdown();
+            }
         }
 
 
@@ -291,6 +311,13 @@ namespace AliRank
             }
         }
         #endregion 
+
+        
+
+    
+        
+
+        
 
 
         

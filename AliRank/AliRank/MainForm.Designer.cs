@@ -40,7 +40,7 @@
             this.SetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ClickToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.TimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.shutdownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
@@ -79,7 +79,7 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(55, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(53, 17);
             this.toolStripStatusLabel1.Text = "运行状态";
             // 
             // menuStrip1
@@ -101,27 +101,27 @@
             this.AsToolStripMenuItem,
             this.MtToolStripMenuItem});
             this.KwToolStripMenuItem.Name = "KwToolStripMenuItem";
-            this.KwToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
+            this.KwToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.KwToolStripMenuItem.Text = "关键词(&K)";
             // 
             // ImpToolStripMenuItem
             // 
             this.ImpToolStripMenuItem.Name = "ImpToolStripMenuItem";
-            this.ImpToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.ImpToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.ImpToolStripMenuItem.Text = "导入橱窗产品(&I)";
             this.ImpToolStripMenuItem.Click += new System.EventHandler(this.ToolStripMenuItem1_Click);
             // 
             // AsToolStripMenuItem
             // 
             this.AsToolStripMenuItem.Name = "AsToolStripMenuItem";
-            this.AsToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.AsToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.AsToolStripMenuItem.Text = "关键词排名查询(&Q)";
             this.AsToolStripMenuItem.Click += new System.EventHandler(this.AsToolStripMenuItem_Click);
             // 
             // MtToolStripMenuItem
             // 
             this.MtToolStripMenuItem.Name = "MtToolStripMenuItem";
-            this.MtToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.MtToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.MtToolStripMenuItem.Text = "关键词维护(&M)";
             // 
             // SetToolStripMenuItem
@@ -129,33 +129,35 @@
             this.SetToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ClickToolStripMenuItem,
             this.NetToolStripMenuItem,
-            this.TimerToolStripMenuItem});
+            this.shutdownToolStripMenuItem});
             this.SetToolStripMenuItem.Name = "SetToolStripMenuItem";
-            this.SetToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.SetToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.SetToolStripMenuItem.Text = "设置(E)";
             // 
             // ClickToolStripMenuItem
             // 
             this.ClickToolStripMenuItem.Name = "ClickToolStripMenuItem";
-            this.ClickToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.ClickToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.ClickToolStripMenuItem.Text = "点击次数设置(&C)";
+            this.ClickToolStripMenuItem.Click += new System.EventHandler(this.ClickToolStripMenuItem_Click);
             // 
             // NetToolStripMenuItem
             // 
             this.NetToolStripMenuItem.Name = "NetToolStripMenuItem";
-            this.NetToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.NetToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.NetToolStripMenuItem.Text = "网络设置(&N)";
             // 
-            // TimerToolStripMenuItem
+            // shutdownToolStripMenuItem
             // 
-            this.TimerToolStripMenuItem.Name = "TimerToolStripMenuItem";
-            this.TimerToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.TimerToolStripMenuItem.Text = "点击定时设置(&S)";
+            this.shutdownToolStripMenuItem.Name = "shutdownToolStripMenuItem";
+            this.shutdownToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.shutdownToolStripMenuItem.Text = "完成后关机(&F)";
+            this.shutdownToolStripMenuItem.Click += new System.EventHandler(this.shutdownStripMenuItem_Click);
             // 
             // HelpToolStripMenuItem
             // 
             this.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem";
-            this.HelpToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
+            this.HelpToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.HelpToolStripMenuItem.Text = "帮助(&H)";
             // 
             // toolStrip1
@@ -179,7 +181,7 @@
             // toolStripLabel3
             // 
             this.toolStripLabel3.Name = "toolStripLabel3";
-            this.toolStripLabel3.Size = new System.Drawing.Size(79, 22);
+            this.toolStripLabel3.Size = new System.Drawing.Size(77, 22);
             this.toolStripLabel3.Text = "产品点击操作";
             // 
             // clickRunBtn
@@ -213,7 +215,7 @@
             // toolStripLabel4
             // 
             this.toolStripLabel4.Name = "toolStripLabel4";
-            this.toolStripLabel4.Size = new System.Drawing.Size(55, 22);
+            this.toolStripLabel4.Size = new System.Drawing.Size(53, 22);
             this.toolStripLabel4.Text = "排名查询";
             // 
             // toolStripButton4
@@ -240,7 +242,7 @@
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(73, 22);
+            this.toolStripLabel2.Size = new System.Drawing.Size(77, 22);
             this.toolStripLabel2.Text = "00： 00： 00";
             // 
             // dataGridView1
@@ -253,7 +255,7 @@
             this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("SimSun", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -364,7 +366,6 @@
         private System.Windows.Forms.ToolStripMenuItem ImpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem AsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem MtToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem TimerToolStripMenuItem;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
@@ -375,6 +376,7 @@
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage dataTab;
         private System.Windows.Forms.TabPage IETab;
+        private System.Windows.Forms.ToolStripMenuItem shutdownToolStripMenuItem;
     }
 }
 
