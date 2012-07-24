@@ -28,7 +28,7 @@ namespace AliRank
             {
                 FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, 50 + "", IniFile);
             }            
-            keywordDAO = DAOFactory.Instance.GetKeywordDAO();
+            
         }
 
         void MainForm_Load(object sender, EventArgs e)
@@ -47,6 +47,7 @@ namespace AliRank
         private void ClickToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetupForm f = new SetupForm();
+            f.FormClosed += new FormClosedEventHandler(f_FormClosed);
             f.StartPosition = FormStartPosition.CenterParent;
             f.ShowDialog(this);
         }
@@ -61,6 +62,7 @@ namespace AliRank
         #region DataGridView 初始化处理
         void LoadDataview()
         {
+            keywordDAO = DAOFactory.Instance.GetKeywordDAO();
             this.dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
             DataTable dt = new DataTable();
             dt.Columns.Add("Image", typeof(Image));

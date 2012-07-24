@@ -17,7 +17,7 @@ namespace AliRank
         public event RankSearchEndEvent OnRankSearchEndEvent;
         public event RankSearchingEvent OnRankSearchingEvent;
 
-        private string SEARCH_URL = "http://www.alibaba.com/products/F0/{0}/----------------------50/{1}.html";
+        private string SEARCH_URL = "http://www.alibaba.com/products/F0/{0}/----------------------38/{1}.html";
         private string PERCENT_PATH = "//div[@class='percent-wrap']";
         private string SUBJECT_PATH = "div[@class='attr']/h2/a";
         private string AD_PATH = "//div[@class='list-items AD']";
@@ -88,7 +88,7 @@ namespace AliRank
                     string subjectId = "lsubject_" + item.ProductId;
                     if (subjectId.Equals(lsubject.ToLower()))
                     {
-                        item.Rank = i * 50 + (k + 1);
+                        item.Rank = i * 38 + (k + 1);
                         break;
                     }
                 }

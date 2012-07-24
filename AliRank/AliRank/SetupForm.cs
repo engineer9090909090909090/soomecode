@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace AliRank
 {
@@ -50,8 +51,10 @@ namespace AliRank
             this.Close();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void CleanBtn_Click(object sender, EventArgs e)
         {
+            string DataBasePath = FileUtils.GetAppDataFolder() + Path.DirectorySeparatorChar + Constants.DB_FILE;
+            File.Delete(DataBasePath);
             this.Close();
         }
 
