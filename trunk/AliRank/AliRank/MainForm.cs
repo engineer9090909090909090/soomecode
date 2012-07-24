@@ -22,7 +22,7 @@ namespace AliRank
             InitializeComponent();
             this.Load += new EventHandler(MainForm_Load);
             IniFile = FileUtils.CreateAppDataFolderEmptyTextFile(Constants.INI_FILE);
-            FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, "0", IniFile);
+            FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, Constants.NO, IniFile);
             string clickNum = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, IniFile);
             if (string.IsNullOrEmpty(clickNum))
             {
@@ -55,7 +55,15 @@ namespace AliRank
         #region 关机菜单
         private void shutdownStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            if (shutdownToolStripMenuItem.Checked)
+            {
+                shutdownToolStripMenuItem.Checked = false;
+                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, Constants.NO, IniFile);
+            }
+            else {
+                shutdownToolStripMenuItem.Checked = true;
+                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, Constants.YES, IniFile);
+            }
         }
         #endregion
 
