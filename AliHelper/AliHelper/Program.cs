@@ -15,7 +15,21 @@ namespace AliHelper
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginForm());
+            Application.Run(new MainForm());
+            /*
+            LoginForm login = new LoginForm();
+            if (login.ShowDialog() == DialogResult.OK)
+            {
+                login.Close();
+                Application.Run(new MainForm());
+            }*/
         }
+
+        
+
+
+
+
+
     }
 }

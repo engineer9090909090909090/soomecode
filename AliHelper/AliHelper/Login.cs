@@ -24,35 +24,34 @@ namespace AliHelper
         }
 
         string loginUrl = "https://login.alibaba.com/";
-        string indexUrl = "http://www.alibaba.com/";
+        string indexUrl = "https://login.alibaba.com/xloginCallBackForRisk.do";
+        string successUrl = "https://login.alibaba.com/xman/success_proxy.htm";
 
         void loginPageLoadCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            WebBrowser browser = (WebBrowser)sender;
+                WebBrowser browser = (WebBrowser)sender;
             if (browser.ReadyState != System.Windows.Forms.WebBrowserReadyState.Complete)
                 return;
+            if (e.Url.ToString() == indexUrl)
+            {
+                browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(loginPageLoadCompleted);
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
             if (e.Url.ToString() != browser.Url.ToString())
                 return;
             if (browser.Url.ToString() == loginUrl)
             {
                 HtmlElement header = browser.Document.GetElementById("header");
-                header.Style = "display:none";
+                if (header != null) header.Style = "display:none";
                 HtmlElement footer = browser.Document.GetElementById("footer");
-                footer.Style = "display:none";
+                if (footer != null) footer.Style = "display:none";
                 HtmlElement page760Div = browser.Document.GetElementById("page760");
-                page760Div.Style = "width:310px";
+                if (page760Div != null) page760Div.Style = "width:310px";
                 HtmlElement benefits = browser.Document.GetElementById("benefits");
-                benefits.Style = "display:none";
-                HtmlElement remember = browser.Document.GetElementById("remember");
-                remember.Parent.Parent.Style = "display:none";
-                HtmlElement checkBox = browser.Document.GetElementById("runatm");
-                checkBox.SetAttribute("checked", "");
+                if (benefits != null) benefits.Style = "display:none";
             }
-            if (browser.Url.ToString() == indexUrl)
-            {
-                browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(loginPageLoadCompleted);
-
-            }
+            
         }
 
         
