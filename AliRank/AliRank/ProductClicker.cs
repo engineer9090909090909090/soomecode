@@ -21,7 +21,7 @@ namespace AliRank
         ManualResetEvent eventX = new ManualResetEvent(false);
 
 
-        private string SEARCH_URL = "http://www.alibaba.com/products/F0/{0}/----------------------50/{1}.html";
+        private string SEARCH_URL = "http://www.alibaba.com/products/F0/{0}/----------------------38/{1}.html";
         private string PURL_PREFIX = "http://www.alibaba.com/product-gs/";
         int currentPage = 1;
         private Keywords item;
@@ -59,7 +59,7 @@ namespace AliRank
             }
             else
             {
-                currentPage = item.Rank % 50 == 0 ? item.Rank / 50 : item.Rank / 50 + 1;
+                currentPage = item.Rank % 38 == 0 ? item.Rank / 38 : item.Rank / 38 + 1;
                 if (currentPage > 1)
                 {
                     currentPage = currentPage - 1;
