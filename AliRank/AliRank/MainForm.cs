@@ -285,7 +285,7 @@ namespace AliRank
             clickRunBtn.Enabled = true;
             clickStopBtn.Enabled = false;
             string sdflag = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, IniFile);
-            if (sdflag.Equals(Constants.YES))
+            if (IsStopClicking == false && sdflag.Equals(Constants.YES))
             {
                 SoomesUtils.Shutdown();
             }
