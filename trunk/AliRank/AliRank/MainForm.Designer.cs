@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -43,11 +43,9 @@
             this.shutdownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.clickRunBtn = new System.Windows.Forms.ToolStripButton();
             this.clickStopBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
@@ -163,11 +161,9 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel3,
             this.clickRunBtn,
             this.clickStopBtn,
             this.toolStripSeparator1,
-            this.toolStripLabel4,
             this.toolStripButton4,
             this.toolStripSeparator3,
             this.toolStripLabel1,
@@ -178,32 +174,29 @@
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripLabel3
-            // 
-            this.toolStripLabel3.Name = "toolStripLabel3";
-            this.toolStripLabel3.Size = new System.Drawing.Size(77, 22);
-            this.toolStripLabel3.Text = "产品点击操作";
-            // 
             // clickRunBtn
             // 
-            this.clickRunBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.clickRunBtn.Image = ((System.Drawing.Image)(resources.GetObject("clickRunBtn.Image")));
             this.clickRunBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.clickRunBtn.Name = "clickRunBtn";
-            this.clickRunBtn.Size = new System.Drawing.Size(23, 22);
-            this.clickRunBtn.Text = "clickRunBtn";
+            this.clickRunBtn.Size = new System.Drawing.Size(73, 22);
+            this.clickRunBtn.Text = "开始点击";
+            this.clickRunBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.clickRunBtn.ToolTipText = "运行";
             this.clickRunBtn.Click += new System.EventHandler(this.clickRunBtn_Click);
             // 
             // clickStopBtn
             // 
-            this.clickStopBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.clickStopBtn.Enabled = false;
             this.clickStopBtn.Image = ((System.Drawing.Image)(resources.GetObject("clickStopBtn.Image")));
+            this.clickStopBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.clickStopBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.clickStopBtn.Name = "clickStopBtn";
-            this.clickStopBtn.Size = new System.Drawing.Size(23, 22);
-            this.clickStopBtn.Text = "clickStopBtn";
+            this.clickStopBtn.RightToLeftAutoMirrorImage = true;
+            this.clickStopBtn.Size = new System.Drawing.Size(73, 22);
+            this.clickStopBtn.Text = "停止点击";
+            this.clickStopBtn.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
+            this.clickStopBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.clickStopBtn.ToolTipText = "停止";
             this.clickStopBtn.Click += new System.EventHandler(this.clickStopBtn_Click);
             // 
@@ -212,20 +205,14 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripLabel4
-            // 
-            this.toolStripLabel4.Name = "toolStripLabel4";
-            this.toolStripLabel4.Size = new System.Drawing.Size(53, 22);
-            this.toolStripLabel4.Text = "排名查询";
-            // 
             // toolStripButton4
             // 
-            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton4.Text = "查询";
+            this.toolStripButton4.Size = new System.Drawing.Size(73, 22);
+            this.toolStripButton4.Text = "排名查询";
+            this.toolStripButton4.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.toolStripButton4.Click += new System.EventHandler(this.AsToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
@@ -253,14 +240,14 @@
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
             this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridView1.ColumnHeadersHeight = 30;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(3, 3);
@@ -369,8 +356,6 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel3;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel4;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.WebBrowser webBrowser;
         private System.Windows.Forms.TabControl tabControl;
