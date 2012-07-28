@@ -175,6 +175,7 @@ namespace AliRank
         ManualResetEvent eventX;
         void bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
+            keywordDAO.UpdateRankToPrevRank();
             List<Keywords> productList = keywordDAO.GetKeywordList();
             MaxCount = productList.Count;
             if (MaxCount > 0)

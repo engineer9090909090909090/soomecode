@@ -32,6 +32,7 @@ namespace AliRank
                     + "companyUrl varchar(100) NOT NULL,"
                     + "clicked integer default 0 NOT NULL, "
                     + "rank integer default 0 NOT NULL,"     /*本产品的当前排名数*/
+                    + "prevRank integer default 0 NOT NULL,"     /*本产品的当前排名数*/
                     + "keyAdNum integer default 0 NOT NULL," /*购买了本关键词排名的产品数*/
                     + "keyP4Num integer default 0 NOT NULL," /*购买了本关键词直通车的产品数*/
                     + "createTime datetime,"
@@ -50,7 +51,7 @@ namespace AliRank
         {
             DataTable dt = dbHelper.ExecuteDataTable(
                   "SELECT id, productId, productName, mainKey, companyUrl, productUrl, "
-                + "productImage, rank, keyAdNum, keyP4Num, clicked, updateTime FROM keywords",
+                + "productImage, prevRank,rank, keyAdNum, keyP4Num, clicked, updateTime FROM keywords",
                 null);
 
             List<Keywords> list = new List<Keywords>();
@@ -64,6 +65,7 @@ namespace AliRank
                 kw.CompanyUrl = (string)row["companyUrl"];
                 kw.ProductUrl = (string)row["productUrl"];
                 kw.ProductImg = (string)row["productImage"];
+                kw.PrevRank = Convert.ToInt32(row["prevRank"]);
                 kw.Rank = Convert.ToInt32(row["rank"]);
                 kw.KeyAdNum = Convert.ToInt32(row["keyAdNum"]);
                 kw.KeyP4Num = Convert.ToInt32(row["keyP4Num"]);
@@ -114,15 +116,21 @@ namespace AliRank
             dbHelper.ExecuteNonQuery(sql, parameter);
         }
 
+        public void UpdateRankToPrevRank()
+        {
+            string sql = @"UPDATE keywords SET prevRank = rank ";
+            dbHelper.ExecuteNonQuery(sql);
+        }
+
         public void UpdateClicked(Keywords kw)
         {
             string sql = @"UPDATE keywords SET clicked = @clicked, updateTime = @updateTime where id = @id";
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {
-                new SQLiteParameter("@clicked",kw.Clicked), 
-                new SQLiteParameter("@updateTime", DateTime.Now), 
+                new SQLiteParameter("@clicked",kw.Clicked),
+                new SQLiteParameter("@updateTime", DateTime.Now),
                 new SQLiteParameter("@id",kw.Id)
-            };            
+            };
             dbHelper.ExecuteNonQuery(sql, parameter);
         }
     }
