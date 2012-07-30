@@ -1,0 +1,357 @@
+<?xml version="1.0"?>
+<doc>
+  <assembly>
+    <name>Aspose.Form</name>
+  </assembly>
+  <members>
+    <member name="T:Aspose.Form.FormException">
+      <summary>
+            Defines the base class for predefined exceptions in the Aspose.Form namespace.
+            </summary>
+    </member>
+    <member name="M:Aspose.Form.FormException.#ctor">
+      <summary>
+            Initializes a new instance of the FormException class.
+            </summary>
+    </member>
+    <member name="M:Aspose.Form.FormException.#ctor(System.String)">
+      <summary>
+            Initializes a new instance of the FormException class with a specified error message.
+            </summary>
+      <param name="message">The error message that explains the reason for the exception.</param>
+    </member>
+    <member name="M:Aspose.Form.FormException.#ctor(System.String,System.Exception)">
+      <summary>
+            Initializes a new instance of the FormException class with a reference to the inner exception that is the cause of this exception.
+            </summary>
+      <param name="message">The error message that explains the reason for the exception.</param>
+      <param name="innerException">The exception that is the cause of the current exception. If the innerException parameter is not null, the current exception is raised in a catch block that handles the inner exception.</param>
+    </member>
+    <member name="T:Aspose.Form.License">
+      <summary>
+            Provides methods to license the component.
+            </summary>
+      <example>
+            In this example, an attempt will be made to find a license file named MyLicense.lic
+            in the folder that contains 
+            
+            
+            the component, in the folder that contains the calling assembly,
+            in the folder of the entry assembly and then in the embedded resources of the calling assembly.
+            <code>
+            [C#]
+            
+            License license = new License();
+            license.SetLicense("MyLicense.lic");
+            
+            
+            [Visual Basic]
+            
+            Dim license As license = New license
+            License.SetLicense("MyLicense.lic")
+            </code></example>
+    </member>
+    <member name="M:Aspose.Form.License.#ctor">
+      <summary>
+            Initializes a new instance of this class.
+            </summary>
+      <example>
+            In this example, an attempt will be made to find a license file named MyLicense.lic
+            in the folder that contains 
+            
+            
+            the component, in the folder that contains the calling assembly,
+            in the folder of the entry assembly and then in the embedded resources of the calling assembly.
+            <code>
+            [C#]
+            
+            License license = new License();
+            license.SetLicense("MyLicense.lic");
+            
+            
+            [Visual Basic]
+            
+            Dim license As license = New license
+            License.SetLicense("MyLicense.lic")
+            </code></example>
+    </member>
+    <member name="M:Aspose.Form.License.SetLicense(System.String)">
+      <summary>
+            Licenses the component.
+            </summary>
+      <remarks>
+        <p>Tries to find the license in the following locations:</p>
+        <p>1. Explicit path.</p>
+        <p>2. The folder of the component assembly.</p>
+        <p>3. The folder of the client's calling assembly.</p>
+        <p>4. The folder of the entry assembly.</p>
+        <p>5. An embedded resource in the client's calling assembly.</p>
+        <p>
+          <b>Note:</b>On the .NET Compact Framework, tries to find the license only in these locations:</p>
+        <p>1. Explicit path.</p>
+        <p>2. An embedded resource in the client's calling assembly.</p>
+      </remarks>
+      <example>
+            In this example, an attempt will be made to find a license file named MyLicense.lic
+            in the folder that contains 
+            
+            
+            the component, in the folder that contains the calling assembly,
+            in the folder of the entry assembly and then in the embedded resources of the calling assembly.
+            <code>
+            [C#]
+            
+            License license = new License();
+            license.SetLicense("MyLicense.lic");
+            
+            
+            [Visual Basic]
+            
+            Dim license As License = New License
+            license.SetLicense("MyLicense.lic")
+            </code><param name="licenseName">Can be a full or short file name or name of an embedded resource.
+            Use an empty string to switch to evaluation mode.</param></example>
+    </member>
+    <member name="M:Aspose.Form.License.SetLicense(System.IO.Stream)">
+      <summary>
+            Licenses the component.
+            </summary>
+      <param name="stream">A stream that contains the license.</param>
+      <remarks>
+        <p>Use this method to load a license from a stream.</p>
+      </remarks>
+      <example>
+        <code>
+            [C#]
+            
+            License license = new License();
+            license.SetLicense(myStream);
+            
+            
+            [Visual Basic]
+            
+            Dim license as License = new License
+            license.SetLicense(myStream)
+            </code>
+      </example>
+    </member>
+    <member name="T:Aspose.Form.Web.UI.WebControls.Custom.CustomHttpModule">
+      <summary>
+             CustomHttpModule for handle customized request for Aspose.Form data.
+            
+             Add the following to Web.config to use the CustomHttpModule class properly
+             <httpModules><add name="CustomModule" type="Aspose.Form.Web.UI.WebControls.Custom.CustomHttpModule, Aspose.Form" /></httpModules></summary>
+    </member>
+    <member name="M:Aspose.Form.Web.UI.WebControls.Custom.CustomHttpModule.Init(System.Web.HttpApplication)">
+      <summary>
+      </summary>
+      <param name="context">
+      </param>
+    </member>
+    <member name="M:Aspose.Form.Web.UI.WebControls.Custom.CustomHttpModule.Dispose">
+      <summary>
+      </summary>
+    </member>
+    <member name="T:Aspose.Form.Web.UI.WebControls.View">
+      <summary>Represents a control that acts as a container for a group of controls within a <see cref="T:System.Web.UI.WebControls.MultiView"></see> control.</summary>
+    </member>
+    <member name="E:Aspose.Form.Web.UI.WebControls.View.Activate">
+      <summary>Occurs when the current <see cref="T:System.Web.UI.WebControls.View"></see> control becomes the active view.</summary>
+    </member>
+    <member name="E:Aspose.Form.Web.UI.WebControls.View.Deactivate">
+      <summary>Occurs when the current active <see cref="T:System.Web.UI.WebControls.View"></see> control becomes inactive.</summary>
+    </member>
+    <member name="P:Aspose.Form.Web.UI.WebControls.View.Visible">
+      <summary>Gets or sets a value that indicates whether the <see cref="T:System.Web.UI.WebControls.View"></see> control is visible. </summary>
+      <returns>true if the <see cref="T:System.Web.UI.WebControls.View"></see> control is visible; otherwise, false. The default value is false.</returns>
+      <exception cref="T:System.InvalidOperationException">An attempt was made to set this property at run time.</exception>
+    </member>
+    <member name="P:Aspose.Form.Web.UI.WebControls.View.AllowReturn">
+      <summary>Gets or sets a value indicating whether the user is allowed to return to the current step from a subsequent step in a <see cref="T:System.Web.UI.WebControls.WizardStepCollection"></see> collection. </summary>
+      <returns>true if the user is allowed to return to the current step; otherwise, false. The default value is true.</returns>
+    </member>
+    <member name="P:Aspose.Form.Web.UI.WebControls.View.ID">
+      <summary>Gets or sets the programmatic identifier assigned to the server control.</summary>
+      <returns>The programmatic identifier assigned to the control.</returns>
+      <exception cref="T:System.ArgumentException">The property was set to an invalid identifier string at design time.-or-The property was set to the same identifier as the containing <see cref="P:System.Web.UI.WebControls.WizardStepBase.Wizard"></see> control at design time.-or- The property was set to the same identifier as another step in the containing <see cref="P:System.Web.UI.WebControls.WizardStepBase.Wizard"></see> control at design time.</exception>
+    </member>
+    <member name="P:Aspose.Form.Web.UI.WebControls.View.Name">
+      <summary>Gets the name associated with a step in a control that acts as a wizard.</summary>
+      <returns>The name associated with a step in a control that acts as a wizard.</returns>
+    </member>
+    <member name="P:Aspose.Form.Web.UI.WebControls.View.Title">
+      <summary>Gets or sets the title to use for a step in a <see cref="T:System.Web.UI.WebControls.Wizard"></see> control when the sidebar feature is enabled.</summary>
+      <returns>The title to use for a step in a <see cref="T:System.Web.UI.WebControls.Wizard"></see> control when the sidebar feature is enabled. The default value is an empty string ("").</returns>
+    </member>
+    <member name="T:Aspose.Form.Web.UI.WebControls.MultipleViewControl">
+      <summary>Provides navigation and a user interface (UI) to collect related data across multiple steps.</summary>
+    </member>
+    <member name="M:Aspose.Form.Web.UI.WebControls.MultipleViewControl.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Web.UI.WebControls.Wizard"></see> class.</summary>
+    </member>
+    <member name="M:Aspose.Form.Web.UI.WebControls.MultipleViewControl.MoveTo(Aspose.Form.Web.UI.WebControls.View)">
+      <summary>Sets the specified <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object as the value for the <see cref="P:System.Web.UI.WebControls.Wizard.ActiveStep"></see> property of the <see cref="T:System.Web.UI.WebControls.Wizard"></see> control.</summary>
+      <param name="wizardStep">The <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object to set as the <see cref="P:System.Web.UI.WebControls.Wizard.ActiveStep"></see>.</param>
+      <exception cref="T:System.ArgumentNullException">The value of the <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object passed in is null.</exception>
+      <exception cref="T:System.ArgumentException">The <see cref="P:System.Web.UI.WebControls.Wizard.ActiveStepIndex"></see> of the associated <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object passed in is equal to -1.</exception>
+    </member>
+    <member name="F:Aspose.Form.Web.UI.WebControls.MultipleViewControl.CancelCommandName">
+      <summary>Retrieves the command name for the Cancel button. This field is static and read-only.</summary>
+    </member>
+    <member name="F:Aspose.Form.Web.UI.WebControls.MultipleViewControl.MoveCompleteCommandName">
+      <summary>Retrieves the command name that is associated with the Finish button. This field is static and read-only.</summary>
+    </member>
+    <member name="F:Aspose.Form.Web.UI.WebControls.MultipleViewControl.MoveNextCommandName">
+      <summary>Retrieves the command name that is associated with the Next button. This field is static and read-only.</summary>
+    </member>
+    <member name="F:Aspose.Form.Web.UI.WebControls.MultipleViewControl.MovePreviousCommandName">
+      <summary>Retrieves the command name that is associated with the Previous button. This field is static and read-only. </summary>
+    </member>
+    <member name="F:Aspose.Form.Web.UI.WebControls.MultipleViewControl.MoveToCommandName">
+      <summary>Retrieves the command name that is associated with each of the sidebar buttons. This field is static and read-only. </summary>
+    </member>
+    <member name="E:Aspose.Form.Web.UI.WebControls.MultipleViewControl.ActiveViewChanged">
+      <summary>Occurs when the user switches to a new step in the control.</summary>
+    </member>
+    <member name="P:Aspose.Form.Web.UI.WebControls.MultipleViewControl.CellPadding">
+      <summary>Gets or sets the amount of space between the contents of the cell and the cell border.</summary>
+      <returns>The amount of space, in pixels, between the contents of a cell and the cell border. The default is 0.</returns>
+    </member>
+    <member name="P:Aspose.Form.Web.UI.WebControls.MultipleViewControl.CellSpacing">
+      <summary>Gets or sets the amount of space between cells.</summary>
+      <returns>The amount of space, in pixels, between cells. The default is 0.</returns>
+    </member>
+    <member name="P:Aspose.Form.Web.UI.WebControls.MultipleViewControl.StepStyle">
+      <summary>Gets a reference to a <see cref="T:System.Web.UI.WebControls.Style"></see> object that defines the settings for the <see cref="T:System.Web.UI.WebControls.WizardStep"></see> objects.</summary>
+      <returns>A reference to the <see cref="T:System.Web.UI.WebControls.Style"></see> that defines the style settings for the <see cref="T:System.Web.UI.WebControls.WizardStep"></see> objects on the <see cref="T:System.Web.UI.WebControls.Wizard"></see>.</returns>
+    </member>
+    <member name="T:Aspose.Form.Web.UI.WebControls.ViewCollection">
+      <summary>Represents a collection of <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived objects in a control that acts as a wizard. This class cannot be inherited.</summary>
+    </member>
+    <member name="M:Aspose.Form.Web.UI.WebControls.ViewCollection.Add(Aspose.Form.Web.UI.WebControls.View)">
+      <summary>Appends the specified <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object to the end of the collection.</summary>
+      <param name="wizardStep">The <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object to append to the <see cref="T:System.Web.UI.WebControls.WizardStepCollection"></see> collection.</param>
+      <exception cref="T:System.ArgumentNullException">The <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object passed in is null.</exception>
+    </member>
+    <member name="M:Aspose.Form.Web.UI.WebControls.ViewCollection.AddAt(System.Int32,Aspose.Form.Web.UI.WebControls.View)">
+      <summary>Adds the specified <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object to the collection at the specified index location.</summary>
+      <param name="wizardStep">The <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object to append to the <see cref="T:System.Web.UI.WebControls.WizardStepCollection"></see> collection.</param>
+      <param name="index">The index location at which to insert <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object.</param>
+      <exception cref="T:System.ArgumentNullException">The <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object passed in is null.</exception>
+    </member>
+    <member name="M:Aspose.Form.Web.UI.WebControls.ViewCollection.Clear">
+      <summary>Removes all <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived objects from the collection.</summary>
+    </member>
+    <member name="M:Aspose.Form.Web.UI.WebControls.ViewCollection.Contains(Aspose.Form.Web.UI.WebControls.View)">
+      <summary>Determines whether the <see cref="T:System.Web.UI.WebControls.WizardStepCollection"></see> collection contains a specific <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object.</summary>
+      <returns>true if the <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object is found in the <see cref="T:System.Web.UI.WebControls.WizardStepCollection"></see> collection; otherwise, false.</returns>
+      <param name="wizardStep">The <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object to find in the <see cref="T:System.Web.UI.WebControls.WizardStepCollection"></see> collection.</param>
+    </member>
+    <member name="M:Aspose.Form.Web.UI.WebControls.ViewCollection.CopyTo(Aspose.Form.Web.UI.WebControls.View[],System.Int32)">
+      <summary>Copies all the items from a <see cref="T:System.Web.UI.WebControls.WizardStepCollection"></see> collection to a compatible one-dimensional array of <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see> objects, starting at the specified index in the target array.</summary>
+      <param name="array">A zero-based array of <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see> objects that receives the items copied from the collection.</param>
+      <param name="index">The position in the target array at which the array starts receiving the copied items.</param>
+    </member>
+    <member name="M:Aspose.Form.Web.UI.WebControls.ViewCollection.GetEnumerator">
+      <summary>Returns an <see cref="T:System.Collections.IEnumerator"></see>-implemented object that can be used to iterate through the <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived objects in the collection.</summary>
+      <returns>An <see cref="T:System.Collections.IEnumerator"></see>-implemented object that contains all the <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived objects in the <see cref="T:System.Web.UI.WebControls.WizardStepCollection"></see> collection.</returns>
+    </member>
+    <member name="M:Aspose.Form.Web.UI.WebControls.ViewCollection.IndexOf(Aspose.Form.Web.UI.WebControls.View)">
+      <summary>Determines the index value that represents the position of the specified <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object in the collection.</summary>
+      <returns>If found, the zero-based index of the first occurrence of the <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object passed in within the current <see cref="T:System.Web.UI.WebControls.WizardStepCollection"></see> collection; otherwise, -1.</returns>
+      <param name="wizardStep">The <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object to search for in the <see cref="T:System.Web.UI.WebControls.WizardStepCollection"></see> collection.</param>
+      <exception cref="T:System.ArgumentNullException">The <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object passed in is null.</exception>
+    </member>
+    <member name="M:Aspose.Form.Web.UI.WebControls.ViewCollection.Insert(System.Int32,Aspose.Form.Web.UI.WebControls.View)">
+      <summary>Inserts the specified <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object into the collection at the specified index location.</summary>
+      <param name="wizardStep">The <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object to insert into the <see cref="T:System.Web.UI.WebControls.WizardStepCollection"></see> collection.</param>
+      <param name="index">The index location at which to insert the <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object.</param>
+    </member>
+    <member name="M:Aspose.Form.Web.UI.WebControls.ViewCollection.Remove(Aspose.Form.Web.UI.WebControls.View)">
+      <summary>Removes the specified <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object from the collection.</summary>
+      <param name="wizardStep">The <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object to remove from the collection.</param>
+      <exception cref="T:System.ArgumentNullException">The <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object passed in is null.</exception>
+    </member>
+    <member name="M:Aspose.Form.Web.UI.WebControls.ViewCollection.RemoveAt(System.Int32)">
+      <summary>Removes the <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object from the collection at the specified location.</summary>
+      <param name="index">The index of the <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object to remove.</param>
+    </member>
+    <member name="P:Aspose.Form.Web.UI.WebControls.ViewCollection.Count">
+      <summary>Gets the number of <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived objects in the <see cref="T:System.Web.UI.WebControls.Wizard"></see> control's <see cref="T:System.Web.UI.WebControls.WizardStepCollection"></see> collection.</summary>
+      <returns>The number of <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived objects in the <see cref="T:System.Web.UI.WebControls.Wizard"></see> control.</returns>
+    </member>
+    <member name="P:Aspose.Form.Web.UI.WebControls.ViewCollection.IsReadOnly">
+      <summary>Gets a value indicating whether the <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived objects in the collection can be modified.</summary>
+      <returns>true if the <see cref="T:System.Web.UI.WebControls.WizardStepCollection"></see> collection can be modified; otherwise, false. </returns>
+    </member>
+    <member name="P:Aspose.Form.Web.UI.WebControls.ViewCollection.IsSynchronized">
+      <summary>Gets a value indicating whether access to the collection is synchronized (thread-safe).</summary>
+      <returns>false in all cases.</returns>
+    </member>
+    <member name="P:Aspose.Form.Web.UI.WebControls.ViewCollection.Item(System.Int32)">
+      <summary>Gets a <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object from the collection at the specified index.</summary>
+      <returns>The <see cref="T:System.Web.UI.WebControls.WizardStepBase"></see>-derived object in the <see cref="T:System.Web.UI.WebControls.WizardStepCollection"></see> collection at the specified index location.</returns>
+      <param name="index">The index of the <see cref="T:System.Web.UI.WebControls.WizardStep"></see> object to retrieve.</param>
+    </member>
+    <member name="P:Aspose.Form.Web.UI.WebControls.ViewCollection.SyncRoot">
+      <summary>Gets an object that can be used to synchronize access to the collection.</summary>
+      <returns>An object that can be used to synchronize access to the <see cref="T:System.Web.UI.WebControls.WizardStepCollection"></see> collection.</returns>
+    </member>
+    <member name="T:Aspose.Form.Web.UI.WebControls.XmlFormView">
+      <summary>
+            XmlFormView is the control to display a InfoPath Form template.
+            </summary>
+    </member>
+    <member name="M:Aspose.Form.Web.UI.WebControls.XmlFormView.#ctor">
+      <summary>
+            Creates a new instance of XmlFormView
+            </summary>
+    </member>
+    <member name="M:Aspose.Form.Web.UI.WebControls.XmlFormView.RefreshData">
+      <summary>
+            Refreshes form data. 
+            </summary>
+    </member>
+    <member name="M:Aspose.Form.Web.UI.WebControls.XmlFormView.LoadPostData(System.String,System.Collections.Specialized.NameValueCollection)">
+      <summary>
+            Called when post data is loaded.
+            </summary>
+      <param name="postDataKey">
+      </param>
+      <param name="postCollection">
+      </param>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:Aspose.Form.Web.UI.WebControls.XmlFormView.RaisePostDataChangedEvent">
+      <summary>
+            Called to raise post data changed event
+            </summary>
+    </member>
+    <member name="P:Aspose.Form.Web.UI.WebControls.XmlFormView.XsnLocation">
+      <summary>
+            Specifies XSN file location
+            </summary>
+    </member>
+    <member name="P:Aspose.Form.Web.UI.WebControls.XmlFormView.XmlDataString">
+      <summary>
+            Sets or returns XML data string
+            </summary>
+    </member>
+    <member name="P:Aspose.Form.Web.UI.WebControls.XmlFormView.ActiveViewName">
+      <summary>
+            Gets or sets active view name
+            </summary>
+    </member>
+    <member name="P:Aspose.Form.Web.UI.WebControls.XmlFormView.ViewNames">
+      <summary>
+            Provides list of available views
+            </summary>
+    </member>
+    <member name="P:Aspose.Form.Web.UI.WebControls.XmlFormView.XmlSchema">
+      <summary>
+            Gets current XmlSchema
+            </summary>
+    </member>
+  </members>
+</doc>
