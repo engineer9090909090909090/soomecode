@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Threading;
+using System.Resources;
 
 namespace AliRank
 {
@@ -20,6 +21,7 @@ namespace AliRank
         public MainForm()
         {
             InitializeComponent();
+            
             this.Load += new EventHandler(MainForm_Load);
             IniFile = FileUtils.CreateAppDataFolderEmptyTextFile(Constants.INI_FILE);
             FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, Constants.NO, IniFile);
@@ -116,7 +118,15 @@ namespace AliRank
                 foreach (Keywords item in productList)
                 {
                     DataRow row = dt.NewRow();
-                    row["Image"] = Image.FromFile(item.ProductImg);
+                    if (string.IsNullOrEmpty(item.ProductImg))
+                    {
+                        //ResourceManager rm = new ResourceManager("AliRank.Properties.Resources", typeof(MainForm).Assembly);
+                        // rm.GetObject("no_image");
+                        row["Image"] = global::AliRank.Properties.Resources.no_image; 
+                    }
+                    else {
+                        row["Image"] = Image.FromFile(item.ProductImg);
+                    }
                     row["productName"] = item.ProductName;
                     row["productId"] = item.ProductId;
                     row["mainKey"] = item.MainKey;

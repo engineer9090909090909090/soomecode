@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -77,7 +77,7 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(53, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(55, 17);
             this.toolStripStatusLabel1.Text = "运行状态";
             // 
             // menuStrip1
@@ -99,27 +99,27 @@
             this.AsToolStripMenuItem,
             this.MtToolStripMenuItem});
             this.KwToolStripMenuItem.Name = "KwToolStripMenuItem";
-            this.KwToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.KwToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
             this.KwToolStripMenuItem.Text = "关键词(&K)";
             // 
             // ImpToolStripMenuItem
             // 
             this.ImpToolStripMenuItem.Name = "ImpToolStripMenuItem";
-            this.ImpToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.ImpToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.ImpToolStripMenuItem.Text = "导入橱窗产品(&I)";
             this.ImpToolStripMenuItem.Click += new System.EventHandler(this.ToolStripMenuItem1_Click);
             // 
             // AsToolStripMenuItem
             // 
             this.AsToolStripMenuItem.Name = "AsToolStripMenuItem";
-            this.AsToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.AsToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.AsToolStripMenuItem.Text = "关键词排名查询(&Q)";
             this.AsToolStripMenuItem.Click += new System.EventHandler(this.AsToolStripMenuItem_Click);
             // 
             // MtToolStripMenuItem
             // 
             this.MtToolStripMenuItem.Name = "MtToolStripMenuItem";
-            this.MtToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.MtToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.MtToolStripMenuItem.Text = "关键词维护(&M)";
             // 
             // SetToolStripMenuItem
@@ -129,33 +129,33 @@
             this.NetToolStripMenuItem,
             this.shutdownToolStripMenuItem});
             this.SetToolStripMenuItem.Name = "SetToolStripMenuItem";
-            this.SetToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.SetToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.SetToolStripMenuItem.Text = "设置(E)";
             // 
             // ClickToolStripMenuItem
             // 
             this.ClickToolStripMenuItem.Name = "ClickToolStripMenuItem";
-            this.ClickToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.ClickToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.ClickToolStripMenuItem.Text = "点击次数设置(&C)";
             this.ClickToolStripMenuItem.Click += new System.EventHandler(this.ClickToolStripMenuItem_Click);
             // 
             // NetToolStripMenuItem
             // 
             this.NetToolStripMenuItem.Name = "NetToolStripMenuItem";
-            this.NetToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.NetToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.NetToolStripMenuItem.Text = "网络设置(&N)";
             // 
             // shutdownToolStripMenuItem
             // 
             this.shutdownToolStripMenuItem.Name = "shutdownToolStripMenuItem";
-            this.shutdownToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.shutdownToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.shutdownToolStripMenuItem.Text = "完成后关机(&F)";
             this.shutdownToolStripMenuItem.Click += new System.EventHandler(this.shutdownStripMenuItem_Click);
             // 
             // HelpToolStripMenuItem
             // 
             this.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem";
-            this.HelpToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.HelpToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
             this.HelpToolStripMenuItem.Text = "帮助(&H)";
             // 
             // toolStrip1
@@ -176,10 +176,10 @@
             // 
             // clickRunBtn
             // 
-            this.clickRunBtn.Image = ((System.Drawing.Image)(resources.GetObject("clickRunBtn.Image")));
+            this.clickRunBtn.Image = global::AliRank.Properties.Resources.play;
             this.clickRunBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.clickRunBtn.Name = "clickRunBtn";
-            this.clickRunBtn.Size = new System.Drawing.Size(73, 22);
+            this.clickRunBtn.Size = new System.Drawing.Size(75, 22);
             this.clickRunBtn.Text = "开始点击";
             this.clickRunBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.clickRunBtn.ToolTipText = "运行";
@@ -188,12 +188,12 @@
             // clickStopBtn
             // 
             this.clickStopBtn.Enabled = false;
-            this.clickStopBtn.Image = ((System.Drawing.Image)(resources.GetObject("clickStopBtn.Image")));
+            this.clickStopBtn.Image = global::AliRank.Properties.Resources.stop;
             this.clickStopBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.clickStopBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.clickStopBtn.Name = "clickStopBtn";
             this.clickStopBtn.RightToLeftAutoMirrorImage = true;
-            this.clickStopBtn.Size = new System.Drawing.Size(73, 22);
+            this.clickStopBtn.Size = new System.Drawing.Size(75, 22);
             this.clickStopBtn.Text = "停止点击";
             this.clickStopBtn.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
             this.clickStopBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
@@ -207,10 +207,10 @@
             // 
             // toolStripButton4
             // 
-            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
+            this.toolStripButton4.Image = global::AliRank.Properties.Resources.query;
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(73, 22);
+            this.toolStripButton4.Size = new System.Drawing.Size(75, 22);
             this.toolStripButton4.Text = "排名查询";
             this.toolStripButton4.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.toolStripButton4.Click += new System.EventHandler(this.AsToolStripMenuItem_Click);
@@ -229,7 +229,7 @@
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(77, 22);
+            this.toolStripLabel2.Size = new System.Drawing.Size(73, 22);
             this.toolStripLabel2.Text = "00： 00： 00";
             // 
             // dataGridView1
@@ -240,14 +240,14 @@
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
             this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("SimSun", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeight = 30;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(3, 3);
