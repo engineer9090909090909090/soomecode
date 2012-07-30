@@ -99,7 +99,10 @@ namespace AliRank
                     string productUrl = item.ProductUrl.Substring(item.ProductUrl.LastIndexOf("/"));
                     currentRequestUrl = PURL_PREFIX + item.ProductId + productUrl;
                     ClickingEvent(item, "Clicking " + currentRequestUrl);
+                    browser.Document.InvokeScript("onProductClick('" + item.ProductId + "');");
                     browser.Navigate(currentRequestUrl);
+
+
                 }
                 else
                 {
@@ -107,6 +110,7 @@ namespace AliRank
                     if (productLink != null)
                     {
                         productLink.SetAttribute("target", "_self");
+                        browser.Document.InvokeScript("onProductClick('" + item.ProductId + "');");
                         productLink.InvokeMember("click");
                     }
                     else
