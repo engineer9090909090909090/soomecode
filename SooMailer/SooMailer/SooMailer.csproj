@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.Cells">
+      <HintPath>..\..\lib\Aspose\Aspose.Cells.dll</HintPath>
+    </Reference>
     <Reference Include="Aspose.Network">
       <HintPath>..\..\lib\Aspose\Aspose.Network.dll</HintPath>
     </Reference>
@@ -64,6 +67,8 @@
       <DependentUpon>ExcelImpForm.cs</DependentUpon>
     </Compile>
     <Compile Include="FileUtils.cs" />
+    <Compile Include="FormatValidation.cs" />
+    <Compile Include="ListItem.cs" />
     <Compile Include="MailForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -16,6 +16,7 @@ namespace SooMailer
         private DAOFactory()
         {
             string DataBasePath = Environment.CurrentDirectory + Path.DirectorySeparatorChar + Constants.DB_FILE;
+            //File.Delete(DataBasePath);
             if (!File.Exists(DataBasePath))
             {
                 SQLiteConnection.CreateFile(DataBasePath);

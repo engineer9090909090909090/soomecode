@@ -14,24 +14,19 @@ namespace SooMailer
     {
 
         private MailModelDAO Dao;
+
+        #region form Initialize
+
         public MailForm()
         {
             InitializeComponent();
         }
-
-        private void findBtn_Click(object sender, EventArgs e)
+       
+        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (findBtn.Checked)
+            if (e.ColumnIndex == 0)
             {
-                findBtn.Checked = false;
-                splitContainer1.Panel1.Hide();
-                splitContainer1.SplitterDistance = 0;
-            }
-            else
-            {
-                findBtn.Checked = true;
-                splitContainer1.Panel1.Show();
-                splitContainer1.SplitterDistance = 94;
+                dataGridView1.Rows[e.RowIndex].HeaderCell.Value = Convert.ToString(e.RowIndex + 1);
             }
         }
 
@@ -55,32 +50,41 @@ namespace SooMailer
             Dao = DAOFactory.Instance.GetMailModelDAO();
             LoadDataview();
         }
+        #endregion
 
         #region DataGridView 初始化处理
         void LoadDataview()
         {
             this.dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            SourceCombo.ValueMember = "Id";
+            SourceCombo.DisplayMember = "Name";
+            SourceCombo.Items.Insert(0, new ListItem("",""));
+            List<ListItem> sourceList = Dao.GetComboBoxData("Source");
+            SourceCombo.Items.AddRange(sourceList.ToArray());
             DataTable dt = new DataTable();
-            dt.Columns.Add("Check", typeof(DataGridViewCheckBoxCell));
+            dt.Columns.Add("Check", typeof(System.Boolean));
             dt.Columns.Add("Email", typeof(string));
             dt.Columns.Add("ProductType", typeof(string));
             dt.Columns.Add("Username", typeof(string));
             dt.Columns.Add("Country", typeof(string));
             dt.Columns.Add("Company", typeof(string));
             dt.Columns.Add("Subject", typeof(string));
-            dt.Columns.Add("Verify", typeof(string));
+            dt.Columns.Add("Source", typeof(string));
             dt.Columns.Add("SendDate", typeof(string));
+            dt.Columns.Add("Verify", typeof(string));
+            dt.Columns.Add("Id", typeof(string));
             this.dataGridView1.DataSource = dt;
 
             DataGridViewColumn column = this.dataGridView1.Columns[0];
-            column.HeaderText = "Selection";
-            column.Width = 100;
+            column.HeaderText = " ";
+            column.Width = 20;
+            column.Frozen = true;
             DataGridViewColumn column0 = this.dataGridView1.Columns[1];
             column0.HeaderText = "Email";
-            column0.Width = 120;
+            column0.Width =200;
             DataGridViewColumn column1 = this.dataGridView1.Columns[2];
             column1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            column1.HeaderText = "Category";
+            column1.HeaderText = "Product";
             column1.Width = 120;
             DataGridViewColumn column2 = this.dataGridView1.Columns[3];
             column2.HeaderText = "Buyer Name";
@@ -96,17 +100,25 @@ namespace SooMailer
             column5.HeaderText = "Subject";
             column5.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             column5.Width = 400;
-            DataGridViewColumn column7 = this.dataGridView1.Columns[7];
+            DataGridViewColumn column6 = this.dataGridView1.Columns[7];
+            column6.HeaderText = "Source";
+            column6.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            column6.Width = 100;
+            DataGridViewColumn column7 = this.dataGridView1.Columns[8];
             column7.HeaderText = "SendDate";
             column7.Width = 120;
-            DataGridViewColumn column6 = this.dataGridView1.Columns[8];
-            column6.HeaderText = "Verify";
-            column6.Width = 100;
+            DataGridViewColumn column8 = this.dataGridView1.Columns[9];
+            column8.HeaderText = "Verify";
+            column8.Width = 100;
+            DataGridViewColumn column9 = this.dataGridView1.Columns[10];
+            column9.HeaderText = "Id";
+            column9.Visible = false;
             List<MailModel> mailModelList = Dao.GetMailModelList(null);
             if (mailModelList.Count > 0)
             {
-                foreach (MailModel item in mailModelList)
+                for (int i = 0; i < mailModelList.Count; i++ )
                 {
+                    MailModel item = mailModelList[i];
                     DataRow row = dt.NewRow();
                     row["Check"] = false;
                     row["Email"] = item.Email;
@@ -115,6 +127,7 @@ namespace SooMailer
                     row["Country"] = item.Country;
                     row["Company"] = item.Company;
                     row["Subject"] = item.Subject;
+                    row["Source"] = item.Source;
                     if (item.Verify1 == 0)
                     {
                         row["Verify"] = "未验证";
@@ -132,13 +145,30 @@ namespace SooMailer
                         row["Verify"] = "通过";
                     }
                     row["SendDate"] = item.SendDate;
+                    row["Id"] = item.Id;
                     dt.Rows.Add(row);
                 }
             }
 
+
         }
         #endregion
 
+        private void findBtn_Click(object sender, EventArgs e)
+        {
+            if (findBtn.Checked)
+            {
+                findBtn.Checked = false;
+                splitContainer1.Panel1.Hide();
+                splitContainer1.SplitterDistance = 0;
+            }
+            else
+            {
+                findBtn.Checked = true;
+                splitContainer1.Panel1.Show();
+                splitContainer1.SplitterDistance = 94;
+            }
+        }
         private void excelImpBtn_Click(object sender, EventArgs e)
         {
             ExcelImpForm f = new ExcelImpForm();
@@ -154,6 +184,7 @@ namespace SooMailer
 
         private void validationBtn_Click(object sender, EventArgs e)
         {
+            validationBtn.Enabled = false;
             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += new DoWorkEventHandler(worker_DoWork);
             worker.RunWorkerAsync();
@@ -177,8 +208,13 @@ namespace SooMailer
                     //lblResult.Text = "邮箱地址不存在，返回代码:\r\n " + result.ReturnCode + ".";
                     model.Verify1 = 2;
                 }
+                Dao.UpdateMailVerify(model);
             }
+            validationBtn.Enabled = true;
+            LoadDataview();
         }
+
+ 
     }
     
 }

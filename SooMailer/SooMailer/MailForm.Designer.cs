@@ -28,13 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.excelImpBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.validationBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.deleteBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.findBtn = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,10 +51,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.companytxt = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.excelImpBtn = new System.Windows.Forms.ToolStripButton();
-            this.validationBtn = new System.Windows.Forms.ToolStripButton();
-            this.deleteBtn = new System.Windows.Forms.ToolStripButton();
-            this.findBtn = new System.Windows.Forms.ToolStripButton();
+            this.button2 = new System.Windows.Forms.Button();
+            this.SourceCombo = new System.Windows.Forms.ComboBox();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -92,20 +96,61 @@
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // excelImpBtn
+            // 
+            this.excelImpBtn.Image = global::SooMailer.Properties.Resources.excel;
+            this.excelImpBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.excelImpBtn.Name = "excelImpBtn";
+            this.excelImpBtn.Size = new System.Drawing.Size(60, 33);
+            this.excelImpBtn.Text = "Excel导入";
+            this.excelImpBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.excelImpBtn.Click += new System.EventHandler(this.excelImpBtn_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 36);
+            // 
+            // validationBtn
+            // 
+            this.validationBtn.Image = global::SooMailer.Properties.Resources.verify;
+            this.validationBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.validationBtn.Name = "validationBtn";
+            this.validationBtn.Size = new System.Drawing.Size(59, 33);
+            this.validationBtn.Text = "验证邮箱";
+            this.validationBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.validationBtn.Click += new System.EventHandler(this.validationBtn_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 36);
             // 
+            // deleteBtn
+            // 
+            this.deleteBtn.Image = global::SooMailer.Properties.Resources.delete;
+            this.deleteBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.deleteBtn.Name = "deleteBtn";
+            this.deleteBtn.Size = new System.Drawing.Size(35, 33);
+            this.deleteBtn.Text = "删除";
+            this.deleteBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 36);
+            // 
+            // findBtn
+            // 
+            this.findBtn.Checked = true;
+            this.findBtn.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.findBtn.Image = global::SooMailer.Properties.Resources.find;
+            this.findBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.findBtn.Name = "findBtn";
+            this.findBtn.Size = new System.Drawing.Size(35, 33);
+            this.findBtn.Text = "查找";
+            this.findBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.findBtn.Click += new System.EventHandler(this.findBtn_Click);
             // 
             // menuStrip1
             // 
@@ -170,17 +215,19 @@
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 4;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.90498F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.09502F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 239F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 81.23569F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18.7643F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 187F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 103F));
             this.tableLayoutPanel1.Controls.Add(this.button1, 3, 1);
+            this.tableLayoutPanel1.Controls.Add(this.button2, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.SourceCombo, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 17);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 51.42857F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 48.57143F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(780, 70);
             this.tableLayoutPanel1.TabIndex = 11;
             // 
@@ -203,63 +250,52 @@
             // dataGridView1
             // 
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("SimSun", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("SimSun", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
             this.dataGridView1.ColumnHeadersHeight = 30;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersVisible = false;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle17;
+            this.dataGridView1.RowHeadersWidth = 60;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle18;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(792, 382);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
             // 
-            // excelImpBtn
+            // button2
             // 
-            this.excelImpBtn.Image = global::SooMailer.Properties.Resources.excel;
-            this.excelImpBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.excelImpBtn.Name = "excelImpBtn";
-            this.excelImpBtn.Size = new System.Drawing.Size(60, 33);
-            this.excelImpBtn.Text = "Excel导入";
-            this.excelImpBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.excelImpBtn.Click += new System.EventHandler(this.excelImpBtn_Click);
+            this.button2.Location = new System.Drawing.Point(679, 3);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(92, 29);
+            this.button2.TabIndex = 3;
+            this.button2.Text = "导出(&E)";
+            this.button2.UseVisualStyleBackColor = true;
             // 
-            // validationBtn
+            // SourceCombo
             // 
-            this.validationBtn.Image = global::SooMailer.Properties.Resources.verify;
-            this.validationBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.validationBtn.Name = "validationBtn";
-            this.validationBtn.Size = new System.Drawing.Size(59, 33);
-            this.validationBtn.Text = "验证邮箱";
-            this.validationBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.validationBtn.Click += new System.EventHandler(this.validationBtn_Click);
-            // 
-            // deleteBtn
-            // 
-            this.deleteBtn.Image = global::SooMailer.Properties.Resources.delete;
-            this.deleteBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.deleteBtn.Name = "deleteBtn";
-            this.deleteBtn.Size = new System.Drawing.Size(35, 33);
-            this.deleteBtn.Text = "删除";
-            this.deleteBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
-            // findBtn
-            // 
-            this.findBtn.Checked = true;
-            this.findBtn.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.findBtn.Image = global::SooMailer.Properties.Resources.find;
-            this.findBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.findBtn.Name = "findBtn";
-            this.findBtn.Size = new System.Drawing.Size(35, 33);
-            this.findBtn.Text = "查找";
-            this.findBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.findBtn.Click += new System.EventHandler(this.findBtn_Click);
+            this.SourceCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SourceCombo.Font = new System.Drawing.Font("SimSun", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.SourceCombo.FormattingEnabled = true;
+            this.SourceCombo.Location = new System.Drawing.Point(492, 3);
+            this.SourceCombo.Name = "SourceCombo";
+            this.SourceCombo.Size = new System.Drawing.Size(157, 23);
+            this.SourceCombo.TabIndex = 4;
             // 
             // MailForm
             // 
@@ -316,6 +352,8 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox companytxt;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ComboBox SourceCombo;
     }
 }
 

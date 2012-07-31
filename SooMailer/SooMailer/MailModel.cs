@@ -14,6 +14,7 @@ namespace SooMailer
         public string Username { set; get; }
         public string Subject { set; get; }
         public string ProductType { set; get; }
+        public string Source { set; get; }
         public int Verify1 { set; get; }
         public int Verify2 { set; get; }
         public string SendDate { set; get; }
