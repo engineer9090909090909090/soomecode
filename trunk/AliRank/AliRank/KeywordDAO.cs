@@ -102,6 +102,9 @@ namespace AliRank
 
         public void UpdateRank(Keywords item)
         {
+
+            dbHelper.ExecuteNonQuery(@"UPDATE keywords SET prevRank = rank where id = " + item.Id);
+
             string sql = @"UPDATE keywords SET rank = @rank, keyAdNum = @keyAdNum,keyP4Num = @keyP4Num,  updateTime = @updateTime where id = @id";
             List<SQLiteParameter[]> parameters = new List<SQLiteParameter[]>();
 
@@ -114,12 +117,6 @@ namespace AliRank
                 new SQLiteParameter("@id",item.Id)
             };
             dbHelper.ExecuteNonQuery(sql, parameter);
-        }
-
-        public void UpdateRankToPrevRank()
-        {
-            string sql = @"UPDATE keywords SET prevRank = rank ";
-            dbHelper.ExecuteNonQuery(sql);
         }
 
         public void UpdateClicked(Keywords kw)

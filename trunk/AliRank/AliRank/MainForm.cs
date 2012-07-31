@@ -185,7 +185,6 @@ namespace AliRank
         ManualResetEvent eventX;
         void bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            keywordDAO.UpdateRankToPrevRank();
             List<Keywords> productList = keywordDAO.GetKeywordList();
             MaxCount = productList.Count;
             if (MaxCount > 0)
@@ -255,21 +254,48 @@ namespace AliRank
 
         #region 点击处理事件
 
+        BackgroundWorker bgClickWorker;
         private void clickRunBtn_Click(object sender, EventArgs e)
         {
             clickRunBtn.Enabled = false;
             clickStopBtn.Enabled = true;
             IsStopClicking = false;
             tabControl.SelectedIndex = 1;
-            BackgroundWorker bgWorker = new BackgroundWorker();
-            bgWorker.DoWork += new DoWorkEventHandler(bgWorker_DoWork2);
-            bgWorker.RunWorkerAsync();
-            bgWorker.Dispose();
+            if (bgClickWorker != null)
+            {
+                bgClickWorker.Dispose();
+                bgClickWorker = null;
+            }
+            bgClickWorker = new BackgroundWorker();
+            bgClickWorker.WorkerSupportsCancellation = true;
+            bgClickWorker.DoWork += new DoWorkEventHandler(bgWorker_DoWork2);
+            bgClickWorker.RunWorkerAsync();
+
+            if (clickTimer != null)
+            {
+                clickTimer.Dispose();
+                clickTimer = null;
+            }
+            clickTimer = new System.Timers.Timer(1000);
+            beginTime = DateTime.Now;
+            clickTimer.Elapsed += new System.Timers.ElapsedEventHandler(theout);
+            clickTimer.AutoReset = true;
+            clickTimer.Enabled = true; 
         }
+
+        System.Timers.Timer clickTimer;
+        DateTime beginTime;
+        public void theout(object source, System.Timers.ElapsedEventArgs e) 
+        {
+            TimeSpan ts = DateTime.Now - beginTime;
+            this.RunTime.Text = ts.Hours.ToString("00") + " : " + ts.Minutes.ToString("00") + " : " + ts.Seconds.ToString("00"); 
+        } 
 
         private void clickStopBtn_Click(object sender, EventArgs e)
         {
             IsStopClicking = true;
+            clickTimer.Enabled = false; 
+            bgClickWorker.CancelAsync();
             clickStopBtn.Enabled = false;
         }
 
@@ -295,6 +321,7 @@ namespace AliRank
             }
             clickRunBtn.Enabled = true;
             clickStopBtn.Enabled = false;
+            clickTimer.Enabled = false; 
             string sdflag = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, IniFile);
             if (IsStopClicking == false && sdflag.Equals(Constants.YES))
             {

@@ -49,7 +49,7 @@
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.RunTime = new System.Windows.Forms.ToolStripLabel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.tabControl = new System.Windows.Forms.TabControl();
@@ -167,7 +167,7 @@
             this.toolStripButton4,
             this.toolStripSeparator3,
             this.toolStripLabel1,
-            this.toolStripLabel2});
+            this.RunTime});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(792, 25);
@@ -223,14 +223,14 @@
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(59, 22);
-            this.toolStripLabel1.Text = "运行时间:";
+            this.toolStripLabel1.Size = new System.Drawing.Size(55, 22);
+            this.toolStripLabel1.Text = "运行时间";
             // 
-            // toolStripLabel2
+            // RunTime
             // 
-            this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(73, 22);
-            this.toolStripLabel2.Text = "00： 00： 00";
+            this.RunTime.Name = "RunTime";
+            this.RunTime.Size = new System.Drawing.Size(63, 22);
+            this.RunTime.Text = "00 : 00 : 00";
             // 
             // dataGridView1
             // 
@@ -354,7 +354,7 @@
         private System.Windows.Forms.ToolStripMenuItem AsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem MtToolStripMenuItem;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        private System.Windows.Forms.ToolStripLabel RunTime;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.WebBrowser webBrowser;

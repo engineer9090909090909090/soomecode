@@ -101,8 +101,6 @@ namespace AliRank
                     ClickingEvent(item, "Clicking " + currentRequestUrl);
                     browser.Document.InvokeScript("onProductClick('" + item.ProductId + "');");
                     browser.Navigate(currentRequestUrl);
-
-
                 }
                 else
                 {
@@ -115,17 +113,23 @@ namespace AliRank
                     }
                     else
                     {
-                        if (currentPage > 10)
+                        if (currentPage == 10)
                         {
                             ClickedEvent(item, "The system does not find the product you need to click.");
-                            browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
-                            eventX.Set();
+                            string productUrl = item.ProductUrl.Substring(item.ProductUrl.LastIndexOf("/"));
+                            currentRequestUrl = PURL_PREFIX + item.ProductId + productUrl;
+                            ClickingEvent(item, "Enforce clicking " + currentRequestUrl);
+                            browser.Document.InvokeScript("onProductClick('" + item.ProductId + "');");
+                            browser.Navigate(currentRequestUrl);
                         }
-                        currentPage++;
-                        string mainKey = item.MainKey.Replace(" ", "_");
-                        currentRequestUrl = string.Format(SEARCH_URL2, mainKey, currentPage);
-                        ClickingEvent(item, "Clicking " + currentRequestUrl);
-                        browser.Navigate(currentRequestUrl);
+                        else
+                        {
+                            currentPage++;
+                            string mainKey = item.MainKey.Replace(" ", "_");
+                            currentRequestUrl = string.Format(SEARCH_URL2, mainKey, currentPage);
+                            ClickingEvent(item, "Clicking " + currentRequestUrl);
+                            browser.Navigate(currentRequestUrl);
+                        }
                     }
                 }
             }
