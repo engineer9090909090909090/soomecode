@@ -18,5 +18,18 @@ namespace SooMailer
         public int Verify1 { set; get; }
         public int Verify2 { set; get; }
         public string SendDate { set; get; }
+
+        public string GetVerifyString()
+        {
+            if (Verify1 == 1)
+            {
+                return "验证通过"; 
+            }
+            else if (Verify1 == 2)
+            {
+                return "验证不存在";
+            }
+            return "未验证";
+        }
     }
 }

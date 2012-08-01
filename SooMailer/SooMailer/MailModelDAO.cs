@@ -44,10 +44,45 @@ namespace SooMailer
 
         public List<MailModel> GetMailModelList(MailModel searchItem)
         {
-            DataTable dt = dbHelper.ExecuteDataTable(
-                  "SELECT id, Email, Company, Country, Username, Subject, "
-                + "ProductType, Source, Verify1,Verify2, SendDate FROM mail_address",
-                null);
+            string sql = "SELECT id, Email, Company, Country, Username, Subject,ProductType, Source, Verify1,Verify2, SendDate FROM mail_address";
+            SQLiteParameter[] parameter = null;
+            if (searchItem != null)
+            {
+                List<SQLiteParameter> parameterList = new List<SQLiteParameter>();
+                string condition = " where 1 = 1";
+                if (!string.IsNullOrEmpty(searchItem.Email))
+                {
+                    condition += " and Email like '%"+searchItem.Email+"%'";
+
+                }
+                if (!string.IsNullOrEmpty(searchItem.Username)) {
+                    condition += " and Username like '%" + searchItem.Username + "%'";
+                }
+                if (!string.IsNullOrEmpty(searchItem.ProductType))
+                {
+                    condition += " and ProductType = @ProductType";
+                    parameterList.Add(new SQLiteParameter("@ProductType", searchItem.ProductType));
+                }
+                if (!string.IsNullOrEmpty(searchItem.Source))
+                {
+                    condition += " and Source = @Source";
+                    parameterList.Add(new SQLiteParameter("@Source", searchItem.Source));
+                }
+                if (searchItem.Verify1 >= 0)
+                {
+                    condition += " and Verify1 = " + searchItem.Verify1;
+                }
+                if (!string.IsNullOrEmpty(searchItem.Country))
+                {
+                    condition += " and Country = @Country";
+                    parameterList.Add(new SQLiteParameter("@Country", searchItem.Country));
+                }
+                sql = sql + condition;
+                parameter = parameterList.ToArray();
+
+            }
+
+            DataTable dt = dbHelper.ExecuteDataTable(sql, parameter);
 
             List<MailModel> list = new List<MailModel>();
             foreach (DataRow row in dt.Rows)
@@ -121,7 +156,9 @@ namespace SooMailer
 
         public List<ListItem> GetComboBoxData(string ColumnName)
         {
-            DataTable dt = dbHelper.ExecuteDataTable("SELECT distinct " + ColumnName + " FROM mail_address", null);
+            string sql = "SELECT distinct " + ColumnName + " FROM mail_address where " 
+                + ColumnName + " is not null and " + ColumnName + " != ''";
+            DataTable dt = dbHelper.ExecuteDataTable(sql, null);
             List<ListItem> list = new List<ListItem>();
             foreach (DataRow row in dt.Rows)
             {
