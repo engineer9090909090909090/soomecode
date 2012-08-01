@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="DAOFactory.cs" />
+    <Compile Include="EmailValidation.cs" />
     <Compile Include="ExcelImpForm.cs">
       <SubType>Form</SubType>
     </Compile>
