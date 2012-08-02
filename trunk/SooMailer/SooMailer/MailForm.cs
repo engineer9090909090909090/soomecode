@@ -61,6 +61,7 @@ namespace SooMailer
         {
             SourceCombo.ValueMember = "Id";
             SourceCombo.DisplayMember = "Name";
+            SourceCombo.Items.Clear();
             SourceCombo.Items.Insert(0, new ListItem("", ""));
             List<ListItem> sourceList = Dao.GetComboBoxData("Source");
             SourceCombo.Items.AddRange(sourceList.ToArray());
@@ -69,6 +70,7 @@ namespace SooMailer
 
             TypeComboBox.ValueMember = "Id";
             TypeComboBox.DisplayMember = "Name";
+            TypeComboBox.Items.Clear();
             TypeComboBox.Items.Insert(0, new ListItem("", ""));
             List<ListItem> typeList = Dao.GetComboBoxData("ProductType");
             TypeComboBox.Items.AddRange(typeList.ToArray());
@@ -77,6 +79,7 @@ namespace SooMailer
 
             CountryComboBox.ValueMember = "Id";
             CountryComboBox.DisplayMember = "Name";
+            CountryComboBox.Items.Clear();
             CountryComboBox.Items.Insert(0, new ListItem("", ""));
             List<ListItem> CountryList = Dao.GetComboBoxData("Country");
             CountryComboBox.Items.AddRange(CountryList.ToArray());
@@ -85,6 +88,7 @@ namespace SooMailer
 
             VerifyComboBox.ValueMember = "Id";
             VerifyComboBox.DisplayMember = "Name";
+            VerifyComboBox.Items.Clear();
             VerifyComboBox.Items.Insert(0, new ListItem("-1", ""));
             VerifyComboBox.Items.Insert(1, new ListItem("0", "未验证"));
             VerifyComboBox.Items.Insert(2, new ListItem("1", "验证通过"));
@@ -198,6 +202,7 @@ namespace SooMailer
         private void f_FormClosed(object sender, FormClosedEventArgs e)
         {
             List<MailModel> mailModelList = Dao.GetMailModelList(null);
+            InitSearchCondition();
             LoadDataview(mailModelList);
         }
         private void validationBtn_Click(object sender, EventArgs e)
