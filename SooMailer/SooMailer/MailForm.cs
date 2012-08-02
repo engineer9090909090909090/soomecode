@@ -49,9 +49,9 @@ namespace SooMailer
         private void Form1_Load(object sender, EventArgs e)
         {
             Dao = DAOFactory.Instance.GetMailModelDAO();
+            InitSearchCondition();
             List<MailModel> mailModelList = Dao.GetMailModelList(null);
             LoadDataview(mailModelList);
-            InitSearchCondition();
         }
         #endregion
 
@@ -59,6 +59,11 @@ namespace SooMailer
 
         void InitSearchCondition()
         {
+            SourceCombo.SelectedIndexChanged -= new EventHandler(button1_Click);
+            TypeComboBox.SelectedIndexChanged -= new EventHandler(button1_Click);
+            CountryComboBox.SelectedIndexChanged -= new EventHandler(button1_Click);
+            VerifyComboBox.SelectedIndexChanged -= new EventHandler(button1_Click);
+
             SourceCombo.ValueMember = "Id";
             SourceCombo.DisplayMember = "Name";
             SourceCombo.Items.Clear();
@@ -68,6 +73,7 @@ namespace SooMailer
             SourceCombo.SelectedIndex = 0;
             SourceCombo.SelectedIndexChanged += new EventHandler(button1_Click);
 
+            
             TypeComboBox.ValueMember = "Id";
             TypeComboBox.DisplayMember = "Name";
             TypeComboBox.Items.Clear();
@@ -77,6 +83,7 @@ namespace SooMailer
             TypeComboBox.SelectedIndex = 0;
             TypeComboBox.SelectedIndexChanged += new EventHandler(button1_Click);
 
+           
             CountryComboBox.ValueMember = "Id";
             CountryComboBox.DisplayMember = "Name";
             CountryComboBox.Items.Clear();
@@ -86,6 +93,7 @@ namespace SooMailer
             CountryComboBox.SelectedIndex = 0;
             CountryComboBox.SelectedIndexChanged += new EventHandler(button1_Click);
 
+           
             VerifyComboBox.ValueMember = "Id";
             VerifyComboBox.DisplayMember = "Name";
             VerifyComboBox.Items.Clear();
@@ -95,7 +103,10 @@ namespace SooMailer
             VerifyComboBox.Items.Insert(3, new ListItem("2", "验证未通过"));
             VerifyComboBox.SelectedIndex = 0;
             VerifyComboBox.SelectedIndexChanged += new EventHandler(button1_Click);
+            
         }
+
+
         void LoadDataview(List<MailModel> mailModelList)
         {
             this.dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
@@ -201,9 +212,14 @@ namespace SooMailer
         }
         private void f_FormClosed(object sender, FormClosedEventArgs e)
         {
-            List<MailModel> mailModelList = Dao.GetMailModelList(null);
-            InitSearchCondition();
-            LoadDataview(mailModelList);
+            ExcelImpForm f = (ExcelImpForm)sender;
+            if (f.SuccessLoadData)
+            {
+                InitSearchCondition();
+                List<MailModel> mailModelList = Dao.GetMailModelList(null);
+                LoadDataview(mailModelList);
+            }
+           
         }
         private void validationBtn_Click(object sender, EventArgs e)
         {

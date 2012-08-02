@@ -64,15 +64,15 @@
             this.label2.ForeColor = System.Drawing.Color.Red;
             this.label2.Location = new System.Drawing.Point(49, 100);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(503, 12);
+            this.label2.Size = new System.Drawing.Size(515, 12);
             this.label2.TabIndex = 2;
-            this.label2.Text = "提示：Excel文件的列头必需包含Email, Country, Buyer Name, Company, Subject, Date等列";
+            this.label2.Text = "提示：Excel文件的列头必需包含Email, Country, Name, Company, Subject, Source, Date等列";
             // 
             // selectBtn
             // 
             this.selectBtn.Location = new System.Drawing.Point(421, 57);
             this.selectBtn.Name = "selectBtn";
-            this.selectBtn.Size = new System.Drawing.Size(89, 23);
+            this.selectBtn.Size = new System.Drawing.Size(89, 25);
             this.selectBtn.TabIndex = 3;
             this.selectBtn.Text = "选择文件(&S)";
             this.selectBtn.UseVisualStyleBackColor = true;
@@ -80,9 +80,9 @@
             // 
             // importBtn
             // 
-            this.importBtn.Location = new System.Drawing.Point(235, 139);
+            this.importBtn.Location = new System.Drawing.Point(261, 136);
             this.importBtn.Name = "importBtn";
-            this.importBtn.Size = new System.Drawing.Size(78, 29);
+            this.importBtn.Size = new System.Drawing.Size(64, 25);
             this.importBtn.TabIndex = 4;
             this.importBtn.Text = "导入(&I)";
             this.importBtn.UseVisualStyleBackColor = true;
@@ -99,12 +99,14 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.InitialImage = global::SooMailer.Properties.Resources.progress;
-            this.pictureBox1.Location = new System.Drawing.Point(421, 126);
+            this.pictureBox1.Image = global::SooMailer.Properties.Resources.progress;
+            this.pictureBox1.InitialImage = null;
+            this.pictureBox1.Location = new System.Drawing.Point(418, 134);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(52, 51);
+            this.pictureBox1.Size = new System.Drawing.Size(35, 35);
             this.pictureBox1.TabIndex = 6;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Visible = false;
             // 
             // panel1
             // 
