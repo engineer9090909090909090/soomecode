@@ -135,14 +135,21 @@ namespace SooMailer
                     if (BuyerCol != -1)
                     {
                         string name = sheet.Cells[i, BuyerCol].StringValue.Trim();
-                        if (!string.IsNullOrEmpty(name))
+                        name = name.Replace(":", "").Trim();
+                        name = name.Replace(",", "").Trim();
+                        if (name.StartsWith("dear") || name.StartsWith("Dear"))
                         {
-                            name = name.Replace("Mr ", "").Trim();
-                            name = name.Replace("Ms ", "").Trim();
-                            name = name.Replace("Mr. ", "").Trim();
-                            name = name.Replace("Ms. ", "").Trim();
-                            model.Username = name;
-                        };
+                            name = name.Substring(4).Trim();
+                        }
+                        if (name.StartsWith("Mr.") || name.StartsWith("Ms."))
+                        {
+                            name = name.Substring(3).Trim();
+                        }
+                        if (name.StartsWith("Mr") || name.StartsWith("Ms"))
+                        {
+                            name = name.Substring(2).Trim();
+                        }
+                        model.Username = name;
                     }
                     if (CompanyCol != -1)
                     {
@@ -158,13 +165,33 @@ namespace SooMailer
                     }
                     if (ProductTypeCol != -1)
                     {
-                        model.ProductType = sheet.Cells[i, ProductTypeCol].StringValue.Trim();
+                        string product = sheet.Cells[i, ProductTypeCol].StringValue.Trim();
+                        if (product.ToLower().IndexOf("moblie") >= 0)
+                        {
+                            model.ProductType = "Moblie";
+                        }
+                        else if (product.ToLower().IndexOf("netbook") >= 0)
+                        {
+                            model.ProductType = "NetBook";
+                        }
+                        else if (product.ToLower().IndexOf("projector") >= 0)
+                        {
+                            model.ProductType = "Projector";
+                        }
+                        else if (product.ToLower().IndexOf("ebook") >= 0 || product.ToLower().IndexOf("e-book") >= 0)
+                        {
+                            model.ProductType = "Other";
+                        }
+                        else {
+                            model.ProductType = product;
+                        }
                     }
                     else if (!sheetName.ToLower().StartsWith("sheet"))
                     {
                         model.ProductType = sheetName;
                     }
-                    else {
+                    else 
+                    {
                         model.ProductType = "Other";
                     }
                     if (SourceCol != -1)
