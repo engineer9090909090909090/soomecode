@@ -88,7 +88,7 @@ namespace SooMailer
                     {
                         CountryCol = j;
                     }
-                    if ("buyer name".Equals(value.ToLower()))
+                    if ("name".Equals(value.ToLower()))
                     {
                         BuyerCol = j;
                     }
@@ -104,7 +104,7 @@ namespace SooMailer
                     {
                         SubjectCol = j;
                     }
-                    if ("producttype".Equals(value.ToLower()))
+                    if ("product".Equals(value.ToLower()))
                     {
                         ProductTypeCol = j;
                     }

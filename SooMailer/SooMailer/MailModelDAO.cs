@@ -107,7 +107,7 @@ namespace SooMailer
 
         public void Insert(List<MailModel> list)
         {
-            string existSql = @"select count(1) from mail_address where Email= @Email and ProductType = @ProductType";
+            string existSql = @"select count(1) from mail_address where Email= @Email";
             List<string> existEmail = new List<string>();
             List<SQLiteParameter[]> parameters = new List<SQLiteParameter[]>();
             foreach (MailModel item in list)
@@ -119,8 +119,7 @@ namespace SooMailer
                 }
                 SQLiteParameter[] existParameter = new SQLiteParameter[]
                 {
-                    new SQLiteParameter("@Email",item.Email), 
-                    new SQLiteParameter("@ProductType",item.ProductType), 
+                    new SQLiteParameter("@Email",item.Email)
                 };
                 int count = Convert.ToInt32(dbHelper.ExecuteScalar(existSql, existParameter));
                 if (count > 0)
