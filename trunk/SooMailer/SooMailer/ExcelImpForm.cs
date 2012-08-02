@@ -12,6 +12,7 @@ namespace SooMailer
 {
     public partial class ExcelImpForm : Form
     {
+        public bool SuccessLoadData = false;
         public ExcelImpForm()
         {
             InitializeComponent();
@@ -51,7 +52,6 @@ namespace SooMailer
         void worker_DoWork(object sender, DoWorkEventArgs e)
         {
             string SelectExcelFile = filePath.Text;
-            this.pictureBox1.Visible = false;
             Workbook workBook = new Workbook();
             try
             {
@@ -134,7 +134,15 @@ namespace SooMailer
                     }
                     if (BuyerCol != -1)
                     {
-                        model.Username = sheet.Cells[i, BuyerCol].StringValue.Trim();
+                        string name = sheet.Cells[i, BuyerCol].StringValue.Trim();
+                        if (!string.IsNullOrEmpty(name))
+                        {
+                            name = name.Replace("Mr ", "").Trim();
+                            name = name.Replace("Ms ", "").Trim();
+                            name = name.Replace("Mr. ", "").Trim();
+                            name = name.Replace("Ms. ", "").Trim();
+                            model.Username = name;
+                        };
                     }
                     if (CompanyCol != -1)
                     {
@@ -178,6 +186,7 @@ namespace SooMailer
             mailModelDAO.Insert(mailModelList);
             this.importBtn.Enabled = true;
             this.pictureBox1.Visible = false;
+            SuccessLoadData = true;
             this.Close();
         }
     }
