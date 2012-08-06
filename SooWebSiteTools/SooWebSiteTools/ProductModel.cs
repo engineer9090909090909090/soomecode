@@ -7,6 +7,7 @@ namespace SooWebSiteTools
 {
     class ProductModel
     {
+        public int StoreId { get; set; }
         public int ProductId {get; set; }
         public string Model {get; set; }
         public string Sku {get; set; }
@@ -21,7 +22,7 @@ namespace SooWebSiteTools
         public int TaxClassId {get; set; }
         public int WeightClassId { get; set; }
         public int LengthClassId { get; set; }
-        public DateTime DateAvailable {get; set; }
+        public DateTime AvailableDate {get; set; }
         public int Subtract {get; set; }
         public int Length {get; set; }
         public int Width {get; set; }
@@ -31,9 +32,13 @@ namespace SooWebSiteTools
         public int SortOrder {get; set; }
         public int LanguageId { get; set; }
         public string Name { get; set; }
-        public string description { get; set; }
-        public string description2 { get; set; }
-        public string meta_keyword { get; set; }
-        public string meta_description { get; set; }
+        public string Description { get; set; }
+        public string Description2 { get; set; }
+        public string MetaKeyword { get; set; }
+        public string MetaDescription { get; set; }
+
+        List<ImageModel> Images { get; set; }
+        List<TagModel> Tags { get; set; }
+        List<CategoryModel> Categories { get; set; }
     }
 }
