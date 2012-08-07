@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Aspose.Network.Verify;
 using Aspose.Cells;
+using System.Threading;
 
 namespace SooMailer
 {
@@ -49,7 +50,6 @@ namespace SooMailer
         private void Form1_Load(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false;
-            validWorker = new BackgroundWorker();
             Dao = DAOFactory.Instance.GetMailModelDAO();
             InitSearchCondition();
             List<MailModel> mailModelList = Dao.GetMailModelList(null);
@@ -220,79 +220,79 @@ namespace SooMailer
         }
         private void validationBtn_Click(object sender, EventArgs e)
         {
-            validationBtn.Enabled = false;
-            stopValidBtn.Enabled = true;
-            toolStripLabel.Text = "正在进行邮箱验证，请稍候...";
-            validWorker.DoWork -= new DoWorkEventHandler(worker_DoWork);
+            BackgroundWorker validWorker = new BackgroundWorker();
             validWorker.DoWork += new DoWorkEventHandler(worker_DoWork);
-            validWorker.WorkerSupportsCancellation = true;
             validWorker.RunWorkerAsync();
         }
 
-        BackgroundWorker validWorker;
+
+        public static int iCount = 0;
+        public static int MaxCount = 10;
+        static ManualResetEvent eventX = new ManualResetEvent(false);
         private bool doWorkFlag = false;
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
             List<MailModel> mailModelList = Dao.GetMailModelList(null);
-            //EmailValidator emailValidator = new EmailValidator();
-            //ValidationResult result;
-            doWorkFlag = true;
-            foreach (MailModel model in mailModelList)
+            MaxCount = mailModelList.Count;
+            if (MaxCount == 0)
             {
-                if (model.Verify1 > 0) continue;
-                toolStripStatusLabel.Text = "验证邮箱地址: " + model.Email;
-                bool result = ActiveUp.Net.Mail.SmtpValidator.Validate(model.Email);
-                if (result)
-                {
-                    model.Verify1 = 1;
-                    toolStripStatusLabel.Text = "邮箱地址[ " + model.Email + "]存在.";
-                }
-                else
-                {
-                    model.Verify1 = 2;
-                    toolStripStatusLabel.Text = "邮箱地址[" + model.Email + "]不存在";
-                }
-
-
-                /*
-                if (model.Verify1 > 0) continue;
-                try
-                {
-                    emailValidator.Validate(model.Email, ValidationPolicy.MailServer, out result);
-                    if (result.ReturnCode == ValidationResponseCode.ValidationSuccess)
-                    {
-                        model.Verify1 = 1;
-                        toolStripStatusLabel.Text = "邮箱地址[ " + model.Email + "]存在.";
-                    }
-                    else
-                    {
-                        model.Verify1 = 2;
-                        toolStripStatusLabel.Text = "邮箱地址[" + model.Email + "]不存在, " + result.Message + ".";
-                    }
-                }
-                catch (Exception ex)
-                {
-                    toolStripStatusLabel.Text = "邮箱地址[" + model.Email + "]异常, " + ex.Message;
-                    continue;
-                }
-                * */
-                
-                Dao.UpdateMailVerify(model);
-                if (!doWorkFlag)
-                {
-                    break;
-                }
+                return;
             }
+            validationBtn.Enabled = false;
+            stopValidBtn.Enabled = true;
+            toolStripLabel.Text = "正在进行邮箱验证，请稍候...";
+            doWorkFlag = true;
+            ThreadPool.SetMinThreads(5, 40);
+            ThreadPool.SetMaxThreads(10, 200);
+            for (int i = 0; i < MaxCount; i++)
+            {
+                ThreadPool.QueueUserWorkItem(new WaitCallback(DoWork), (object)mailModelList[i]);
+            }
+            eventX.WaitOne(Timeout.Infinite, true); 
+            System.Diagnostics.Trace.WriteLine("线程池结束！");
             validationBtn.Enabled = true;
             stopValidBtn.Enabled = false;
             toolStripLabel.Text = "";
             toolStripStatusLabel.Text = "邮箱验证已经停止.";
         }
 
+        private void DoWork(object obj)
+        {
+            MailModel model = (MailModel)obj;
+            if (!doWorkFlag || model.Verify1 > 0) 
+            {
+                Interlocked.Increment(ref iCount);
+                if (iCount == MaxCount)
+                {
+                    eventX.Set();
+                }
+                return;
+            };
+            toolStripStatusLabel.Text = "验证邮箱地址: " + model.Email;
+            bool result = ActiveUp.Net.Mail.SmtpValidator.Validate(model.Email);
+            if (result)
+            {
+                model.Verify1 = 1;
+                toolStripStatusLabel.Text = "邮箱地址[ " + model.Email + "]存在.";
+            }
+            else
+            {
+                model.Verify1 = 2;
+                toolStripStatusLabel.Text = "邮箱地址[" + model.Email + "]不存在";
+            }
+            Dao.UpdateMailVerify(model);
+            Interlocked.Increment(ref iCount);
+            if (iCount == MaxCount)
+            {
+                eventX.Set();
+            }
+        }
+
         private void stopValidBtn_Click(object sender, EventArgs e)
         {
-            validWorker.CancelAsync();
             doWorkFlag = false;
+            stopValidBtn.Enabled = false;
+            validationBtn.Enabled = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
