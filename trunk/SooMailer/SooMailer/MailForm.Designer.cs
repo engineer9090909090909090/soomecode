@@ -228,7 +228,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52.1028F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47.8972F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 229F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 105F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 106F));
             this.tableLayoutPanel1.Controls.Add(this.panel6, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel5, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel4, 0, 1);
@@ -251,7 +251,7 @@
             this.panel6.Controls.Add(this.VerifyComboBox);
             this.panel6.Controls.Add(this.label6);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(448, 38);
+            this.panel6.Location = new System.Drawing.Point(447, 38);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(223, 29);
             this.panel6.TabIndex = 13;
@@ -280,7 +280,7 @@
             this.panel5.Controls.Add(this.EmailTxtBox);
             this.panel5.Controls.Add(this.label5);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(235, 38);
+            this.panel5.Location = new System.Drawing.Point(234, 38);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(207, 29);
             this.panel5.TabIndex = 12;
@@ -308,7 +308,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 38);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(226, 29);
+            this.panel4.Size = new System.Drawing.Size(225, 29);
             this.panel4.TabIndex = 11;
             // 
             // NameTxtBox
@@ -332,7 +332,7 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.CountryComboBox);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(448, 3);
+            this.panel1.Location = new System.Drawing.Point(447, 3);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(223, 29);
             this.panel1.TabIndex = 10;
@@ -361,7 +361,7 @@
             this.panel3.Controls.Add(this.label3);
             this.panel3.Controls.Add(this.SourceCombo);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(235, 3);
+            this.panel3.Location = new System.Drawing.Point(234, 3);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(207, 29);
             this.panel3.TabIndex = 9;
@@ -392,7 +392,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(226, 29);
+            this.panel2.Size = new System.Drawing.Size(225, 29);
             this.panel2.TabIndex = 8;
             // 
             // label2
@@ -416,7 +416,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(677, 38);
+            this.button2.Location = new System.Drawing.Point(676, 38);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(92, 29);
             this.button2.TabIndex = 8;
@@ -426,7 +426,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(677, 3);
+            this.button1.Location = new System.Drawing.Point(676, 3);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(92, 29);
             this.button1.TabIndex = 7;
@@ -494,6 +494,7 @@
             // 
             // stopValidBtn
             // 
+            this.stopValidBtn.Enabled = false;
             this.stopValidBtn.Image = global::SooMailer.Properties.Resources.stop;
             this.stopValidBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.stopValidBtn.Name = "stopValidBtn";

@@ -221,6 +221,7 @@ namespace SooMailer
         private void validationBtn_Click(object sender, EventArgs e)
         {
             validationBtn.Enabled = false;
+            stopValidBtn.Enabled = true;
             toolStripLabel.Text = "正在进行邮箱验证，请稍候...";
             validWorker.DoWork -= new DoWorkEventHandler(worker_DoWork);
             validWorker.DoWork += new DoWorkEventHandler(worker_DoWork);
@@ -233,12 +234,11 @@ namespace SooMailer
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
             List<MailModel> mailModelList = Dao.GetMailModelList(null);
-            EmailValidator emailValidator = new EmailValidator();
-            ValidationResult result;
+            //EmailValidator emailValidator = new EmailValidator();
+            //ValidationResult result;
             doWorkFlag = true;
             foreach (MailModel model in mailModelList)
             {
-                /*
                 if (model.Verify1 > 0) continue;
                 toolStripStatusLabel.Text = "验证邮箱地址: " + model.Email;
                 bool result = ActiveUp.Net.Mail.SmtpValidator.Validate(model.Email);
@@ -249,24 +249,34 @@ namespace SooMailer
                 }
                 else
                 {
-                    //lblResult.Text = "邮箱地址不存在，返回代码:\r\n " + result.ReturnCode + ".";
                     model.Verify1 = 2;
                     toolStripStatusLabel.Text = "邮箱地址[" + model.Email + "]不存在";
                 }
-                * */
+
+
+                /*
                 if (model.Verify1 > 0) continue;
-                emailValidator.Validate(model.Email, ValidationPolicy.MailServer, out result);
-                if (result.ReturnCode ==ValidationResponseCode.ValidationSuccess)
+                try
                 {
-                    model.Verify1 = 1;
-                    toolStripStatusLabel.Text = "邮箱地址[ " + model.Email + "]存在.";
+                    emailValidator.Validate(model.Email, ValidationPolicy.MailServer, out result);
+                    if (result.ReturnCode == ValidationResponseCode.ValidationSuccess)
+                    {
+                        model.Verify1 = 1;
+                        toolStripStatusLabel.Text = "邮箱地址[ " + model.Email + "]存在.";
+                    }
+                    else
+                    {
+                        model.Verify1 = 2;
+                        toolStripStatusLabel.Text = "邮箱地址[" + model.Email + "]不存在, " + result.Message + ".";
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    model.Verify1 = 2;
-                    toolStripStatusLabel.Text = "邮箱地址[" + model.Email + "]不存在, " + result.Message + ".";
+                    toolStripStatusLabel.Text = "邮箱地址[" + model.Email + "]异常, " + ex.Message;
+                    continue;
                 }
-                 
+                * */
+                
                 Dao.UpdateMailVerify(model);
                 if (!doWorkFlag)
                 {
@@ -274,6 +284,7 @@ namespace SooMailer
                 }
             }
             validationBtn.Enabled = true;
+            stopValidBtn.Enabled = false;
             toolStripLabel.Text = "";
             toolStripStatusLabel.Text = "邮箱验证已经停止.";
         }
