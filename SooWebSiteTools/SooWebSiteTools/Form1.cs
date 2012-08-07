@@ -24,6 +24,7 @@ namespace SooWebSiteTools
         {
             CheckForIllegalCrossThreadCalls = false;
             dataGridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dao = new ProducctDAO();
             DataTable dt = dao.GetLanguages();
             LangComboBox.SelectedIndexChanged += new EventHandler(LangComboBoxChanged);
@@ -44,13 +45,13 @@ namespace SooWebSiteTools
             
             DataGridViewColumn column0 = this.dataGridView.Columns[0];
             column0.HeaderText = "Product Image";
-            column0.Width = 120;
+            column0.Width = 100;
             DataGridViewColumn column = this.dataGridView.Columns[1];
             column.HeaderText = "Product Model";
             column.Width = 150;
             DataGridViewColumn column2 = this.dataGridView.Columns[2];
             column2.HeaderText = "Product Name";
-            column2.Width = 200;
+            //column2.Width = 200;
             DataGridViewColumn column3 = this.dataGridView.Columns[3];
             column3.HeaderText = "Product Price";
             column3.Width = 200;
@@ -85,10 +86,10 @@ namespace SooWebSiteTools
             this.LengthComboBox.DataSource = dao.GetLengthClass(SelectLang);
             this.LengthComboBox.DisplayMember = "name";
             this.LengthComboBox.ValueMember = "id";
-            this.availableTextBox.Text = DateTime.Now.ToString("MM/dd/yyyy");
+            this.AvailableTextBox.Text = DateTime.Now.ToString("MM/dd/yyyy");
         }
 
-        List<string> pictureList = new List<string>();
+       
         private void OpenBtn_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -96,39 +97,41 @@ namespace SooWebSiteTools
             ofd.Filter = "图片文件(*.jpg)| *.jpg; *.jpeg";
             ofd.Multiselect = true;
             ofd.ShowDialog();
-            pictureList.Clear();
-            foreach(string fileName in ofd.FileNames)
-            {
-                pictureList.Add(fileName);
-            }
-            BackgroundWorker work = new BackgroundWorker();
-            work.WorkerSupportsCancellation = true;
-            work.DoWork += new DoWorkEventHandler(work_DoWork);
-            work.RunWorkerAsync();
-            work.Dispose();
+            if (ofd.FileNames.Length == 0) return;
+            SetDataGridView del = new SetDataGridView(setgv);
+            this.BeginInvoke(del, new object[] { ofd.FileNames });
         }
 
-        void work_DoWork(object sender, DoWorkEventArgs e)
+        private delegate void SetDataGridView(string[] fileNames);
+        List<string> pictureList = new List<string>();
+
+        private void setgv(string[] fileNames)
         {
+            pictureList.Clear();
+            this.dataGridView.DataBindings.Clear();
             DataTable table = new DataTable();
             table.Columns.Add("Image", typeof(Image));
             table.Columns.Add("Model", typeof(string));
             table.Columns.Add("Name", typeof(string));
             table.Columns.Add("Price", typeof(string));
-
-            foreach (string path in pictureList)
+            foreach (string fileName in fileNames)
             {
+                pictureList.Add(fileName);
                 DataRow dr = table.NewRow();
-                dr["Image"] = Image.FromFile(path);
-                dr["Model"] = Path.GetFileNameWithoutExtension(path);
-                dr["Name"] = Path.GetFileName(path);
+                dr["Image"] = new Bitmap(Image.FromFile(fileName), 100, 100);
+                dr["Model"] = Path.GetFileNameWithoutExtension(fileName);
+                dr["Name"] = Path.GetFileName(fileName);
                 dr["Price"] = "0.00";
                 table.Rows.Add(dr);
             }
-            this.dataGridView.DataBindings.Clear();
             this.dataGridView.DataSource = table;
         }
 
+        private void Form1_SizeChanged(object sender, EventArgs e)
+        {
+            splitContainer.SplitterDistance = 705;
+            splitContainer.Panel1.Show();
+        }
 
     }
 }

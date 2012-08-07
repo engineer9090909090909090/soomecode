@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -35,21 +36,24 @@
             this.编辑EToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助HToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel8 = new System.Windows.Forms.Panel();
-            this.availableTextBox = new System.Windows.Forms.TextBox();
+            this.AvailableTextBox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
+            this.QtyTextBox = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
+            this.HsCodeTextBox = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.UnitTextBox = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.MOQText = new System.Windows.Forms.TextBox();
+            this.MOQTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
@@ -66,28 +70,30 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.checkedListBox = new System.Windows.Forms.CheckedListBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.LangComboBox = new System.Windows.Forms.ComboBox();
-            this.HsCodeTextBox = new System.Windows.Forms.TextBox();
-            this.QtyTextBox = new System.Windows.Forms.TextBox();
-            this.panel11 = new System.Windows.Forms.Panel();
-            this.OpenBtn = new System.Windows.Forms.Button();
-            this.keyword = new System.Windows.Forms.TextBox();
-            this.panel12 = new System.Windows.Forms.Panel();
-            this.label12 = new System.Windows.Forms.Label();
-            this.panel13 = new System.Windows.Forms.Panel();
-            this.label13 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.panel14 = new System.Windows.Forms.Panel();
-            this.label14 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.webBrowser2 = new System.Windows.Forms.WebBrowser();
+            this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.LangComboBox = new System.Windows.Forms.ComboBox();
+            this.NamesTextBox = new System.Windows.Forms.TextBox();
+            this.panel13 = new System.Windows.Forms.Panel();
+            this.label13 = new System.Windows.Forms.Label();
+            this.keywordDescTextBox = new System.Windows.Forms.TextBox();
+            this.panel12 = new System.Windows.Forms.Panel();
+            this.label12 = new System.Windows.Forms.Label();
+            this.keywordTextBox = new System.Windows.Forms.TextBox();
+            this.panel11 = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
@@ -103,23 +109,23 @@
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
-            this.panel11.SuspendLayout();
-            this.panel12.SuspendLayout();
-            this.panel13.SuspendLayout();
-            this.panel14.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
+            this.panel13.SuspendLayout();
+            this.panel12.SuspendLayout();
+            this.panel11.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 518);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 544);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(935, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1092, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -137,7 +143,7 @@
             this.帮助HToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(935, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1092, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -161,18 +167,32 @@
             // 
             // toolStrip1
             // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton1,
+            this.toolStripButton2,
+            this.toolStripButton3,
+            this.toolStripSeparator1,
+            this.toolStripLabel1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(935, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1092, 25);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(111, 22);
+            this.toolStripButton1.Text = "从图片导入产品";
+            this.toolStripButton1.Click += new System.EventHandler(this.OpenBtn_Click);
             // 
             // splitContainer
             // 
             this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer.Location = new System.Drawing.Point(0, 49);
             this.splitContainer.Name = "splitContainer";
-            this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer.Panel1
             // 
@@ -180,28 +200,29 @@
             // 
             // splitContainer.Panel2
             // 
-            this.splitContainer.Panel2.Controls.Add(this.dataGridView);
-            this.splitContainer.Size = new System.Drawing.Size(935, 469);
-            this.splitContainer.SplitterDistance = 280;
-            this.splitContainer.SplitterWidth = 3;
+            this.splitContainer.Panel2.Controls.Add(this.tabControl1);
+            this.splitContainer.Size = new System.Drawing.Size(1092, 495);
+            this.splitContainer.SplitterDistance = 704;
+            this.splitContainer.SplitterWidth = 5;
             this.splitContainer.TabIndex = 3;
             // 
             // tabControl
             // 
             this.tabControl.Controls.Add(this.tabPage1);
-            this.tabControl.Controls.Add(this.tabPage2);
             this.tabControl.Controls.Add(this.tabPage3);
             this.tabControl.Controls.Add(this.tabPage4);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(935, 280);
+            this.tabControl.Size = new System.Drawing.Size(704, 495);
             this.tabControl.TabIndex = 0;
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.panel11);
+            this.tabPage1.Controls.Add(this.panel13);
+            this.tabPage1.Controls.Add(this.panel12);
             this.tabPage1.Controls.Add(this.panel8);
             this.tabPage1.Controls.Add(this.panel9);
             this.tabPage1.Controls.Add(this.panel10);
@@ -215,26 +236,26 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 21);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(927, 255);
+            this.tabPage1.Size = new System.Drawing.Size(696, 470);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "基本属性";
+            this.tabPage1.Text = "产品属性";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // panel8
             // 
-            this.panel8.Controls.Add(this.availableTextBox);
+            this.panel8.Controls.Add(this.AvailableTextBox);
             this.panel8.Controls.Add(this.label8);
-            this.panel8.Location = new System.Drawing.Point(722, 114);
+            this.panel8.Location = new System.Drawing.Point(567, 116);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(200, 57);
+            this.panel8.Size = new System.Drawing.Size(131, 57);
             this.panel8.TabIndex = 11;
             // 
-            // availableTextBox
+            // AvailableTextBox
             // 
-            this.availableTextBox.Location = new System.Drawing.Point(6, 26);
-            this.availableTextBox.Name = "availableTextBox";
-            this.availableTextBox.Size = new System.Drawing.Size(180, 21);
-            this.availableTextBox.TabIndex = 4;
+            this.AvailableTextBox.Location = new System.Drawing.Point(6, 26);
+            this.AvailableTextBox.Name = "AvailableTextBox";
+            this.AvailableTextBox.Size = new System.Drawing.Size(122, 21);
+            this.AvailableTextBox.TabIndex = 4;
             // 
             // label8
             // 
@@ -249,15 +270,23 @@
             // 
             this.panel9.Controls.Add(this.QtyTextBox);
             this.panel9.Controls.Add(this.label9);
-            this.panel9.Location = new System.Drawing.Point(722, 61);
+            this.panel9.Location = new System.Drawing.Point(567, 62);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(201, 57);
+            this.panel9.Size = new System.Drawing.Size(131, 49);
             this.panel9.TabIndex = 10;
+            // 
+            // QtyTextBox
+            // 
+            this.QtyTextBox.Location = new System.Drawing.Point(7, 25);
+            this.QtyTextBox.Name = "QtyTextBox";
+            this.QtyTextBox.Size = new System.Drawing.Size(122, 21);
+            this.QtyTextBox.TabIndex = 4;
+            this.QtyTextBox.Text = "1000";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 10);
+            this.label9.Location = new System.Drawing.Point(5, 10);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(53, 12);
             this.label9.TabIndex = 3;
@@ -267,15 +296,22 @@
             // 
             this.panel10.Controls.Add(this.HsCodeTextBox);
             this.panel10.Controls.Add(this.label10);
-            this.panel10.Location = new System.Drawing.Point(722, 4);
+            this.panel10.Location = new System.Drawing.Point(567, 3);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(201, 57);
+            this.panel10.Size = new System.Drawing.Size(131, 57);
             this.panel10.TabIndex = 9;
+            // 
+            // HsCodeTextBox
+            // 
+            this.HsCodeTextBox.Location = new System.Drawing.Point(6, 30);
+            this.HsCodeTextBox.Name = "HsCodeTextBox";
+            this.HsCodeTextBox.Size = new System.Drawing.Size(123, 21);
+            this.HsCodeTextBox.TabIndex = 4;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 11);
+            this.label10.Location = new System.Drawing.Point(6, 12);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(53, 12);
             this.label10.TabIndex = 3;
@@ -285,23 +321,23 @@
             // 
             this.panel7.Controls.Add(this.UnitTextBox);
             this.panel7.Controls.Add(this.label7);
-            this.panel7.Location = new System.Drawing.Point(508, 115);
+            this.panel7.Location = new System.Drawing.Point(435, 117);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(200, 57);
+            this.panel7.Size = new System.Drawing.Size(133, 57);
             this.panel7.TabIndex = 8;
             // 
             // UnitTextBox
             // 
-            this.UnitTextBox.Location = new System.Drawing.Point(6, 26);
+            this.UnitTextBox.Location = new System.Drawing.Point(3, 25);
             this.UnitTextBox.Name = "UnitTextBox";
-            this.UnitTextBox.Size = new System.Drawing.Size(180, 21);
+            this.UnitTextBox.Size = new System.Drawing.Size(127, 21);
             this.UnitTextBox.TabIndex = 4;
             this.UnitTextBox.Text = "PCS";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 11);
+            this.label7.Location = new System.Drawing.Point(2, 10);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(53, 12);
             this.label7.TabIndex = 3;
@@ -309,20 +345,20 @@
             // 
             // panel6
             // 
-            this.panel6.Controls.Add(this.MOQText);
+            this.panel6.Controls.Add(this.MOQTextBox);
             this.panel6.Controls.Add(this.label6);
             this.panel6.Location = new System.Drawing.Point(291, 119);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(200, 57);
+            this.panel6.Size = new System.Drawing.Size(139, 57);
             this.panel6.TabIndex = 7;
             // 
-            // MOQText
+            // MOQTextBox
             // 
-            this.MOQText.Location = new System.Drawing.Point(6, 26);
-            this.MOQText.Name = "MOQText";
-            this.MOQText.Size = new System.Drawing.Size(180, 21);
-            this.MOQText.TabIndex = 4;
-            this.MOQText.Text = "200";
+            this.MOQTextBox.Location = new System.Drawing.Point(6, 26);
+            this.MOQTextBox.Name = "MOQTextBox";
+            this.MOQTextBox.Size = new System.Drawing.Size(133, 21);
+            this.MOQTextBox.TabIndex = 4;
+            this.MOQTextBox.Text = "200";
             // 
             // label6
             // 
@@ -337,15 +373,15 @@
             // 
             this.panel5.Controls.Add(this.label5);
             this.panel5.Controls.Add(this.LengthComboBox);
-            this.panel5.Location = new System.Drawing.Point(508, 62);
+            this.panel5.Location = new System.Drawing.Point(435, 64);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(201, 57);
+            this.panel5.Size = new System.Drawing.Size(133, 57);
             this.panel5.TabIndex = 6;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 10);
+            this.label5.Location = new System.Drawing.Point(4, 10);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 12);
             this.label5.TabIndex = 3;
@@ -355,24 +391,24 @@
             // 
             this.LengthComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.LengthComboBox.FormattingEnabled = true;
-            this.LengthComboBox.Location = new System.Drawing.Point(8, 27);
+            this.LengthComboBox.Location = new System.Drawing.Point(6, 27);
             this.LengthComboBox.Name = "LengthComboBox";
-            this.LengthComboBox.Size = new System.Drawing.Size(181, 20);
+            this.LengthComboBox.Size = new System.Drawing.Size(125, 20);
             this.LengthComboBox.TabIndex = 2;
             // 
             // panel4
             // 
             this.panel4.Controls.Add(this.label4);
             this.panel4.Controls.Add(this.WeightComboBox);
-            this.panel4.Location = new System.Drawing.Point(508, 5);
+            this.panel4.Location = new System.Drawing.Point(435, 7);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(201, 57);
+            this.panel4.Size = new System.Drawing.Size(133, 57);
             this.panel4.TabIndex = 5;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 11);
+            this.label4.Location = new System.Drawing.Point(5, 12);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 12);
             this.label4.TabIndex = 3;
@@ -382,9 +418,9 @@
             // 
             this.WeightComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.WeightComboBox.FormattingEnabled = true;
-            this.WeightComboBox.Location = new System.Drawing.Point(6, 29);
+            this.WeightComboBox.Location = new System.Drawing.Point(5, 29);
             this.WeightComboBox.Name = "WeightComboBox";
-            this.WeightComboBox.Size = new System.Drawing.Size(181, 20);
+            this.WeightComboBox.Size = new System.Drawing.Size(127, 20);
             this.WeightComboBox.TabIndex = 2;
             // 
             // panel3
@@ -393,7 +429,7 @@
             this.panel3.Controls.Add(this.StockComboBox);
             this.panel3.Location = new System.Drawing.Point(291, 62);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(200, 57);
+            this.panel3.Size = new System.Drawing.Size(139, 57);
             this.panel3.TabIndex = 4;
             // 
             // label3
@@ -411,7 +447,7 @@
             this.StockComboBox.FormattingEnabled = true;
             this.StockComboBox.Location = new System.Drawing.Point(6, 29);
             this.StockComboBox.Name = "StockComboBox";
-            this.StockComboBox.Size = new System.Drawing.Size(181, 20);
+            this.StockComboBox.Size = new System.Drawing.Size(133, 20);
             this.StockComboBox.TabIndex = 2;
             // 
             // panel2
@@ -420,7 +456,7 @@
             this.panel2.Controls.Add(this.maComboBox);
             this.panel2.Location = new System.Drawing.Point(291, 5);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(200, 57);
+            this.panel2.Size = new System.Drawing.Size(139, 57);
             this.panel2.TabIndex = 3;
             // 
             // label2
@@ -438,7 +474,7 @@
             this.maComboBox.FormattingEnabled = true;
             this.maComboBox.Location = new System.Drawing.Point(6, 29);
             this.maComboBox.Name = "maComboBox";
-            this.maComboBox.Size = new System.Drawing.Size(181, 20);
+            this.maComboBox.Size = new System.Drawing.Size(133, 20);
             this.maComboBox.TabIndex = 2;
             // 
             // panel1
@@ -464,92 +500,115 @@
             this.checkedListBox.FormattingEnabled = true;
             this.checkedListBox.Location = new System.Drawing.Point(3, 29);
             this.checkedListBox.Name = "checkedListBox";
-            this.checkedListBox.Size = new System.Drawing.Size(266, 132);
+            this.checkedListBox.Size = new System.Drawing.Size(273, 132);
             this.checkedListBox.TabIndex = 0;
             // 
-            // tabPage2
+            // tabPage3
             // 
-            this.tabPage2.Controls.Add(this.panel14);
-            this.tabPage2.Controls.Add(this.panel13);
-            this.tabPage2.Controls.Add(this.panel12);
-            this.tabPage2.Location = new System.Drawing.Point(4, 21);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(927, 275);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "产品";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabPage3.Controls.Add(this.webBrowser);
+            this.tabPage3.Location = new System.Drawing.Point(4, 21);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(696, 470);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "产品描述1";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // webBrowser
+            // 
+            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowser.Location = new System.Drawing.Point(3, 3);
+            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser.Name = "webBrowser";
+            this.webBrowser.ScrollBarsEnabled = false;
+            this.webBrowser.Size = new System.Drawing.Size(690, 464);
+            this.webBrowser.TabIndex = 0;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.webBrowser2);
+            this.tabPage4.Location = new System.Drawing.Point(4, 21);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(696, 470);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "产品描述2";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // webBrowser2
+            // 
+            this.webBrowser2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowser2.Location = new System.Drawing.Point(3, 3);
+            this.webBrowser2.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser2.Name = "webBrowser2";
+            this.webBrowser2.ScrollBarsEnabled = false;
+            this.webBrowser2.Size = new System.Drawing.Size(690, 464);
+            this.webBrowser2.TabIndex = 0;
             // 
             // dataGridView
             // 
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView.Location = new System.Drawing.Point(3, 3);
             this.dataGridView.Name = "dataGridView";
-            this.dataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dataGridView.RowHeadersVisible = false;
             this.dataGridView.RowTemplate.Height = 23;
-            this.dataGridView.Size = new System.Drawing.Size(935, 186);
+            this.dataGridView.Size = new System.Drawing.Size(369, 464);
             this.dataGridView.TabIndex = 0;
             // 
             // LangComboBox
             // 
             this.LangComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.LangComboBox.FormattingEnabled = true;
-            this.LangComboBox.Location = new System.Drawing.Point(196, 2);
+            this.LangComboBox.Location = new System.Drawing.Point(331, 25);
             this.LangComboBox.Name = "LangComboBox";
             this.LangComboBox.Size = new System.Drawing.Size(120, 20);
             this.LangComboBox.TabIndex = 4;
             // 
-            // HsCodeTextBox
+            // NamesTextBox
             // 
-            this.HsCodeTextBox.Location = new System.Drawing.Point(8, 33);
-            this.HsCodeTextBox.Name = "HsCodeTextBox";
-            this.HsCodeTextBox.Size = new System.Drawing.Size(181, 21);
-            this.HsCodeTextBox.TabIndex = 4;
+            this.NamesTextBox.Location = new System.Drawing.Point(6, 24);
+            this.NamesTextBox.Multiline = true;
+            this.NamesTextBox.Name = "NamesTextBox";
+            this.NamesTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.NamesTextBox.Size = new System.Drawing.Size(273, 262);
+            this.NamesTextBox.TabIndex = 12;
             // 
-            // QtyTextBox
+            // panel13
             // 
-            this.QtyTextBox.Location = new System.Drawing.Point(9, 25);
-            this.QtyTextBox.Name = "QtyTextBox";
-            this.QtyTextBox.Size = new System.Drawing.Size(180, 21);
-            this.QtyTextBox.TabIndex = 4;
-            this.QtyTextBox.Text = "1000";
+            this.panel13.Controls.Add(this.label13);
+            this.panel13.Controls.Add(this.keywordDescTextBox);
+            this.panel13.Location = new System.Drawing.Point(291, 325);
+            this.panel13.Name = "panel13";
+            this.panel13.Size = new System.Drawing.Size(407, 102);
+            this.panel13.TabIndex = 14;
             // 
-            // panel11
+            // label13
             // 
-            this.panel11.Controls.Add(this.OpenBtn);
-            this.panel11.Location = new System.Drawing.Point(3, 186);
-            this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(371, 42);
-            this.panel11.TabIndex = 13;
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(2, 9);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(65, 12);
+            this.label13.TabIndex = 1;
+            this.label13.Text = "关键字描述";
             // 
-            // OpenBtn
+            // keywordDescTextBox
             // 
-            this.OpenBtn.Location = new System.Drawing.Point(5, 10);
-            this.OpenBtn.Name = "OpenBtn";
-            this.OpenBtn.Size = new System.Drawing.Size(91, 23);
-            this.OpenBtn.TabIndex = 5;
-            this.OpenBtn.Text = "导入产品图片";
-            this.OpenBtn.UseVisualStyleBackColor = true;
-            this.OpenBtn.Click += new System.EventHandler(this.OpenBtn_Click);
-            // 
-            // keyword
-            // 
-            this.keyword.Location = new System.Drawing.Point(8, 24);
-            this.keyword.Multiline = true;
-            this.keyword.Name = "keyword";
-            this.keyword.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.keyword.Size = new System.Drawing.Size(421, 109);
-            this.keyword.TabIndex = 0;
+            this.keywordDescTextBox.Location = new System.Drawing.Point(3, 24);
+            this.keywordDescTextBox.Multiline = true;
+            this.keywordDescTextBox.Name = "keywordDescTextBox";
+            this.keywordDescTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.keywordDescTextBox.Size = new System.Drawing.Size(402, 77);
+            this.keywordDescTextBox.TabIndex = 0;
             // 
             // panel12
             // 
             this.panel12.Controls.Add(this.label12);
-            this.panel12.Controls.Add(this.keyword);
-            this.panel12.Location = new System.Drawing.Point(426, 6);
+            this.panel12.Controls.Add(this.keywordTextBox);
+            this.panel12.Location = new System.Drawing.Point(291, 182);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(444, 139);
-            this.panel12.TabIndex = 1;
+            this.panel12.Size = new System.Drawing.Size(407, 137);
+            this.panel12.TabIndex = 13;
             // 
             // label12
             // 
@@ -560,105 +619,86 @@
             this.label12.TabIndex = 1;
             this.label12.Text = "关键字";
             // 
-            // panel13
+            // keywordTextBox
             // 
-            this.panel13.Controls.Add(this.label13);
-            this.panel13.Controls.Add(this.textBox2);
-            this.panel13.Location = new System.Drawing.Point(426, 145);
-            this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(444, 124);
-            this.panel13.TabIndex = 2;
+            this.keywordTextBox.Location = new System.Drawing.Point(3, 24);
+            this.keywordTextBox.Multiline = true;
+            this.keywordTextBox.Name = "keywordTextBox";
+            this.keywordTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.keywordTextBox.Size = new System.Drawing.Size(402, 110);
+            this.keywordTextBox.TabIndex = 0;
             // 
-            // label13
+            // panel11
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(8, 9);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(65, 12);
-            this.label13.TabIndex = 1;
-            this.label13.Text = "关键字描述";
+            this.panel11.Controls.Add(this.label11);
+            this.panel11.Controls.Add(this.NamesTextBox);
+            this.panel11.Location = new System.Drawing.Point(3, 182);
+            this.panel11.Name = "panel11";
+            this.panel11.Size = new System.Drawing.Size(279, 288);
+            this.panel11.TabIndex = 15;
             // 
-            // textBox2
+            // label11
             // 
-            this.textBox2.Location = new System.Drawing.Point(8, 24);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox2.Size = new System.Drawing.Size(421, 97);
-            this.textBox2.TabIndex = 0;
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(5, 9);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(77, 12);
+            this.label11.TabIndex = 1;
+            this.label11.Text = "产品名称列表";
             // 
-            // panel14
+            // tabControl1
             // 
-            this.panel14.Controls.Add(this.label14);
-            this.panel14.Controls.Add(this.textBox1);
-            this.panel14.Location = new System.Drawing.Point(6, 6);
-            this.panel14.Name = "panel14";
-            this.panel14.Size = new System.Drawing.Size(395, 263);
-            this.panel14.TabIndex = 3;
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(383, 495);
+            this.tabControl1.TabIndex = 1;
             // 
-            // label14
+            // tabPage2
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(8, 9);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(53, 12);
-            this.label14.TabIndex = 1;
-            this.label14.Text = "产品名称";
+            this.tabPage2.Controls.Add(this.dataGridView);
+            this.tabPage2.Location = new System.Drawing.Point(4, 21);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(375, 470);
+            this.tabPage2.TabIndex = 0;
+            this.tabPage2.Text = "图片及型号";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // toolStripButton2
             // 
-            this.textBox1.Location = new System.Drawing.Point(8, 24);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(375, 236);
-            this.textBox1.TabIndex = 0;
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(75, 22);
+            this.toolStripButton2.Text = "更新数据";
             // 
-            // tabPage3
+            // toolStripButton3
             // 
-            this.tabPage3.Controls.Add(this.webBrowser);
-            this.tabPage3.Location = new System.Drawing.Point(4, 21);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(927, 275);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "描述1";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(75, 22);
+            this.toolStripButton3.Text = "提交数据";
             // 
-            // webBrowser
+            // toolStripSeparator1
             // 
-            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser.Location = new System.Drawing.Point(3, 3);
-            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser.Name = "webBrowser";
-            this.webBrowser.Size = new System.Drawing.Size(921, 269);
-            this.webBrowser.TabIndex = 0;
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
-            // tabPage4
+            // toolStripLabel1
             // 
-            this.tabPage4.Controls.Add(this.webBrowser2);
-            this.tabPage4.Location = new System.Drawing.Point(4, 21);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(927, 175);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "描述2";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // webBrowser2
-            // 
-            this.webBrowser2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser2.Location = new System.Drawing.Point(3, 3);
-            this.webBrowser2.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser2.Name = "webBrowser2";
-            this.webBrowser2.Size = new System.Drawing.Size(921, 169);
-            this.webBrowser2.TabIndex = 0;
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(55, 22);
+            this.toolStripLabel1.Text = "选择语言";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(935, 540);
+            this.ClientSize = new System.Drawing.Size(1092, 566);
             this.Controls.Add(this.LangComboBox);
             this.Controls.Add(this.splitContainer);
             this.Controls.Add(this.toolStrip1);
@@ -668,10 +708,13 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.SizeChanged += new System.EventHandler(this.Form1_SizeChanged);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.splitContainer.Panel1.ResumeLayout(false);
             this.splitContainer.Panel2.ResumeLayout(false);
             this.splitContainer.ResumeLayout(false);
@@ -697,17 +740,17 @@
             this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
-            this.panel11.ResumeLayout(false);
-            this.panel12.ResumeLayout(false);
-            this.panel12.PerformLayout();
-            this.panel13.ResumeLayout(false);
-            this.panel13.PerformLayout();
-            this.panel14.ResumeLayout(false);
-            this.panel14.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
+            this.panel13.ResumeLayout(false);
+            this.panel13.PerformLayout();
+            this.panel12.ResumeLayout(false);
+            this.panel12.PerformLayout();
+            this.panel11.ResumeLayout(false);
+            this.panel11.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -723,11 +766,9 @@
         private System.Windows.Forms.ToolStripMenuItem 帮助HToolStripMenuItem;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.SplitContainer splitContainer;
-        private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.ComboBox LangComboBox;
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.CheckedListBox checkedListBox;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
@@ -745,12 +786,12 @@
         private System.Windows.Forms.ComboBox LengthComboBox;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox MOQText;
+        private System.Windows.Forms.TextBox MOQTextBox;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.TextBox UnitTextBox;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.TextBox availableTextBox;
+        private System.Windows.Forms.TextBox AvailableTextBox;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Label label9;
@@ -758,21 +799,27 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox HsCodeTextBox;
         private System.Windows.Forms.TextBox QtyTextBox;
-        private System.Windows.Forms.Panel panel11;
-        private System.Windows.Forms.Button OpenBtn;
-        private System.Windows.Forms.Panel panel12;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox keyword;
-        private System.Windows.Forms.Panel panel13;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Panel panel14;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.WebBrowser webBrowser;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.WebBrowser webBrowser2;
+        private System.Windows.Forms.DataGridView dataGridView;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.Panel panel13;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox keywordDescTextBox;
+        private System.Windows.Forms.Panel panel12;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox keywordTextBox;
+        private System.Windows.Forms.TextBox NamesTextBox;
+        private System.Windows.Forms.Panel panel11;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
     }
 }
 
