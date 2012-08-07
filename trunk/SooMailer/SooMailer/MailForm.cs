@@ -48,6 +48,8 @@ namespace SooMailer
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            CheckForIllegalCrossThreadCalls = false;
+            validWorker = new BackgroundWorker();
             Dao = DAOFactory.Instance.GetMailModelDAO();
             InitSearchCondition();
             List<MailModel> mailModelList = Dao.GetMailModelList(null);
@@ -103,13 +105,12 @@ namespace SooMailer
             VerifyComboBox.Items.Insert(3, new ListItem("2", "验证未通过"));
             VerifyComboBox.SelectedIndex = 0;
             VerifyComboBox.SelectedIndexChanged += new EventHandler(button1_Click);
-            
         }
-
 
         void LoadDataview(List<MailModel> mailModelList)
         {
             this.dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            this.dataGridView1.DataBindings.Clear();
             DataTable dt = new DataTable();
             dt.Columns.Add("Check", typeof(System.Boolean));
             dt.Columns.Add("Email", typeof(string));
@@ -122,15 +123,34 @@ namespace SooMailer
             dt.Columns.Add("SendDate", typeof(string));
             dt.Columns.Add("Verify", typeof(string));
             dt.Columns.Add("Id", typeof(string));
+            if (mailModelList.Count > 0)
+            {
+                for (int i = 0; i < mailModelList.Count; i++ )
+                {
+                    MailModel item = mailModelList[i];
+                    DataRow row = dt.NewRow();
+                    row["Check"] = false;
+                    row["Email"] = item.Email;
+                    row["ProductType"] = item.ProductType;
+                    row["Username"] = item.Username;
+                    row["Country"] = item.Country;
+                    row["Company"] = item.Company;
+                    row["Subject"] = item.Subject;
+                    row["Source"] = item.Source;
+                    row["Verify"] = item.GetVerifyString();
+                    row["SendDate"] = item.SendDate;
+                    row["Id"] = item.Id;
+                    dt.Rows.Add(row);
+                }
+            }
             this.dataGridView1.DataSource = dt;
-
             DataGridViewColumn column = this.dataGridView1.Columns[0];
             column.HeaderText = " ";
             column.Width = 20;
             column.Frozen = true;
             DataGridViewColumn column0 = this.dataGridView1.Columns[1];
             column0.HeaderText = "Email";
-            column0.Width =200;
+            column0.Width = 200;
             DataGridViewColumn column1 = this.dataGridView1.Columns[2];
             column1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             column1.HeaderText = "Product";
@@ -162,29 +182,6 @@ namespace SooMailer
             DataGridViewColumn column9 = this.dataGridView1.Columns[10];
             column9.HeaderText = "Id";
             column9.Visible = false;
-            
-            if (mailModelList.Count > 0)
-            {
-                for (int i = 0; i < mailModelList.Count; i++ )
-                {
-                    MailModel item = mailModelList[i];
-                    DataRow row = dt.NewRow();
-                    row["Check"] = false;
-                    row["Email"] = item.Email;
-                    row["ProductType"] = item.ProductType;
-                    row["Username"] = item.Username;
-                    row["Country"] = item.Country;
-                    row["Company"] = item.Company;
-                    row["Subject"] = item.Subject;
-                    row["Source"] = item.Source;
-                    row["Verify"] = item.GetVerifyString();
-                    row["SendDate"] = item.SendDate;
-                    row["Id"] = item.Id;
-                    dt.Rows.Add(row);
-                }
-            }
-
-
         }
         #endregion
 
@@ -225,22 +222,27 @@ namespace SooMailer
         {
             validationBtn.Enabled = false;
             toolStripLabel.Text = "正在进行邮箱验证，请稍候...";
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += new DoWorkEventHandler(worker_DoWork);
-            worker.RunWorkerAsync();
-            worker.Dispose();
+            validWorker.DoWork -= new DoWorkEventHandler(worker_DoWork);
+            validWorker.DoWork += new DoWorkEventHandler(worker_DoWork);
+            validWorker.WorkerSupportsCancellation = true;
+            validWorker.RunWorkerAsync();
         }
+
+        BackgroundWorker validWorker;
+        private bool doWorkFlag = false;
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
             List<MailModel> mailModelList = Dao.GetMailModelList(null);
             EmailValidator emailValidator = new EmailValidator();
             ValidationResult result;
+            doWorkFlag = true;
             foreach (MailModel model in mailModelList)
             {
+                /*
                 if (model.Verify1 > 0) continue;
                 toolStripStatusLabel.Text = "验证邮箱地址: " + model.Email;
-                emailValidator.Validate(model.Email, out result);
-                if (result.ReturnCode ==ValidationResponseCode.ValidationSuccess)
+                bool result = ActiveUp.Net.Mail.SmtpValidator.Validate(model.Email);
+                if (result)
                 {
                     model.Verify1 = 1;
                     toolStripStatusLabel.Text = "邮箱地址[ " + model.Email + "]存在.";
@@ -249,11 +251,37 @@ namespace SooMailer
                 {
                     //lblResult.Text = "邮箱地址不存在，返回代码:\r\n " + result.ReturnCode + ".";
                     model.Verify1 = 2;
-                    toolStripStatusLabel.Text = "邮箱地址[" + model.Email + "]不存在," + result.ReturnCode + ".";
+                    toolStripStatusLabel.Text = "邮箱地址[" + model.Email + "]不存在";
                 }
+                * */
+                if (model.Verify1 > 0) continue;
+                emailValidator.Validate(model.Email, ValidationPolicy.MailServer, out result);
+                if (result.ReturnCode ==ValidationResponseCode.ValidationSuccess)
+                {
+                    model.Verify1 = 1;
+                    toolStripStatusLabel.Text = "邮箱地址[ " + model.Email + "]存在.";
+                }
+                else
+                {
+                    model.Verify1 = 2;
+                    toolStripStatusLabel.Text = "邮箱地址[" + model.Email + "]不存在, " + result.Message + ".";
+                }
+                 
                 Dao.UpdateMailVerify(model);
+                if (!doWorkFlag)
+                {
+                    break;
+                }
             }
             validationBtn.Enabled = true;
+            toolStripLabel.Text = "";
+            toolStripStatusLabel.Text = "邮箱验证已经停止.";
+        }
+
+        private void stopValidBtn_Click(object sender, EventArgs e)
+        {
+            validWorker.CancelAsync();
+            doWorkFlag = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -382,7 +410,15 @@ namespace SooMailer
                 cells.SetRowHeight(i, 24);
             }
             workbook.Save(path);
-        } 
+        }
+
+        private void RToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Dao.UpdateAllMailVerifyToZreo();
+            button1_Click(sender,e);
+        }
+
+        
 
     }
     
