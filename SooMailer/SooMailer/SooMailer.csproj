@@ -61,6 +61,18 @@
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ActiveUp.Net.Common">
+      <HintPath>..\..\lib\ActiveUp.Net.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveUp.Net.Dns">
+      <HintPath>..\..\lib\ActiveUp.Net.Dns.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveUp.Net.Mail">
+      <HintPath>..\..\lib\ActiveUp.Net.Mail.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveUp.Net.Smtp">
+      <HintPath>..\..\lib\ActiveUp.Net.Smtp.dll</HintPath>
+    </Reference>
     <Reference Include="Aspose.Cells">
       <HintPath>..\..\lib\Aspose\Aspose.Cells.dll</HintPath>
     </Reference>
@@ -150,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="email1.ico" />
+    <None Include="Resources\stop.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

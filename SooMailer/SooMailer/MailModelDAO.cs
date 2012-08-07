@@ -147,6 +147,12 @@ namespace SooMailer
 
         }
 
+        public void UpdateAllMailVerifyToZreo()
+        {
+            string sql = @"update mail_address set Verify1 = 0";
+            dbHelper.ExecuteNonQuery(sql);
+        }
+
         public void UpdateMailVerify(MailModel item)
         {
             string sql = @"update mail_address set Verify1 = " + item.Verify1 + " where id = " + item.Id;

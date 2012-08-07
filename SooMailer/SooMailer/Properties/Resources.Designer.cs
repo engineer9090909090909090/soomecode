@@ -88,6 +88,13 @@ namespace SooMailer.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap stop {
+            get {
+                object obj = ResourceManager.GetObject("stop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap verify {
             get {
                 object obj = ResourceManager.GetObject("verify", resourceCulture);

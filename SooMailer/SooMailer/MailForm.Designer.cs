@@ -35,18 +35,15 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.excelImpBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.validationBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.deleteBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.findBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel = new System.Windows.Forms.ToolStripLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -73,6 +70,11 @@
             this.button1 = new System.Windows.Forms.Button();
             this.companytxt = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.excelImpBtn = new System.Windows.Forms.ToolStripButton();
+            this.validationBtn = new System.Windows.Forms.ToolStripButton();
+            this.stopValidBtn = new System.Windows.Forms.ToolStripButton();
+            this.deleteBtn = new System.Windows.Forms.ToolStripButton();
+            this.findBtn = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -112,6 +114,7 @@
             this.excelImpBtn,
             this.toolStripSeparator1,
             this.validationBtn,
+            this.stopValidBtn,
             this.toolStripSeparator2,
             this.deleteBtn,
             this.toolStripSeparator3,
@@ -124,62 +127,20 @@
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // excelImpBtn
-            // 
-            this.excelImpBtn.Image = global::SooMailer.Properties.Resources.excel;
-            this.excelImpBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.excelImpBtn.Name = "excelImpBtn";
-            this.excelImpBtn.Size = new System.Drawing.Size(60, 33);
-            this.excelImpBtn.Text = "Excel导入";
-            this.excelImpBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.excelImpBtn.Click += new System.EventHandler(this.excelImpBtn_Click);
-            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 36);
-            // 
-            // validationBtn
-            // 
-            this.validationBtn.Image = global::SooMailer.Properties.Resources.verify;
-            this.validationBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.validationBtn.Name = "validationBtn";
-            this.validationBtn.Size = new System.Drawing.Size(59, 33);
-            this.validationBtn.Text = "验证邮箱";
-            this.validationBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.validationBtn.Click += new System.EventHandler(this.validationBtn_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 36);
             // 
-            // deleteBtn
-            // 
-            this.deleteBtn.Enabled = false;
-            this.deleteBtn.Image = global::SooMailer.Properties.Resources.delete;
-            this.deleteBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.deleteBtn.Name = "deleteBtn";
-            this.deleteBtn.Size = new System.Drawing.Size(35, 33);
-            this.deleteBtn.Text = "删除";
-            this.deleteBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 36);
-            // 
-            // findBtn
-            // 
-            this.findBtn.Checked = true;
-            this.findBtn.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.findBtn.Image = global::SooMailer.Properties.Resources.find;
-            this.findBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.findBtn.Name = "findBtn";
-            this.findBtn.Size = new System.Drawing.Size(35, 33);
-            this.findBtn.Text = "查找";
-            this.findBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.findBtn.Click += new System.EventHandler(this.findBtn_Click);
             // 
             // toolStripSeparator4
             // 
@@ -212,9 +173,18 @@
             // 
             // editEToolStripMenuItem
             // 
+            this.editEToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.RToolStripMenuItem});
             this.editEToolStripMenuItem.Name = "editEToolStripMenuItem";
             this.editEToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.editEToolStripMenuItem.Text = "编辑(&E)";
+            // 
+            // RToolStripMenuItem
+            // 
+            this.RToolStripMenuItem.Name = "RToolStripMenuItem";
+            this.RToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.RToolStripMenuItem.Text = "恢复到未验证(&R)";
+            this.RToolStripMenuItem.Click += new System.EventHandler(this.RToolStripMenuItem_Click);
             // 
             // helpHToolStripMenuItem
             // 
@@ -258,7 +228,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52.1028F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47.8972F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 229F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 104F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 105F));
             this.tableLayoutPanel1.Controls.Add(this.panel6, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel5, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel4, 0, 1);
@@ -281,7 +251,7 @@
             this.panel6.Controls.Add(this.VerifyComboBox);
             this.panel6.Controls.Add(this.label6);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(449, 38);
+            this.panel6.Location = new System.Drawing.Point(448, 38);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(223, 29);
             this.panel6.TabIndex = 13;
@@ -312,7 +282,7 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel5.Location = new System.Drawing.Point(235, 38);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(208, 29);
+            this.panel5.Size = new System.Drawing.Size(207, 29);
             this.panel5.TabIndex = 12;
             // 
             // EmailTxtBox
@@ -362,7 +332,7 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.CountryComboBox);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(449, 3);
+            this.panel1.Location = new System.Drawing.Point(448, 3);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(223, 29);
             this.panel1.TabIndex = 10;
@@ -393,7 +363,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(235, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(208, 29);
+            this.panel3.Size = new System.Drawing.Size(207, 29);
             this.panel3.TabIndex = 9;
             // 
             // label3
@@ -446,7 +416,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(678, 38);
+            this.button2.Location = new System.Drawing.Point(677, 38);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(92, 29);
             this.button2.TabIndex = 8;
@@ -456,7 +426,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(678, 3);
+            this.button1.Location = new System.Drawing.Point(677, 3);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(92, 29);
             this.button1.TabIndex = 7;
@@ -501,6 +471,58 @@
             this.dataGridView1.Size = new System.Drawing.Size(792, 382);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
+            // 
+            // excelImpBtn
+            // 
+            this.excelImpBtn.Image = global::SooMailer.Properties.Resources.excel;
+            this.excelImpBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.excelImpBtn.Name = "excelImpBtn";
+            this.excelImpBtn.Size = new System.Drawing.Size(60, 33);
+            this.excelImpBtn.Text = "Excel导入";
+            this.excelImpBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.excelImpBtn.Click += new System.EventHandler(this.excelImpBtn_Click);
+            // 
+            // validationBtn
+            // 
+            this.validationBtn.Image = global::SooMailer.Properties.Resources.verify;
+            this.validationBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.validationBtn.Name = "validationBtn";
+            this.validationBtn.Size = new System.Drawing.Size(59, 33);
+            this.validationBtn.Text = "验证邮箱";
+            this.validationBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.validationBtn.Click += new System.EventHandler(this.validationBtn_Click);
+            // 
+            // stopValidBtn
+            // 
+            this.stopValidBtn.Image = global::SooMailer.Properties.Resources.stop;
+            this.stopValidBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.stopValidBtn.Name = "stopValidBtn";
+            this.stopValidBtn.Size = new System.Drawing.Size(59, 33);
+            this.stopValidBtn.Text = "停止验证";
+            this.stopValidBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.stopValidBtn.Click += new System.EventHandler(this.stopValidBtn_Click);
+            // 
+            // deleteBtn
+            // 
+            this.deleteBtn.Enabled = false;
+            this.deleteBtn.Image = global::SooMailer.Properties.Resources.delete;
+            this.deleteBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.deleteBtn.Name = "deleteBtn";
+            this.deleteBtn.Size = new System.Drawing.Size(35, 33);
+            this.deleteBtn.Text = "删除";
+            this.deleteBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // findBtn
+            // 
+            this.findBtn.Checked = true;
+            this.findBtn.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.findBtn.Image = global::SooMailer.Properties.Resources.find;
+            this.findBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.findBtn.Name = "findBtn";
+            this.findBtn.Size = new System.Drawing.Size(35, 33);
+            this.findBtn.Text = "查找";
+            this.findBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.findBtn.Click += new System.EventHandler(this.findBtn_Click);
             // 
             // MailForm
             // 
@@ -591,6 +613,8 @@
         private System.Windows.Forms.ComboBox VerifyComboBox;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripLabel toolStripLabel;
+        private System.Windows.Forms.ToolStripMenuItem RToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton stopValidBtn;
     }
 }
 
