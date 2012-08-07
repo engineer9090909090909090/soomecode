@@ -25,6 +25,7 @@ namespace SooWebSiteTools
         public DateTime AvailableDate {get; set; }
         public int Subtract {get; set; }
         public int Length {get; set; }
+        public int Weight { get; set; }
         public int Width {get; set; }
         public int Height {get; set; }
         public int Minimum {get; set; }
@@ -37,8 +38,10 @@ namespace SooWebSiteTools
         public string MetaKeyword { get; set; }
         public string MetaDescription { get; set; }
 
-        List<ImageModel> Images { get; set; }
-        List<TagModel> Tags { get; set; }
-        List<CategoryModel> Categories { get; set; }
+        public List<ImageModel> Images { get; set; }
+        public List<TagModel> Tags { get; set; }
+        public List<CategoryModel> Categories { get; set; }
+        public List<RelatedModel> Relateds { get; set; }
+        
     }
 }
