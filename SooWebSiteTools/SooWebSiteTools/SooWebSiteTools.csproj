@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CategoryModel.cs" />
+    <Compile Include="RelatedModel.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
