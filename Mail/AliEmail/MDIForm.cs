@@ -192,10 +192,14 @@ namespace AliEmail
                 {
                     return new ParseAliBetween24to30Mail();
                 }
-                if (inquireTime > 201103010000)
+                if (inquireTime > 201103010000 && inquireTime < 201207010000)
                 {
                     return new ParseAliAfter20110301Mail();
-                }                
+                }
+                if (inquireTime > 201207010000)
+                {
+                    return new ParseAliAfter20120701Mail();
+                }
             }
 
             return null;

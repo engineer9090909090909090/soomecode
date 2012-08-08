@@ -126,7 +126,7 @@ namespace AliEmail
 
         public string getType()
         { 
-            return "made-in-china.com";
+            return "Made-In-China";
         }
     }
 }

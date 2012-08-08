@@ -15,7 +15,6 @@ namespace AliEmail
         private HtmlNode productInfo;
         public ParseGlobelSourceMail() { }
 
-
         public object[] Parse(string subject, string body)
         {
             this.subject = subject;
@@ -157,7 +156,7 @@ namespace AliEmail
 
         public string getType()
         {
-            return "globalsources.com"; 
+            return "GlobalSources"; 
         }
     }
 }

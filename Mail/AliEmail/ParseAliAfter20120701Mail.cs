@@ -8,13 +8,14 @@ using HtmlAgilityPack;
 
 namespace AliEmail
 {
-    public class ParseAliAfter20110301Mail: IfParseMail
+    public class ParseAliAfter20120701Mail: IfParseMail
     {
         private string subject;
-        private HtmlNode senderInfo;
+        private HtmlNode messageInfo;
+        private string messageText = string.Empty;
         private HtmlNode productInfo;
         private HtmlNode cantactInfo;
-        public ParseAliAfter20110301Mail() { }
+        public ParseAliAfter20120701Mail() { }
 
 
         public object[] Parse(string subject, string body)
@@ -22,9 +23,13 @@ namespace AliEmail
             this.subject = subject;
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(body);
-            this.senderInfo = doc.DocumentNode.SelectSingleNode(@"//body/table/tr[2]/td/table[3]/tr/td/table[2]");
-            this.productInfo = doc.DocumentNode.SelectSingleNode(@"//body/table/tr[2]/td/h3");
-            this.cantactInfo = doc.DocumentNode.SelectSingleNode(@"//body/table/tr[2]/td/table[3]/tr/td/table/tr/td[2]/h4");
+            this.messageInfo = doc.DocumentNode.SelectSingleNode(@"//body/table/tr[2]/td/div/div[2]");
+            if (messageInfo != null)
+            {
+                messageText = messageInfo.InnerText.Replace("\t", "").Replace("\r\n", " ");
+            }
+            this.productInfo = doc.DocumentNode.SelectSingleNode(@"//body/table/tr[2]/td/table/tr[2]/td[2]/a/strong");
+            this.cantactInfo = doc.DocumentNode.SelectSingleNode(@"//body/table/tr[2]/td/table[3]/tr/td");
 
             object[] dataItem = new object[13];
             dataItem[0] = 0;
@@ -44,26 +49,38 @@ namespace AliEmail
         }
         private string GetMail()
         {
-            if (senderInfo != null)
+            if (cantactInfo != null)
             {
-                return senderInfo.SelectSingleNode(@"tr[4]/td[2]").InnerText.Trim();
+                return cantactInfo.SelectSingleNode(@"table[2]/tr[4]/td[2]").InnerText.Trim();
             }
             return "";
         }
 
         private string GetMsgIp()
         {
-            if (senderInfo != null)
+            if (messageText != null)
             {
-                return senderInfo.SelectSingleNode(@"tr[8]/td[2]").InnerText.Trim();
+                Regex r = new Regex("Message IP:(.*?)\\*");
+                GroupCollection gc = r.Match(messageText).Groups;
+                if (gc != null && gc.Count > 1)
+                {
+                    string msgIp = gc[1].Value.Trim()+"*";
+                    return msgIp;
+                }
             }
             return "";
         }
         private string GetOrigin()
         {
-            if (senderInfo != null)
+            if (messageText != null)
             {
-                return senderInfo.SelectSingleNode(@"tr[7]/td[2]").InnerText.Trim();
+                Regex r = new Regex("Message Origin:(.*?)Message IP:");
+                GroupCollection gc = r.Match(messageText).Groups;
+                if (gc != null && gc.Count > 1)
+                {
+                    string msgIp = gc[1].Value.Trim();
+                    return msgIp;
+                }
             }
             return "";
         }
@@ -81,50 +98,50 @@ namespace AliEmail
         {
             if (cantactInfo != null)
             {
-                return cantactInfo.InnerText.Trim();
+                return cantactInfo.SelectSingleNode(@"table/tr/td[2]/a/h4").InnerText.Trim();
             }
             return "";
         }
 
         private string GetCountry()
         {
-            if (senderInfo != null)
+            if (cantactInfo != null)
             {
-                return senderInfo.SelectSingleNode(@"tr[2]/td[2]").InnerText.Trim();
+                return cantactInfo.SelectSingleNode(@"table[2]/tr[2]/td[2]").InnerText.Trim();
             }
             return "";
         }
         private string GetTelephone()
         {
-            if (senderInfo != null)
+            if (cantactInfo != null)
             {
-                return senderInfo.SelectSingleNode(@"tr[5]/td[2]").InnerText.Trim();
+                return cantactInfo.SelectSingleNode(@"table[2]/tr[5]/td[2]").InnerText.Trim();
             }
             return "";
         }
 
         private string GetCompany()
         {
-            if (senderInfo != null)
+            if (cantactInfo != null)
             {
-                return senderInfo.SelectSingleNode(@"tr[1]/td[2]").InnerText.Trim();
+                return cantactInfo.SelectSingleNode(@"table[2]/tr/td[2]").InnerText.Trim();
             }
             return "";
         }
 
         private string GetAddress()
         {
-            if (senderInfo != null)
+            if (cantactInfo != null)
             {
-                return senderInfo.SelectSingleNode(@"tr[3]/td[2]").InnerText.Trim();
+                return cantactInfo.SelectSingleNode(@"table[2]/tr[3]/td[2]").InnerText.Trim();
             }
             return "";
         }
         private string GetFax()
         {
-            if (senderInfo != null)
+            if (cantactInfo != null)
             {
-                return senderInfo.SelectSingleNode(@"tr[6]/td[2]").InnerText.Trim();
+                return cantactInfo.SelectSingleNode(@"table[2]/tr[6]/td[2]").InnerText.Trim();
             }
             return "";
         }
