@@ -92,6 +92,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ParseAliAfter20120701Mail.cs" />
     <Compile Include="DAO.cs" />
     <Compile Include="ExcelUtils.cs" />
     <Compile Include="FolderSelectorForm.cs">

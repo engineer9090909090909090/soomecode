@@ -155,7 +155,7 @@ namespace AliEmail
 
         public string getType()
         {
-             return "Alibaba.com";
+             return "Alibaba";
         }
     }
 }
