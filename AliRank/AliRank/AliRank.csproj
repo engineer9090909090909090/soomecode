@@ -89,6 +89,14 @@
     <Compile Include="SetupForm.Designer.cs">
       <DependentUpon>SetupForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="VpnDAO.cs" />
+    <Compile Include="VpnForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VpnForm.Designer.cs">
+      <DependentUpon>VpnForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VpnModel.cs" />
     <EmbeddedResource Include="ImpKwForm.resx">
       <DependentUpon>ImpKwForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -109,7 +117,9 @@
     <EmbeddedResource Include="SetupForm.resx">
       <DependentUpon>SetupForm.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="app.config" />
+    <EmbeddedResource Include="VpnForm.resx">
+      <DependentUpon>VpnForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

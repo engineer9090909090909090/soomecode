@@ -15,7 +15,12 @@ namespace AliRank
         public static string AUTO_CLICK_NUM = "AutoClickNum";
         public static string COMPANY_URL = "CompanyUrl";
         public static string AUTO_SHUTDOWN = "AutoShutDown";
+        public static string NETWORK_CHOICE = "Network Choice";
         public static string YES = "1";
         public static string NO =  "0";
+
+        public static string NETWORK_VPN = "2";
+        public static string NETWORK_AGENT = "1";
+        public static string NETWORK_NONE = "0";
     }
 }
