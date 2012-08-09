@@ -24,6 +24,21 @@ namespace AliRank
         {
             string clickNum = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, IniFile);
             this.textBox1.Text = clickNum;
+            string network = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.NETWORK_CHOICE, IniFile);
+            if (network.Equals(Constants.NETWORK_VPN))
+            {
+                VPNRadioBtn.Checked = true;
+            }else if (network.Equals(Constants.NETWORK_AGENT))
+            {
+                AgentRadioBtn.Checked = true;
+            }
+            else if (network.Equals(Constants.NETWORK_NONE))
+            {
+                NoneRadioBtn.Checked = true;
+            }
+            else {
+                VPNRadioBtn.Checked = true;
+            }
         }
 
         private void TextBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -48,13 +63,26 @@ namespace AliRank
                 return;
             }
             FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, str, IniFile);
+            string Network = Constants.NETWORK_VPN;
+            if (VPNRadioBtn.Checked)
+            {
+                Network = Constants.NETWORK_VPN;
+            }
+            if (AgentRadioBtn.Checked)
+            {
+                Network = Constants.NETWORK_AGENT;
+            }
+            if (NoneRadioBtn.Checked)
+            {
+                Network = Constants.NETWORK_NONE;
+            }
+            FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.NETWORK_CHOICE, Network, IniFile);
+            
             this.Close();
         }
 
-        private void CleanBtn_Click(object sender, EventArgs e)
+        private void CancelBtn_Click(object sender, EventArgs e)
         {
-            string DataBasePath = FileUtils.GetAppDataFolder() + Path.DirectorySeparatorChar + Constants.DB_FILE;
-            File.Delete(DataBasePath);
             this.Close();
         }
 

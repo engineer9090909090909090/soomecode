@@ -39,8 +39,9 @@
             this.MtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ClickToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.NetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.VPNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.shutdownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CleanKeyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.clickRunBtn = new System.Windows.Forms.ToolStripButton();
@@ -126,8 +127,9 @@
             // 
             this.SetToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ClickToolStripMenuItem,
-            this.NetToolStripMenuItem,
-            this.shutdownToolStripMenuItem});
+            this.VPNToolStripMenuItem,
+            this.shutdownToolStripMenuItem,
+            this.CleanKeyMenuItem});
             this.SetToolStripMenuItem.Name = "SetToolStripMenuItem";
             this.SetToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.SetToolStripMenuItem.Text = "设置(E)";
@@ -135,22 +137,30 @@
             // ClickToolStripMenuItem
             // 
             this.ClickToolStripMenuItem.Name = "ClickToolStripMenuItem";
-            this.ClickToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.ClickToolStripMenuItem.Text = "点击次数设置(&C)";
+            this.ClickToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ClickToolStripMenuItem.Text = "点击设置(&C)";
             this.ClickToolStripMenuItem.Click += new System.EventHandler(this.ClickToolStripMenuItem_Click);
             // 
-            // NetToolStripMenuItem
+            // VPNToolStripMenuItem
             // 
-            this.NetToolStripMenuItem.Name = "NetToolStripMenuItem";
-            this.NetToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.NetToolStripMenuItem.Text = "网络设置(&N)";
+            this.VPNToolStripMenuItem.Name = "VPNToolStripMenuItem";
+            this.VPNToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.VPNToolStripMenuItem.Text = "VPN 管理(&V)";
+            this.VPNToolStripMenuItem.Click += new System.EventHandler(this.VPNToolStripMenuItem_Click);
             // 
             // shutdownToolStripMenuItem
             // 
             this.shutdownToolStripMenuItem.Name = "shutdownToolStripMenuItem";
-            this.shutdownToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.shutdownToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.shutdownToolStripMenuItem.Text = "完成后关机(&F)";
             this.shutdownToolStripMenuItem.Click += new System.EventHandler(this.shutdownStripMenuItem_Click);
+            // 
+            // CleanKeyMenuItem
+            // 
+            this.CleanKeyMenuItem.Name = "CleanKeyMenuItem";
+            this.CleanKeyMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.CleanKeyMenuItem.Text = "清空关键词(&C)";
+            this.CleanKeyMenuItem.Click += new System.EventHandler(this.CleanKeyMenuItem_Click);
             // 
             // HelpToolStripMenuItem
             // 
@@ -347,7 +357,7 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ToolStripMenuItem SetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ClickToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem NetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem VPNToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem HelpToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripMenuItem ImpToolStripMenuItem;
@@ -362,6 +372,7 @@
         private System.Windows.Forms.TabPage dataTab;
         private System.Windows.Forms.TabPage IETab;
         private System.Windows.Forms.ToolStripMenuItem shutdownToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem CleanKeyMenuItem;
     }
 }
 

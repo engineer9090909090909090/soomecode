@@ -364,6 +364,26 @@ namespace AliRank
         }
         #endregion 
 
+        private void CleanKeyMenuItem_Click(object sender, EventArgs e)
+        {
+
+            DialogResult dr =MessageBox.Show("您确认要清空所有数据吗？", "", MessageBoxButtons.OKCancel) ;
+            if (dr == DialogResult.OK)
+            {
+                string DataBasePath = FileUtils.GetAppDataFolder() + Path.DirectorySeparatorChar + Constants.DB_FILE;
+                File.Delete(DataBasePath);
+                LoadDataview();
+            }
+        }
+
+        private void VPNToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            VpnForm f = new VpnForm();
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
+        }
+
+
         
 
     

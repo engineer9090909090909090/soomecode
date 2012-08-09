@@ -29,5 +29,10 @@ namespace AliRank
            return new KeywordDAO(dbHelper);
         }
 
+        public VpnDAO GetVpnDAO()
+        {
+            return new VpnDAO(dbHelper);
+        }
+
     }
 }
