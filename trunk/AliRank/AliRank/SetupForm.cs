@@ -37,7 +37,7 @@ namespace AliRank
                 NoneRadioBtn.Checked = true;
             }
             else {
-                VPNRadioBtn.Checked = true;
+                NoneRadioBtn.Checked = true;
             }
         }
 

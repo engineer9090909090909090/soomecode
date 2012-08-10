@@ -39,6 +39,7 @@ namespace AliRank
             LoadDataview();
         }
 
+        #region 导入关键词菜单，点击设计菜单
         private void ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             ImpKwForm f = new ImpKwForm();
@@ -52,6 +53,7 @@ namespace AliRank
             f.StartPosition = FormStartPosition.CenterParent;
             f.ShowDialog(this);
         }
+        #endregion
 
         #region 关机菜单
         private void shutdownStripMenuItem_Click(object sender, EventArgs e)
@@ -65,6 +67,27 @@ namespace AliRank
                 shutdownToolStripMenuItem.Checked = true;
                 FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, Constants.YES, IniFile);
             }
+        }
+        #endregion
+
+        #region 清空菜单，VPN管理菜单
+        private void CleanKeyMenuItem_Click(object sender, EventArgs e)
+        {
+
+            DialogResult dr = MessageBox.Show("\r\n        您确认要清空所有数据吗？          \r\n\r\n", "清空关键词", MessageBoxButtons.OKCancel);
+            if (dr == DialogResult.OK)
+            {
+                string DataBasePath = FileUtils.GetAppDataFolder() + Path.DirectorySeparatorChar + Constants.DB_FILE;
+                File.Delete(DataBasePath);
+                LoadDataview();
+            }
+        }
+
+        private void VPNToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            VpnForm f = new VpnForm();
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
         }
         #endregion
 
@@ -253,16 +276,20 @@ namespace AliRank
 
         #region 点击处理事件
 
-        BackgroundWorker bgClickWorker;
+        private BackgroundWorker bgClickWorker;
+        private List<VpnModel> VpnModelList;
+        private int CurrentActiveVpnIndex;
         private void clickRunBtn_Click(object sender, EventArgs e)
         {
             string network = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.NETWORK_CHOICE, IniFile);
             if (network.Equals(Constants.NETWORK_VPN))
             {
-                List<VpnModel> vpnList = vpnDao.GetVpnModelList();
-                if (vpnList == null || vpnList.Count == 0)
+                VpnModelList = null;
+                VpnModelList = vpnDao.GetVpnModelList();
+                CurrentActiveVpnIndex = 0;
+                if (VpnModelList == null || VpnModelList.Count == 0)
                 {
-                    MessageBox.Show("您选择了VPN网络点击，但您没有设置任何VPN数据信息.\r\n请到[VPN 管理]项设置.");
+                    MessageBox.Show("\r\n您选择了VPN网络点击，但您没有设置任何VPN数据信息.请到[VPN 管理]项设置.\r\n","提示");
                     return;
                 }
             }
@@ -308,39 +335,80 @@ namespace AliRank
             clickStopBtn.Enabled = false;
         }
 
+        private bool ConnectNextVpn()
+        {
+            string vpnName = "VPN123";
+            if (CurrentActiveVpnIndex >= VpnModelList.Count)
+            {
+                CurrentActiveVpnIndex = 0;
+            }
+            VPN.DisConnect(vpnName);
+            VpnModel model = VpnModelList[CurrentActiveVpnIndex];
+            CurrentActiveVpnIndex++;
+            VPN.Create(vpnName, model);
+            bool Connected = VPN.Connect(vpnName, model);
+            if (Connected)
+            {
+                return true;
+            }
+            else 
+            {
+                return ConnectNextVpn();
+            }
+            
+            
+        }
+
         void bgWorker_DoWork2(object sender, DoWorkEventArgs e)
         {
             List<Keywords> productList = keywordDAO.GetKeywordList();
             string ConfigClickNum = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, IniFile);
             string Network = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.NETWORK_CHOICE, IniFile);
-            List<VpnModel> VpnModelList = null;
-            string vpnName = "VPN123";
-            VPN.DisConnect(vpnName);
             if (Network.Equals(Constants.NETWORK_VPN))
             {
-                VpnModelList = vpnDao.GetVpnModelList();
-            }
-            int clickNum = Convert.ToInt32(ConfigClickNum);
-            for (int n = 0; n < clickNum; n++)
-            {
-                if (Network.Equals(Constants.NETWORK_VPN))
+                
+                int clickNum = Convert.ToInt32(ConfigClickNum);
+                for (int n = 0; n < clickNum; n++)
                 {
-                    VpnModel model = VpnModelList[n];
-                    VPN.Create(vpnName, model);
-                    VPN.Connect(vpnName, model);
-                }
-                IEHandleUtils.ClearIECookie();
-                for (int i = 0; i < productList.Count; i++)
-                {
-                    ProductClicker clicker = new ProductClicker(webBrowser);
-                    clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
-                    clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
-                    clicker.DoClick(productList[i]);
-                    clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
-                    clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
+                    bool Connected = ConnectNextVpn();
+                    if (!Connected)
+                    {
+                        toolStripStatusLabel1.Text = "没有正确的VPN可以连接.";
+                        break;
+                    }
+                    IEHandleUtils.ClearIECookie();
+                    for (int i = 0; i < productList.Count; i++)
+                    {
+                        ProductClicker clicker = new ProductClicker(webBrowser);
+                        clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
+                        clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
+                        clicker.DoClick(productList[i]);
+                        clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
+                        clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
+                        if (IsStopClicking) { break; }
+                    }
                     if (IsStopClicking) { break; }
                 }
-                if (IsStopClicking) { break; }
+            }
+            else 
+            {
+                int clickNum = Convert.ToInt32(ConfigClickNum);
+                for (int n = 0; n < clickNum; n++)
+                {
+                    IEHandleUtils.ClearIECookie();
+                    for (int i = 0; i < productList.Count; i++)
+                    {
+                        ProductClicker clicker = new ProductClicker(webBrowser);
+                        clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
+                        clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
+                        clicker.DoClick(productList[i]);
+                        clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
+                        clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
+                        if (IsStopClicking) { break; }
+                    }
+                    if (IsStopClicking) { break; }
+                }
+            
             }
             clickRunBtn.Enabled = true;
             clickStopBtn.Enabled = false;
@@ -387,24 +455,7 @@ namespace AliRank
         }
         #endregion 
 
-        private void CleanKeyMenuItem_Click(object sender, EventArgs e)
-        {
 
-            DialogResult dr = MessageBox.Show("\r\n        您确认要清空所有数据吗？          \r\n\r\n", "清空关键词", MessageBoxButtons.OKCancel);
-            if (dr == DialogResult.OK)
-            {
-                string DataBasePath = FileUtils.GetAppDataFolder() + Path.DirectorySeparatorChar + Constants.DB_FILE;
-                File.Delete(DataBasePath);
-                LoadDataview();
-            }
-        }
-
-        private void VPNToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            VpnForm f = new VpnForm();
-            f.StartPosition = FormStartPosition.CenterParent;
-            f.ShowDialog(this);
-        }
 
 
         
