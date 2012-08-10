@@ -15,13 +15,13 @@ namespace AliRank
     public partial class MainForm : Form
     {
         private KeywordDAO keywordDAO;
+        private VpnDAO vpnDao;
         private static bool IsStopClicking;
 
         private string IniFile;
         public MainForm()
         {
             InitializeComponent();
-            VpnModel momdel = new VpnModel();
             this.Load += new EventHandler(MainForm_Load);
             IniFile = FileUtils.CreateAppDataFolderEmptyTextFile(Constants.INI_FILE);
             FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, Constants.NO, IniFile);
@@ -35,6 +35,7 @@ namespace AliRank
         void MainForm_Load(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false;
+            vpnDao = DAOFactory.Instance.GetVpnDAO();
             LoadDataview();
         }
 
@@ -255,6 +256,16 @@ namespace AliRank
         BackgroundWorker bgClickWorker;
         private void clickRunBtn_Click(object sender, EventArgs e)
         {
+            string network = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.NETWORK_CHOICE, IniFile);
+            if (network.Equals(Constants.NETWORK_VPN))
+            {
+                List<VpnModel> vpnList = vpnDao.GetVpnModelList();
+                if (vpnList == null || vpnList.Count == 0)
+                {
+                    MessageBox.Show("您选择了VPN网络点击，但您没有设置任何VPN数据信息.\r\n请到[VPN 管理]项设置.");
+                    return;
+                }
+            }
             clickRunBtn.Enabled = false;
             clickStopBtn.Enabled = true;
             IsStopClicking = false;
@@ -301,9 +312,23 @@ namespace AliRank
         {
             List<Keywords> productList = keywordDAO.GetKeywordList();
             string ConfigClickNum = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, IniFile);
+            string Network = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.NETWORK_CHOICE, IniFile);
+            List<VpnModel> VpnModelList = null;
+            string vpnName = "VPN123";
+            VPN.DisConnect(vpnName);
+            if (Network.Equals(Constants.NETWORK_VPN))
+            {
+                VpnModelList = vpnDao.GetVpnModelList();
+            }
             int clickNum = Convert.ToInt32(ConfigClickNum);
             for (int n = 0; n < clickNum; n++)
             {
+                if (Network.Equals(Constants.NETWORK_VPN))
+                {
+                    VpnModel model = VpnModelList[n];
+                    VPN.Create(vpnName, model);
+                    VPN.Connect(vpnName, model);
+                }
                 IEHandleUtils.ClearIECookie();
                 for (int i = 0; i < productList.Count; i++)
                 {
