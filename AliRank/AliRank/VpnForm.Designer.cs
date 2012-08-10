@@ -33,9 +33,8 @@
             this.L2tpBtn = new System.Windows.Forms.RadioButton();
             this.PptpBtn = new System.Windows.Forms.RadioButton();
             this.L2tpKeyTxtBox = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.PasswordBox = new System.Windows.Forms.TextBox();
+            this.UsernameBox = new System.Windows.Forms.TextBox();
             this.L2tpKeyLabel = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -44,6 +43,9 @@
             this.InsertBtn = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.ErrorMsg = new System.Windows.Forms.Label();
+            this.AddressBox = new System.Windows.Forms.TextBox();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -64,6 +66,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.statusStrip1);
             this.splitContainer1.Panel2.Controls.Add(this.dataGridView);
             this.splitContainer1.Size = new System.Drawing.Size(808, 517);
             this.splitContainer1.SplitterDistance = 150;
@@ -71,12 +74,13 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.AddressBox);
+            this.groupBox1.Controls.Add(this.ErrorMsg);
             this.groupBox1.Controls.Add(this.L2tpBtn);
             this.groupBox1.Controls.Add(this.PptpBtn);
             this.groupBox1.Controls.Add(this.L2tpKeyTxtBox);
-            this.groupBox1.Controls.Add(this.textBox3);
-            this.groupBox1.Controls.Add(this.textBox2);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.PasswordBox);
+            this.groupBox1.Controls.Add(this.UsernameBox);
             this.groupBox1.Controls.Add(this.L2tpKeyLabel);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
@@ -93,7 +97,7 @@
             // L2tpBtn
             // 
             this.L2tpBtn.AutoSize = true;
-            this.L2tpBtn.Location = new System.Drawing.Point(185, 86);
+            this.L2tpBtn.Location = new System.Drawing.Point(163, 78);
             this.L2tpBtn.Name = "L2tpBtn";
             this.L2tpBtn.Size = new System.Drawing.Size(47, 16);
             this.L2tpBtn.TabIndex = 12;
@@ -106,7 +110,7 @@
             // 
             this.PptpBtn.AutoSize = true;
             this.PptpBtn.Checked = true;
-            this.PptpBtn.Location = new System.Drawing.Point(92, 87);
+            this.PptpBtn.Location = new System.Drawing.Point(92, 78);
             this.PptpBtn.Name = "PptpBtn";
             this.PptpBtn.Size = new System.Drawing.Size(47, 16);
             this.PptpBtn.TabIndex = 11;
@@ -117,37 +121,30 @@
             // 
             // L2tpKeyTxtBox
             // 
-            this.L2tpKeyTxtBox.Location = new System.Drawing.Point(331, 82);
+            this.L2tpKeyTxtBox.Location = new System.Drawing.Point(316, 75);
             this.L2tpKeyTxtBox.Name = "L2tpKeyTxtBox";
             this.L2tpKeyTxtBox.Size = new System.Drawing.Size(139, 21);
             this.L2tpKeyTxtBox.TabIndex = 10;
             // 
-            // textBox3
+            // PasswordBox
             // 
-            this.textBox3.Location = new System.Drawing.Point(539, 26);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.PasswordChar = '*';
-            this.textBox3.Size = new System.Drawing.Size(137, 21);
-            this.textBox3.TabIndex = 9;
+            this.PasswordBox.Location = new System.Drawing.Point(529, 26);
+            this.PasswordBox.Name = "PasswordBox";
+            this.PasswordBox.PasswordChar = '*';
+            this.PasswordBox.Size = new System.Drawing.Size(137, 21);
+            this.PasswordBox.TabIndex = 9;
             // 
-            // textBox2
+            // UsernameBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(331, 26);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(139, 21);
-            this.textBox2.TabIndex = 8;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(85, 26);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(154, 21);
-            this.textBox1.TabIndex = 7;
+            this.UsernameBox.Location = new System.Drawing.Point(316, 26);
+            this.UsernameBox.Name = "UsernameBox";
+            this.UsernameBox.Size = new System.Drawing.Size(139, 21);
+            this.UsernameBox.TabIndex = 8;
             // 
             // L2tpKeyLabel
             // 
             this.L2tpKeyLabel.AutoSize = true;
-            this.L2tpKeyLabel.Location = new System.Drawing.Point(272, 87);
+            this.L2tpKeyLabel.Location = new System.Drawing.Point(248, 78);
             this.L2tpKeyLabel.Name = "L2tpKeyLabel";
             this.L2tpKeyLabel.Size = new System.Drawing.Size(65, 12);
             this.L2tpKeyLabel.TabIndex = 6;
@@ -156,7 +153,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(32, 89);
+            this.label4.Location = new System.Drawing.Point(32, 80);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(59, 12);
             this.label4.TabIndex = 5;
@@ -165,7 +162,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(504, 31);
+            this.label3.Location = new System.Drawing.Point(494, 31);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(41, 12);
             this.label3.TabIndex = 4;
@@ -174,7 +171,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(273, 31);
+            this.label2.Location = new System.Drawing.Point(260, 31);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 12);
             this.label2.TabIndex = 3;
@@ -197,10 +194,11 @@
             this.InsertBtn.TabIndex = 0;
             this.InsertBtn.Text = "新增(&N)";
             this.InsertBtn.UseVisualStyleBackColor = true;
+            this.InsertBtn.Click += new System.EventHandler(this.InsertBtn_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(682, 84);
+            this.button2.Location = new System.Drawing.Point(682, 75);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 1;
@@ -213,9 +211,35 @@
             this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView.Location = new System.Drawing.Point(0, 0);
             this.dataGridView.Name = "dataGridView";
+            this.dataGridView.RowHeadersVisible = false;
             this.dataGridView.RowTemplate.Height = 23;
+            this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView.Size = new System.Drawing.Size(808, 363);
             this.dataGridView.TabIndex = 0;
+            // 
+            // ErrorMsg
+            // 
+            this.ErrorMsg.AutoSize = true;
+            this.ErrorMsg.ForeColor = System.Drawing.Color.Red;
+            this.ErrorMsg.Location = new System.Drawing.Point(35, 115);
+            this.ErrorMsg.Name = "ErrorMsg";
+            this.ErrorMsg.Size = new System.Drawing.Size(0, 12);
+            this.ErrorMsg.TabIndex = 14;
+            // 
+            // AddressBox
+            // 
+            this.AddressBox.Location = new System.Drawing.Point(92, 26);
+            this.AddressBox.Name = "AddressBox";
+            this.AddressBox.Size = new System.Drawing.Size(128, 21);
+            this.AddressBox.TabIndex = 15;
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 341);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(808, 22);
+            this.statusStrip1.TabIndex = 1;
+            this.statusStrip1.Text = "statusStrip1";
             // 
             // VpnForm
             // 
@@ -231,6 +255,7 @@
             this.Text = "VPN信息维护";
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
             this.splitContainer1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -251,11 +276,13 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox PasswordBox;
+        private System.Windows.Forms.TextBox UsernameBox;
         private System.Windows.Forms.TextBox L2tpKeyTxtBox;
         private System.Windows.Forms.RadioButton L2tpBtn;
         private System.Windows.Forms.RadioButton PptpBtn;
+        private System.Windows.Forms.Label ErrorMsg;
+        private System.Windows.Forms.TextBox AddressBox;
+        private System.Windows.Forms.StatusStrip statusStrip1;
     }
 }

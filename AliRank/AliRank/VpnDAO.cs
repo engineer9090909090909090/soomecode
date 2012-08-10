@@ -14,9 +14,13 @@ namespace AliRank
         public VpnDAO(SQLiteDBHelper dbHelper)
         { 
             this.dbHelper = dbHelper;
+            //DropTable();
             CreateTable();
         }
-
+        private void DropTable()
+        {
+            dbHelper.ExecuteNonQuery("DROP TABLE IF EXISTS vpns");
+        }
         private void CreateTable()
         {
                    dbHelper.ExecuteNonQuery
@@ -27,7 +31,7 @@ namespace AliRank
                     + "Username varchar(50) NOT NULL,"
                     + "Password varchar(50) NOT NULL,"
                     + "VpnType varchar(50),"
-                    + "L2tpSec varchar(20) NOT NULL,"
+                    + "L2tpSec varchar(20),"
                     + "createTime datetime,"
                     + "updateTime datetime)"
                     );
@@ -36,7 +40,7 @@ namespace AliRank
 
         public bool ExistAddress(string address)
         {
-            string sql = "select count(1) from vpns where Addrsss= @Address";
+            string sql = "select count(1) from vpns where Address= @Address";
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {
                 new SQLiteParameter("@Address", address)
@@ -56,7 +60,7 @@ namespace AliRank
         public List<VpnModel> GetVpnModelList()
         {
             DataTable dt = dbHelper.ExecuteDataTable(
-                "SELECT Id, Address, Username, Password, VpnType, L2tpSec,updateTime FROM vpns", null);
+                "SELECT Id, Address, Username, Password, VpnType, L2tpSec,updateTime FROM vpns order by updateTime desc", null);
 
             List<VpnModel> list = new List<VpnModel>();
             foreach (DataRow row in dt.Rows)
@@ -66,7 +70,7 @@ namespace AliRank
                 model.Address = (string)row["Address"];
                 model.Username = (string)row["Username"];
                 model.Password = (string)row["Password"];
-                model.Password = (string)row["Password"];
+                model.VpnType = (string)row["VpnType"];
                 model.L2tpSec = (string)row["L2tpSec"];
                 model.UpdateTime = Convert.ToDateTime(row["updateTime"]);
                 list.Add(model);

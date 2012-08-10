@@ -49,7 +49,6 @@ namespace AliRank
         private void ClickToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetupForm f = new SetupForm();
-            f.FormClosed += new FormClosedEventHandler(f_FormClosed);
             f.StartPosition = FormStartPosition.CenterParent;
             f.ShowDialog(this);
         }
@@ -367,7 +366,7 @@ namespace AliRank
         private void CleanKeyMenuItem_Click(object sender, EventArgs e)
         {
 
-            DialogResult dr =MessageBox.Show("您确认要清空所有数据吗？", "", MessageBoxButtons.OKCancel) ;
+            DialogResult dr = MessageBox.Show("\r\n        您确认要清空所有数据吗？          \r\n\r\n", "清空关键词", MessageBoxButtons.OKCancel);
             if (dr == DialogResult.OK)
             {
                 string DataBasePath = FileUtils.GetAppDataFolder() + Path.DirectorySeparatorChar + Constants.DB_FILE;

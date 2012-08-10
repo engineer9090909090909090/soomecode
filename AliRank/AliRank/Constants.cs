@@ -22,5 +22,8 @@ namespace AliRank
         public static string NETWORK_VPN = "2";
         public static string NETWORK_AGENT = "1";
         public static string NETWORK_NONE = "0";
+
+        public static string PPTP = "PPTP";
+        public static string L2TP = "L2TP";
     }
 }
