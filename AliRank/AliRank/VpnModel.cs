@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AliRank
 {
-    class VpnModel
+    public class VpnModel
     {
         public Int32 Id { get; set; }
         public string Address { get; set; }

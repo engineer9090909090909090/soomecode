@@ -36,6 +36,9 @@
     <ApplicationIcon>rank.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotRas">
+      <HintPath>..\DotRas.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\..\lib\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -56,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CmdUtils.cs" />
     <Compile Include="IEHandleUtils.cs" />
     <Compile Include="ProductClicker.cs" />
     <Compile Include="RankEvent.cs" />
@@ -89,6 +93,7 @@
     <Compile Include="SetupForm.Designer.cs">
       <DependentUpon>SetupForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="VPN.cs" />
     <Compile Include="VpnDAO.cs" />
     <Compile Include="VpnForm.cs">
       <SubType>Form</SubType>

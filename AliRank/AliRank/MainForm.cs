@@ -21,7 +21,7 @@ namespace AliRank
         public MainForm()
         {
             InitializeComponent();
-            
+            VpnModel momdel = new VpnModel();
             this.Load += new EventHandler(MainForm_Load);
             IniFile = FileUtils.CreateAppDataFolderEmptyTextFile(Constants.INI_FILE);
             FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, Constants.NO, IniFile);
@@ -29,8 +29,7 @@ namespace AliRank
             if (string.IsNullOrEmpty(clickNum))
             {
                 FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, 50 + "", IniFile);
-            }            
-            
+            }
         }
 
         void MainForm_Load(object sender, EventArgs e)
