@@ -137,28 +137,28 @@
             // ClickToolStripMenuItem
             // 
             this.ClickToolStripMenuItem.Name = "ClickToolStripMenuItem";
-            this.ClickToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ClickToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.ClickToolStripMenuItem.Text = "点击设置(&C)";
             this.ClickToolStripMenuItem.Click += new System.EventHandler(this.ClickToolStripMenuItem_Click);
             // 
             // VPNToolStripMenuItem
             // 
             this.VPNToolStripMenuItem.Name = "VPNToolStripMenuItem";
-            this.VPNToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.VPNToolStripMenuItem.Text = "VPN 管理(&V)";
+            this.VPNToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.VPNToolStripMenuItem.Text = "VPN数据管理(&V)";
             this.VPNToolStripMenuItem.Click += new System.EventHandler(this.VPNToolStripMenuItem_Click);
             // 
             // shutdownToolStripMenuItem
             // 
             this.shutdownToolStripMenuItem.Name = "shutdownToolStripMenuItem";
-            this.shutdownToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.shutdownToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.shutdownToolStripMenuItem.Text = "完成后关机(&F)";
             this.shutdownToolStripMenuItem.Click += new System.EventHandler(this.shutdownStripMenuItem_Click);
             // 
             // CleanKeyMenuItem
             // 
             this.CleanKeyMenuItem.Name = "CleanKeyMenuItem";
-            this.CleanKeyMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.CleanKeyMenuItem.Size = new System.Drawing.Size(155, 22);
             this.CleanKeyMenuItem.Text = "清空关键词(&C)";
             this.CleanKeyMenuItem.Click += new System.EventHandler(this.CleanKeyMenuItem_Click);
             // 
@@ -191,7 +191,6 @@
             this.clickRunBtn.Name = "clickRunBtn";
             this.clickRunBtn.Size = new System.Drawing.Size(75, 22);
             this.clickRunBtn.Text = "开始点击";
-            this.clickRunBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.clickRunBtn.ToolTipText = "运行";
             this.clickRunBtn.Click += new System.EventHandler(this.clickRunBtn_Click);
             // 
@@ -206,7 +205,6 @@
             this.clickStopBtn.Size = new System.Drawing.Size(75, 22);
             this.clickStopBtn.Text = "停止点击";
             this.clickStopBtn.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
-            this.clickStopBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.clickStopBtn.ToolTipText = "停止";
             this.clickStopBtn.Click += new System.EventHandler(this.clickStopBtn_Click);
             // 
@@ -222,7 +220,6 @@
             this.toolStripButton4.Name = "toolStripButton4";
             this.toolStripButton4.Size = new System.Drawing.Size(75, 22);
             this.toolStripButton4.Text = "排名查询";
-            this.toolStripButton4.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.toolStripButton4.Click += new System.EventHandler(this.AsToolStripMenuItem_Click);
             // 
             // toolStripSeparator3

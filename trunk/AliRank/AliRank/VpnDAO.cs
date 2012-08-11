@@ -112,10 +112,10 @@ namespace AliRank
         {
             foreach (string id in idList)
             {
-                string sql = @"delete form vpns where id = @id";
+                string sql = @"DELETE FROM vpns WHERE id = @id";
                 SQLiteParameter[] parameter = new SQLiteParameter[]
                 {
-                    new SQLiteParameter("@id", id)
+                    new SQLiteParameter("@id", Convert.ToInt32(id))
                 };
                 dbHelper.ExecuteNonQuery(sql, parameter);
             }
