@@ -7,22 +7,36 @@ using DotRas;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Net.NetworkInformation;
+using System.Threading;
 
 namespace AliRank
 {
-    public class VPN
+    public class VPN : IDisposable
     {
         private static string WinDir = Environment.GetFolderPath(Environment.SpecialFolder.System);
         private static string fileName = @"rasdial.exe";
         private static string VPNPROCESS = WinDir + fileName;
 
-        public VPN() { }
+        ManualResetEvent eventX;
+        private string connName;
+        private VpnModel model;
+        private RasDialer dialer;
+        private RasHandle handle;
+        private bool connectSatuts;
 
+        public VPN(string connName, VpnModel model)
+        {
+            this.connName = connName;
+            this.model = model;
+        }
+
+        #region static method
+        /*
         public static bool Connect(string connName, VpnModel model)
         {
             string command = string.Format(@"{0} {1} {2} {3}", fileName, connName, model.Username, model.Password);
             string returnVal = CmdUtils.Cmd(command);
-            string successString = "Successfully connected to "+model.Address+".";
+            string successString = "Successfully connected to " + connName + ".";
             if (returnVal.IndexOf(successString) > 0)
             {
                 return true;
@@ -40,11 +54,29 @@ namespace AliRank
             } 
             return false;
         }
+        */
+        #endregion
 
-        public static void Create(string connName, VpnModel model)
+
+        public void Disconnect()
         {
-            DotRas.RasDialer dialer = new DotRas.RasDialer();
-            DotRas.RasPhoneBook phoneBook = new DotRas.RasPhoneBook();
+            if (dialer.IsBusy)
+            {
+                dialer.DialAsyncCancel();
+            }
+            else
+            {
+                RasConnection connection = RasConnection.GetActiveConnectionByHandle(handle);
+                if (connection != null)
+                {
+                    connection.HangUp();
+                }
+            }
+        }
+        public bool Connect()
+        {
+            dialer = new RasDialer();
+            RasPhoneBook phoneBook = new RasPhoneBook();
             phoneBook.Open();
 
             RasEntry entry = null;
@@ -60,33 +92,48 @@ namespace AliRank
             {
                 entry = RasEntry.CreateVpnEntry(connName, model.Address, RasVpnStrategy.PptpOnly, RasDevice.GetDeviceByName("(PPTP)", RasDeviceType.Vpn));
             }
-            entry.Options = RasEntryOptions.Custom;
-            entry.EncryptionType = RasEncryptionType.Optional;
-            entry.Options = entry.Options |= RasEntryOptions.RequirePap;
-            entry.Options = entry.Options |= RasEntryOptions.RequireChap;
-            entry.Options = entry.Options |= RasEntryOptions.RequireMSChap;
-            entry.Options = entry.Options |= RasEntryOptions.RequireMSChap2;
-            entry.ExtendedOptions =  RasEntryExtendedOptions.UsePreSharedKey;
             phoneBook.Entries.Add(entry);
+            dialer.DialCompleted += new EventHandler<DialCompletedEventArgs>(Dialer_DialCompleted);
+            dialer.EapOptions = new DotRas.RasEapOptions(false, false, false);
+            dialer.HangUpPollingInterval = 0;
+            dialer.Options = new DotRas.RasDialOptions(false, false, false, false, false, false, false, false, false, false);
             dialer.EntryName = connName;
-            dialer.PhoneBookPath = RasPhoneBook.GetPhoneBookPath(RasPhoneBookType.User);
-            try
+            dialer.PhoneBookPath = RasPhoneBook.GetPhoneBookPath(RasPhoneBookType.AllUsers);
+            
+            dialer.AllowUseStoredCredentials = true;
+            dialer.AutoUpdateCredentials = RasUpdateCredential.AllUsers;
+            dialer.Credentials = new NetworkCredential(model.Username, model.Password);
+            if (model.VpnType.ToUpper().Equals("L2TP") && !string.IsNullOrEmpty(model.L2tpSec))
             {
-                entry.UpdateCredentials(new NetworkCredential(model.Username, model.Password));
+                entry.Options.UsePreSharedKey = true;
+                entry.UpdateCredentials(RasPreSharedKey.Client, model.L2tpSec);
                 entry.Update();
+            }
+            eventX = new ManualResetEvent(false);
+            handle = dialer.DialAsync();
+            eventX.WaitOne(Timeout.Infinite, true);
+            return connectSatuts;
+        }
 
-                if (model.VpnType.ToUpper().Equals("L2TP") && !string.IsNullOrEmpty(model.L2tpSec))
-                {
-                    entry.ExtendedOptions = RasEntryExtendedOptions.UsePreSharedKey;
-                    entry.UpdateCredentials(RasPreSharedKey.Client, model.L2tpSec);
-                    entry.Update();
-                }
-                dialer.DialAsync();
-            }
-            catch (Exception)
+        private void Dialer_DialCompleted(object sender, DialCompletedEventArgs e)
+        {
+            if (e.Cancelled)
             {
-                return;
+                connectSatuts = false;
             }
+            else if (e.TimedOut)
+            {
+                connectSatuts = false;
+            }
+            else if (e.Error != null)
+            {
+                connectSatuts = false;
+            }
+            else if (e.Connected)
+            {
+                connectSatuts = true;
+            }
+            eventX.Set();
         }
 
         public static bool TestConnection(string IP)
@@ -111,6 +158,15 @@ namespace AliRank
                 RV = false;
             }
             return RV;
+        }
+
+        public void Dispose()
+        {
+            dialer.DialCompleted -= new EventHandler<DialCompletedEventArgs>(Dialer_DialCompleted);
+            connName = null;
+            model = null;
+            dialer = null;
+            handle = null;
         }
     }
 
