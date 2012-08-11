@@ -162,6 +162,16 @@ namespace AliRank
 
         }
 
+        public bool IsExistColumn(string tableName, string columnName)
+        {
+            string sql = "select * from " + tableName + " where 1 = 0";
+            DataTable table = ExecuteDataTable(sql, null);
+            bool rev = table.Columns.Contains(columnName);
+            table.Dispose();
+            table = null;
+            return rev;
+        }
+
         /// <summary> 
         /// 查询数据库中的所有数据类型信息 
         /// </summary> 

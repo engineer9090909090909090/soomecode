@@ -323,7 +323,6 @@ namespace AliRank
             clickTimer.Enabled = true; 
         }
 
-        
         public void theout(object source, System.Timers.ElapsedEventArgs e) 
         {
             TimeSpan ts = DateTime.Now - beginTime;
@@ -350,7 +349,7 @@ namespace AliRank
                 CurrentActiveVpnIndex = 0;
             }
             VpnModel model = VpnModelList[CurrentActiveVpnIndex];
-            vpnEntity = new VPN("VPN1234567", model);
+            vpnEntity = new VPN("MyVPN", model);
             CurrentActiveVpnIndex++;
             bool Connected = vpnEntity.Connect();
             if (!Connected)
@@ -367,7 +366,6 @@ namespace AliRank
             string Network = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.NETWORK_CHOICE, IniFile);
             if (Network.Equals(Constants.NETWORK_VPN))
             {
-                
                 int clickNum = Convert.ToInt32(ConfigClickNum);
                 for (int n = 0; n < clickNum; n++)
                 {
@@ -411,6 +409,11 @@ namespace AliRank
                 }
             
             }
+            if (vpnEntity != null)
+            {
+                vpnEntity.Disconnect();
+                vpnEntity.Dispose();
+            }
             clickRunBtn.Enabled = true;
             clickStopBtn.Enabled = false;
             clickTimer.Enabled = false; 
@@ -420,7 +423,6 @@ namespace AliRank
                 SoomesUtils.Shutdown();
             }
         }
-
 
         void clicker_OnRankClickEndEvent(object sender, RankEventArgs e)
         {

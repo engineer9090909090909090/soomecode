@@ -19,6 +19,7 @@ namespace AliRank
         public Int32 KeyAdNum { get; set; }
         public Int32 KeyP4Num { get; set; }
         public Int32 Clicked { get; set; }
+        public Int32 Status { get; set; }
         public DateTime UpdateTime { get; set; }
 
         public string Image { get; set; }

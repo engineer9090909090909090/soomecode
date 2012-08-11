@@ -16,33 +16,39 @@ namespace AliRank
         { 
             this.dbHelper = dbHelper;
             CreateTable();
+            UpdateTable();
         }
 
         private void CreateTable()
         {
-                   dbHelper.ExecuteNonQuery
-                    (
-                      "CREATE TABLE IF NOT EXISTS keywords("
-                    + "id integer NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
-                    + "mainKey varchar(100) NOT NULL,"
-                    + "productId varchar(20) NOT NULL,"
-                    + "productName varchar(200) NOT NULL,"
-                    + "productImage varchar(300),"
-                    + "productUrl varchar(1000) NOT NULL,"
-                    + "companyUrl varchar(100) NOT NULL,"
-                    + "clicked integer default 0 NOT NULL, "
-                    + "rank integer default 0 NOT NULL,"     /*本产品的当前排名数*/
-                    + "prevRank integer default 0 NOT NULL,"     /*本产品的当前排名数*/
-                    + "keyAdNum integer default 0 NOT NULL," /*购买了本关键词排名的产品数*/
-                    + "keyP4Num integer default 0 NOT NULL," /*购买了本关键词直通车的产品数*/
-                    + "createTime datetime,"
-                    + "updateTime datetime)"
-                    );
+            dbHelper.ExecuteNonQuery(
+              "CREATE TABLE IF NOT EXISTS keywords("
+            + "id integer NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
+            + "mainKey varchar(100) NOT NULL,"
+            + "productId varchar(20) NOT NULL,"
+            + "productName varchar(200) NOT NULL,"
+            + "productImage varchar(300),"
+            + "productUrl varchar(1000) NOT NULL,"
+            + "companyUrl varchar(100) NOT NULL,"
+            + "clicked integer default 0 NOT NULL, "
+            + "rank integer default 0 NOT NULL,"     /*本产品的当前排名数*/
+            + "prevRank integer default 0 NOT NULL,"     /*本产品的当前排名数*/
+            + "keyAdNum integer default 0 NOT NULL," /*购买了本关键词排名的产品数*/
+            + "keyP4Num integer default 0 NOT NULL," /*购买了本关键词直通车的产品数*/
+            + "status integer default 0,"
+            + "createTime datetime,"
+            + "updateTime datetime)");
 
-                    dbHelper.ExecuteNonQuery
-                    (
-                    "Create Index  IF NOT EXISTS Index_productId on keywords(productId);"
-                    );
+            dbHelper.ExecuteNonQuery("Create Index  IF NOT EXISTS Index_productId on keywords(productId);");
+        }
+
+        private void UpdateTable()
+        {
+            bool ExistColumnStatus = dbHelper.IsExistColumn("keywords", "status");
+            if (!ExistColumnStatus)
+            {
+                dbHelper.ExecuteNonQuery("ALTER TABLE  keywords add COLUMN status integer default 1;");
+            }
         }
         
 
@@ -51,8 +57,7 @@ namespace AliRank
         {
             DataTable dt = dbHelper.ExecuteDataTable(
                   "SELECT id, productId, productName, mainKey, companyUrl, productUrl, "
-                + "productImage, prevRank,rank, keyAdNum, keyP4Num, clicked, updateTime FROM keywords",
-                null);
+                + "productImage, prevRank,rank, keyAdNum, keyP4Num, clicked, updateTime FROM keywords where status = 1", null);
 
             List<Keywords> list = new List<Keywords>();
             foreach (DataRow row in dt.Rows)
@@ -79,25 +84,61 @@ namespace AliRank
 
         public void Insert(List<Keywords> list)
         {
-            string sql = @"INSERT INTO keywords(mainKey,productId,productName,productImage,productUrl,companyUrl, createTime, updateTime)"
+            string InsSql = @"INSERT INTO keywords(mainKey,productId,productName,productImage,productUrl,companyUrl, createTime, updateTime)"
                             + "values(@mainKey,@productId,@productName,@productImage,@productUrl,@companyUrl, @createTime, @updateTime)";
-            List<SQLiteParameter[]> parameters = new List<SQLiteParameter[]>();
+
+            string UpdSql = @"Update keywords SET mainKey = @mainKey, productName = @productName, productImage = @productImage, "
+                   + "productUrl = @productUrl, companyUrl = @companyUrl, updateTime = @updateTime,status=1 WHERE productId = @productId";
+
+            string ExistRecordSql = "SELECT count(1) FROM keywords WHERE productId = ";
+            List<SQLiteParameter[]> InsertParameters = new List<SQLiteParameter[]>();
+            List<SQLiteParameter[]> UpdateParameters = new List<SQLiteParameter[]>();
             foreach (Keywords item in list)
             {
-                SQLiteParameter[] parameter = new SQLiteParameter[]
+                int record = Convert.ToInt32(dbHelper.ExecuteScalar(ExistRecordSql + item.ProductId, null));
+                if (record > 0)
                 {
-                    new SQLiteParameter("@mainKey",item.MainKey), 
-                    new SQLiteParameter("@productId", item.ProductId), 
-                    new SQLiteParameter("@productName",item.ProductName), 
-                    new SQLiteParameter("@productImage",item.ProductImg), 
-                    new SQLiteParameter("@productUrl",item.ProductUrl), 
-                    new SQLiteParameter("@companyUrl",item.CompanyUrl), 
-                    new SQLiteParameter("@createTime",DateTime.Now), 
-                    new SQLiteParameter("@updateTime",DateTime.Now) 
-                };
-                parameters.Add(parameter);
+                    SQLiteParameter[] parameter = new SQLiteParameter[]
+                    {
+                        new SQLiteParameter("@mainKey",item.MainKey), 
+                        new SQLiteParameter("@productName",item.ProductName), 
+                        new SQLiteParameter("@productImage",item.ProductImg), 
+                        new SQLiteParameter("@productUrl",item.ProductUrl), 
+                        new SQLiteParameter("@companyUrl",item.CompanyUrl),
+                        new SQLiteParameter("@updateTime",DateTime.Now),
+                        new SQLiteParameter("@productId", item.ProductId)
+                    };
+                    UpdateParameters.Add(parameter);
+                }
+                else 
+                {
+                    SQLiteParameter[] parameter = new SQLiteParameter[]
+                    {
+                        new SQLiteParameter("@mainKey",item.MainKey), 
+                        new SQLiteParameter("@productId", item.ProductId), 
+                        new SQLiteParameter("@productName",item.ProductName), 
+                        new SQLiteParameter("@productImage",item.ProductImg), 
+                        new SQLiteParameter("@productUrl",item.ProductUrl), 
+                        new SQLiteParameter("@companyUrl",item.CompanyUrl), 
+                        new SQLiteParameter("@createTime",DateTime.Now), 
+                        new SQLiteParameter("@updateTime",DateTime.Now) 
+                    };
+                    InsertParameters.Add(parameter);
+                }
+                
             }
-            dbHelper.ExecuteNonQuery(sql, parameters);        
+            if (list != null && list.Count > 0)
+            {
+                dbHelper.ExecuteNonQuery("UPDATE keywords SET status = 0");
+            }
+            if (InsertParameters.Count > 0)
+            {
+                dbHelper.ExecuteNonQuery(InsSql, InsertParameters);
+            }
+            if (UpdateParameters.Count > 0)
+            {
+                dbHelper.ExecuteNonQuery(UpdSql, UpdateParameters);
+            }
         }
 
         public void UpdateRank(Keywords item)
@@ -127,6 +168,17 @@ namespace AliRank
                 new SQLiteParameter("@clicked",kw.Clicked),
                 new SQLiteParameter("@updateTime", DateTime.Now),
                 new SQLiteParameter("@id",kw.Id)
+            };
+            dbHelper.ExecuteNonQuery(sql, parameter);
+        }
+
+        public void UpdateAllStatus(int status)
+        {
+            string sql = @"UPDATE keywords SET status = @status, updateTime = @updateTime";
+            SQLiteParameter[] parameter = new SQLiteParameter[]
+            {
+                new SQLiteParameter("@status", status),
+                new SQLiteParameter("@updateTime", DateTime.Now)
             };
             dbHelper.ExecuteNonQuery(sql, parameter);
         }

@@ -30,6 +30,8 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.AddressBox = new System.Windows.Forms.TextBox();
+            this.ErrorMsg = new System.Windows.Forms.Label();
             this.L2tpBtn = new System.Windows.Forms.RadioButton();
             this.PptpBtn = new System.Windows.Forms.RadioButton();
             this.L2tpKeyTxtBox = new System.Windows.Forms.TextBox();
@@ -41,11 +43,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.InsertBtn = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.ErrorMsg = new System.Windows.Forms.Label();
-            this.AddressBox = new System.Windows.Forms.TextBox();
+            this.DeleteBtn = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.dataGridView = new System.Windows.Forms.DataGridView();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -87,12 +87,28 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.InsertBtn);
-            this.groupBox1.Controls.Add(this.button2);
+            this.groupBox1.Controls.Add(this.DeleteBtn);
             this.groupBox1.Location = new System.Drawing.Point(12, 3);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(784, 135);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
+            // 
+            // AddressBox
+            // 
+            this.AddressBox.Location = new System.Drawing.Point(92, 26);
+            this.AddressBox.Name = "AddressBox";
+            this.AddressBox.Size = new System.Drawing.Size(128, 21);
+            this.AddressBox.TabIndex = 15;
+            // 
+            // ErrorMsg
+            // 
+            this.ErrorMsg.AutoSize = true;
+            this.ErrorMsg.ForeColor = System.Drawing.Color.Red;
+            this.ErrorMsg.Location = new System.Drawing.Point(35, 115);
+            this.ErrorMsg.Name = "ErrorMsg";
+            this.ErrorMsg.Size = new System.Drawing.Size(0, 12);
+            this.ErrorMsg.TabIndex = 14;
             // 
             // L2tpBtn
             // 
@@ -196,14 +212,23 @@
             this.InsertBtn.UseVisualStyleBackColor = true;
             this.InsertBtn.Click += new System.EventHandler(this.InsertBtn_Click);
             // 
-            // button2
+            // DeleteBtn
             // 
-            this.button2.Location = new System.Drawing.Point(682, 75);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "删除(&D)";
-            this.button2.UseVisualStyleBackColor = true;
+            this.DeleteBtn.Location = new System.Drawing.Point(682, 75);
+            this.DeleteBtn.Name = "DeleteBtn";
+            this.DeleteBtn.Size = new System.Drawing.Size(75, 23);
+            this.DeleteBtn.TabIndex = 1;
+            this.DeleteBtn.Text = "删除(&D)";
+            this.DeleteBtn.UseVisualStyleBackColor = true;
+            this.DeleteBtn.Click += new System.EventHandler(this.DeleteBtn_Click);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 341);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(808, 22);
+            this.statusStrip1.TabIndex = 1;
+            this.statusStrip1.Text = "statusStrip1";
             // 
             // dataGridView
             // 
@@ -216,30 +241,6 @@
             this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView.Size = new System.Drawing.Size(808, 363);
             this.dataGridView.TabIndex = 0;
-            // 
-            // ErrorMsg
-            // 
-            this.ErrorMsg.AutoSize = true;
-            this.ErrorMsg.ForeColor = System.Drawing.Color.Red;
-            this.ErrorMsg.Location = new System.Drawing.Point(35, 115);
-            this.ErrorMsg.Name = "ErrorMsg";
-            this.ErrorMsg.Size = new System.Drawing.Size(0, 12);
-            this.ErrorMsg.TabIndex = 14;
-            // 
-            // AddressBox
-            // 
-            this.AddressBox.Location = new System.Drawing.Point(92, 26);
-            this.AddressBox.Name = "AddressBox";
-            this.AddressBox.Size = new System.Drawing.Size(128, 21);
-            this.AddressBox.TabIndex = 15;
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 341);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(808, 22);
-            this.statusStrip1.TabIndex = 1;
-            this.statusStrip1.Text = "statusStrip1";
             // 
             // VpnForm
             // 
@@ -267,7 +268,7 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button DeleteBtn;
         private System.Windows.Forms.Button InsertBtn;
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.GroupBox groupBox1;

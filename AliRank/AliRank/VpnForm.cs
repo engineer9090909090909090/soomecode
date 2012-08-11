@@ -13,6 +13,8 @@ namespace AliRank
     public partial class VpnForm : Form
     {
         private VpnDAO vpnDao;
+
+        #region 初始化
         public VpnForm()
         {
             InitializeComponent();
@@ -82,7 +84,7 @@ namespace AliRank
                 }
             }
         }
-
+        
         private void L2tpBtn_CheckedChanged(object sender, EventArgs e)
         {
             if (L2tpBtn.Checked)
@@ -90,14 +92,16 @@ namespace AliRank
                 L2tpKeyLabel.Show();
                 L2tpKeyTxtBox.Show();
             }
-            else 
+            else
             {
                 L2tpKeyLabel.Hide();
                 L2tpKeyTxtBox.Hide();
             }
         }
+        
+        #endregion
 
-
+        #region 新增按钮事件
         private void InsertBtn_Click(object sender, EventArgs e)
         {
             VpnModel model = new VpnModel();
@@ -141,5 +145,34 @@ namespace AliRank
             AddressBox.Text = "";
             LoadDataview();
         }
+        #endregion
+
+        #region 删除按钮事件
+        private void DeleteBtn_Click(object sender, EventArgs e)
+        {
+            if (dataGridView == null || dataGridView.Rows.Count == 0)
+            {
+                return;
+            }
+            List<string> removeList = new List<string>();
+            DataTable dt = (DataTable)dataGridView.DataSource;
+            for (int j = dt.Rows.Count - 1; j >= 0; j--)
+            {
+                DataRow dr = dt.Rows[j];
+                Boolean chk = System.Boolean.Parse(dr[0].ToString());
+                if (chk)
+                {
+                    removeList.Add(dr[7].ToString());
+                    dt.Rows.Remove(dr);
+                }
+            }
+            if (removeList.Count > 0)
+            {
+                vpnDao.DeleteVpn(removeList);
+                MessageBox.Show(removeList.Count + " 行记录被删除。");
+            }
+        }
+        #endregion
+
     }
 }
