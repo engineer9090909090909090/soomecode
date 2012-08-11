@@ -276,9 +276,13 @@ namespace AliRank
 
         #region 点击处理事件
 
+        System.Timers.Timer clickTimer;
+        DateTime beginTime;
         private BackgroundWorker bgClickWorker;
         private List<VpnModel> VpnModelList;
+        private VPN vpnEntity;
         private int CurrentActiveVpnIndex;
+
         private void clickRunBtn_Click(object sender, EventArgs e)
         {
             string network = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.NETWORK_CHOICE, IniFile);
@@ -319,8 +323,7 @@ namespace AliRank
             clickTimer.Enabled = true; 
         }
 
-        System.Timers.Timer clickTimer;
-        DateTime beginTime;
+        
         public void theout(object source, System.Timers.ElapsedEventArgs e) 
         {
             TimeSpan ts = DateTime.Now - beginTime;
@@ -334,29 +337,27 @@ namespace AliRank
             bgClickWorker.CancelAsync();
             clickStopBtn.Enabled = false;
         }
-
+        
         private bool ConnectNextVpn()
         {
-            string vpnName = "VPN123";
+            if (vpnEntity != null)
+            {
+                vpnEntity.Disconnect();
+                vpnEntity.Dispose();
+            }
             if (CurrentActiveVpnIndex >= VpnModelList.Count)
             {
                 CurrentActiveVpnIndex = 0;
             }
-            VPN.DisConnect(vpnName);
             VpnModel model = VpnModelList[CurrentActiveVpnIndex];
+            vpnEntity = new VPN("VPN1234567", model);
             CurrentActiveVpnIndex++;
-            VPN.Create(vpnName, model);
-            bool Connected = VPN.Connect(vpnName, model);
-            if (Connected)
-            {
-                return true;
-            }
-            else 
+            bool Connected = vpnEntity.Connect();
+            if (!Connected)
             {
                 return ConnectNextVpn();
             }
-            
-            
+            return true;
         }
 
         void bgWorker_DoWork2(object sender, DoWorkEventArgs e)
