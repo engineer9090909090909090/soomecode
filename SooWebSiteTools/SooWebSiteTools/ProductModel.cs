@@ -15,7 +15,7 @@ namespace SooWebSiteTools
         public int Quantity {get; set; }
         public int StockStatusId {get; set; }
         public string Image {get; set; }
-        public string ManufacturerId { get; set; }
+        public int ManufacturerId { get; set; }
         public int shipping {get; set; }
         public decimal Price {get; set; }
         public int points { get; set; }
@@ -38,10 +38,10 @@ namespace SooWebSiteTools
         public string MetaKeyword { get; set; }
         public string MetaDescription { get; set; }
 
-        public List<ImageModel> Images { get; set; }
-        public List<TagModel> Tags { get; set; }
-        public List<CategoryModel> Categories { get; set; }
-        public List<RelatedModel> Relateds { get; set; }
-        
+        public List<ImageModel> Images = new List<ImageModel>();
+        public List<TagModel> Tags = new List<TagModel>();
+        public List<CategoryModel> Categories = new List<CategoryModel>();
+        public List<RelatedModel> Relateds = new List<RelatedModel>();
+
     }
 }
