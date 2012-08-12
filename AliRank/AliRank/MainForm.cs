@@ -375,6 +375,7 @@ namespace AliRank
                         toolStripStatusLabel1.Text = "没有正确的VPN可以连接.";
                         break;
                     }
+                    IEHandleUtils.ClearIECache();
                     IEHandleUtils.ClearIECookie();
                     for (int i = 0; i < productList.Count; i++)
                     {
@@ -394,6 +395,7 @@ namespace AliRank
                 int clickNum = Convert.ToInt32(ConfigClickNum);
                 for (int n = 0; n < clickNum; n++)
                 {
+                    IEHandleUtils.ClearIECache();
                     IEHandleUtils.ClearIECookie();
                     for (int i = 0; i < productList.Count; i++)
                     {
