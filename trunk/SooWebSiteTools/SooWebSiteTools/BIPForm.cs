@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace SooWebSiteTools
+namespace WebTools
 {
     [ComVisible(true)]
     public partial class BIPForm : Form
@@ -47,8 +47,6 @@ namespace SooWebSiteTools
             DataTable table = new DataTable();
             table.Columns.Add("Image", typeof(Image));
             table.Columns.Add("Model", typeof(string));
-            table.Columns.Add("Name", typeof(string));
-            table.Columns.Add("Price", typeof(string));
             this.dataGridView.DataSource = table;
             
             DataGridViewColumn column0 = this.dataGridView.Columns[0];
@@ -56,13 +54,7 @@ namespace SooWebSiteTools
             column0.Width = 100;
             DataGridViewColumn column = this.dataGridView.Columns[1];
             column.HeaderText = "Product Model";
-            column.Width = 150;
-            DataGridViewColumn column2 = this.dataGridView.Columns[2];
-            column2.HeaderText = "Product Name";
-            //column2.Width = 200;
-            DataGridViewColumn column3 = this.dataGridView.Columns[3];
-            column3.HeaderText = "Product Price";
-            column3.Width = 200;
+            column.Width = 200;
             
             
         }
@@ -106,17 +98,14 @@ namespace SooWebSiteTools
             ofd.ShowDialog();
             if (ofd.FileNames.Length == 0) return;
             fileNames = ofd.FileNames;
-            BackgroundWorker bgWorker = new BackgroundWorker();
-            bgWorker.DoWork += new DoWorkEventHandler(bgWorker_DoWork);
-            bgWorker.RunWorkerAsync();
-            bgWorker.Dispose();
+            ofd.Dispose();
+            SetGVDel del = new SetGVDel(UpdateDataGridView);
+            this.BeginInvoke(del);
         }
-
-       
-        void bgWorker_DoWork(object sender, DoWorkEventArgs e)
+        private delegate void SetGVDel();
+        void UpdateDataGridView()
         {
             MsgToolsLabel.Text = "正在导入产品图片，请稍候...";
-            ImpBtn.Enabled = false;
             UpdBtn.Enabled = false;
             SubmitBtn.Enabled = false;
             pictureList.Clear();
@@ -124,21 +113,17 @@ namespace SooWebSiteTools
             DataTable table = new DataTable();
             table.Columns.Add("Image", typeof(Image));
             table.Columns.Add("Model", typeof(string));
-            table.Columns.Add("Name", typeof(string));
-            table.Columns.Add("Price", typeof(string));
+            this.dataGridView.DataSource = table;
             foreach (string fileName in fileNames)
             {
                 pictureList.Add(fileName);
                 DataRow dr = table.NewRow();
                 dr["Image"] = new Bitmap(Image.FromFile(fileName), 100, 100);
                 dr["Model"] = Path.GetFileNameWithoutExtension(fileName);
-                dr["Name"] = Path.GetFileName(fileName);
-                dr["Price"] = "0.00";
                 table.Rows.Add(dr);
             }
-            this.dataGridView.DataSource = table;
+            
             MsgToolsLabel.Text = "";
-            ImpBtn.Enabled = true;
             UpdBtn.Enabled = true;
             SubmitBtn.Enabled = true;
         }
@@ -158,6 +143,12 @@ namespace SooWebSiteTools
         {
             productDesc = string.Empty;
             productDesc2 = string.Empty;
+            if (CategoriesList.CheckedItems.Count ==0)
+            {
+                MessageBox.Show("没有任何产品种类被选中，请选择产品种类。");
+                return;
+            }
+
             if (string.IsNullOrEmpty(NamesTextBox.Text.Trim()))
             {
                 MessageBox.Show("没有任何产品名称，请输入一组产品名称。");
@@ -176,21 +167,19 @@ namespace SooWebSiteTools
                 return;
             }
             Keywords = keywordTextBox.Text.Trim().Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-            KeyDescs = keywordDescTextBox.Text.Trim().Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            Tags = TagTextBox.Text.Trim().Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
             ProNames = NamesTextBox.Text.Trim().Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
             CurrentKeywordIndex = 0;
-            CurrentKeyDescIndex = 0;
             CurrentProNameIndex = 0;
             BackgroundWorker bgWorker = new BackgroundWorker();
             bgWorker.DoWork +=new DoWorkEventHandler(UpdBtn_DoWork);
             bgWorker.RunWorkerAsync();
             bgWorker.Dispose();
         }
-        #region fetch Next Value for keyword, keydesc, Product name
+        #region fetch Next Value for keyword, Product name
         private string[] Keywords = new string[0] { };
         private int CurrentKeywordIndex = 0;
-        private string[] KeyDescs = new string[0] { };
-        private int CurrentKeyDescIndex = 0;
+        private string[] Tags = new string[0] { };
         private string[] ProNames = new string[0] { };
         private int CurrentProNameIndex = 0;
 
@@ -204,27 +193,19 @@ namespace SooWebSiteTools
             {
                 CurrentKeywordIndex = 0;
             }
-           return Keywords[++CurrentKeywordIndex];
-        }
-        private string GetNextKeyDescsValue()
-        {
-            if (KeyDescs == null || KeyDescs.Length == 0)
-            {
-                return "";
-            }
-            if (CurrentKeyDescIndex >= Keywords.Length)
-            {
-                CurrentKeyDescIndex = 0;
-            }
-            return KeyDescs[++CurrentKeyDescIndex];
+            string val = Keywords[CurrentKeywordIndex];
+            CurrentKeywordIndex++;
+            return val;
         }
         private string GetNextProNameValue()
         {
-            if (CurrentProNameIndex >= Keywords.Length)
+            if (CurrentProNameIndex >= ProNames.Length)
             {
                 CurrentProNameIndex = 0;
             }
-            return ProNames[++CurrentProNameIndex];
+            string val = ProNames[CurrentProNameIndex];
+            CurrentProNameIndex++;
+            return val;
         }
         #endregion
 
@@ -244,6 +225,14 @@ namespace SooWebSiteTools
                 CategoryList.Add(cateModel);
             }
 
+            List<TagModel> TagList = new List<TagModel>();
+            foreach (string  tag in Tags)
+            {
+                TagModel tModel = new TagModel();
+                tModel.Tag = tag;
+                TagList.Add(tModel);
+            }
+
             Int32 ManufacturerId = Convert.ToInt32(MaComboBox.SelectedValue);
             Int32 StockStatusId = Convert.ToInt32(StockComboBox.SelectedValue);
             Int32 WeightClassId = Convert.ToInt32(WeightComboBox.SelectedValue);
@@ -254,30 +243,49 @@ namespace SooWebSiteTools
             string HsCode = HsCodeTextBox.Text.Trim();
             DateTime AvailableDate = AvailableBox.Value;
             ProductModel productModel = null;
-            int orderNum = 0;
+            int orderNum = dao.getMaxSortOrder(CategoryList);
             foreach (string path in pictureList)
             {
                 if (path.IndexOf("data") == -1) continue;
-                orderNum++;
-                string imageName = Path.GetFileNameWithoutExtension(path);
-                string model = imageName.Split(new char[]{'_','-'})[0];
+
+                string model = Path.GetFileNameWithoutExtension(path);
                 string image = path.Substring(path.IndexOf("data")).Replace("\\", "/");
-                if (productDic.Keys.Contains(model))
-                {
-                    productModel = productDic[model];
-                }
-                else 
-                {
-                    productModel = new ProductModel();
-                    productDic.Add(model, productModel);
-                }
                 ImageModel imageModel = new ImageModel();
                 imageModel.Image = image;
+
+                bool IsSameModel = false;
+                foreach (string key in productDic.Keys)
+                {
+                    if (key.StartsWith(model))
+                    {
+                        productModel = productDic[key];
+                        productModel.Images.Add(imageModel);
+                        productModel.Image = image;
+                        productModel.Model = model;
+                        productDic.Remove(key);
+                        productDic.Add(model, productModel);
+                        IsSameModel = true;
+                        break;
+                    }
+                    if (model.StartsWith(key))
+                    {
+                        productModel = productDic[key];
+                        productModel.Images.Add(imageModel);
+                        IsSameModel = true;
+                        break;
+                    }
+                }
+                if (IsSameModel)
+                {
+                    continue;
+                }
+                productModel = new ProductModel();
                 productModel.Images.Add(imageModel);
                 productModel.Image = image;
+                productModel.Model = model;
                 productModel.LanguageId = Convert.ToInt32(SelectLang);
                 productModel.Statust = 1;
-                productModel.SortOrder = orderNum;
+                productModel.SortOrder = ++orderNum;
                 productModel.ManufacturerId = ManufacturerId;
                 productModel.StockStatusId = StockStatusId;
                 productModel.WeightClassId = WeightClassId;
@@ -289,11 +297,38 @@ namespace SooWebSiteTools
                 productModel.AvailableDate = AvailableDate;
                 productModel.Name = GetNextProNameValue();
                 productModel.MetaKeyword = GetNextKeywordValue();
-                productModel.MetaDescription = GetNextKeyDescsValue();
+                productModel.MetaDescription = productModel.Name + ", " 
+                    + productModel.Model + ", " + productModel.MetaKeyword;
                 productModel.Description = productDesc;
                 productModel.Description2 = productDesc2;
+                productModel.Categories.AddRange(CategoryList);
+                productModel.Tags.AddRange(TagList);
+                productDic.Add(model, productModel);
+     
+                //dao.InsertProducts(productDic.Values.ToList());
             }
             MsgToolsLabel.Text = "";
+            ImpBtn.Enabled = true;
+            UpdBtn.Enabled = true;
+            SubmitBtn.Enabled = true;
+        }
+
+        private void SubmitBtn_Click(object sender, EventArgs e)
+        {
+            MsgToolsLabel.Text = "正在提交数据，请稍候...";
+            ImpBtn.Enabled = false;
+            UpdBtn.Enabled = false;
+            SubmitBtn.Enabled = false;
+            try
+            {
+                dao.InsertProducts(productDic.Values.ToList());
+                MsgToolsLabel.Text = "提交成功.";
+            }
+            catch (Exception ex)
+            {
+                MsgToolsLabel.Text = "提交失败，原因: "+ex.InnerException.Message;
+            }
+            
             ImpBtn.Enabled = true;
             UpdBtn.Enabled = true;
             SubmitBtn.Enabled = true;

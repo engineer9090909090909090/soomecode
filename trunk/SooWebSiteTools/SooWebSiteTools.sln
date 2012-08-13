@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SooWebSiteTools", "SooWebSiteTools\SooWebSiteTools.csproj", "{EA26DB5D-55FB-4B59-BA31-E654464BE8A8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebTools", "SooWebSiteTools\WebTools.csproj", "{EA26DB5D-55FB-4B59-BA31-E654464BE8A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,8 +4,8 @@ using System.Text;
 using System.Configuration;
 using MySql.Data.MySqlClient;
 using System.Data;
-//该源码下载自C#编程网|www.cpbcw.com
-namespace SooWebSiteTools
+
+namespace WebTools
 {
     public partial class MySqlHelper:HelperBase
     {
