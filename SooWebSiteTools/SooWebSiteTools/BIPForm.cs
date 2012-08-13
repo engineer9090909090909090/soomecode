@@ -143,10 +143,15 @@ namespace SooWebSiteTools
             SubmitBtn.Enabled = true;
         }
 
+
+
         private void Form1_SizeChanged(object sender, EventArgs e)
         {
-            splitContainer.SplitterDistance = 705;
-            splitContainer.Panel1.Show();
+            if (this.WindowState != FormWindowState.Minimized)
+            {
+                splitContainer.SplitterDistance = 705;
+                splitContainer.Panel1.Show();
+            }
         }
 
         private void UpdBtn_Click(object sender, EventArgs e)
@@ -170,15 +175,58 @@ namespace SooWebSiteTools
                 MessageBox.Show("没有任何产品图片和型号数据不能执行更新，请从图片导入产品数据。");
                 return;
             }
-            string[] Keywords = keywordTextBox.Text.Trim().Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-            string[] KeyDescs = keywordDescTextBox.Text.Trim().Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-            string[] ProNames = NamesTextBox.Text.Trim().Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-            
+            Keywords = keywordTextBox.Text.Trim().Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            KeyDescs = keywordDescTextBox.Text.Trim().Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            ProNames = NamesTextBox.Text.Trim().Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            CurrentKeywordIndex = 0;
+            CurrentKeyDescIndex = 0;
+            CurrentProNameIndex = 0;
             BackgroundWorker bgWorker = new BackgroundWorker();
             bgWorker.DoWork +=new DoWorkEventHandler(UpdBtn_DoWork);
             bgWorker.RunWorkerAsync();
             bgWorker.Dispose();
         }
+        #region fetch Next Value for keyword, keydesc, Product name
+        private string[] Keywords = new string[0] { };
+        private int CurrentKeywordIndex = 0;
+        private string[] KeyDescs = new string[0] { };
+        private int CurrentKeyDescIndex = 0;
+        private string[] ProNames = new string[0] { };
+        private int CurrentProNameIndex = 0;
+
+        private string GetNextKeywordValue()
+        {
+            if (Keywords == null || Keywords.Length == 0)
+            {
+                return "";
+            }
+            if (CurrentKeywordIndex >= Keywords.Length)
+            {
+                CurrentKeywordIndex = 0;
+            }
+           return Keywords[++CurrentKeywordIndex];
+        }
+        private string GetNextKeyDescsValue()
+        {
+            if (KeyDescs == null || KeyDescs.Length == 0)
+            {
+                return "";
+            }
+            if (CurrentKeyDescIndex >= Keywords.Length)
+            {
+                CurrentKeyDescIndex = 0;
+            }
+            return KeyDescs[++CurrentKeyDescIndex];
+        }
+        private string GetNextProNameValue()
+        {
+            if (CurrentProNameIndex >= Keywords.Length)
+            {
+                CurrentProNameIndex = 0;
+            }
+            return ProNames[++CurrentProNameIndex];
+        }
+        #endregion
 
         void UpdBtn_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -239,10 +287,12 @@ namespace SooWebSiteTools
                 productModel.Sku = Unit;
                 productModel.Upc = HsCode;
                 productModel.AvailableDate = AvailableDate;
+                productModel.Name = GetNextProNameValue();
+                productModel.MetaKeyword = GetNextKeywordValue();
+                productModel.MetaDescription = GetNextKeyDescsValue();
                 productModel.Description = productDesc;
                 productModel.Description2 = productDesc2;
             }
-
             MsgToolsLabel.Text = "";
             ImpBtn.Enabled = true;
             UpdBtn.Enabled = true;
