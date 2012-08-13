@@ -6,7 +6,7 @@ using System.Collections;
 using MySql.Data.MySqlClient;
 using System.Data;
 
-namespace SooWebSiteTools
+namespace WebTools
 {
     public partial class MySqlHelper
     {

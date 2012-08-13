@@ -5,7 +5,7 @@ using System.Text;
 using System.Data;
 using MySql.Data.MySqlClient;
 
-namespace SooWebSiteTools
+namespace WebTools
 {
     class ProducctDAO
     {
@@ -85,7 +85,34 @@ namespace SooWebSiteTools
             return newtable;
         }
 
-
+        public void InsertProducts(List<ProductModel> modelList)
+        {
+            using (MySqlConnection connection = MySqlHelper.GetConnection())
+            {
+                connection.Open();
+                MySqlTransaction trans = connection.BeginTransaction();
+                try
+                {
+                    foreach (ProductModel model in modelList)
+                    {
+                        ProductModel model1 = AddProduct(model, trans);
+                        AddProductDesc(model1, trans);
+                        AddProductCategories(model1, trans);
+                        AddProductImages(model1, trans);
+                        AddProductTags(model1, trans);
+                        AddProductStore(model1, trans);
+                    }
+                    trans.Commit();
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                    System.Diagnostics.Trace.WriteLine(e.InnerException.Message);
+                    throw e;
+                }
+            }
+        
+        }
         private ProductModel AddProduct(ProductModel model, MySqlTransaction trans)
         {
             string sql = "INSERT INTO `product` (`model`,`sku`,`upc`,`location`,`quantity`,`stock_status_id`,"
@@ -117,8 +144,8 @@ namespace SooWebSiteTools
                 new MySqlParameter("@minimum",model.Minimum),
                 new MySqlParameter("@sort_order",model.SortOrder)
             };
-            int lastId = MySqlHelper.ExecuteNonQuery(trans, CommandType.Text, sql, parameter);
-            model.ProductId = lastId;
+            MySqlHelper.ExecuteNonQuery(trans, CommandType.Text, sql, parameter);
+            model.ProductId = Convert.ToInt32(MySqlHelper.ExecuteScalar(@"select max(Product_id) from product", null));
             return model;
         }
 
@@ -132,6 +159,7 @@ namespace SooWebSiteTools
             { 
                 new MySqlParameter("@product_id",model.ProductId),
                 new MySqlParameter("@language_id",model.LanguageId),
+                new MySqlParameter("@name",model.Name),
                 new MySqlParameter("@description",model.Description),
                 new MySqlParameter("@description2",model.Description2),
                 new MySqlParameter("@meta_description",model.MetaDescription),
@@ -196,6 +224,16 @@ namespace SooWebSiteTools
              }
          }
 
+         private void AddProductStore(ProductModel model, MySqlTransaction trans)
+         {
+                string sql = "insert into product_to_store(product_id, store_id)VALUES(@product_id, 0);";
+                MySqlParameter[] parameter = new MySqlParameter[]
+                { 
+                    new MySqlParameter("@product_id",model.ProductId)
+                };
+                MySqlHelper.ExecuteNonQuery(trans, CommandType.Text, sql, parameter);
+         }
+
          private void AddProductRelateds(ProductModel model, MySqlTransaction trans)
          {
              string sql = "INSERT INTO `product_related` (`product_id`, `related_id`)VALUES(@product_id, @related_id);";
@@ -212,6 +250,26 @@ namespace SooWebSiteTools
                      MySqlHelper.ExecuteNonQuery(trans, CommandType.Text, sql, parameter);
                  }
              }
+         }
+
+         public int getMaxSortOrder(List<CategoryModel> CategoryList)
+         {
+             int maxid = 0;
+             foreach (CategoryModel categoryModel in CategoryList)
+             {
+                 if (categoryModel.CategoryId > maxid)
+                 {
+                     maxid = categoryModel.CategoryId;
+                 }
+             }
+             string sql = "select max(p.sort_order) from product p join product_to_category c " +
+                         " on p.product_id = c.product_id where c.category_id= " + maxid;
+             object sortOrder = MySqlHelper.ExecuteScalar(sql, null);
+             if (Convert.IsDBNull(sortOrder))
+             {
+                 return Convert.ToInt32(maxid.ToString() + "00001");
+             }
+             return Convert.ToInt32(sortOrder);
          }
     }
 

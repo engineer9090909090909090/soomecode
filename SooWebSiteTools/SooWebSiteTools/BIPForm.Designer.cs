@@ -1,4 +1,4 @@
-﻿namespace SooWebSiteTools
+﻿namespace WebTools
 {
     partial class BIPForm
     {
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BIPForm));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -42,7 +43,7 @@
             this.NamesTextBox = new System.Windows.Forms.TextBox();
             this.panel13 = new System.Windows.Forms.Panel();
             this.label13 = new System.Windows.Forms.Label();
-            this.keywordDescTextBox = new System.Windows.Forms.TextBox();
+            this.TagTextBox = new System.Windows.Forms.TextBox();
             this.panel12 = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
             this.keywordTextBox = new System.Windows.Forms.TextBox();
@@ -79,6 +80,7 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.webBrowser2 = new System.Windows.Forms.WebBrowser();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dataGridView = new System.Windows.Forms.DataGridView();
@@ -91,7 +93,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.MsgToolsLabel = new System.Windows.Forms.ToolStripLabel();
-            this.webBrowser2 = new System.Windows.Forms.WebBrowser();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.splitContainer.Panel1.SuspendLayout();
@@ -248,10 +249,10 @@
             // panel13
             // 
             this.panel13.Controls.Add(this.label13);
-            this.panel13.Controls.Add(this.keywordDescTextBox);
-            this.panel13.Location = new System.Drawing.Point(291, 325);
+            this.panel13.Controls.Add(this.TagTextBox);
+            this.panel13.Location = new System.Drawing.Point(291, 353);
             this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(355, 145);
+            this.panel13.Size = new System.Drawing.Size(355, 115);
             this.panel13.TabIndex = 14;
             // 
             // label13
@@ -259,18 +260,18 @@
             this.label13.AutoSize = true;
             this.label13.Location = new System.Drawing.Point(2, 9);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(65, 12);
+            this.label13.Size = new System.Drawing.Size(53, 12);
             this.label13.TabIndex = 1;
-            this.label13.Text = "关键字描述";
+            this.label13.Text = "产品标签";
             // 
-            // keywordDescTextBox
+            // TagTextBox
             // 
-            this.keywordDescTextBox.Location = new System.Drawing.Point(3, 24);
-            this.keywordDescTextBox.Multiline = true;
-            this.keywordDescTextBox.Name = "keywordDescTextBox";
-            this.keywordDescTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.keywordDescTextBox.Size = new System.Drawing.Size(355, 115);
-            this.keywordDescTextBox.TabIndex = 0;
+            this.TagTextBox.Location = new System.Drawing.Point(3, 24);
+            this.TagTextBox.Multiline = true;
+            this.TagTextBox.Name = "TagTextBox";
+            this.TagTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.TagTextBox.Size = new System.Drawing.Size(355, 89);
+            this.TagTextBox.TabIndex = 0;
             // 
             // panel12
             // 
@@ -278,7 +279,7 @@
             this.panel12.Controls.Add(this.keywordTextBox);
             this.panel12.Location = new System.Drawing.Point(291, 182);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(407, 137);
+            this.panel12.Size = new System.Drawing.Size(359, 165);
             this.panel12.TabIndex = 13;
             // 
             // label12
@@ -296,7 +297,7 @@
             this.keywordTextBox.Multiline = true;
             this.keywordTextBox.Name = "keywordTextBox";
             this.keywordTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.keywordTextBox.Size = new System.Drawing.Size(355, 110);
+            this.keywordTextBox.Size = new System.Drawing.Size(355, 138);
             this.keywordTextBox.TabIndex = 0;
             // 
             // panel8
@@ -341,7 +342,7 @@
             this.QtyTextBox.Name = "QtyTextBox";
             this.QtyTextBox.Size = new System.Drawing.Size(102, 21);
             this.QtyTextBox.TabIndex = 4;
-            this.QtyTextBox.Text = "1000";
+            this.QtyTextBox.Text = "5000";
             // 
             // label9
             // 
@@ -356,14 +357,14 @@
             // 
             this.panel10.Controls.Add(this.HsCodeTextBox);
             this.panel10.Controls.Add(this.label10);
-            this.panel10.Location = new System.Drawing.Point(534, 3);
+            this.panel10.Location = new System.Drawing.Point(534, 7);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(109, 57);
+            this.panel10.Size = new System.Drawing.Size(109, 53);
             this.panel10.TabIndex = 9;
             // 
             // HsCodeTextBox
             // 
-            this.HsCodeTextBox.Location = new System.Drawing.Point(6, 30);
+            this.HsCodeTextBox.Location = new System.Drawing.Point(6, 27);
             this.HsCodeTextBox.Name = "HsCodeTextBox";
             this.HsCodeTextBox.Size = new System.Drawing.Size(100, 21);
             this.HsCodeTextBox.TabIndex = 4;
@@ -371,7 +372,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 12);
+            this.label10.Location = new System.Drawing.Point(6, 11);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(53, 12);
             this.label10.TabIndex = 3;
@@ -597,6 +598,16 @@
             this.tabPage4.Text = "产品描述2";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // webBrowser2
+            // 
+            this.webBrowser2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowser2.Location = new System.Drawing.Point(3, 3);
+            this.webBrowser2.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser2.Name = "webBrowser2";
+            this.webBrowser2.ScrollBarsEnabled = false;
+            this.webBrowser2.Size = new System.Drawing.Size(643, 464);
+            this.webBrowser2.TabIndex = 0;
+            // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage2);
@@ -620,16 +631,18 @@
             // 
             // dataGridView
             // 
+            this.dataGridView.AllowDrop = true;
             this.dataGridView.AllowUserToAddRows = false;
-            this.dataGridView.AllowUserToDeleteRows = false;
-            this.dataGridView.AllowUserToResizeColumns = false;
-            this.dataGridView.AllowUserToResizeRows = false;
+            this.dataGridView.AllowUserToOrderColumns = true;
+            this.dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView.Location = new System.Drawing.Point(3, 3);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.RowHeadersVisible = false;
             this.dataGridView.RowTemplate.Height = 23;
+            this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView.Size = new System.Drawing.Size(340, 464);
             this.dataGridView.TabIndex = 0;
             // 
@@ -644,7 +657,7 @@
             // 
             // ImpBtn
             // 
-            this.ImpBtn.Image = global::SooWebSiteTools.Properties.Resources.select;
+            this.ImpBtn.Image = global::WebTools.Properties.Resources.select;
             this.ImpBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ImpBtn.Name = "ImpBtn";
             this.ImpBtn.Size = new System.Drawing.Size(111, 22);
@@ -653,7 +666,7 @@
             // 
             // UpdBtn
             // 
-            this.UpdBtn.Image = global::SooWebSiteTools.Properties.Resources.update;
+            this.UpdBtn.Image = global::WebTools.Properties.Resources.update;
             this.UpdBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.UpdBtn.Name = "UpdBtn";
             this.UpdBtn.Size = new System.Drawing.Size(75, 22);
@@ -662,11 +675,12 @@
             // 
             // SubmitBtn
             // 
-            this.SubmitBtn.Image = global::SooWebSiteTools.Properties.Resources.dnoe;
+            this.SubmitBtn.Image = global::WebTools.Properties.Resources.dnoe;
             this.SubmitBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.SubmitBtn.Name = "SubmitBtn";
             this.SubmitBtn.Size = new System.Drawing.Size(75, 22);
             this.SubmitBtn.Text = "提交数据";
+            this.SubmitBtn.Click += new System.EventHandler(this.SubmitBtn_Click);
             // 
             // toolStripSeparator1
             // 
@@ -708,16 +722,6 @@
             this.MsgToolsLabel.Name = "MsgToolsLabel";
             this.MsgToolsLabel.Size = new System.Drawing.Size(0, 22);
             // 
-            // webBrowser2
-            // 
-            this.webBrowser2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser2.Location = new System.Drawing.Point(3, 3);
-            this.webBrowser2.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser2.Name = "webBrowser2";
-            this.webBrowser2.ScrollBarsEnabled = false;
-            this.webBrowser2.Size = new System.Drawing.Size(643, 464);
-            this.webBrowser2.TabIndex = 0;
-            // 
             // BIPForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -728,6 +732,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "BIPForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -828,7 +833,7 @@
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox keywordDescTextBox;
+        private System.Windows.Forms.TextBox TagTextBox;
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox keywordTextBox;
