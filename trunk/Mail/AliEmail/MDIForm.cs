@@ -89,8 +89,18 @@ namespace AliEmail
 
         private void SaveToXls(String fileName)
         {
+            DataTable dt = new DataTable();
+            dt = mailDataTable.Copy();
+            dt.Columns.Remove(dt.Columns["id"]);
+            dt.Columns.Remove(dt.Columns["fax"]);
+            dt.Columns.Remove(dt.Columns["Address"]);
+            dt.Columns.Remove(dt.Columns["IP"]);
+            dt.Columns.Remove(dt.Columns["Origin"]);
+            dt.Columns.Add("ProductType", typeof(string));
+            dt.Columns["ProductType"].SetOrdinal(0);
             DataSet ds = new DataSet();
-            ds.Tables.Add(mailDataTable);
+            ds.Tables.Add(dt);
+
             ExcelUtils excel = new ExcelUtils();
             excel.ExportToExcel(ds,fileName);
         }
@@ -196,9 +206,13 @@ namespace AliEmail
                 {
                     return new ParseAliAfter20110301Mail();
                 }
-                if (inquireTime > 201207010000)
+                if (inquireTime > 201207010000 && inquireTime < 201208080000)
                 {
                     return new ParseAliAfter20120701Mail();
+                }
+                if (inquireTime > 201208080000)
+                {
+                    return new ParseAliAfter20120809Mail();
                 }
             }
 
@@ -264,30 +278,29 @@ namespace AliEmail
         {
             DataTable table = new DataTable();
             table.Columns.Add("id", typeof(Int64));
-            table.Columns.Add("ip", typeof(string));
-            table.Columns.Add("origin", typeof(string));
-            table.Columns.Add("product", typeof(string));
-            table.Columns.Add("name", typeof(string));
-            table.Columns.Add("email", typeof(string));
-            table.Columns.Add("country", typeof(string));
-            table.Columns.Add("telephone", typeof(string));
-            table.Columns.Add("company", typeof(string));
-            table.Columns.Add("address", typeof(string));           
+            table.Columns.Add("IP", typeof(string));
+            table.Columns.Add("Origin", typeof(string));
+            table.Columns.Add("Product", typeof(string));
+            table.Columns.Add("Buyer Name", typeof(string));
+            table.Columns.Add("Email", typeof(string));
+            table.Columns.Add("Country", typeof(string));
+            table.Columns.Add("Telephone", typeof(string));
+            table.Columns.Add("Company", typeof(string));
+            table.Columns.Add("Address", typeof(string));           
             table.Columns.Add("fax", typeof(string));
-            table.Columns.Add("sendTime", typeof(string));
-            table.Columns.Add("source", typeof(string));
+            table.Columns.Add("Date", typeof(string));
+            table.Columns.Add("Source", typeof(string));
             table.Columns["id"].Caption = "ID";
-            table.Columns["ip"].Caption = "Message IP";
-            table.Columns["origin"].Caption = "Origin";
-            table.Columns["product"].Caption = "Product";
-            table.Columns["name"].Caption = "Name";
-            table.Columns["email"].Caption = "Email";
-            table.Columns["company"].Caption = "Company";
-            table.Columns["address"].Caption = "Address/webSite";
-            table.Columns["country"].Caption = "Country/Region";
-            table.Columns["sendTime"].Caption = "Sent On";
-            table.Columns["source"].Caption = "Source";
-          //  table.Columns["id"].ColumnMapping = MappingType.Hidden;
+            table.Columns["IP"].Caption = "Message IP";
+            table.Columns["Origin"].Caption = "Origin";
+            table.Columns["Product"].Caption = "Product";
+            table.Columns["Buyer Name"].Caption = "Buyer Name";
+            table.Columns["Email"].Caption = "Email";
+            table.Columns["Company"].Caption = "Company";
+            table.Columns["Address"].Caption = "Address/webSite";
+            table.Columns["Country"].Caption = "Country";
+            table.Columns["Date"].Caption = "Sent On";
+            table.Columns["Source"].Caption = "Source";
             return table;
         }
 
