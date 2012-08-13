@@ -77,8 +77,7 @@ namespace AliRank
             DialogResult dr = MessageBox.Show("\r\n        您确认要清空所有数据吗？          \r\n\r\n", "清空关键词", MessageBoxButtons.OKCancel);
             if (dr == DialogResult.OK)
             {
-                string DataBasePath = FileUtils.GetAppDataFolder() + Path.DirectorySeparatorChar + Constants.DB_FILE;
-                File.Delete(DataBasePath);
+                keywordDAO.DeleteAll();
                 LoadDataview();
             }
         }

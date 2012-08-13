@@ -84,8 +84,8 @@ namespace AliRank
 
         public void Insert(List<Keywords> list)
         {
-            string InsSql = @"INSERT INTO keywords(mainKey,productId,productName,productImage,productUrl,companyUrl, createTime, updateTime)"
-                            + "values(@mainKey,@productId,@productName,@productImage,@productUrl,@companyUrl, @createTime, @updateTime)";
+            string InsSql = @"INSERT INTO keywords(mainKey,productId,productName,productImage,productUrl,companyUrl, createTime, updateTime, status)"
+                            + "values(@mainKey,@productId,@productName,@productImage,@productUrl,@companyUrl, @createTime, @updateTime, 1)";
 
             string UpdSql = @"Update keywords SET mainKey = @mainKey, productName = @productName, productImage = @productImage, "
                    + "productUrl = @productUrl, companyUrl = @companyUrl, updateTime = @updateTime,status=1 WHERE productId = @productId";
@@ -181,6 +181,11 @@ namespace AliRank
                 new SQLiteParameter("@updateTime", DateTime.Now)
             };
             dbHelper.ExecuteNonQuery(sql, parameter);
+        }
+
+        public void DeleteAll()
+        {
+            dbHelper.ExecuteNonQuery(@"delete from  keywords");
         }
     }
 }
