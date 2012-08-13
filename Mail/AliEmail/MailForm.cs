@@ -19,31 +19,31 @@ namespace AliEmail
         public void setDataGrigViewContext(DataTable dt)
         {
             this.dataGridView.DataSource = dt;
-            this.dataGridView.Columns["ip"].HeaderText = "Message IP";
-            this.dataGridView.Columns["origin"].HeaderText = "Origin";
-            this.dataGridView.Columns["product"].HeaderText = "Product";
-            this.dataGridView.Columns["name"].HeaderText = "Name";
-            this.dataGridView.Columns["email"].HeaderText = "Email";
-            this.dataGridView.Columns["company"].HeaderText = "Company";
-            this.dataGridView.Columns["address"].HeaderText = "Address";
-            this.dataGridView.Columns["country"].HeaderText = "Country/Region";
-            this.dataGridView.Columns["telephone"].HeaderText = "Telephone";
-            this.dataGridView.Columns["fax"].HeaderText = "Fax";
-            this.dataGridView.Columns["sendTime"].HeaderText = "Sent On";
-            this.dataGridView.Columns["source"].HeaderText = "Source";
+            this.dataGridView.Columns["IP"].HeaderText = "Message IP";
+            this.dataGridView.Columns["Origin"].HeaderText = "Origin";
+            this.dataGridView.Columns["Product"].HeaderText = "Product";
+            this.dataGridView.Columns["Buyer Name"].HeaderText = "Name";
+            this.dataGridView.Columns["Email"].HeaderText = "Email";
+            this.dataGridView.Columns["Company"].HeaderText = "Company";
+            this.dataGridView.Columns["Address"].HeaderText = "Address";
+            this.dataGridView.Columns["Country"].HeaderText = "Country/Region";
+            this.dataGridView.Columns["Telephone"].HeaderText = "Telephone";
+            this.dataGridView.Columns["Fax"].HeaderText = "Fax";
+            this.dataGridView.Columns["Date"].HeaderText = "Sent On";
+            this.dataGridView.Columns["Source"].HeaderText = "Source";
             this.dataGridView.Columns["id"].FillWeight = 3;
-            this.dataGridView.Columns["ip"].FillWeight = 5;
-            this.dataGridView.Columns["origin"].FillWeight = 5;
-            this.dataGridView.Columns["product"].FillWeight = 10;
-            this.dataGridView.Columns["name"].FillWeight = 10;
-            this.dataGridView.Columns["email"].FillWeight = 10;
-            this.dataGridView.Columns["country"].FillWeight = 7;
-            this.dataGridView.Columns["telephone"].FillWeight = 7;
-            this.dataGridView.Columns["company"].FillWeight = 10;
-            this.dataGridView.Columns["address"].FillWeight = 5;
-            this.dataGridView.Columns["fax"].FillWeight = 5;
-            this.dataGridView.Columns["sendTime"].FillWeight = 10;
-            this.dataGridView.Columns["source"].FillWeight = 5;
+            this.dataGridView.Columns["IP"].FillWeight = 5;
+            this.dataGridView.Columns["Origin"].FillWeight = 5;
+            this.dataGridView.Columns["Product"].FillWeight = 10;
+            this.dataGridView.Columns["Buyer Name"].FillWeight = 10;
+            this.dataGridView.Columns["Email"].FillWeight = 10;
+            this.dataGridView.Columns["Country"].FillWeight = 7;
+            this.dataGridView.Columns["Telephone"].FillWeight = 7;
+            this.dataGridView.Columns["Company"].FillWeight = 10;
+            this.dataGridView.Columns["Address"].FillWeight = 5;
+            this.dataGridView.Columns["Fax"].FillWeight = 5;
+            this.dataGridView.Columns["Date"].FillWeight = 10;
+            this.dataGridView.Columns["Source"].FillWeight = 5;
         }
     }
 }

@@ -120,7 +120,7 @@ namespace AliEmail
                 colIndex++;
                 excel.Cells[1, colIndex] = col.ColumnName;
             }
-
+            
             foreach (DataRow row in table.Rows)
             {
                 rowIndex++;
@@ -131,6 +131,13 @@ namespace AliEmail
                     excel.Cells[rowIndex, colIndex] = row[col.ColumnName].ToString();
                 }
             }
+            excel.get_Range(excel.Cells[1, 1], excel.Cells[1, colIndex]).Font.Bold = true;
+            excel.get_Range(excel.Cells[1, 1], excel.Cells[1, colIndex]).ColumnWidth = 15;
+            excel.get_Range(excel.Cells[1, 1], excel.Cells[1, colIndex]).RowHeight = 20;
+            excel.get_Range(excel.Cells[1, 1], excel.Cells[1, colIndex]).Borders.LineStyle = XlLineStyle.xlContinuous;
+            excel.get_Range(excel.Cells[2, 1], excel.Cells[rowIndex, colIndex]).Borders.LineStyle = XlLineStyle.xlDot;
+            excel.get_Range(excel.Cells[2, 1], excel.Cells[rowIndex, colIndex]).RowHeight = 20;
+            excel.get_Range(excel.Cells[2, 1], excel.Cells[rowIndex, colIndex]).Font.Size = 10;
             excel.Visible = false;
             excel.ActiveWorkbook.SaveAs(strExcelFileName, XlFileFormat.xlExcel7, null, null, false, false, XlSaveAsAccessMode.xlNoChange, null, null, null, null);                                                                                                                                   
             excel.Quit();
