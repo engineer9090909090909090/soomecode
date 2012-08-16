@@ -88,7 +88,7 @@ namespace AliRank
                             + "values(@mainKey,@productId,@productName,@productImage,@productUrl,@companyUrl, @createTime, @updateTime, 1)";
 
             string UpdSql = @"Update keywords SET mainKey = @mainKey, productName = @productName, productImage = @productImage, "
-                   + "productUrl = @productUrl, companyUrl = @companyUrl, updateTime = @updateTime,status=1 WHERE productId = @productId";
+                   + "productUrl = @productUrl, companyUrl = @companyUrl, updateTime = @updateTime,status=1,clicked = 0 WHERE productId = @productId";
 
             string ExistRecordSql = "SELECT count(1) FROM keywords WHERE productId = ";
             List<SQLiteParameter[]> InsertParameters = new List<SQLiteParameter[]>();

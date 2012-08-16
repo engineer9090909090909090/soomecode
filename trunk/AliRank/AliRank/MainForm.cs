@@ -141,8 +141,6 @@ namespace AliRank
                     DataRow row = dt.NewRow();
                     if (string.IsNullOrEmpty(item.ProductImg))
                     {
-                        //ResourceManager rm = new ResourceManager("AliRank.Properties.Resources", typeof(MainForm).Assembly);
-                        // rm.GetObject("no_image");
                         row["Image"] = global::AliRank.Properties.Resources.no_image; 
                     }
                     else {
@@ -201,8 +199,8 @@ namespace AliRank
             bgWorker.Dispose();
         }
 
-        private static int iCount = 0;
-        private static int MaxCount = 10;
+        private int iCount = 0;
+        private int MaxCount = 10;
         ManualResetEvent eventX;
         void bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -210,6 +208,7 @@ namespace AliRank
             MaxCount = productList.Count;
             if (MaxCount > 0)
             {
+                iCount = 0;
                 eventX = new ManualResetEvent(false);
                 ThreadPool.SetMinThreads(4, 40);
                 ThreadPool.SetMaxThreads(10, 200);
