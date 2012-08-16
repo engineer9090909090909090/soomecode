@@ -20,7 +20,7 @@ namespace AliRank
         {
             CheckForIllegalCrossThreadCalls = false;
         }
-
+        
         private void ImportBtn_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(this.textBox1.Text))
@@ -46,6 +46,8 @@ namespace AliRank
             List<Keywords> keywordList = searcher.Seacher(url);
             KeywordDAO keywordDAO = DAOFactory.Instance.GetKeywordDAO();
             keywordDAO.Insert(keywordList);
+            searcher.Dispose();
+            searcher = null;
             string IniFile = FileUtils.CreateAppDataFolderEmptyTextFile(Constants.INI_FILE);
             FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.COMPANY_URL, url, IniFile);
             this.pictureBox1.Visible = false;

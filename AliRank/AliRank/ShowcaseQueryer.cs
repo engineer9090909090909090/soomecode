@@ -10,11 +10,13 @@ using System.IO;
 
 namespace AliRank
 {
-    class ShowcaseQueryer
+    class ShowcaseQueryer:IDisposable
     {
         private static string KeywordExpressions = "var kw = encodeURIComponent\\(\\\"(.*?)\\\"\\);";
         private List<Keywords> showCaseProducts = new List<Keywords>();
-
+        private int iCount = 0;
+        private int MaxCount = 10;
+        private ManualResetEvent eventX = new ManualResetEvent(false);
         public ShowcaseQueryer() { }
 
         public List<Keywords> Seacher(string companyUrl)
@@ -55,9 +57,7 @@ namespace AliRank
         }
 
 
-        public static int iCount = 0;
-        public static int MaxCount = 10;
-        static ManualResetEvent eventX = new ManualResetEvent(false);
+        
 
         private void DoWork(object obj)
         {
@@ -83,16 +83,23 @@ namespace AliRank
                 productItem.ProductImg = imageFile;
                 webClient.Dispose();
             }
-            catch (Exception){
+            catch (Exception e){
+                System.Diagnostics.Trace.WriteLine(e.InnerException.Message);
                 productItem.ProductImg = "";
             }
-
 
             Interlocked.Increment(ref iCount);
             if (iCount == MaxCount)
             {
                 eventX.Set();//设置ManualResetEvent为有信号状态，Setting eventX
             }　
+        }
+
+        public void Dispose()
+        {
+            showCaseProducts.Clear();
+            showCaseProducts = null;
+            eventX = null;
         }
     }
 
