@@ -442,7 +442,7 @@ namespace AliRank
                 string id = (string)productIdCell.Value;
                 if (id == item.ProductId)
                 {
-                    DataGridViewCell cell = row.Cells[5];
+                    DataGridViewCell cell = row.Cells[6];
                     cell.Value = item.Clicked;
                     toolStripStatusLabel1.Text = e.Msg;
                     keywordDAO.UpdateClicked(item);
@@ -459,7 +459,7 @@ namespace AliRank
                 string id = (string)productIdCell.Value;
                 if (id == item.ProductId)
                 {
-                    DataGridViewCell cell = row.Cells[5];
+                    DataGridViewCell cell = row.Cells[6];
                     cell.Value = "Clicking...";
                     toolStripStatusLabel1.Text = e.Msg;
                 }
