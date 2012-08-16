@@ -68,9 +68,8 @@ namespace AliRank
             string jsKwString = Regex.Match(ProductPageHtml, KeywordExpressions, RegexOptions.IgnoreCase).Groups[1].Value;
             if (!string.IsNullOrEmpty(jsKwString))
             {
-                string mainKey = jsKwString.Split(',')[0];
-                productItem.MainKey = mainKey;
-                System.Diagnostics.Trace.WriteLine(url + " = " + mainKey);
+                productItem.MainKey = jsKwString;
+                System.Diagnostics.Trace.WriteLine(url + " = " + jsKwString);
             }
             ProductPageHtml = null;
 

@@ -54,7 +54,8 @@ namespace AliRank
             item = kw;
             if (item.Rank == 0)
             {
-                string mainKey = item.MainKey.Replace(" ", "+");
+
+                string mainKey = item.MainKey.Split(',')[0].Replace(" ", "+");
                 currentRequestUrl = string.Format(SEARCH_URL1, mainKey);
             }
             else
@@ -66,11 +67,11 @@ namespace AliRank
                 }
                 if (currentPage == 1)
                 {
-                    string mainKey = item.MainKey.Replace(" ", "+");
+                    string mainKey = item.MainKey.Split(',')[0].Replace(" ", "+");
                     currentRequestUrl = string.Format(SEARCH_URL1, mainKey);
                 }
                 else {
-                    string mainKey = item.MainKey.Replace(" ", "_");
+                    string mainKey = item.MainKey.Split(',')[0].Replace(" ", "_");
                     currentRequestUrl = string.Format(SEARCH_URL2, mainKey, currentPage);
                 }
                 
@@ -125,7 +126,7 @@ namespace AliRank
                         else
                         {
                             currentPage++;
-                            string mainKey = item.MainKey.Replace(" ", "_");
+                            string mainKey = item.MainKey.Split(',')[0].Replace(" ", "_");
                             currentRequestUrl = string.Format(SEARCH_URL2, mainKey, currentPage);
                             ClickingEvent(item, "Clicking " + currentRequestUrl);
                             browser.Navigate(currentRequestUrl);
