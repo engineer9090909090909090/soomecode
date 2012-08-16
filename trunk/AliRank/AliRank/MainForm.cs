@@ -139,12 +139,11 @@ namespace AliRank
                 foreach (Keywords item in productList)
                 {
                     DataRow row = dt.NewRow();
-                    if (string.IsNullOrEmpty(item.ProductImg))
+                    if (string.IsNullOrEmpty(item.ProductImg) || !File.Exists(item.ProductImg))
                     {
                         row["Image"] = global::AliRank.Properties.Resources.no_image; 
-                    }
-                    else {
-                        row["Image"] = Image.FromFile(item.ProductImg);
+                    }else {
+                        row["Image"] = new Bitmap(Image.FromFile(item.ProductImg),100,100);
                     }
                     row["productName"] = item.ProductName;
                     row["productId"] = item.ProductId;
