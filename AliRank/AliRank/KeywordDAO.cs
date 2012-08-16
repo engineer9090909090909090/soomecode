@@ -24,17 +24,18 @@ namespace AliRank
             dbHelper.ExecuteNonQuery(
               "CREATE TABLE IF NOT EXISTS keywords("
             + "id integer NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
-            + "mainKey varchar(100) NOT NULL,"
+            + "productImage varchar(300),"
             + "productId varchar(20) NOT NULL,"
             + "productName varchar(200) NOT NULL,"
-            + "productImage varchar(300),"
+            + "mainKey varchar(100) NOT NULL,"
             + "productUrl varchar(1000) NOT NULL,"
             + "companyUrl varchar(100) NOT NULL,"
             + "clicked integer default 0 NOT NULL, "
-            + "rank integer default 0 NOT NULL,"     /*本产品的当前排名数*/
-            + "prevRank integer default 0 NOT NULL,"     /*本产品的当前排名数*/
+            + "rankKeyword varchar(300),"
             + "keyAdNum integer default 0 NOT NULL," /*购买了本关键词排名的产品数*/
             + "keyP4Num integer default 0 NOT NULL," /*购买了本关键词直通车的产品数*/
+            + "rank integer(500),"         /*本产品的当前排名数*/
+            + "prevRank integer(500),"     /*本产品的当前排名数*/
             + "status integer default 0,"
             + "createTime datetime,"
             + "updateTime datetime)");

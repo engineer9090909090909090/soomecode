@@ -93,6 +93,7 @@ namespace AliRank
         #region DataGridView 初始化处理
         void LoadDataview()
         {
+            this.dataGridView1.DataBindings.Clear();
             keywordDAO = DAOFactory.Instance.GetKeywordDAO();
             this.dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
             DataTable dt = new DataTable();
@@ -100,6 +101,7 @@ namespace AliRank
             dt.Columns.Add("productName", typeof(string));
             dt.Columns.Add("productId", typeof(string));
             dt.Columns.Add("mainKey", typeof(string));
+            dt.Columns.Add("rankKey", typeof(string));
             dt.Columns.Add("rank", typeof(string));
             dt.Columns.Add("clicked", typeof(string));
             dt.Columns.Add("productUrl", typeof(string));
@@ -107,31 +109,38 @@ namespace AliRank
             this.dataGridView1.DataSource = dt;
 
             DataGridViewColumn column0 = this.dataGridView1.Columns[0];
-            column0.HeaderText = "Product Image";
+            column0.HeaderText = "产品图片";
             column0.Width = 120;
             DataGridViewColumn column = this.dataGridView1.Columns[1];
             column.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            column.HeaderText = "Product Name";
+            column.HeaderText = "产品名称";
             column.Width = 150;
             DataGridViewColumn column2 = this.dataGridView1.Columns[2];
-            column2.HeaderText = "Product Id";
+            column2.HeaderText = "产品ID";
             column2.Width = 100;
             DataGridViewColumn column3 = this.dataGridView1.Columns[3];
-            column3.HeaderText = "Main Keyword";
-            column3.Width = 150;
-            DataGridViewColumn column4 = this.dataGridView1.Columns[4];
-            column4.HeaderText = "Ranking Status";
+            column3.HeaderText = "产品关键词";
+            column3.Width = 200;
+            column3.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            DataGridViewColumn columnRankKey = this.dataGridView1.Columns[4];
+            columnRankKey.HeaderText = "排名关键词";
+            columnRankKey.Width = 120;
+            columnRankKey.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            DataGridViewColumn column4 = this.dataGridView1.Columns[5];
+            column4.HeaderText = "排名状态";
+            column4.Width = 120;
             column4.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            column4.Width = 180;
-            DataGridViewColumn column5 = this.dataGridView1.Columns[5];
-            column5.HeaderText = "Clicked";
+            DataGridViewColumn column5 = this.dataGridView1.Columns[6];
+            column5.HeaderText = "点击";
             column5.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            column5.Width = 150;
-            DataGridViewColumn column6 = this.dataGridView1.Columns[6];
-            column6.HeaderText = "Pruduct Url";
-            column6.Width = 400;
-            DataGridViewColumn column7 = this.dataGridView1.Columns[7];
-            column7.HeaderText = "Update Time";
+            column5.Width = 120;
+            DataGridViewColumn column6 = this.dataGridView1.Columns[7];
+            column6.HeaderText = "产品URL";
+            column6.Width = 300;
+            column6.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+
+            DataGridViewColumn column7 = this.dataGridView1.Columns[8];
+            column7.HeaderText = "更新时间";
             column7.Width = 120;
             List<Keywords> productList = keywordDAO.GetKeywordList();
             if (productList.Count > 0)
@@ -143,11 +152,12 @@ namespace AliRank
                     {
                         row["Image"] = global::AliRank.Properties.Resources.no_image; 
                     }else {
-                        row["Image"] = new Bitmap(Image.FromFile(item.ProductImg),100,100);
+                        row["Image"] = new Bitmap(Image.FromFile(item.ProductImg));
                     }
                     row["productName"] = item.ProductName;
                     row["productId"] = item.ProductId;
-                    row["mainKey"] = item.MainKey;
+                    row["mainKey"] = item.MainKey.Replace(",", "\r\n\r\n");
+                    row["rankKey"] = item.RankKeyword;
                     row["rank"] = Keywords.GetRankInfo(item);
                     row["clicked"] = Convert.ToString(item.Clicked);
                     row["productUrl"] = item.CompanyUrl + item.ProductUrl;
