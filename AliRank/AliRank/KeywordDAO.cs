@@ -21,6 +21,7 @@ namespace AliRank
 
         private void CreateTable()
         {
+            
             dbHelper.ExecuteNonQuery(
               "CREATE TABLE IF NOT EXISTS keywords("
             + "id integer NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
@@ -31,11 +32,11 @@ namespace AliRank
             + "productUrl varchar(1000) NOT NULL,"
             + "companyUrl varchar(100) NOT NULL,"
             + "clicked integer default 0 NOT NULL, "
-            + "rankKeyword varchar(300),"
+            + "rankKeyword varchar(300) default '',"
             + "keyAdNum integer default 0 NOT NULL," /*购买了本关键词排名的产品数*/
             + "keyP4Num integer default 0 NOT NULL," /*购买了本关键词直通车的产品数*/
-            + "rank integer(500),"         /*本产品的当前排名数*/
-            + "prevRank integer(500),"     /*本产品的当前排名数*/
+            + "rank integer default 0,"         /*本产品的当前排名数*/
+            + "prevRank integer default 0,"     /*本产品的当前排名数*/
             + "status integer default 0,"
             + "createTime datetime,"
             + "updateTime datetime)");
@@ -50,6 +51,11 @@ namespace AliRank
             {
                 dbHelper.ExecuteNonQuery("ALTER TABLE  keywords add COLUMN status integer default 1;");
             }
+            bool ExistColumnRankKeyword = dbHelper.IsExistColumn("keywords", "rankKeyword");
+            if (!ExistColumnRankKeyword)
+            {
+                dbHelper.ExecuteNonQuery("ALTER TABLE  keywords add COLUMN rankKeyword varchar(300) default '';");
+            }
         }
         
 
@@ -57,7 +63,7 @@ namespace AliRank
         public List<Keywords> GetKeywordList()
         {
             DataTable dt = dbHelper.ExecuteDataTable(
-                  "SELECT id, productId, productName, mainKey, companyUrl, productUrl, "
+                  "SELECT id, productId, productName, mainKey, rankKeyword, companyUrl, productUrl, "
                 + "productImage, prevRank,rank, keyAdNum, keyP4Num, clicked, updateTime FROM keywords where status = 1", null);
 
             List<Keywords> list = new List<Keywords>();
@@ -68,6 +74,7 @@ namespace AliRank
                 kw.ProductId = (string)row["productId"];
                 kw.ProductName = (string)row["productName"];
                 kw.MainKey = (string)row["mainKey"];
+                kw.RankKeyword = (string)row["rankKeyword"];
                 kw.CompanyUrl = (string)row["companyUrl"];
                 kw.ProductUrl = (string)row["productUrl"];
                 kw.ProductImg = (string)row["productImage"];
@@ -142,23 +149,31 @@ namespace AliRank
             }
         }
 
-        public void UpdateRank(Keywords item)
+        public Keywords UpdateRank(Keywords item)
         {
 
-            dbHelper.ExecuteNonQuery(@"UPDATE keywords SET prevRank = rank where id = " + item.Id);
-
-            string sql = @"UPDATE keywords SET rank = @rank, keyAdNum = @keyAdNum,keyP4Num = @keyP4Num,  updateTime = @updateTime where id = @id";
+            Object prank = dbHelper.ExecuteScalar(@"select prevRank from keywords where productId = " + item.ProductId, null);
+            if (Convert.IsDBNull(prank))
+            {
+                item.PrevRank = 0;
+            }else{
+                item.PrevRank = Convert.ToInt32(prank);
+            }
+            string sql = @"UPDATE keywords SET rankKeyword= @rankKeyword, prevRank= @prevRank, rank = @rank, keyAdNum = @keyAdNum,keyP4Num = @keyP4Num,  updateTime = @updateTime where productId = @productId";
             List<SQLiteParameter[]> parameters = new List<SQLiteParameter[]>();
 
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {
+                new SQLiteParameter("@rankKeyword",item.RankKeyword), 
+                new SQLiteParameter("@prevRank",item.PrevRank), 
                 new SQLiteParameter("@rank",item.Rank), 
                 new SQLiteParameter("@keyAdNum",item.KeyAdNum), 
                 new SQLiteParameter("@keyP4Num",item.KeyP4Num), 
                 new SQLiteParameter("@updateTime", DateTime.Now), 
-                new SQLiteParameter("@id",item.Id)
+                new SQLiteParameter("@productId",item.ProductId)
             };
             dbHelper.ExecuteNonQuery(sql, parameter);
+            return item;
         }
 
         public void UpdateClicked(Keywords kw)
@@ -186,7 +201,9 @@ namespace AliRank
 
         public void DeleteAll()
         {
-            dbHelper.ExecuteNonQuery(@"delete from  keywords");
+            dbHelper.ExecuteNonQuery("drop TABLE IF EXISTS keywords");
+            CreateTable();
+            UpdateTable();
         }
     }
 }

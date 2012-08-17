@@ -56,6 +56,7 @@
             this.tabControl = new System.Windows.Forms.TabControl();
             this.dataTab = new System.Windows.Forms.TabPage();
             this.IETab = new System.Windows.Forms.TabPage();
+            this.MessageLabel = new System.Windows.Forms.ToolStripLabel();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -177,7 +178,8 @@
             this.toolStripButton4,
             this.toolStripSeparator3,
             this.toolStripLabel1,
-            this.RunTime});
+            this.RunTime,
+            this.MessageLabel});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(792, 25);
@@ -312,6 +314,12 @@
             this.IETab.Text = "浏览器点击窗口";
             this.IETab.UseVisualStyleBackColor = true;
             // 
+            // MessageLabel
+            // 
+            this.MessageLabel.ForeColor = System.Drawing.Color.Red;
+            this.MessageLabel.Name = "MessageLabel";
+            this.MessageLabel.Size = new System.Drawing.Size(0, 22);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -370,6 +378,7 @@
         private System.Windows.Forms.TabPage IETab;
         private System.Windows.Forms.ToolStripMenuItem shutdownToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem CleanKeyMenuItem;
+        private System.Windows.Forms.ToolStripLabel MessageLabel;
     }
 }
 

@@ -19,13 +19,16 @@ namespace AliRank
 
         private string SEARCH_URL = "http://www.alibaba.com/products/F0/{0}/----------------------38/{1}.html";
         private string PERCENT_PATH = "//div[@class='percent-wrap']";
-        private string SUBJECT_PATH = "div[@class='attr']/h2/a";
+        private string SUBJECT_PATH = "div[@class='attr']/h2/a[@class='qrPTitle']";
         private string AD_PATH = "//div[@class='list-items AD']";
         private string P4P_PATH = "//div[@class='list-items p4p']";
 
         private Keywords item;
 
-        public RankQueryer() { }
+        public RankQueryer() 
+        {
+            item = new Keywords();
+        }
 
 
         public virtual void FinishedEvent(Keywords kw, string msg)
@@ -45,11 +48,12 @@ namespace AliRank
             }
         }
 
-        public void Seacher(Keywords kw)
+        public void Seacher(string key, string companyUrl)
         {
-            item = kw;
             item.Rank = 0;
-            string mainKey = item.MainKey.Replace(" ", "_");
+            item.RankKeyword = key;
+            item.CompanyUrl = companyUrl;
+            string mainKey = key.Replace(" ", "_");
             HtmlDocument document = null;
 
             for (int i = 0; i < 10; i++)
@@ -72,23 +76,26 @@ namespace AliRank
                         item.KeyP4Num = p4pNodes.Count;
                     }
                 }
-                string comUrlPath = "//div[@class='supplier']/span/a[@href='" + item.CompanyUrl + "']";
+                string comUrlPath = "//div[@class='supplier']/span/a[@href='" + companyUrl.ToLower() + "']";
                 HtmlNodeCollection comUrlNode = document.DocumentNode.SelectNodes(comUrlPath);
                 if (comUrlNode == null || comUrlNode.Count == 0)
                 {
                     continue;
                 }
+                comUrlPath = "div[@class='supplier']/span/a[@href='" + companyUrl.ToLower() + "']";
                 HtmlNodeCollection nodes = document.DocumentNode.SelectNodes(PERCENT_PATH);
                 for (int k = 0; k < nodes.Count; k++)
                 {
                     HtmlNode percentNode = nodes[k];
-                    HtmlNode aLinkNode = percentNode.SelectSingleNode(SUBJECT_PATH);
-    
-                    string lsubject = aLinkNode.Id.ToLower();
-                    string subjectId = "lsubject_" + item.ProductId;
-                    if (subjectId.Equals(lsubject.ToLower()))
+                    HtmlNode companyNode = percentNode.SelectSingleNode(comUrlPath);
+                    if (companyNode != null)
                     {
+                        HtmlNode aLinkNode = percentNode.SelectSingleNode(SUBJECT_PATH);
+                        string lsubject = aLinkNode.Id.ToLower();
+                        string productName = aLinkNode.InnerText;
+                        item.ProductId = lsubject.Replace("lsubject_", "");
                         item.Rank = i * 38 + (k + 1);
+                        item.ProductName = productName;
                         break;
                     }
                 }
