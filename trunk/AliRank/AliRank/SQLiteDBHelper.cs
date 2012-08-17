@@ -155,6 +155,10 @@ namespace AliRank
                     SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
                     DataTable data = new DataTable();
                     adapter.Fill(data);
+                    if (data.Rows.Count == 0)
+                    {
+                        return DBNull.Value;
+                    }
                     return data.Rows[0][0];
                 }
 

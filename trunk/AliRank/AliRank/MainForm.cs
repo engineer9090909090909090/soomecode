@@ -169,7 +169,7 @@ namespace AliRank
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 6)
+            if (e.ColumnIndex == 7)
             {
                 DataGridViewCell cell = dataGridView1[e.ColumnIndex, e.RowIndex];
                 System.Diagnostics.Process.Start("iexplore.exe", Convert.ToString(cell.Value));
@@ -195,12 +195,38 @@ namespace AliRank
 
         private void AsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            QueryKwForm f = new QueryKwForm();
+            f.FormClosed += new FormClosedEventHandler(QueryKwForm_FormClosed);
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
+
+           
+        }
+
+        void QueryKwForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (!QueryKwForm.IsQuery)
+            {
+                AsToolStripMenuItem.Enabled = true;
+                toolStripButton4.Enabled = true;
+                clickRunBtn.Enabled = true;
+                return;
+            }
+            string kwString = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.KEY_WORDS, IniFile);
+            if (string.IsNullOrEmpty(kwString))
+            {
+                return;
+            }
+            MessageLabel.Text = "开始进行关键词排名查询...";
             AsToolStripMenuItem.Enabled = false;
             toolStripButton4.Enabled = false;
+            clickRunBtn.Enabled = false;
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-                DataGridViewCell cell = row.Cells[4];
-                cell.Value = "Waiting...";
+                DataGridViewCell SearchKeyCell = row.Cells[4];
+                SearchKeyCell.Value = "";
+                DataGridViewCell cell = row.Cells[5];
+                cell.Value = "";
             }
             BackgroundWorker bgWorker = new BackgroundWorker();
             bgWorker.DoWork += new DoWorkEventHandler(bgWorker_DoWork);
@@ -208,13 +234,18 @@ namespace AliRank
             bgWorker.Dispose();
         }
 
+
+
         private int iCount = 0;
         private int MaxCount = 10;
         ManualResetEvent eventX;
+        private string QueryCompanyUrl;
         void bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            List<Keywords> productList = keywordDAO.GetKeywordList();
-            MaxCount = productList.Count;
+            string kwString = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.KEY_WORDS, IniFile);
+            QueryCompanyUrl = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.COMPANY_URL, IniFile);
+            List<string> kwList = kwString.Split(',').ToList();
+            MaxCount = kwList.Count;
             if (MaxCount > 0)
             {
                 iCount = 0;
@@ -223,22 +254,24 @@ namespace AliRank
                 ThreadPool.SetMaxThreads(10, 200);
                 for (int i = 0; i < MaxCount; i++)
                 {
-                    ThreadPool.QueueUserWorkItem(new WaitCallback(DoRankSearch), (object)productList[i]);
+                    ThreadPool.QueueUserWorkItem(new WaitCallback(DoRankSearch), (object)kwList[i]);
                 }
                 eventX.WaitOne(Timeout.Infinite, true);
             }
             toolStripButton4.Enabled = true;
             AsToolStripMenuItem.Enabled = true;
+            clickRunBtn.Enabled = true;
+            MessageLabel.Text = "";
             Console.WriteLine("线程池结束！");
         }
         
         private void DoRankSearch(object obj)
         {
-            Keywords item = (Keywords)obj;
+            string Item = (string)obj;
             RankQueryer queryer = new RankQueryer();
             queryer.OnRankSearchingEvent += new RankSearchingEvent(queryer_OnRankSearchingEvent);
             queryer.OnRankSearchEndEvent += new RankSearchEndEvent(queryer_OnRankSearchEndEvent);
-            queryer.Seacher(item);
+            queryer.Seacher(Item, QueryCompanyUrl);
             queryer.OnRankSearchingEvent -= new RankSearchingEvent(queryer_OnRankSearchingEvent);
             queryer.OnRankSearchEndEvent -= new RankSearchEndEvent(queryer_OnRankSearchEndEvent);
             Interlocked.Increment(ref iCount);
@@ -250,30 +283,25 @@ namespace AliRank
 
         void queryer_OnRankSearchingEvent(object sender, RankEventArgs e)
         {
-            Keywords item = e.Item;
-            foreach (DataGridViewRow row in dataGridView1.Rows)
-            {
-                DataGridViewCell productIdCell = row.Cells[2];
-                string id = (string)productIdCell.Value;
-                if (id == item.ProductId)
-                {
-                    DataGridViewCell cell = row.Cells[5];
-                    cell.Value = e.Msg;
-                }
-            }
         }
 
         void queryer_OnRankSearchEndEvent(object sender, RankEventArgs e)
         {
             Keywords item = e.Item;
+            if (item.Rank == 0)
+            {
+                return;            
+            }
+            item = keywordDAO.UpdateRank(item);
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 DataGridViewCell productIdCell = row.Cells[2];
                 string id = (string)productIdCell.Value;
-                if (id == item.ProductId)
+                if (id.Equals(item.ProductId))
                 {
+                    DataGridViewCell SearchKeyCell = row.Cells[4];
+                    SearchKeyCell.Value = item.RankKeyword;
                     DataGridViewCell cell = row.Cells[5];
-                    keywordDAO.UpdateRank(item);
                     cell.Value = Keywords.GetRankInfo(item);
                 }
             }

@@ -59,6 +59,12 @@
     <Compile Include="CmdUtils.cs" />
     <Compile Include="IEHandleUtils.cs" />
     <Compile Include="ProductClicker.cs" />
+    <Compile Include="QueryKwForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryKwForm.Designer.cs">
+      <DependentUpon>QueryKwForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="RankEvent.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="RankQueryer.cs" />
@@ -116,6 +122,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="QueryKwForm.resx">
+      <DependentUpon>QueryKwForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SetupForm.resx">
       <DependentUpon>SetupForm.cs</DependentUpon>
     </EmbeddedResource>
