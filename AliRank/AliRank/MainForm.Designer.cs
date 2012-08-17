@@ -298,7 +298,7 @@
             this.dataTab.Padding = new System.Windows.Forms.Padding(3);
             this.dataTab.Size = new System.Drawing.Size(784, 470);
             this.dataTab.TabIndex = 0;
-            this.dataTab.Text = "数据窗口";
+            this.dataTab.Text = "橱窗产品列表";
             this.dataTab.UseVisualStyleBackColor = true;
             // 
             // IETab
@@ -309,7 +309,7 @@
             this.IETab.Padding = new System.Windows.Forms.Padding(3);
             this.IETab.Size = new System.Drawing.Size(784, 470);
             this.IETab.TabIndex = 1;
-            this.IETab.Text = "浏览器窗口";
+            this.IETab.Text = "浏览器点击窗口";
             this.IETab.UseVisualStyleBackColor = true;
             // 
             // MainForm

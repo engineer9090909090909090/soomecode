@@ -257,7 +257,7 @@ namespace AliRank
                 string id = (string)productIdCell.Value;
                 if (id == item.ProductId)
                 {
-                    DataGridViewCell cell = row.Cells[4];
+                    DataGridViewCell cell = row.Cells[5];
                     cell.Value = e.Msg;
                 }
             }
@@ -272,7 +272,7 @@ namespace AliRank
                 string id = (string)productIdCell.Value;
                 if (id == item.ProductId)
                 {
-                    DataGridViewCell cell = row.Cells[4];
+                    DataGridViewCell cell = row.Cells[5];
                     keywordDAO.UpdateRank(item);
                     cell.Value = Keywords.GetRankInfo(item);
                 }
