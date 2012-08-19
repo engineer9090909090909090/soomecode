@@ -53,15 +53,16 @@ namespace AliRank
         public void DoClick(ShowcaseRankInfo kw)
         {
             item = kw;
+            if (string.IsNullOrEmpty(item.RankKeyword.Trim()))
+            {
+                clickKey = item.MainKey.Split(',')[0];
+            }
+            else
+            {
+                clickKey = item.RankKeyword;
+            }
             if (item.Rank == 0)
             {
-                if (string.IsNullOrEmpty(item.RankKeyword.Trim()))
-                {
-                    clickKey = item.MainKey.Split(',')[0];
-                } else {
-                    clickKey = item.RankKeyword;
-                }
-
                 string mainKey = clickKey.Replace(" ", "+");
                 currentRequestUrl = string.Format(SEARCH_URL1, mainKey);
             }
