@@ -130,7 +130,7 @@ namespace AliRank
             columnRankKey.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             DataGridViewColumn column4 = this.dataGridView1.Columns[5];
             column4.HeaderText = "排名状态";
-            column4.Width = 120;
+            column4.Width = 150;
             column4.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             DataGridViewColumn column5 = this.dataGridView1.Columns[6];
             column5.HeaderText = "点击";

@@ -25,6 +25,7 @@ namespace AliRank
         private string PURL_PREFIX = "http://www.alibaba.com/product-gs/";
         int currentPage = 1;
         private ShowcaseRankInfo item;
+        private string clickKey = string.Empty;
         private string currentRequestUrl;
         public ProductClicker(WebBrowser b) 
         {
@@ -54,8 +55,14 @@ namespace AliRank
             item = kw;
             if (item.Rank == 0)
             {
+                if (string.IsNullOrEmpty(item.RankKeyword.Trim()))
+                {
+                    clickKey = item.MainKey.Split(',')[0];
+                } else {
+                    clickKey = item.RankKeyword;
+                }
 
-                string mainKey = item.MainKey.Split(',')[0].Replace(" ", "+");
+                string mainKey = clickKey.Replace(" ", "+");
                 currentRequestUrl = string.Format(SEARCH_URL1, mainKey);
             }
             else
@@ -67,11 +74,11 @@ namespace AliRank
                 }
                 if (currentPage == 1)
                 {
-                    string mainKey = item.MainKey.Split(',')[0].Replace(" ", "+");
+                    string mainKey = clickKey.Replace(" ", "+");
                     currentRequestUrl = string.Format(SEARCH_URL1, mainKey);
                 }
                 else {
-                    string mainKey = item.MainKey.Split(',')[0].Replace(" ", "_");
+                    string mainKey = clickKey.Replace(" ", "_");
                     currentRequestUrl = string.Format(SEARCH_URL2, mainKey, currentPage);
                 }
                 
@@ -126,7 +133,7 @@ namespace AliRank
                         else
                         {
                             currentPage++;
-                            string mainKey = item.MainKey.Split(',')[0].Replace(" ", "_");
+                            string mainKey = clickKey.Replace(" ", "_");
                             currentRequestUrl = string.Format(SEARCH_URL2, mainKey, currentPage);
                             ClickingEvent(item, "Clicking " + currentRequestUrl);
                             browser.Navigate(currentRequestUrl);
