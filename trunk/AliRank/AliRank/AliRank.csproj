@@ -57,6 +57,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CmdUtils.cs" />
+    <Compile Include="RankInfo.cs" />
+    <Compile Include="RankInfoDAO.cs" />
     <Compile Include="IEHandleUtils.cs" />
     <Compile Include="ProductClicker.cs" />
     <Compile Include="QueryKwForm.cs">
@@ -77,7 +79,7 @@
     <Compile Include="ImpKwForm.Designer.cs">
       <DependentUpon>ImpKwForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Keywords.cs" />
+    <Compile Include="ShowcaseRankInfo.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

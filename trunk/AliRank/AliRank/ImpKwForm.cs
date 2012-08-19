@@ -43,7 +43,7 @@ namespace AliRank
             this.pictureBox1.Visible = true;
             string url = this.textBox1.Text;
             ShowcaseQueryer searcher = new ShowcaseQueryer();
-            List<Keywords> keywordList = searcher.Seacher(url);
+            List<ShowcaseRankInfo> keywordList = searcher.Seacher(url);
             KeywordDAO keywordDAO = DAOFactory.Instance.GetKeywordDAO();
             keywordDAO.Insert(keywordList);
             searcher.Dispose();

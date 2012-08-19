@@ -24,7 +24,7 @@ namespace AliRank
         private string SEARCH_URL2 = "http://www.alibaba.com/products/F0/{0}/{1}.html";
         private string PURL_PREFIX = "http://www.alibaba.com/product-gs/";
         int currentPage = 1;
-        private Keywords item;
+        private ShowcaseRankInfo item;
         private string currentRequestUrl;
         public ProductClicker(WebBrowser b) 
         {
@@ -32,7 +32,7 @@ namespace AliRank
         }
 
 
-        public virtual void ClickedEvent(Keywords kw, string msg)
+        public virtual void ClickedEvent(ShowcaseRankInfo kw, string msg)
         {
             if (OnRankClickEndEvent != null)
             {
@@ -40,7 +40,7 @@ namespace AliRank
                 OnRankClickEndEvent(this, e);
             }
         }
-        public virtual void ClickingEvent(Keywords kw, string msg)
+        public virtual void ClickingEvent(ShowcaseRankInfo kw, string msg)
         {
             if (OnRankClickingEvent != null)
             {
@@ -49,7 +49,7 @@ namespace AliRank
             }
         }
 
-        public void DoClick(Keywords kw)
+        public void DoClick(ShowcaseRankInfo kw)
         {
             item = kw;
             if (item.Rank == 0)

@@ -14,10 +14,10 @@ namespace AliRank
 
     public class RankEventArgs : EventArgs
     {
-        public Keywords Item;
+        public ShowcaseRankInfo Item;
         public string Msg;
 
-        public RankEventArgs(Keywords _obj, string _msg)
+        public RankEventArgs(ShowcaseRankInfo _obj, string _msg)
         {
             this.Item = _obj;
             this.Msg = _msg;

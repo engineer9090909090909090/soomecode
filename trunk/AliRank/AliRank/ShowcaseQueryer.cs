@@ -13,13 +13,13 @@ namespace AliRank
     class ShowcaseQueryer:IDisposable
     {
         private static string KeywordExpressions = "var kw = encodeURIComponent\\(\\\"(.*?)\\\"\\);";
-        private List<Keywords> showCaseProducts = new List<Keywords>();
+        private List<ShowcaseRankInfo> showCaseProducts = new List<ShowcaseRankInfo>();
         private int iCount = 0;
         private int MaxCount = 10;
         private ManualResetEvent eventX = new ManualResetEvent(false);
         public ShowcaseQueryer() { }
 
-        public List<Keywords> Seacher(string companyUrl)
+        public List<ShowcaseRankInfo> Seacher(string companyUrl)
         {
             HtmlWeb clinet = new HtmlWeb();
             HtmlDocument document = clinet.Load(companyUrl);
@@ -27,7 +27,7 @@ namespace AliRank
             
             foreach (HtmlNode node in nodes)
             {
-                Keywords item = new Keywords();
+                ShowcaseRankInfo item = new ShowcaseRankInfo();
                 item.CompanyUrl = companyUrl;
                 item.ProductId = node.Id.Replace("featureSelectProduct", "");
                 HtmlNode linkNode = node.SelectSingleNode("div[@class='featureSelectProductName']/a");
@@ -62,7 +62,7 @@ namespace AliRank
         private void DoWork(object obj)
         {
             int index = (int)obj;
-            Keywords productItem = showCaseProducts[index];
+            ShowcaseRankInfo productItem = showCaseProducts[index];
             string url = productItem.CompanyUrl + productItem.ProductUrl;
             string ProductPageHtml = HtmlUtils.getContent(url);
             string jsKwString = Regex.Match(ProductPageHtml, KeywordExpressions, RegexOptions.IgnoreCase).Groups[1].Value;

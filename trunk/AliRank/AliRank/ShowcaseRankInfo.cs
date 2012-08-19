@@ -5,27 +5,19 @@ using System.Text;
 
 namespace AliRank
 {
-    public class Keywords
+    public class ShowcaseRankInfo : RankInfo
     {
-        public Int32 Id { get; set; }
-        public string ProductId { get; set; }
         public string CompanyUrl { get; set; }
-        public string ProductName { get; set; }
         public string ProductUrl { get; set; }
         public string ProductImg { get; set; }
         public string MainKey { get; set; }
         public Int32 PrevRank { get; set; }
-        public Int32 Rank { get; set; }
-        public string RankKeyword { get; set; }
-        public Int32 KeyAdNum { get; set; }
-        public Int32 KeyP4Num { get; set; }
         public Int32 Clicked { get; set; }
         public Int32 Status { get; set; }
-        public DateTime UpdateTime { get; set; }
 
         public string Image { get; set; }
 
-        public static string GetRankInfo(Keywords item)
+        public static string GetRankInfo(ShowcaseRankInfo item)
         {
             if (item.Rank == 0)
             {

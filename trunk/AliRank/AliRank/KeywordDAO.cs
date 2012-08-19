@@ -60,16 +60,16 @@ namespace AliRank
         
 
 
-        public List<Keywords> GetKeywordList()
+        public List<ShowcaseRankInfo> GetKeywordList()
         {
             DataTable dt = dbHelper.ExecuteDataTable(
                   "SELECT id, productId, productName, mainKey, rankKeyword, companyUrl, productUrl, "
                 + "productImage, prevRank,rank, keyAdNum, keyP4Num, clicked, updateTime FROM keywords where status = 1", null);
 
-            List<Keywords> list = new List<Keywords>();
+            List<ShowcaseRankInfo> list = new List<ShowcaseRankInfo>();
             foreach (DataRow row in dt.Rows)
             {
-                Keywords kw = new Keywords();
+                ShowcaseRankInfo kw = new ShowcaseRankInfo();
                 kw.Id = Convert.ToInt32(row["id"]);
                 kw.ProductId = (string)row["productId"];
                 kw.ProductName = (string)row["productName"];
@@ -90,7 +90,7 @@ namespace AliRank
         }
 
 
-        public void Insert(List<Keywords> list)
+        public void Insert(List<ShowcaseRankInfo> list)
         {
             string InsSql = @"INSERT INTO keywords(mainKey,productId,productName,productImage,productUrl,companyUrl, createTime, updateTime, status)"
                             + "values(@mainKey,@productId,@productName,@productImage,@productUrl,@companyUrl, @createTime, @updateTime, 1)";
@@ -101,7 +101,7 @@ namespace AliRank
             string ExistRecordSql = "SELECT count(1) FROM keywords WHERE productId = ";
             List<SQLiteParameter[]> InsertParameters = new List<SQLiteParameter[]>();
             List<SQLiteParameter[]> UpdateParameters = new List<SQLiteParameter[]>();
-            foreach (Keywords item in list)
+            foreach (ShowcaseRankInfo item in list)
             {
                 int record = Convert.ToInt32(dbHelper.ExecuteScalar(ExistRecordSql + item.ProductId, null));
                 if (record > 0)
@@ -149,7 +149,7 @@ namespace AliRank
             }
         }
 
-        public Keywords UpdateRank(Keywords item)
+        public ShowcaseRankInfo UpdateRank(ShowcaseRankInfo item)
         {
 
             Object prank = dbHelper.ExecuteScalar(@"select prevRank from keywords where productId = " + item.ProductId, null);
@@ -176,7 +176,7 @@ namespace AliRank
             return item;
         }
 
-        public void UpdateClicked(Keywords kw)
+        public void UpdateClicked(ShowcaseRankInfo kw)
         {
             string sql = @"UPDATE keywords SET clicked = @clicked, updateTime = @updateTime where id = @id";
             SQLiteParameter[] parameter = new SQLiteParameter[]
