@@ -11,24 +11,28 @@ namespace AliRank
 {
     public partial class QueryKwForm : Form
     {
-
-        private string IniFile;
         public static bool IsQuery = false;
         private bool IsCancel = false;
+        RankInfoDAO rankInfoDao;
         public QueryKwForm()
         {
             InitializeComponent();
-            IniFile = FileUtils.CreateAppDataFolderEmptyTextFile(Constants.INI_FILE);
+            rankInfoDao = DAOFactory.Instance.GetRankInfoDAO();
         }
 
         private void QueryKwForm_Load(object sender, EventArgs e)
         {
             IsQuery = false;
             IsCancel = false;
-            string keywords = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.KEY_WORDS, IniFile);
-            if (!string.IsNullOrEmpty(keywords))
+            List<RankInfo> list = rankInfoDao.GetRankInfoList();
+            if (list.Count > 0)
             {
-                KwTextBox.Text = keywords.Replace(",", "\r\n");
+                string keywords = string.Empty;
+                foreach (RankInfo info in list)
+                {
+                    keywords += info.RankKeyword + "\r\n";
+                }
+                KwTextBox.Text = keywords;
             }
         }
 
@@ -43,8 +47,19 @@ namespace AliRank
         {
             if (!IsCancel)
             {
-                string keywords = KwTextBox.Text = KwTextBox.Text.Replace("\r\n", ",");
-                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.KEY_WORDS, keywords, IniFile);
+                string kwString = KwTextBox.Text.Trim();
+                if (!string.IsNullOrEmpty(kwString))
+                {
+                    List<RankInfo> list = new List<RankInfo>();
+                    string[] keywords = kwString.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (string s in keywords)
+                    {
+                        RankInfo info = new RankInfo();
+                        info.RankKeyword = s;
+                        list.Add(info);
+                    }
+                    rankInfoDao.Insert(list);
+                }
             }
         }
 

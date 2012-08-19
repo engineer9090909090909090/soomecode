@@ -16,7 +16,6 @@ namespace AliRank
         public static string COMPANY_URL = "CompanyUrl";
         public static string AUTO_SHUTDOWN = "AutoShutDown";
         public static string NETWORK_CHOICE = "Network Choice";
-        public static string KEY_WORDS = "Key Words";
         public static string YES = "1";
         public static string NO =  "0";
 

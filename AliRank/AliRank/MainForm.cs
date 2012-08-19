@@ -16,6 +16,7 @@ namespace AliRank
     {
         private KeywordDAO keywordDAO;
         private VpnDAO vpnDao;
+        private RankInfoDAO rankInfoDAO;
         private static bool IsStopClicking;
 
         private string IniFile;
@@ -36,6 +37,7 @@ namespace AliRank
         {
             CheckForIllegalCrossThreadCalls = false;
             vpnDao = DAOFactory.Instance.GetVpnDAO();
+            rankInfoDAO = DAOFactory.Instance.GetRankInfoDAO();
             LoadDataview();
         }
 
@@ -142,10 +144,10 @@ namespace AliRank
             DataGridViewColumn column7 = this.dataGridView1.Columns[8];
             column7.HeaderText = "更新时间";
             column7.Width = 120;
-            List<Keywords> productList = keywordDAO.GetKeywordList();
+            List<ShowcaseRankInfo> productList = keywordDAO.GetKeywordList();
             if (productList.Count > 0)
             {
-                foreach (Keywords item in productList)
+                foreach (ShowcaseRankInfo item in productList)
                 {
                     DataRow row = dt.NewRow();
                     if (string.IsNullOrEmpty(item.ProductImg) || !File.Exists(item.ProductImg))
@@ -158,7 +160,7 @@ namespace AliRank
                     row["productId"] = item.ProductId;
                     row["mainKey"] = item.MainKey.Replace(",", "\r\n\r\n");
                     row["rankKey"] = item.RankKeyword;
-                    row["rank"] = Keywords.GetRankInfo(item);
+                    row["rank"] = ShowcaseRankInfo.GetRankInfo(item);
                     row["clicked"] = Convert.ToString(item.Clicked);
                     row["productUrl"] = item.CompanyUrl + item.ProductUrl;
                     row["updateTime"] = item.UpdateTime;
@@ -212,8 +214,8 @@ namespace AliRank
                 clickRunBtn.Enabled = true;
                 return;
             }
-            string kwString = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.KEY_WORDS, IniFile);
-            if (string.IsNullOrEmpty(kwString))
+            List<RankInfo> queryList = rankInfoDAO.GetRankInfoList();
+            if (queryList == null || queryList.Count ==0)
             {
                 return;
             }
@@ -242,10 +244,9 @@ namespace AliRank
         private string QueryCompanyUrl;
         void bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            string kwString = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.KEY_WORDS, IniFile);
             QueryCompanyUrl = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.COMPANY_URL, IniFile);
-            List<string> kwList = kwString.Split(',').ToList();
-            MaxCount = kwList.Count;
+            List<RankInfo> queryList = rankInfoDAO.GetRankInfoList();
+            MaxCount = queryList.Count;
             if (MaxCount > 0)
             {
                 iCount = 0;
@@ -254,7 +255,8 @@ namespace AliRank
                 ThreadPool.SetMaxThreads(10, 200);
                 for (int i = 0; i < MaxCount; i++)
                 {
-                    ThreadPool.QueueUserWorkItem(new WaitCallback(DoRankSearch), (object)kwList[i]);
+                    string keyword = queryList[i].RankKeyword;
+                    ThreadPool.QueueUserWorkItem(new WaitCallback(DoRankSearch), (object)keyword);
                 }
                 eventX.WaitOne(Timeout.Infinite, true);
             }
@@ -287,11 +289,12 @@ namespace AliRank
 
         void queryer_OnRankSearchEndEvent(object sender, RankEventArgs e)
         {
-            Keywords item = e.Item;
+            ShowcaseRankInfo item = e.Item;
             if (item.Rank == 0)
             {
                 return;            
             }
+            rankInfoDAO.UpdateRankInfo(item);
             item = keywordDAO.UpdateRank(item);
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
@@ -302,7 +305,7 @@ namespace AliRank
                     DataGridViewCell SearchKeyCell = row.Cells[4];
                     SearchKeyCell.Value = item.RankKeyword;
                     DataGridViewCell cell = row.Cells[5];
-                    cell.Value = Keywords.GetRankInfo(item);
+                    cell.Value = ShowcaseRankInfo.GetRankInfo(item);
                 }
             }
         }
@@ -396,7 +399,7 @@ namespace AliRank
 
         void bgWorker_DoWork2(object sender, DoWorkEventArgs e)
         {
-            List<Keywords> productList = keywordDAO.GetKeywordList();
+            List<ShowcaseRankInfo> productList = keywordDAO.GetKeywordList();
             string ConfigClickNum = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, IniFile);
             string Network = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.NETWORK_CHOICE, IniFile);
             if (Network.Equals(Constants.NETWORK_VPN))
@@ -463,7 +466,7 @@ namespace AliRank
 
         void clicker_OnRankClickEndEvent(object sender, RankEventArgs e)
         {
-            Keywords item = e.Item;
+            ShowcaseRankInfo item = e.Item;
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 DataGridViewCell productIdCell = row.Cells[2];
@@ -480,7 +483,7 @@ namespace AliRank
 
         void clicker_OnRankClickingEvent(object sender, RankEventArgs e)
         {
-            Keywords item = e.Item;
+            ShowcaseRankInfo item = e.Item;
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 DataGridViewCell productIdCell = row.Cells[2];

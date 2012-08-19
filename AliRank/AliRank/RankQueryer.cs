@@ -23,15 +23,15 @@ namespace AliRank
         private string AD_PATH = "//div[@class='list-items AD']";
         private string P4P_PATH = "//div[@class='list-items p4p']";
 
-        private Keywords item;
+        private ShowcaseRankInfo item;
 
         public RankQueryer() 
         {
-            item = new Keywords();
+            item = new ShowcaseRankInfo();
         }
 
 
-        public virtual void FinishedEvent(Keywords kw, string msg)
+        public virtual void FinishedEvent(ShowcaseRankInfo kw, string msg)
         {
             if (OnRankSearchEndEvent != null)
             {
@@ -39,7 +39,7 @@ namespace AliRank
                 OnRankSearchEndEvent(this, e);
             }
         }
-        public virtual void SearchingEvent(Keywords kw, string msg)
+        public virtual void SearchingEvent(ShowcaseRankInfo kw, string msg)
         {
             if (OnRankSearchingEvent != null)
             {
