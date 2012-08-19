@@ -246,6 +246,8 @@ namespace AliRank
         {
             QueryCompanyUrl = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.COMPANY_URL, IniFile);
             List<RankInfo> queryList = rankInfoDAO.GetRankInfoList();
+            rankInfoDAO.UpdateAllQueryStatus();
+            keywordDAO.UpdateAllQueryStatus();
             MaxCount = queryList.Count;
             if (MaxCount > 0)
             {
@@ -296,6 +298,10 @@ namespace AliRank
             }
             rankInfoDAO.UpdateRankInfo(item);
             item = keywordDAO.UpdateRank(item);
+            if (item.QueryStatus == 0)
+            {
+                return;
+            }
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 DataGridViewCell productIdCell = row.Cells[2];

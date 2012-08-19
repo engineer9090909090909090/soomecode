@@ -32,6 +32,7 @@ namespace AliRank
             + "productId varchar(20),"
             + "productName varchar(200),"
             + "status integer default 0,"
+            + "queryStatus integer default 0,"
             + "createTime datetime,"
             + "updateTime datetime)");
 
@@ -40,7 +41,11 @@ namespace AliRank
 
         private void UpdateTable()
         {
-
+            bool ExistColumnStatus = dbHelper.IsExistColumn("RankInfo", "queryStatus");
+            if (!ExistColumnStatus)
+            {
+                dbHelper.ExecuteNonQuery("ALTER TABLE  RankInfo add COLUMN queryStatus integer default 0;");
+            }
         }
 
         public List<RankInfo> GetRankInfoList()
@@ -119,9 +124,11 @@ namespace AliRank
         }
 
 
-        public void UpdateRankInfo(RankInfo item)
+        public int UpdateRankInfo(RankInfo item)
         {
-            string sql = @"UPDATE RankInfo SET rank = @rank, keyAdNum = @keyAdNum,keyP4Num = @keyP4Num,productId= @productId, productName=@productName,  updateTime = @updateTime where rankKeyword = @rankKeyword";
+            string sql = @"UPDATE RankInfo SET rank = @rank, keyAdNum = @keyAdNum,keyP4Num = "
+                + "@keyP4Num,productId= @productId, productName=@productName,  updateTime = @updateTime, queryStatus = 1 "
+                +"where rankKeyword = @rankKeyword and queryStatus = 0";
             List<SQLiteParameter[]> parameters = new List<SQLiteParameter[]>();
 
             SQLiteParameter[] parameter = new SQLiteParameter[]
@@ -134,7 +141,12 @@ namespace AliRank
                 new SQLiteParameter("@updateTime", DateTime.Now), 
                 new SQLiteParameter("@rankKeyword",item.RankKeyword), 
             };
-            dbHelper.ExecuteNonQuery(sql, parameter);
+            return dbHelper.ExecuteNonQuery(sql, parameter);
+        }
+
+        public void UpdateAllQueryStatus()
+        {
+            dbHelper.ExecuteNonQuery("UPDATE RankInfo SET queryStatus = 0");
         }
     }
 }
