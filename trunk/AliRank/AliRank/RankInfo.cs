@@ -15,5 +15,6 @@ namespace AliRank
         public Int32 KeyAdNum { get; set; }
         public Int32 KeyP4Num { get; set; }
         public DateTime UpdateTime { get; set; }
+        public Int32 QueryStatus { get; set; }
     }
 }

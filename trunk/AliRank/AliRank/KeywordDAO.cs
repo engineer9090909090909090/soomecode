@@ -38,6 +38,7 @@ namespace AliRank
             + "rank integer default 0,"         /*本产品的当前排名数*/
             + "prevRank integer default 0,"     /*本产品的当前排名数*/
             + "status integer default 0,"
+            + "queryStatus integer default 0,"
             + "createTime datetime,"
             + "updateTime datetime)");
 
@@ -55,6 +56,11 @@ namespace AliRank
             if (!ExistColumnRankKeyword)
             {
                 dbHelper.ExecuteNonQuery("ALTER TABLE  keywords add COLUMN rankKeyword varchar(300) default '';");
+            }
+            bool ExistColumnQueryStatus = dbHelper.IsExistColumn("keywords", "queryStatus");
+            if (!ExistColumnQueryStatus)
+            {
+                dbHelper.ExecuteNonQuery("ALTER TABLE  keywords add COLUMN queryStatus integer default 0;");
             }
         }
         
@@ -149,9 +155,13 @@ namespace AliRank
             }
         }
 
+        public void UpdateAllQueryStatus()
+        {
+            dbHelper.ExecuteNonQuery("UPDATE keywords SET queryStatus = 0");
+        }
+
         public ShowcaseRankInfo UpdateRank(ShowcaseRankInfo item)
         {
-
             Object prank = dbHelper.ExecuteScalar(@"select prevRank from keywords where productId = " + item.ProductId, null);
             if (Convert.IsDBNull(prank))
             {
@@ -159,9 +169,9 @@ namespace AliRank
             }else{
                 item.PrevRank = Convert.ToInt32(prank);
             }
-            string sql = @"UPDATE keywords SET rankKeyword= @rankKeyword, prevRank= @prevRank, rank = @rank, keyAdNum = @keyAdNum,keyP4Num = @keyP4Num,  updateTime = @updateTime where productId = @productId";
-            List<SQLiteParameter[]> parameters = new List<SQLiteParameter[]>();
-
+            string sql = @"UPDATE keywords SET rankKeyword= @rankKeyword,prevRank= @prevRank,  "
+                + "rank = @rank, keyAdNum = @keyAdNum,keyP4Num = @keyP4Num, queryStatus = 1,  "
+                + "updateTime = @updateTime where productId = @productId and  queryStatus = 0 ";
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {
                 new SQLiteParameter("@rankKeyword",item.RankKeyword), 
@@ -172,7 +182,7 @@ namespace AliRank
                 new SQLiteParameter("@updateTime", DateTime.Now), 
                 new SQLiteParameter("@productId",item.ProductId)
             };
-            dbHelper.ExecuteNonQuery(sql, parameter);
+            item.QueryStatus = dbHelper.ExecuteNonQuery(sql, parameter);
             return item;
         }
 
