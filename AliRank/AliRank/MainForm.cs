@@ -31,6 +31,7 @@ namespace AliRank
             {
                 FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, 50 + "", IniFile);
             }
+            this.WindowState = FormWindowState.Maximized;
         }
 
         void MainForm_Load(object sender, EventArgs e)
@@ -503,6 +504,12 @@ namespace AliRank
             }
         }
         #endregion 
+
+        private void MtToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TopFiveQueryForm f = new TopFiveQueryForm();
+            f.Show();
+        }
 
 
 

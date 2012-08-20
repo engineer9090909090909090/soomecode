@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CmdUtils.cs" />
+    <Compile Include="TopFiveInfo.cs" />
     <Compile Include="RankInfo.cs" />
     <Compile Include="RankInfoDAO.cs" />
     <Compile Include="IEHandleUtils.cs" />
@@ -98,6 +99,12 @@
     <Compile Include="SetupForm.Designer.cs">
       <DependentUpon>SetupForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TopFiveQueryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TopFiveQueryForm.Designer.cs">
+      <DependentUpon>TopFiveQueryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="VPN.cs" />
     <Compile Include="VpnDAO.cs" />
     <Compile Include="VpnForm.cs">
@@ -129,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SetupForm.resx">
       <DependentUpon>SetupForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TopFiveQueryForm.resx">
+      <DependentUpon>TopFiveQueryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VpnForm.resx">
       <DependentUpon>VpnForm.cs</DependentUpon>
