@@ -51,12 +51,12 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.RunTime = new System.Windows.Forms.ToolStripLabel();
+            this.MessageLabel = new System.Windows.Forms.ToolStripLabel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.dataTab = new System.Windows.Forms.TabPage();
             this.IETab = new System.Windows.Forms.TabPage();
-            this.MessageLabel = new System.Windows.Forms.ToolStripLabel();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -107,22 +107,23 @@
             // ImpToolStripMenuItem
             // 
             this.ImpToolStripMenuItem.Name = "ImpToolStripMenuItem";
-            this.ImpToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.ImpToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.ImpToolStripMenuItem.Text = "导入橱窗产品(&I)";
             this.ImpToolStripMenuItem.Click += new System.EventHandler(this.ToolStripMenuItem1_Click);
             // 
             // AsToolStripMenuItem
             // 
             this.AsToolStripMenuItem.Name = "AsToolStripMenuItem";
-            this.AsToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.AsToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.AsToolStripMenuItem.Text = "关键词排名查询(&Q)";
             this.AsToolStripMenuItem.Click += new System.EventHandler(this.AsToolStripMenuItem_Click);
             // 
             // MtToolStripMenuItem
             // 
             this.MtToolStripMenuItem.Name = "MtToolStripMenuItem";
-            this.MtToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.MtToolStripMenuItem.Text = "关键词维护(&M)";
+            this.MtToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.MtToolStripMenuItem.Text = "关键词前5名分析(&A)";
+            this.MtToolStripMenuItem.Click += new System.EventHandler(this.MtToolStripMenuItem_Click);
             // 
             // SetToolStripMenuItem
             // 
@@ -241,6 +242,12 @@
             this.RunTime.Size = new System.Drawing.Size(63, 22);
             this.RunTime.Text = "00 : 00 : 00";
             // 
+            // MessageLabel
+            // 
+            this.MessageLabel.ForeColor = System.Drawing.Color.Red;
+            this.MessageLabel.Name = "MessageLabel";
+            this.MessageLabel.Size = new System.Drawing.Size(0, 22);
+            // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
@@ -313,12 +320,6 @@
             this.IETab.TabIndex = 1;
             this.IETab.Text = "浏览器点击窗口";
             this.IETab.UseVisualStyleBackColor = true;
-            // 
-            // MessageLabel
-            // 
-            this.MessageLabel.ForeColor = System.Drawing.Color.Red;
-            this.MessageLabel.Name = "MessageLabel";
-            this.MessageLabel.Size = new System.Drawing.Size(0, 22);
             // 
             // MainForm
             // 
