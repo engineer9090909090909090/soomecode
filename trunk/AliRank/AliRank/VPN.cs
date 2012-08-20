@@ -72,6 +72,8 @@ namespace AliRank
                 entry.Options.ShowDialingProgress = false;
                 entry.Options.PromoteAlternates = false;
                 entry.Options.DoNotNegotiateMultilink = false;
+                entry.DnsAddress = IPAddress.Parse("121.0.21.2");
+                entry.DnsAddressAlt = IPAddress.Parse("110.75.217.1");
                 if (model.VpnType.ToUpper().Equals("L2TP") && !string.IsNullOrEmpty(model.L2tpSec))
                 {
                     entry.Options.UsePreSharedKey = true;
