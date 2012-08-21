@@ -99,6 +99,7 @@
     <Compile Include="SetupForm.Designer.cs">
       <DependentUpon>SetupForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TopFiveQueryer.cs" />
     <Compile Include="TopFiveQueryForm.cs">
       <SubType>Form</SubType>
     </Compile>

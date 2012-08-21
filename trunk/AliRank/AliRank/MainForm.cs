@@ -510,18 +510,6 @@ namespace AliRank
             TopFiveQueryForm f = new TopFiveQueryForm();
             f.Show();
         }
-
-
-
-
-        
-
-    
-        
-
-        
-
-
         
     }
 }

@@ -42,47 +42,44 @@ namespace AliRank
             column.Width = 200;
             DataGridViewColumn column2 = this.dataGridView.Columns[2];
             column2.HeaderText = "关键词1";
-            column2.Width = 150;
+            column2.Width = 180;
             DataGridViewColumn column3 = this.dataGridView.Columns[3];
             column3.HeaderText = "关键词2";
-            column3.Width = 150;
-            DataGridViewColumn column4 = this.dataGridView.Columns[3];
+            column3.Width = 180;
+            DataGridViewColumn column4 = this.dataGridView.Columns[4];
             column4.HeaderText = "关键词3";
-            column4.Width = 150;
+            column4.Width = 180;
             DataGridViewColumn column5 = this.dataGridView.Columns[5];
             column5.HeaderText = "简要描述";
-            column5.Width = 200;
+            column5.Width = 250;
             column5.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
         }
 
-        void LoadDataView()
+        void LoadItemToDataView(TopFiveInfo item)
         {
             DataTable dt = (DataTable)this.dataGridView.DataSource;
-            dt.Clear();
-            List<TopFiveInfo> productList = null;// keywordDAO.GetKeywordList();
-            if (productList.Count > 0)
+            DataRow row = dt.NewRow();
+            if (string.IsNullOrEmpty(item.Image) || !File.Exists(item.Image))
             {
-                foreach (TopFiveInfo item in productList)
-                {
-                    DataRow row = dt.NewRow();
-                    if (string.IsNullOrEmpty(item.Image) || !File.Exists(item.Image))
-                    {
-                        row["Image"] = global::AliRank.Properties.Resources.no_image;
-                    }
-                    else
-                    {
-                        row["Image"] = new Bitmap(Image.FromFile(item.Image));
-                    }
-                    row["Name"] = item.Name;
-                    row["Key1"] = item.Key1;
-                    row["Key2"] = item.Key2;
-                    row["Key3"] = item.Key3;
-                    row["Desc"] = item.Desc;
-                    dt.Rows.Add(row);
-                }
+                row["Image"] = global::AliRank.Properties.Resources.no_image;
+            } else {
+                row["Image"] = new Bitmap(Image.FromFile(item.Image));
             }
+            row["Name"] = item.Name;
+            row["Key1"] = item.Key1;
+            row["Key2"] = item.Key2;
+            row["Key3"] = item.Key3;
+            row["Desc"] = item.Desc;
+            dt.Rows.Add(row);
         }
 
+        private void keyBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                queryBtn_Click(sender, e);
+            }
+        }
         private void queryBtn_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(keyBox.Text.Trim()))
@@ -90,6 +87,9 @@ namespace AliRank
                 MessageBox.Show("查询关键字不能为空。");
                 return;
             }
+            queryBtn.Enabled = false;
+            DataTable dt = (DataTable)this.dataGridView.DataSource;
+            dt.Clear();
             BackgroundWorker bgWorker = new BackgroundWorker();
             bgWorker.DoWork += new DoWorkEventHandler(bgWorker_DoWork);
             bgWorker.RunWorkerAsync();
@@ -98,9 +98,16 @@ namespace AliRank
 
         void bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            
+            TopFiveQueryer query = new TopFiveQueryer();
+            query.OnTopFiveSearchEndEvent += new TopFiveSearchEndEvent(query_OnTopFiveSearchEndEvent);
+            query.Seacher(keyBox.Text.Trim());
+            queryBtn.Enabled = true;
         }
 
-       
+        void query_OnTopFiveSearchEndEvent(object sender, TopFiveEventArgs e)
+        {
+            TopFiveInfo item = e.Item;
+            LoadItemToDataView(item);
+        }
     }
 }
