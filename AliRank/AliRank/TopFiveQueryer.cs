@@ -16,17 +16,17 @@ namespace AliRank
     {
         public event TopFiveSearchEndEvent OnTopFiveSearchEndEvent;
         public event TopFiveSearchingEvent OnTopFiveSearchingEvent;
-
-        private string SEARCH_URL = "http://www.alibaba.com/products/F0/{0}/----------------------50/{1}.html";
-        private string PERCENT_PATH = "//div[@class='percent-wrap']";
-        private string SUBJECT_PATH = "div[@class='attr']/h2/a[@class='qrPTitle']";
+        private string KeywordExpressions = "var kw = encodeURIComponent\\(\\\"(.*?)\\\"\\);";
+        private string SEARCH_URL = "http://www.alibaba.com/products/F0/{0}/----------------------38/{1}.html";
+        private string IMAGE_PATH = "div[@class='pic']/a/img";
+        private string SUBJECT_PATH = "div[@class='percent-wrap']/div[@class='attr']/h2/a[@class='qrPTitle']";
+        private string PATH = "//div[@class='list-items']";
         private string AD_PATH = "//div[@class='list-items AD']";
         private string P4P_PATH = "//div[@class='list-items p4p']";
 
 
         public TopFiveQueryer() 
         {
-
         }
 
 
@@ -47,55 +47,73 @@ namespace AliRank
             }
         }
 
-        public void Seacher(string key, string companyUrl)
+        public void Seacher(string key)
         {
+            
             string mainKey = key.Replace(" ", "_");
             HtmlDocument document = null;
-
+            int p4pNum = 0;
+            int adaNum = 0;
             string url = string.Format(SEARCH_URL, mainKey, 1);
             HtmlWeb clinet = new HtmlWeb();
             document = clinet.Load(url);
-            System.Diagnostics.Trace.WriteLine(url + " = " + mainKey);
-
+            HtmlNodeCollection itemNodes = document.DocumentNode.SelectNodes(PATH);
             HtmlNodeCollection adNodes = document.DocumentNode.SelectNodes(AD_PATH);
             HtmlNodeCollection p4pNodes = document.DocumentNode.SelectNodes(P4P_PATH);
             if (adNodes != null)
             {
-                item.KeyAdNum = adNodes.Count;
+                adaNum = adNodes.Count;
             }
             if (p4pNodes != null)
             {
-                item.KeyP4Num = p4pNodes.Count;
+                p4pNum = p4pNodes.Count;
             }
+            int itemCount = itemNodes.Count;
+            int kcount = itemCount >= 8 ? 8 : itemCount;
+            for (int k = 0; k < kcount; k++)
+            {
+                TopFiveInfo item = new TopFiveInfo();
+                item.KeyP4Num = p4pNum;
+                item.KeyAdNum = adaNum;
+                HtmlNode percentNode = itemNodes[k];
 
-            string comUrlPath = "//div[@class='supplier']/span/a[@href='" + companyUrl.ToLower() + "']";
-            HtmlNodeCollection comUrlNode = document.DocumentNode.SelectNodes(comUrlPath);
-            if (comUrlNode == null || comUrlNode.Count == 0)
-            {
-                continue;
-            }
-            comUrlPath = "div[@class='supplier']/span/a[@href='" + companyUrl.ToLower() + "']";
-            HtmlNodeCollection nodes = document.DocumentNode.SelectNodes(PERCENT_PATH);
-            for (int k = 0; k < nodes.Count; k++)
-            {
-                HtmlNode percentNode = nodes[k];
-                HtmlNode companyNode = percentNode.SelectSingleNode(comUrlPath);
-                if (companyNode != null)
+                HtmlNode ImageNode = percentNode.SelectSingleNode(IMAGE_PATH);
+                string src = ImageNode.Attributes["image-src"].Value;
+                string productId = ImageNode.Id.Replace("limage_", "");
+                try
                 {
-                    HtmlNode aLinkNode = percentNode.SelectSingleNode(SUBJECT_PATH);
-                    string lsubject = aLinkNode.Id.ToLower();
-                    string productName = aLinkNode.InnerText;
-                    item.ProductId = lsubject.Replace("lsubject_", "");
-                    item.Rank = i * 38 + (k + 1);
-                    item.ProductName = productName;
-                    break;
+                    WebClient webClient = new WebClient();
+                    string imageFile = FileUtils.GetImageFolder() + Path.DirectorySeparatorChar + productId + ".jpg";
+                    if (File.Exists(imageFile)) File.Delete(imageFile);
+                    webClient.DownloadFile(src, imageFile);
+                    item.Image = imageFile;
+                    webClient.Dispose();
                 }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Trace.WriteLine(e.InnerException.Message);
+                    item.Image = "";
+                }
+
+                HtmlNode aLinkNode = percentNode.SelectSingleNode(SUBJECT_PATH);
+                item.Name = aLinkNode.InnerText;
+                string href = aLinkNode.Attributes["href"].Value;
+                document = clinet.Load(href);
+                string ProductPageHtml = document.DocumentNode.InnerHtml;
+                string jsKwString = Regex.Match(ProductPageHtml, KeywordExpressions, RegexOptions.IgnoreCase).Groups[1].Value;
+                if (!string.IsNullOrEmpty(jsKwString))
+                {
+                    string[] keywords = jsKwString.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries);
+                    item.Key1 = keywords[0];
+                    item.Key2 = keywords[1];
+                    item.Key3 = keywords[2];
+                 }
+                string descrption = document.DocumentNode.SelectSingleNode("//div[@id='richTextDescription']").PreviousSibling.PreviousSibling.InnerHtml;
+                item.Desc = descrption.Replace("<br>", "");
+                ProductPageHtml = null;
+                FinishedEvent(item, "Rank search finished.");
             }
-            if (item.Rank > 0)
-            {
-                break;                
-            }
-            FinishedEvent(item, "Rank search finished.");
+           
         }
     }
 }
