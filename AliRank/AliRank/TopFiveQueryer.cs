@@ -104,9 +104,18 @@ namespace AliRank
                 if (!string.IsNullOrEmpty(jsKwString))
                 {
                     string[] keywords = jsKwString.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries);
-                    item.Key1 = keywords[0];
-                    item.Key2 = keywords[1];
-                    item.Key3 = keywords[2];
+                    if (keywords.Length > 0)
+                    {
+                        item.Key1 = keywords[0];
+                    } 
+                    if (keywords.Length > 1)
+                    {
+                        item.Key2 = keywords[1];
+                    } 
+                    if (keywords.Length > 2)
+                    {
+                        item.Key3 = keywords[2];
+                    }
                  }
                 string descrption = document.DocumentNode.SelectSingleNode("//div[@id='richTextDescription']").PreviousSibling.PreviousSibling.InnerHtml;
                 item.Desc = descrption.Replace("<br>", "");
