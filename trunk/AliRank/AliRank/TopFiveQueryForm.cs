@@ -73,6 +73,8 @@ namespace AliRank
             dt.Rows.Add(row);
         }
 
+       
+
         private void keyBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -88,6 +90,7 @@ namespace AliRank
                 return;
             }
             queryBtn.Enabled = false;
+            keyBox.Enabled = false;
             DataTable dt = (DataTable)this.dataGridView.DataSource;
             dt.Clear();
             BackgroundWorker bgWorker = new BackgroundWorker();
@@ -102,12 +105,24 @@ namespace AliRank
             query.OnTopFiveSearchEndEvent += new TopFiveSearchEndEvent(query_OnTopFiveSearchEndEvent);
             query.Seacher(keyBox.Text.Trim());
             queryBtn.Enabled = true;
+            keyBox.Enabled = true;
         }
 
+
+        private delegate void UpdateDataGridView(TopFiveInfo item);
         void query_OnTopFiveSearchEndEvent(object sender, TopFiveEventArgs e)
         {
             TopFiveInfo item = e.Item;
-            LoadItemToDataView(item);
+            if (dataGridView.InvokeRequired)
+            {
+                UpdateDataGridView uActive = LoadItemToDataView;
+                this.BeginInvoke(uActive, new object[] { item });
+            }
+            else
+            {
+                LoadItemToDataView(item);
+            }
+
         }
     }
 }
