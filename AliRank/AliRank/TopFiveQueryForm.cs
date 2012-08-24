@@ -28,10 +28,9 @@ namespace AliRank
             DataTable dt = new DataTable();
             dt.Columns.Add("Image", typeof(Image));
             dt.Columns.Add("Name", typeof(string));
-            dt.Columns.Add("Key1", typeof(string));
-            dt.Columns.Add("Key2", typeof(string));
-            dt.Columns.Add("Key3", typeof(string));
+            dt.Columns.Add("Key", typeof(string));
             dt.Columns.Add("Desc", typeof(string));
+            dt.Columns.Add("Cate", typeof(string));
             this.dataGridView.DataSource = dt;
             DataGridViewColumn column0 = this.dataGridView.Columns[0];
             column0.HeaderText = "产品图片";
@@ -41,18 +40,18 @@ namespace AliRank
             column.HeaderText = "产品名称";
             column.Width = 200;
             DataGridViewColumn column2 = this.dataGridView.Columns[2];
-            column2.HeaderText = "关键词1";
-            column2.Width = 180;
+            column2.HeaderText = "关键词";
+            column2.Width = 200;
+            column2.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             DataGridViewColumn column3 = this.dataGridView.Columns[3];
-            column3.HeaderText = "关键词2";
-            column3.Width = 180;
+            column3.HeaderText = "简要描述";
+            column3.Width = 250;
+            column3.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             DataGridViewColumn column4 = this.dataGridView.Columns[4];
-            column4.HeaderText = "关键词3";
-            column4.Width = 180;
-            DataGridViewColumn column5 = this.dataGridView.Columns[5];
-            column5.HeaderText = "简要描述";
-            column5.Width = 250;
-            column5.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            column4.HeaderText = "产品类目";
+            column4.Width = 400;
+            column4.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+
         }
 
         void LoadItemToDataView(TopFiveInfo item)
@@ -66,10 +65,9 @@ namespace AliRank
                 row["Image"] = new Bitmap(Image.FromFile(item.Image));
             }
             row["Name"] = item.Name;
-            row["Key1"] = item.Key1;
-            row["Key2"] = item.Key2;
-            row["Key3"] = item.Key3;
+            row["Key"] = item.Key;
             row["Desc"] = item.Desc;
+            row["Cate"] = item.Category;
             dt.Rows.Add(row);
         }
 
