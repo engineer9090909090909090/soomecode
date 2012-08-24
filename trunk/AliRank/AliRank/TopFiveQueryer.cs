@@ -69,7 +69,7 @@ namespace AliRank
                 p4pNum = p4pNodes.Count;
             }
             int itemCount = itemNodes.Count;
-            int kcount = itemCount >= 8 ? 8 : itemCount;
+            int kcount = itemCount >= 10 ? 10 : itemCount;
             for (int k = 0; k < kcount; k++)
             {
                 TopFiveInfo item = new TopFiveInfo();

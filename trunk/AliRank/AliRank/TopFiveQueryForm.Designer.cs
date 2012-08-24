@@ -35,6 +35,7 @@
             this.keyBox = new System.Windows.Forms.TextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.MsgText = new System.Windows.Forms.Label();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -50,6 +51,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.MsgText);
             this.splitContainer1.Panel1.Controls.Add(this.queryBtn);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
             this.splitContainer1.Panel1.Controls.Add(this.keyBox);
@@ -113,6 +115,15 @@
             this.dataGridView.Size = new System.Drawing.Size(792, 527);
             this.dataGridView.TabIndex = 0;
             // 
+            // MsgText
+            // 
+            this.MsgText.AutoSize = true;
+            this.MsgText.ForeColor = System.Drawing.Color.Red;
+            this.MsgText.Location = new System.Drawing.Point(428, 12);
+            this.MsgText.Name = "MsgText";
+            this.MsgText.Size = new System.Drawing.Size(0, 12);
+            this.MsgText.TabIndex = 4;
+            // 
             // TopFiveQueryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -123,7 +134,7 @@
             this.MinimizeBox = false;
             this.Name = "TopFiveQueryForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "自然排名TOP5分析";
+            this.Text = "自然排名TOP10分析";
             this.Load += new System.EventHandler(this.TopFiveQueryForm_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
@@ -143,5 +154,6 @@
         private System.Windows.Forms.Button queryBtn;
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.Label MsgText;
     }
 }
