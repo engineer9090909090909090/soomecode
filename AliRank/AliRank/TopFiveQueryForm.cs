@@ -91,6 +91,7 @@ namespace AliRank
             keyBox.Enabled = false;
             DataTable dt = (DataTable)this.dataGridView.DataSource;
             dt.Clear();
+            MsgText.Text = "正在搜索阿里出口通网站，请稍候...";
             BackgroundWorker bgWorker = new BackgroundWorker();
             bgWorker.DoWork += new DoWorkEventHandler(bgWorker_DoWork);
             bgWorker.RunWorkerAsync();
@@ -102,6 +103,7 @@ namespace AliRank
             TopFiveQueryer query = new TopFiveQueryer();
             query.OnTopFiveSearchEndEvent += new TopFiveSearchEndEvent(query_OnTopFiveSearchEndEvent);
             query.Seacher(keyBox.Text.Trim());
+            MsgText.Text = "搜索完成.";
             queryBtn.Enabled = true;
             keyBox.Enabled = true;
         }
