@@ -32,6 +32,7 @@ namespace AliRank
             + "productId varchar(20),"
             + "productName varchar(200),"
             + "status integer default 0,"
+            + "orderBy integer default 0,"
             + "queryStatus integer default 0,"
             + "createTime datetime,"
             + "updateTime datetime)");
@@ -46,12 +47,17 @@ namespace AliRank
             {
                 dbHelper.ExecuteNonQuery("ALTER TABLE  RankInfo add COLUMN queryStatus integer default 0;");
             }
+            bool ExistColumnOrderBy = dbHelper.IsExistColumn("RankInfo", "orderBy");
+            if (!ExistColumnOrderBy)
+            {
+                dbHelper.ExecuteNonQuery("ALTER TABLE  RankInfo add COLUMN orderBy integer default 0;");
+            }
         }
 
         public List<RankInfo> GetRankInfoList()
         {
             DataTable dt = dbHelper.ExecuteDataTable(
-                  "SELECT id, rankKeyword,rank, keyAdNum, keyP4Num, productId, productName, updateTime FROM RankInfo where status = 1", null);
+                  "SELECT id, rankKeyword,rank, keyAdNum, keyP4Num, productId, productName, updateTime FROM RankInfo where status = 1 order by orderBy asc", null);
 
             List<RankInfo> list = new List<RankInfo>();
             foreach (DataRow row in dt.Rows)
@@ -75,25 +81,27 @@ namespace AliRank
 
         public void Insert(List<RankInfo> list)
         {
-            string InsSql = @"INSERT INTO RankInfo(rankKeyword,createTime, updateTime, status)"
-                            + "values(@rankKeyword, @createTime, @updateTime, 1)";
+            string InsSql = @"INSERT INTO RankInfo(rankKeyword,createTime, updateTime, status, orderBy)"
+                            + "values(@rankKeyword, @createTime, @updateTime, 1, @orderBy)";
 
-            string UpdSql = @"Update RankInfo SET status = 1 WHERE id = @id";
+            string UpdSql = @"Update RankInfo SET status = 1, orderBy = @orderBy  WHERE id = @id";
 
             string ExistRecordSql = "SELECT id FROM RankInfo WHERE rankKeyword =@rankKeyword LIMIT 0,1";
             List<SQLiteParameter[]> InsertParameters = new List<SQLiteParameter[]>();
             List<SQLiteParameter[]> UpdateParameters = new List<SQLiteParameter[]>();
-            foreach (RankInfo item in list)
+            for (int i = 0; i < list.Count; i++ )
             {
+                RankInfo item = list[i];
                 Object id = dbHelper.ExecuteScalar
                 (
-                    ExistRecordSql, new SQLiteParameter[]{ new SQLiteParameter("@rankKeyword",item.RankKeyword) }
+                    ExistRecordSql, new SQLiteParameter[] { new SQLiteParameter("@rankKeyword", item.RankKeyword) }
                 );
                 if (!Convert.IsDBNull(id) && Convert.ToInt32(id) > 0)
                 {
                     SQLiteParameter[] parameter = new SQLiteParameter[]
                     {
-                        new SQLiteParameter("@id",Convert.ToInt32(id))
+                        new SQLiteParameter("@id",Convert.ToInt32(id)),
+                        new SQLiteParameter("@orderBy",i)
                     };
                     UpdateParameters.Add(parameter);
                 }
@@ -103,7 +111,8 @@ namespace AliRank
                     {
                         new SQLiteParameter("@rankKeyword",item.RankKeyword),
                         new SQLiteParameter("@createTime",DateTime.Now), 
-                        new SQLiteParameter("@updateTime",DateTime.Now) 
+                        new SQLiteParameter("@updateTime",DateTime.Now),
+                        new SQLiteParameter("@orderBy",i) 
                     };
                     InsertParameters.Add(parameter);
                 }
