@@ -103,20 +103,10 @@ namespace AliRank
                 string jsKwString = Regex.Match(ProductPageHtml, KeywordExpressions, RegexOptions.IgnoreCase).Groups[1].Value;
                 if (!string.IsNullOrEmpty(jsKwString))
                 {
-                    string[] keywords = jsKwString.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries);
-                    if (keywords.Length > 0)
-                    {
-                        item.Key1 = keywords[0];
-                    } 
-                    if (keywords.Length > 1)
-                    {
-                        item.Key2 = keywords[1];
-                    } 
-                    if (keywords.Length > 2)
-                    {
-                        item.Key3 = keywords[2];
-                    }
+                    item.Key = jsKwString.Replace(",", ",\n");
                  }
+                string category = document.DocumentNode.SelectSingleNode("//div[@class='crumb global']").InnerText;
+                item.Category = category.Replace("\t", "").Replace("\n", "").Replace("&gt;", ">").Replace("  ", "").Replace("&amp;","&");
                 string descrption = document.DocumentNode.SelectSingleNode("//div[@id='richTextDescription']").PreviousSibling.PreviousSibling.InnerHtml;
                 item.Desc = descrption.Replace("<br>", "");
                 ProductPageHtml = null;

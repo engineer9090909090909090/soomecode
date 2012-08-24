@@ -49,6 +49,7 @@
             this.KwTextBox.Location = new System.Drawing.Point(12, 12);
             this.KwTextBox.Multiline = true;
             this.KwTextBox.Name = "KwTextBox";
+            this.KwTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.KwTextBox.Size = new System.Drawing.Size(499, 250);
             this.KwTextBox.TabIndex = 1;
             // 
