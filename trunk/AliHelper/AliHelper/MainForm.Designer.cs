@@ -34,6 +34,7 @@
             this.主菜单ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -51,7 +52,7 @@
             // statusLabel
             // 
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(41, 17);
+            this.statusLabel.Size = new System.Drawing.Size(43, 17);
             this.statusLabel.Text = "状态栏";
             // 
             // menuStrip1
@@ -68,13 +69,13 @@
             // 主菜单ToolStripMenuItem
             // 
             this.主菜单ToolStripMenuItem.Name = "主菜单ToolStripMenuItem";
-            this.主菜单ToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
+            this.主菜单ToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
             this.主菜单ToolStripMenuItem.Text = "主菜单";
             // 
             // 设置ToolStripMenuItem
             // 
             this.设置ToolStripMenuItem.Name = "设置ToolStripMenuItem";
-            this.设置ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+            this.设置ToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.设置ToolStripMenuItem.Text = "设置";
             // 
             // toolStrip1
@@ -85,11 +86,21 @@
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // webBrowser1
+            // 
+            this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowser1.Location = new System.Drawing.Point(0, 49);
+            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser1.Name = "webBrowser1";
+            this.webBrowser1.Size = new System.Drawing.Size(792, 395);
+            this.webBrowser1.TabIndex = 3;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(792, 466);
+            this.Controls.Add(this.webBrowser1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -114,5 +125,6 @@
         private System.Windows.Forms.ToolStripMenuItem 主菜单ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 设置ToolStripMenuItem;
         private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.WebBrowser webBrowser1;
     }
 }

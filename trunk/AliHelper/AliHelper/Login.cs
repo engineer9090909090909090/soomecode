@@ -35,8 +35,10 @@ namespace AliHelper
             if (e.Url.ToString() == indexUrl)
             {
                 browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(loginPageLoadCompleted);
+                string cookie = browser.Document.Cookie;
+                ShareCookie.Instance.LoginCookie = FullWebBrowserCookie.GetCookieInternal(browser.Url, false);
+               // ShareCookie.Instance.LoginCookieContainer = FullWebBrowserCookie.getUriCookie(browser.Url);
                 this.DialogResult = DialogResult.OK;
-                this.Close();
             }
             if (e.Url.ToString() != browser.Url.ToString())
                 return;
