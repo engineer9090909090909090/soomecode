@@ -384,6 +384,10 @@ namespace AliRank
         
         private bool ConnectNextVpn()
         {
+            if (IsStopClicking)
+            {
+                return true;
+            }
             if (vpnEntity != null)
             {
                 vpnEntity.Disconnect();
@@ -420,6 +424,7 @@ namespace AliRank
                         toolStripStatusLabel1.Text = "没有正确的VPN可以连接.";
                         break;
                     }
+                    if (IsStopClicking) { break; }
                     IEHandleUtils.ClearIECache();
                     IEHandleUtils.ClearIECookie();
                     for (int i = 0; i < productList.Count; i++)
@@ -509,6 +514,15 @@ namespace AliRank
         {
             TopFiveQueryForm f = new TopFiveQueryForm();
             f.Show();
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (vpnEntity != null)
+            {
+                vpnEntity.Disconnect();
+                vpnEntity.Dispose();
+            }
         }
         
     }
