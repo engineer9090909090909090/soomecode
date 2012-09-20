@@ -68,6 +68,7 @@ namespace AliRank
                 {
                     entry = RasEntry.CreateVpnEntry(connName, model.Address, RasVpnStrategy.PptpOnly, RasDevice.GetDeviceByName("(PPTP)", RasDeviceType.Vpn));
                 }
+                phoneBook.Entries.Add(entry);
                 entry.Options.PreviewDomain = false;
                 entry.Options.ShowDialingProgress = false;
                 entry.Options.PromoteAlternates = false;
@@ -80,7 +81,6 @@ namespace AliRank
                     entry.UpdateCredentials(RasPreSharedKey.Client, model.L2tpSec);
                     entry.Update();
                 }
-                phoneBook.Entries.Add(entry);
                 dialer.DialCompleted += new EventHandler<DialCompletedEventArgs>(Dialer_DialCompleted);
                 dialer.EapOptions = new DotRas.RasEapOptions(false, false, false);
                 dialer.HangUpPollingInterval = 0;
