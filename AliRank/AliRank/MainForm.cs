@@ -467,6 +467,7 @@ namespace AliRank
             {
                 vpnEntity.Disconnect();
                 vpnEntity.Dispose();
+                vpnEntity = null;
             }
             clickRunBtn.Enabled = true;
             clickStopBtn.Enabled = false;
@@ -524,6 +525,7 @@ namespace AliRank
             {
                 vpnEntity.Disconnect();
                 vpnEntity.Dispose();
+                vpnEntity = null;
             }
         }
         

@@ -109,6 +109,7 @@ namespace AliRank
                     currentRequestUrl = PURL_PREFIX + item.ProductId + productUrl;
                     ClickingEvent(item, "Clicking " + currentRequestUrl);
                     //browser.Document.InvokeScript("onProductClick", new string[] { item.ProductId });
+                    browser.Document.InvokeScript("onProductClick('" + item.ProductId + "');");
                     browser.Document.InvokeScript("logProductHistory", new object[] { item.ProductId, new string[]{}});
                     browser.Navigate(currentRequestUrl);
                 }
@@ -119,8 +120,10 @@ namespace AliRank
                     {
                         productLink.SetAttribute("target", "_self");
                         //browser.Document.InvokeScript("onProductClick", new string[] { item.ProductId });
+                        browser.Document.InvokeScript("onProductClick('" + item.ProductId + "');");
                         browser.Document.InvokeScript("logProductHistory", new object[] { item.ProductId, new string[]{}});
                         productLink.InvokeMember("click");
+                        
                     }
                     else
                     {
@@ -131,6 +134,7 @@ namespace AliRank
                             currentRequestUrl = PURL_PREFIX + item.ProductId + productUrl;
                             ClickingEvent(item, "Enforce clicking " + currentRequestUrl);
                             //browser.Document.InvokeScript("onProductClick", new string[] { item.ProductId });
+                            browser.Document.InvokeScript("onProductClick('" + item.ProductId + "');");
                             browser.Document.InvokeScript("logProductHistory", new object[] { item.ProductId, new string[]{}});
                             browser.Navigate(currentRequestUrl);
                         }
