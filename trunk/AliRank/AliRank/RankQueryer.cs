@@ -21,7 +21,7 @@ namespace AliRank
         private string PERCENT_PATH = "//div[@class='percent-wrap']";
         private string SUBJECT_PATH = "div[@class='attr']/h2/a[@class='qrPTitle']";
         private string AD_PATH = "//div[@class='list-items AD']";
-        private string P4P_PATH = "//div[@class='list-items p4p']";
+        private string P4P_PATH = "//div[@class='list-items  p4p']";
 
         private ShowcaseRankInfo item;
 
