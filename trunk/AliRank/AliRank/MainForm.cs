@@ -413,6 +413,8 @@ namespace AliRank
             List<ShowcaseRankInfo> productList = keywordDAO.GetKeywordList();
             string ConfigClickNum = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, IniFile);
             string Network = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.NETWORK_CHOICE, IniFile);
+            IEHandleUtils.ClearIECache();
+            IEHandleUtils.ClearIECookie();
             if (Network.Equals(Constants.NETWORK_VPN))
             {
                 int clickNum = Convert.ToInt32(ConfigClickNum);
@@ -425,8 +427,8 @@ namespace AliRank
                         break;
                     }
                     if (IsStopClicking) { break; }
-                    IEHandleUtils.ClearIECache();
-                    IEHandleUtils.ClearIECookie();
+                    //IEHandleUtils.ClearIECache();
+                    //IEHandleUtils.ClearIECookie();
                     for (int i = 0; i < productList.Count; i++)
                     {
                         ProductClicker clicker = new ProductClicker(webBrowser);
@@ -445,8 +447,8 @@ namespace AliRank
                 int clickNum = Convert.ToInt32(ConfigClickNum);
                 for (int n = 0; n < clickNum; n++)
                 {
-                    IEHandleUtils.ClearIECache();
-                    IEHandleUtils.ClearIECookie();
+                    //IEHandleUtils.ClearIECache();
+                    //IEHandleUtils.ClearIECookie();
                     for (int i = 0; i < productList.Count; i++)
                     {
                         ProductClicker clicker = new ProductClicker(webBrowser);
