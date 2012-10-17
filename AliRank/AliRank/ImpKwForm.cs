@@ -49,6 +49,7 @@ namespace AliRank
             searcher.Dispose();
             searcher = null;
             string IniFile = FileUtils.CreateAppDataFolderEmptyTextFile(Constants.INI_FILE);
+            url = url.Replace(".en.alibaba.com/", ".en.alibaba.com");
             FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.COMPANY_URL, url, IniFile);
             this.pictureBox1.Visible = false;
             this.ImportBtn.Enabled = true;
