@@ -21,18 +21,21 @@ namespace AliHelper
         private void LoginForm_Load(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false;
+            this.webBrowser1.Navigate(loginUrl);
         }
 
         string loginUrl = "https://login.alibaba.com/";
+        string homeUrl = "http://www.alibaba.com/";
         string indexUrl = "https://login.alibaba.com/xloginCallBackForRisk.do";
         string successUrl = "https://login.alibaba.com/xman/success_proxy.htm";
 
         void loginPageLoadCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-                WebBrowser browser = (WebBrowser)sender;
+            WebBrowser browser = (WebBrowser)sender;
             if (browser.ReadyState != System.Windows.Forms.WebBrowserReadyState.Complete)
                 return;
-            if (e.Url.ToString() == indexUrl)
+            System.Diagnostics.Trace.WriteLine("========================" + this.webBrowser1.Url.ToString());
+            if (e.Url.ToString() == homeUrl)
             {
                 browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(loginPageLoadCompleted);
                 ShareCookie.Instance.LoginCookie = FullWebBrowserCookie.GetCookieInternal(browser.Url, false);

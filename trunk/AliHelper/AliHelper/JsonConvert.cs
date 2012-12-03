@@ -8,9 +8,8 @@ using Newtonsoft.Json;
 
 namespace AliHelper
 {
-    class JsonConvert
+    static class JsonConvert
     {
-
         /// <summary>
         /// 序列化数据为Json数据格式.
         /// </summary>

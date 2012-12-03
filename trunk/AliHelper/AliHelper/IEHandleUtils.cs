@@ -72,7 +72,6 @@ namespace AliHelper
                 IEHandleUtils.InternetSetCookie(url, cook.Name, cook.Value);
             }
             webBrowser1.Navigate(url, "", null, "Cookie: " + cookie_string + Environment.NewLine);
-        
         }
 
         public static string WebRequestGetUrlHtml(string url)
@@ -80,8 +79,8 @@ namespace AliHelper
             HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(url);
             myHttpWebRequest.Timeout = 20 * 1000; //连接超时
             myHttpWebRequest.Accept = "*/*";
+            myHttpWebRequest.AllowAutoRedirect = false;
             myHttpWebRequest.UserAgent = "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0;)";
-            //myHttpWebRequest.CookieContainer = cookies; //使用已经保存的cookies 方法一
             myHttpWebRequest.Headers.Add("Cookie", ShareCookie.Instance.LoginCookie); //使用已经保存的cookies 方法二
             HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
             Stream stream = myHttpWebResponse.GetResponseStream();

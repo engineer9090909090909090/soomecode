@@ -42,7 +42,7 @@
             this.webBrowser1.ScrollBarsEnabled = false;
             this.webBrowser1.Size = new System.Drawing.Size(322, 416);
             this.webBrowser1.TabIndex = 6;
-            this.webBrowser1.Url = new System.Uri("https://login.alibaba.com/", System.UriKind.Absolute);
+            this.webBrowser1.Url = new System.Uri("", System.UriKind.Relative);
             this.webBrowser1.WebBrowserShortcutsEnabled = false;
             this.webBrowser1.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.loginPageLoadCompleted);
             // 
