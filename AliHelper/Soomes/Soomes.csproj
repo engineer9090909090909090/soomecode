@@ -39,7 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AliGroup.cs" />
+    <Compile Include="AliGroupInfo.cs" />
+    <Compile Include="AliProductInfo.cs" />
     <Compile Include="Category.cs" />
+    <Compile Include="AliProduct.cs" />
+    <Compile Include="ProductStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
