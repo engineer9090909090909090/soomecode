@@ -38,7 +38,14 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+<<<<<<< .mine
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\..\lib\System.Data.SQLite.DLL</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
+=======
+    <Reference Include="System.Web" />
+>>>>>>> .r96
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -48,6 +55,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
+    <Compile Include="DAO\AliGroupDao.cs" />
+    <Compile Include="DAO\AliProductDao.cs" />
+    <Compile Include="DAO\DAOFactory.cs" />
+    <Compile Include="DAO\SQLiteDBHelper.cs" />
+    <Compile Include="FileUtils.cs" />
     <Compile Include="FullWebBrowserCookie.cs" />
     <Compile Include="HttpHelper.cs" />
     <Compile Include="HttpHelper1.cs" />
