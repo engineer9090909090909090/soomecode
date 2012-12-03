@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -46,7 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FullWebBrowserCookie.cs" />
+    <Compile Include="HttpHelper.cs" />
+    <Compile Include="HttpHelper1.cs" />
     <Compile Include="IEHandleUtils.cs" />
+    <Compile Include="JsonConvert.cs" />
     <Compile Include="LoadCode.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
