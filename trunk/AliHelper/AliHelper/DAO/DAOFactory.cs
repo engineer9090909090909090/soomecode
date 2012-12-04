@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using System.Data.SQLite;
 
-namespace AliHelper
+namespace AliHelper.DAO
 {
     class DAOFactory
     {
