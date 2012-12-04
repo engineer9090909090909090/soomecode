@@ -17,8 +17,6 @@ namespace Soomes
 
         public int ProductCount { set; get; }
 
-        public List<AliGroup> Children { set; get; }
-
         public int Level { set; get; }
 
         public int ParentId { set; get; }

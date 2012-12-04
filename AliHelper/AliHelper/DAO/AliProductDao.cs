@@ -5,9 +5,9 @@ using System.Text;
 using System.Data.SQLite;
 using Soomes;
 
-namespace AliHelper
+namespace AliHelper.DAO
 {
-    class AliProductDao
+    public class AliProductDao
     {
         private SQLiteDBHelper dbHelper;
 
@@ -45,10 +45,14 @@ namespace AliHelper
 
         }
 
+        public void DeleteProduct4GroupId(int groupId)
+        {
+            dbHelper.ExecuteNonQuery("delete from AliProducts where GroupId = " + groupId.ToString());
+        }
 
         public void Insert(List<AliProduct> list)
         {
-            string InsSql = @"INSERT INTO RankInfo(Id,Keywords, IsKeywords, Status, GroupId, GroupName1, Subject, RedModel, DetailUrl,AbsImageUrl, AbsSummImageUrl,IsWindowProduct, GmtModified)"
+            string InsSql = @"INSERT INTO AliProducts(Id,Keywords, IsKeywords, Status, GroupId, GroupName1, Subject, RedModel, DetailUrl,AbsImageUrl, AbsSummImageUrl,IsWindowProduct, GmtModified)"
                             + "values(@Id,@Keywords, @IsKeywords, @Status, @GroupId, @GroupName1, @Subject, @RedModel, @DetailUrl,@AbsImageUrl, @AbsSummImageUrl,@IsWindowProduct, @GmtModified)";
 
             List<SQLiteParameter[]> InsertParameters = new List<SQLiteParameter[]>();

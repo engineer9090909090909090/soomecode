@@ -6,7 +6,7 @@ using System.Data.SQLite;
 using System.Data.Common;
 using System.Data;
 using System.IO;
-namespace AliHelper
+namespace AliHelper.DAO
 {
     public class SQLiteDBHelper
     {

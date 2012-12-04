@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bussness\ProductsManager.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DAO\AliGroupDao.cs" />
     <Compile Include="DAO\AliProductDao.cs" />
