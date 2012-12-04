@@ -26,8 +26,8 @@ namespace AliHelper
 
         string loginUrl = "https://login.alibaba.com/";
         string homeUrl = "http://www.alibaba.com/";
-        string indexUrl = "https://login.alibaba.com/xloginCallBackForRisk.do";
-        string successUrl = "https://login.alibaba.com/xman/success_proxy.htm";
+       // string indexUrl = "https://login.alibaba.com/xloginCallBackForRisk.do";
+       // string successUrl = "https://login.alibaba.com/xman/success_proxy.htm";
 
         void loginPageLoadCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
