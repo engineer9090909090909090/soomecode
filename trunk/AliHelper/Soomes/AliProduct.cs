@@ -18,6 +18,10 @@ namespace Soomes
 
         public string GroupName1 { set; get; }
 
+        public string GroupName2 { set; get; }
+
+        public string GroupName3 { set; get; }
+
         public string Subject { set; get; }
 
         public string RedModel { set; get; }
@@ -32,6 +36,6 @@ namespace Soomes
         
         public DateTime GmtModified { set; get; }
 
-        public int GroupId { set; get; }
+        public string GroupId { set; get; }
     }
 }
