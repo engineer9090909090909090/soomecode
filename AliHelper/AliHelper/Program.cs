@@ -37,6 +37,7 @@ namespace AliHelper
              System.Diagnostics.Trace.WriteLine("========================");
              Application.Run(new MainForm());
              */
+
              LoginForm login = new LoginForm();
              if (login.ShowDialog() == DialogResult.OK)
              {

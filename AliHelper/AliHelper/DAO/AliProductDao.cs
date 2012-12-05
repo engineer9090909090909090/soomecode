@@ -27,8 +27,10 @@ namespace AliHelper.DAO
             + "Keywords varchar(300) NOT NULL,"
             + "IsKeywords BOOLEAN,"
             + "Status varchar(30),"
-            + "GroupId integer NOT NULL,"
-            + "GroupName1 varchar(100)," 
+            + "GroupId varchar(100) NOT NULL,"
+            + "GroupName1 varchar(100),"
+            + "GroupName2 varchar(100),"
+            + "GroupName3 varchar(100)," 
             + "Subject varchar(300) NOT NULL,"
             + "RedModel varchar(100),"
             + "DetailUrl varchar(500),"
@@ -47,13 +49,13 @@ namespace AliHelper.DAO
 
         public void DeleteProduct4GroupId(int groupId)
         {
-            dbHelper.ExecuteNonQuery("delete from AliProducts where GroupId = " + groupId.ToString());
+            dbHelper.ExecuteNonQuery("delete from AliProducts where GroupId like '%" + groupId.ToString() + "%'");
         }
 
         public void Insert(List<AliProduct> list)
         {
-            string InsSql = @"INSERT INTO AliProducts(Id,Keywords, IsKeywords, Status, GroupId, GroupName1, Subject, RedModel, DetailUrl,AbsImageUrl, AbsSummImageUrl,IsWindowProduct, GmtModified)"
-                            + "values(@Id,@Keywords, @IsKeywords, @Status, @GroupId, @GroupName1, @Subject, @RedModel, @DetailUrl,@AbsImageUrl, @AbsSummImageUrl,@IsWindowProduct, @GmtModified)";
+            string InsSql = @"INSERT INTO AliProducts(Id,Keywords, IsKeywords, Status, GroupId, GroupName1,GroupName2,GroupName3, Subject, RedModel, DetailUrl,AbsImageUrl, AbsSummImageUrl,IsWindowProduct, GmtModified)"
+                            + "values(@Id,@Keywords, @IsKeywords, @Status, @GroupId, @GroupName1,@GroupName2,@GroupName3, @Subject, @RedModel, @DetailUrl,@AbsImageUrl, @AbsSummImageUrl,@IsWindowProduct, @GmtModified)";
 
             List<SQLiteParameter[]> InsertParameters = new List<SQLiteParameter[]>();
             List<SQLiteParameter[]> UpdateParameters = new List<SQLiteParameter[]>();
@@ -68,6 +70,8 @@ namespace AliHelper.DAO
                     new SQLiteParameter("@Status",item.Status),
                     new SQLiteParameter("@GroupId",item.GroupId),
                     new SQLiteParameter("@GroupName1",item.GroupName1), 
+                    new SQLiteParameter("@GroupName2",item.GroupName2), 
+                    new SQLiteParameter("@GroupName3",item.GroupName3), 
                     new SQLiteParameter("@Subject",item.Subject),
                     new SQLiteParameter("@RedModel",item.RedModel),
                     new SQLiteParameter("@DetailUrl",item.DetailUrl),

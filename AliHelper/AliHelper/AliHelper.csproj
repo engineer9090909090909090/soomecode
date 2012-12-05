@@ -61,6 +61,7 @@
     <Compile Include="FullWebBrowserCookie.cs" />
     <Compile Include="HttpHelper.cs" />
     <Compile Include="HttpHelper1.cs" />
+    <Compile Include="Http\HttpClient.cs" />
     <Compile Include="IEHandleUtils.cs" />
     <Compile Include="JsonConvert.cs" />
     <Compile Include="LoadCode.cs" />
@@ -110,6 +111,7 @@
       <Name>Soomes</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
