@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -62,6 +62,7 @@
             this.DeleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.QueryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ModifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -262,14 +263,14 @@
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
             this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("SimSun", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("SimSun", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.ColumnHeadersHeight = 30;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(3, 3);
@@ -332,30 +333,38 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.DeleteRowToolStripMenuItem,
             this.OpenToolStripMenuItem,
-            this.QueryToolStripMenuItem});
+            this.QueryToolStripMenuItem,
+            this.ModifyToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(151, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(175, 114);
             // 
             // DeleteRowToolStripMenuItem
             // 
             this.DeleteRowToolStripMenuItem.Name = "DeleteRowToolStripMenuItem";
-            this.DeleteRowToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
-            this.DeleteRowToolStripMenuItem.Text = "删除该行(&D)";
+            this.DeleteRowToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.DeleteRowToolStripMenuItem.Text = "删除该行记录(&D)";
             this.DeleteRowToolStripMenuItem.Click += new System.EventHandler(this.DeleteRowToolStripMenuItem_Click);
             // 
             // OpenToolStripMenuItem
             // 
             this.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem";
-            this.OpenToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
-            this.OpenToolStripMenuItem.Text = "浏览器打开(&O)";
+            this.OpenToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.OpenToolStripMenuItem.Text = "在浏览器打开(&O)";
             this.OpenToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
             // 
             // QueryToolStripMenuItem
             // 
             this.QueryToolStripMenuItem.Name = "QueryToolStripMenuItem";
-            this.QueryToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
-            this.QueryToolStripMenuItem.Text = "查询排名(&Q)";
+            this.QueryToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.QueryToolStripMenuItem.Text = "查询产品排名(&Q)";
             this.QueryToolStripMenuItem.Click += new System.EventHandler(this.QueryToolStripMenuItem_Click);
+            // 
+            // ModifyToolStripMenuItem
+            // 
+            this.ModifyToolStripMenuItem.Name = "ModifyToolStripMenuItem";
+            this.ModifyToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.ModifyToolStripMenuItem.Text = "修改排名关键词(&M)";
+            this.ModifyToolStripMenuItem.Click += new System.EventHandler(this.ModifyToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -422,6 +431,7 @@
         private System.Windows.Forms.ToolStripMenuItem DeleteRowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem OpenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem QueryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ModifyToolStripMenuItem;
     }
 }
 
