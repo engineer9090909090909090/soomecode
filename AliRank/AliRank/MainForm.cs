@@ -278,7 +278,7 @@ namespace AliRank
             {
                 DataGridViewCell productIdCell = row.Cells[2];
                 string id = (string)productIdCell.Value;
-                if (id.Equals(item.ProductId))
+                if (Convert.ToInt32(id) ==item.ProductId)
                 {
                     DataGridViewCell SearchKeyCell = row.Cells[4];
                     SearchKeyCell.Value = item.RankKeyword;
@@ -545,8 +545,27 @@ namespace AliRank
 
         private void QueryToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            BackgroundWorker bgWorker = new BackgroundWorker();
+            bgWorker.DoWork += new DoWorkEventHandler(bgWorker_DoWorkQueryRank);
+            bgWorker.RunWorkerAsync();
+            bgWorker.Dispose();
+        }
 
+        void bgWorker_DoWorkQueryRank(object sender, DoWorkEventArgs e)
+        {
+            toolStripButton4.Enabled = false;
+            clickRunBtn.Enabled = false;
+            ShowcaseRankInfo item = keywordDAO.GetShowcaseRankInfo(RowSelectedProductId);
+            RankQueryer queryer = new RankQueryer();
+            queryer.OnRankSearchingEvent += new RankSearchingEvent(queryer_OnRankSearchingEvent);
+            queryer.OnRankSearchEndEvent += new RankSearchEndEvent(queryer_OnRankSearchEndEvent);
+            queryer.Seacher(item.RankKeyword, item.CompanyUrl);
+            queryer.OnRankSearchingEvent -= new RankSearchingEvent(queryer_OnRankSearchingEvent);
+            queryer.OnRankSearchEndEvent -= new RankSearchEndEvent(queryer_OnRankSearchEndEvent);
+            toolStripButton4.Enabled = true;
+            clickRunBtn.Enabled = true;
         }
         
+
     }
 }

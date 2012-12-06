@@ -156,7 +156,11 @@ namespace AliRank
                 }
                 else 
                 {
-                    string sRankKeyword = (item.MainKey.Split(',').Length > 1) ? item.MainKey.Split(',')[0] : "";
+                    string sRankKeyword = string.Empty;
+                    if (string.IsNullOrEmpty(item.MainKey) == false && item.MainKey.Split(',').Length > 1)
+                    {
+                        sRankKeyword = item.MainKey.Split(',')[0];
+                    }
                     SQLiteParameter[] parameter = new SQLiteParameter[]
                     {
                         new SQLiteParameter("@mainKey",item.MainKey), 
@@ -201,21 +205,18 @@ namespace AliRank
             }else{
                 item.PrevRank = Convert.ToInt32(prank);
             }
-            string sql = @"UPDATE keywords SET rankKeyword= @rankKeyword,prevRank= @prevRank,  "
-                + "rank = @rank, keyAdNum = @keyAdNum,keyP4Num = @keyP4Num, queryStatus = 1,  "
-                + "updateTime = @updateTime where (productId = @productId and  queryStatus = 0) "
-                +"or ( productId = @productId and queryStatus = 1 and rank > @rank) ";
+            string sql = @"UPDATE keywords SET prevRank= @prevRank,  "
+                + "rank = @rank, keyAdNum = @keyAdNum, keyP4Num = @keyP4Num, queryStatus = 1,  "
+                + "updateTime = @updateTime where productId = @productId ";
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {
-                new SQLiteParameter("@rankKeyword",item.RankKeyword), 
                 new SQLiteParameter("@prevRank",item.PrevRank), 
                 new SQLiteParameter("@rank",item.Rank), 
                 new SQLiteParameter("@keyAdNum",item.KeyAdNum), 
                 new SQLiteParameter("@keyP4Num",item.KeyP4Num), 
                 new SQLiteParameter("@updateTime", DateTime.Now), 
                 new SQLiteParameter("@productId",item.ProductId),
-                 new SQLiteParameter("@productId",item.ProductId),
-                new SQLiteParameter("@rank",item.Rank), 
+                 new SQLiteParameter("@productId",item.ProductId)
             };
             item.QueryStatus = dbHelper.ExecuteNonQuery(sql, parameter);
             return item;
