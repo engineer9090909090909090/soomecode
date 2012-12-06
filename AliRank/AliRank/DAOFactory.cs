@@ -34,10 +34,6 @@ namespace AliRank
             return new VpnDAO(dbHelper);
         }
 
-        public RankInfoDAO GetRankInfoDAO()
-        {
-            return new RankInfoDAO(dbHelper);
-        }
 
     }
 }

@@ -40,7 +40,7 @@
             // 
             // ImportBtn
             // 
-            this.ImportBtn.Location = new System.Drawing.Point(450, 51);
+            this.ImportBtn.Location = new System.Drawing.Point(555, 10);
             this.ImportBtn.Name = "ImportBtn";
             this.ImportBtn.Size = new System.Drawing.Size(69, 23);
             this.ImportBtn.TabIndex = 0;
@@ -50,7 +50,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(120, 53);
+            this.textBox1.Location = new System.Drawing.Point(225, 12);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(324, 21);
             this.textBox1.TabIndex = 1;
@@ -59,7 +59,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(18, 58);
+            this.label1.Location = new System.Drawing.Point(123, 17);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(101, 12);
             this.label1.TabIndex = 2;
@@ -68,7 +68,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(122, 78);
+            this.label2.Location = new System.Drawing.Point(227, 37);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(167, 12);
             this.label2.TabIndex = 3;
@@ -77,7 +77,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(253, 118);
+            this.pictureBox1.Location = new System.Drawing.Point(670, 10);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(36, 35);
             this.pictureBox1.TabIndex = 4;
@@ -97,7 +97,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(552, 226);
+            this.ClientSize = new System.Drawing.Size(836, 528);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.errorMsg);
             this.Controls.Add(this.label2);
@@ -110,7 +110,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "导入橱窗产品关键词";
+            this.Text = "从公司网站橱窗导入关键词排名产品信息";
             this.Load += new System.EventHandler(this.ImpKwForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

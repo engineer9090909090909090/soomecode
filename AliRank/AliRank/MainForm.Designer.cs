@@ -28,7 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -57,6 +58,10 @@
             this.tabControl = new System.Windows.Forms.TabControl();
             this.dataTab = new System.Windows.Forms.TabPage();
             this.IETab = new System.Windows.Forms.TabPage();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.DeleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.OpenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.QueryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -64,6 +69,7 @@
             this.tabControl.SuspendLayout();
             this.dataTab.SuspendLayout();
             this.IETab.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -107,22 +113,22 @@
             // ImpToolStripMenuItem
             // 
             this.ImpToolStripMenuItem.Name = "ImpToolStripMenuItem";
-            this.ImpToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.ImpToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
             this.ImpToolStripMenuItem.Text = "导入橱窗产品(&I)";
             this.ImpToolStripMenuItem.Click += new System.EventHandler(this.ToolStripMenuItem1_Click);
             // 
             // AsToolStripMenuItem
             // 
             this.AsToolStripMenuItem.Name = "AsToolStripMenuItem";
-            this.AsToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.AsToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
             this.AsToolStripMenuItem.Text = "关键词排名查询(&Q)";
             this.AsToolStripMenuItem.Click += new System.EventHandler(this.AsToolStripMenuItem_Click);
             // 
             // MtToolStripMenuItem
             // 
             this.MtToolStripMenuItem.Name = "MtToolStripMenuItem";
-            this.MtToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
-            this.MtToolStripMenuItem.Text = "关键词前5名分析(&A)";
+            this.MtToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.MtToolStripMenuItem.Text = "关键词前10名分析(&A)";
             this.MtToolStripMenuItem.Click += new System.EventHandler(this.MtToolStripMenuItem_Click);
             // 
             // SetToolStripMenuItem
@@ -256,14 +262,14 @@
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
             this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("SimSun", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("SimSun", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.ColumnHeadersHeight = 30;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(3, 3);
@@ -273,7 +279,7 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(778, 464);
             this.dataGridView1.TabIndex = 3;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dataGridView1.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDown);
             this.dataGridView1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyUp);
             // 
             // webBrowser
@@ -321,6 +327,36 @@
             this.IETab.Text = "浏览器点击窗口";
             this.IETab.UseVisualStyleBackColor = true;
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.DeleteRowToolStripMenuItem,
+            this.OpenToolStripMenuItem,
+            this.QueryToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 92);
+            // 
+            // DeleteRowToolStripMenuItem
+            // 
+            this.DeleteRowToolStripMenuItem.Name = "DeleteRowToolStripMenuItem";
+            this.DeleteRowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.DeleteRowToolStripMenuItem.Text = "删除该行(&D)";
+            this.DeleteRowToolStripMenuItem.Click += new System.EventHandler(this.DeleteRowToolStripMenuItem_Click);
+            // 
+            // OpenToolStripMenuItem
+            // 
+            this.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem";
+            this.OpenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.OpenToolStripMenuItem.Text = "浏览器打开(&O)";
+            this.OpenToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
+            // 
+            // QueryToolStripMenuItem
+            // 
+            this.QueryToolStripMenuItem.Name = "QueryToolStripMenuItem";
+            this.QueryToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.QueryToolStripMenuItem.Text = "查询排名(&Q)";
+            this.QueryToolStripMenuItem.Click += new System.EventHandler(this.QueryToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -347,6 +383,7 @@
             this.tabControl.ResumeLayout(false);
             this.dataTab.ResumeLayout(false);
             this.IETab.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -381,6 +418,10 @@
         private System.Windows.Forms.ToolStripMenuItem shutdownToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem CleanKeyMenuItem;
         private System.Windows.Forms.ToolStripLabel MessageLabel;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem DeleteRowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem OpenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem QueryToolStripMenuItem;
     }
 }
 

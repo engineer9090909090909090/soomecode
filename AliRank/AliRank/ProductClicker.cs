@@ -24,6 +24,7 @@ namespace AliRank
         private string SEARCH_URL2 = "http://www.alibaba.com/products/F0/{0}/{1}.html";
         private string PURL_PREFIX = "http://www.alibaba.com/product-gs/";
         int currentPage = 1;
+        int maxQueryPage = 10;
         private ShowcaseRankInfo item;
         private string clickKey = string.Empty;
         private string currentRequestUrl;
@@ -50,46 +51,16 @@ namespace AliRank
             }
         }
 
-        public void DoClick(ShowcaseRankInfo kw)
+        public void DoClick(ShowcaseRankInfo kw, int maxQueryPageNumber)
         {
             item = kw;
-            if (string.IsNullOrEmpty(item.RankKeyword.Trim()))
-            {
-                clickKey = item.MainKey.Split(',')[0];
-            }
-            else
-            {
-                clickKey = item.RankKeyword;
-            }
-            if (item.Rank == 0)
-            {
-                string mainKey = clickKey.Replace(" ", "+");
-                currentRequestUrl = string.Format(SEARCH_URL1, mainKey);
-            }
-            else
-            {
-                currentPage = item.Rank % 38 == 0 ? item.Rank / 38 : item.Rank / 38 + 1;
-                if (currentPage > 1)
-                {
-                    currentPage = currentPage - 1;
-                }
-                if (currentPage == 1)
-                {
-                    string mainKey = clickKey.Replace(" ", "+");
-                    currentRequestUrl = string.Format(SEARCH_URL1, mainKey);
-                }
-                else {
-                    string mainKey = clickKey.Replace(" ", "_");
-                    currentRequestUrl = string.Format(SEARCH_URL2, mainKey, currentPage);
-                }
-                
-            }
-
+            this.maxQueryPage = maxQueryPageNumber;
+            string searchKey = item.RankKeyword.Replace(" ", "+");
+            currentRequestUrl = string.Format(SEARCH_URL1, searchKey);
             ClickingEvent(item, "Clicking " + currentRequestUrl);
             browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
             browser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
             browser.Navigate(currentRequestUrl);
-
             eventX.WaitOne(Timeout.Infinite, true);
             Console.WriteLine("线程池结束！");
         }
@@ -103,49 +74,35 @@ namespace AliRank
                 return;
             if (browser.Url.ToString() == currentRequestUrl)
             {
-                if (item.Rank == 0)
+                HtmlElement productLink = browser.Document.GetElementById("lsubject_" + this.item.ProductId);
+                if (productLink != null)
                 {
-                    string productUrl = item.ProductUrl.Substring(item.ProductUrl.LastIndexOf("/"));
-                    currentRequestUrl = PURL_PREFIX + item.ProductId + productUrl;
-                    ClickingEvent(item, "Clicking " + currentRequestUrl);
+                    productLink.SetAttribute("target", "_self");
                     //browser.Document.InvokeScript("onProductClick", new string[] { item.ProductId });
                     browser.Document.InvokeScript("onProductClick('" + item.ProductId + "');");
                     browser.Document.InvokeScript("logProductHistory", new object[] { item.ProductId, new string[]{}});
-                    browser.Navigate(currentRequestUrl);
+                    productLink.InvokeMember("click");
                 }
                 else
                 {
-                    HtmlElement productLink = browser.Document.GetElementById("lsubject_" + this.item.ProductId);
-                    if (productLink != null)
+                    if (currentPage == maxQueryPage)
                     {
-                        productLink.SetAttribute("target", "_self");
+                        ClickedEvent(item, "The system does not find the product you need to click.");
+                        string productUrl = item.ProductUrl.Substring(item.ProductUrl.LastIndexOf("/"));
+                        currentRequestUrl = PURL_PREFIX + item.ProductId + productUrl;
+                        ClickingEvent(item, "Enforce clicking " + currentRequestUrl);
                         //browser.Document.InvokeScript("onProductClick", new string[] { item.ProductId });
                         browser.Document.InvokeScript("onProductClick('" + item.ProductId + "');");
                         browser.Document.InvokeScript("logProductHistory", new object[] { item.ProductId, new string[]{}});
-                        productLink.InvokeMember("click");
-                        
+                        browser.Navigate(currentRequestUrl);
                     }
                     else
                     {
-                        if (currentPage == 10)
-                        {
-                            ClickedEvent(item, "The system does not find the product you need to click.");
-                            string productUrl = item.ProductUrl.Substring(item.ProductUrl.LastIndexOf("/"));
-                            currentRequestUrl = PURL_PREFIX + item.ProductId + productUrl;
-                            ClickingEvent(item, "Enforce clicking " + currentRequestUrl);
-                            //browser.Document.InvokeScript("onProductClick", new string[] { item.ProductId });
-                            browser.Document.InvokeScript("onProductClick('" + item.ProductId + "');");
-                            browser.Document.InvokeScript("logProductHistory", new object[] { item.ProductId, new string[]{}});
-                            browser.Navigate(currentRequestUrl);
-                        }
-                        else
-                        {
-                            currentPage++;
-                            string mainKey = clickKey.Replace(" ", "_");
-                            currentRequestUrl = string.Format(SEARCH_URL2, mainKey, currentPage);
-                            ClickingEvent(item, "Clicking " + currentRequestUrl);
-                            browser.Navigate(currentRequestUrl);
-                        }
+                        currentPage++;
+                        string mainKey = clickKey.Replace(" ", "_");
+                        currentRequestUrl = string.Format(SEARCH_URL2, mainKey, currentPage);
+                        ClickingEvent(item, "Clicking " + currentRequestUrl);
+                        browser.Navigate(currentRequestUrl);
                     }
                 }
             }
