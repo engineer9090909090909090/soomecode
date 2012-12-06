@@ -202,8 +202,6 @@ namespace AliRank
             clickRunBtn.Enabled = false;
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-                DataGridViewCell SearchKeyCell = row.Cells[4];
-                SearchKeyCell.Value = "";
                 DataGridViewCell cell = row.Cells[5];
                 cell.Value = "";
             }
@@ -231,7 +229,7 @@ namespace AliRank
                 ThreadPool.SetMaxThreads(10, 200);
                 for (int i = 0; i < MaxCount; i++)
                 {
-                    ThreadPool.QueueUserWorkItem(new WaitCallback(DoRankSearch), (object)queryList);
+                    ThreadPool.QueueUserWorkItem(new WaitCallback(DoRankSearch), (object)queryList[i]);
                 }
                 eventX.WaitOne(Timeout.Infinite, true);
             }
@@ -564,6 +562,11 @@ namespace AliRank
             queryer.OnRankSearchEndEvent -= new RankSearchEndEvent(queryer_OnRankSearchEndEvent);
             toolStripButton4.Enabled = true;
             clickRunBtn.Enabled = true;
+        }
+
+        private void ModifyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
         
 
