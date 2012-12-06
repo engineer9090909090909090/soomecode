@@ -93,7 +93,8 @@ namespace AliRank
                         HtmlNode aLinkNode = percentNode.SelectSingleNode(SUBJECT_PATH);
                         string lsubject = aLinkNode.Id.ToLower();
                         string productName = aLinkNode.InnerText;
-                        item.ProductId = lsubject.Replace("lsubject_", "");
+                        string proId = lsubject.Replace("lsubject_", "");
+                        item.ProductId = Convert.ToInt32(proId);
                         item.Rank = i * 38 + (k + 1);
                         item.ProductName = productName;
                         break;

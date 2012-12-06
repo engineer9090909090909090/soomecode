@@ -10,6 +10,7 @@ namespace AliRank
         public string CompanyUrl { get; set; }
         public string ProductUrl { get; set; }
         public string ProductImg { get; set; }
+        public string ProductName { get; set; }
         public string MainKey { get; set; }
         public Int32 PrevRank { get; set; }
         public Int32 Clicked { get; set; }

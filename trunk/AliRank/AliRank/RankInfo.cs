@@ -7,9 +7,7 @@ namespace AliRank
 {
     public class RankInfo
     {
-        public Int32 Id { get; set; }
-        public string ProductId { get; set; }
-        public string ProductName { get; set; }
+        public Int32 ProductId { get; set; }
         public Int32 Rank { get; set; }
         public string RankKeyword { get; set; }
         public Int32 KeyAdNum { get; set; }

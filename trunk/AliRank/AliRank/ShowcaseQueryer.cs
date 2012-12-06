@@ -29,7 +29,8 @@ namespace AliRank
             {
                 ShowcaseRankInfo item = new ShowcaseRankInfo();
                 item.CompanyUrl = companyUrl;
-                item.ProductId = node.Id.Replace("featureSelectProduct", "");
+                string proId = node.Id.Replace("featureSelectProduct", "");
+                item.ProductId = Convert.ToInt32(proId);
                 HtmlNode linkNode = node.SelectSingleNode("div[@class='featureSelectProductName']/a");
                 item.ProductName = linkNode.InnerText;
                 item.ProductUrl = linkNode.Attributes["href"].Value;

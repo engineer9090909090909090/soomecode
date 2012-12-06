@@ -15,8 +15,8 @@ namespace AliRank
         public KeywordDAO(SQLiteDBHelper dbHelper)
         { 
             this.dbHelper = dbHelper;
-            CreateTable();
             UpdateTable();
+            CreateTable();
         }
 
         private void CreateTable()
@@ -24,9 +24,8 @@ namespace AliRank
             
             dbHelper.ExecuteNonQuery(
               "CREATE TABLE IF NOT EXISTS keywords("
-            + "id integer NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
+            + "productId integer NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
             + "productImage varchar(300),"
-            + "productId varchar(20) NOT NULL,"
             + "productName varchar(200) NOT NULL,"
             + "mainKey varchar(100) NOT NULL,"
             + "productUrl varchar(1000) NOT NULL,"
@@ -42,7 +41,6 @@ namespace AliRank
             + "createTime datetime,"
             + "updateTime datetime)");
 
-            dbHelper.ExecuteNonQuery("Create Index  IF NOT EXISTS Index_productId on keywords(productId);");
         }
 
         private void UpdateTable()
@@ -62,6 +60,11 @@ namespace AliRank
             {
                 dbHelper.ExecuteNonQuery("ALTER TABLE  keywords add COLUMN queryStatus integer default 0;");
             }
+             bool ExistColumnId = dbHelper.IsExistColumn("keywords", "id");
+             if (ExistColumnId)
+             {
+                 dbHelper.ExecuteNonQuery("Drop TABLE keywords");
+             }
         }
         
 
@@ -69,15 +72,14 @@ namespace AliRank
         public List<ShowcaseRankInfo> GetKeywordList()
         {
             DataTable dt = dbHelper.ExecuteDataTable(
-                  "SELECT id, productId, productName, mainKey, rankKeyword, companyUrl, productUrl, "
+                  "SELECT productId, productName, mainKey, rankKeyword, companyUrl, productUrl, "
                 + "productImage, prevRank,rank, keyAdNum, keyP4Num, clicked, updateTime FROM keywords where status = 1", null);
 
             List<ShowcaseRankInfo> list = new List<ShowcaseRankInfo>();
             foreach (DataRow row in dt.Rows)
             {
                 ShowcaseRankInfo kw = new ShowcaseRankInfo();
-                kw.Id = Convert.ToInt32(row["id"]);
-                kw.ProductId = (string)row["productId"];
+                kw.ProductId = Convert.ToInt32(row["productId"]);
                 kw.ProductName = (string)row["productName"];
                 kw.MainKey = (string)row["mainKey"];
                 kw.RankKeyword = (string)row["rankKeyword"];
@@ -95,11 +97,39 @@ namespace AliRank
             return list;
         }
 
+        public ShowcaseRankInfo GetShowcaseRankInfo(int ProductId)
+        {
+            DataTable dt = dbHelper.ExecuteDataTable(
+                  "SELECT productId, productName, mainKey, rankKeyword, companyUrl, productUrl, "
+                + "productImage, prevRank,rank, keyAdNum, keyP4Num, clicked, updateTime FROM keywords where productId = " 
+                + ProductId, null);
+
+            if (dt.Rows.Count > 0)
+            {
+                DataRow row = dt.Rows[0]; 
+                ShowcaseRankInfo kw = new ShowcaseRankInfo();
+                kw.ProductId = Convert.ToInt32(row["productId"]);
+                kw.ProductName = (string)row["productName"];
+                kw.MainKey = (string)row["mainKey"];
+                kw.RankKeyword = (string)row["rankKeyword"];
+                kw.CompanyUrl = (string)row["companyUrl"];
+                kw.ProductUrl = (string)row["productUrl"];
+                kw.ProductImg = (string)row["productImage"];
+                kw.PrevRank = Convert.ToInt32(row["prevRank"]);
+                kw.Rank = Convert.ToInt32(row["rank"]);
+                kw.KeyAdNum = Convert.ToInt32(row["keyAdNum"]);
+                kw.KeyP4Num = Convert.ToInt32(row["keyP4Num"]);
+                kw.Clicked = Convert.ToInt32(row["clicked"]);
+                kw.UpdateTime = Convert.ToDateTime(row["updateTime"]);
+                return kw;
+            }
+            return null;
+        }
 
         public void Insert(List<ShowcaseRankInfo> list)
         {
-            string InsSql = @"INSERT INTO keywords(mainKey,productId,productName,productImage,productUrl,companyUrl, createTime, updateTime, status)"
-                            + "values(@mainKey,@productId,@productName,@productImage,@productUrl,@companyUrl, @createTime, @updateTime, 1)";
+            string InsSql = @"INSERT INTO keywords(mainKey,rankKeyword, productId,productName,productImage,productUrl,companyUrl, createTime, updateTime, status)"
+                            + "values(@mainKey,@rankKeyword, @productId,@productName,@productImage,@productUrl,@companyUrl, @createTime, @updateTime, 1)";
 
             string UpdSql = @"Update keywords SET mainKey = @mainKey, productName = @productName, productImage = @productImage, "
                    + "productUrl = @productUrl, companyUrl = @companyUrl, updateTime = @updateTime,status=1,clicked = 0 WHERE productId = @productId";
@@ -126,9 +156,11 @@ namespace AliRank
                 }
                 else 
                 {
+                    string sRankKeyword = (item.MainKey.Split(',').Length > 1) ? item.MainKey.Split(',')[0] : "";
                     SQLiteParameter[] parameter = new SQLiteParameter[]
                     {
                         new SQLiteParameter("@mainKey",item.MainKey), 
+                        new SQLiteParameter("@rankKeyword",sRankKeyword), 
                         new SQLiteParameter("@productId", item.ProductId), 
                         new SQLiteParameter("@productName",item.ProductName), 
                         new SQLiteParameter("@productImage",item.ProductImg), 
@@ -191,12 +223,12 @@ namespace AliRank
 
         public void UpdateClicked(ShowcaseRankInfo kw)
         {
-            string sql = @"UPDATE keywords SET clicked = @clicked, updateTime = @updateTime where id = @id";
+            string sql = @"UPDATE keywords SET clicked = @clicked, updateTime = @updateTime where productId = @productId";
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {
                 new SQLiteParameter("@clicked",kw.Clicked),
                 new SQLiteParameter("@updateTime", DateTime.Now),
-                new SQLiteParameter("@id",kw.Id)
+                new SQLiteParameter("@productId",kw.ProductId)
             };
             dbHelper.ExecuteNonQuery(sql, parameter);
         }
@@ -208,6 +240,29 @@ namespace AliRank
             {
                 new SQLiteParameter("@status", status),
                 new SQLiteParameter("@updateTime", DateTime.Now)
+            };
+            dbHelper.ExecuteNonQuery(sql, parameter);
+        }
+
+        public void Delete(int productId)
+        {
+            string sql = @"delete from  keywords where productId = @productId";
+            SQLiteParameter[] parameter = new SQLiteParameter[]
+            {
+                new SQLiteParameter("@productId", productId)
+            };
+            dbHelper.ExecuteNonQuery(sql, parameter);
+        }
+
+        public void UpdateRankKeyword(int productId, string rankKeyword)
+        {
+            string sql = @"UPDATE keywords SET rankKeyword = @rankKeyword where productId= @productId";
+            List<SQLiteParameter[]> parameters = new List<SQLiteParameter[]>();
+
+            SQLiteParameter[] parameter = new SQLiteParameter[]
+            {
+                new SQLiteParameter("@rankKeyword", rankKeyword),
+                new SQLiteParameter("@productId",productId),
             };
             dbHelper.ExecuteNonQuery(sql, parameter);
         }

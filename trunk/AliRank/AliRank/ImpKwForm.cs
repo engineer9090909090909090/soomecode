@@ -43,14 +43,12 @@ namespace AliRank
             this.pictureBox1.Visible = true;
             string url = this.textBox1.Text;
             ShowcaseQueryer searcher = new ShowcaseQueryer();
+            url = url.Replace(".en.alibaba.com/", ".en.alibaba.com");
             List<ShowcaseRankInfo> keywordList = searcher.Seacher(url);
             KeywordDAO keywordDAO = DAOFactory.Instance.GetKeywordDAO();
             keywordDAO.Insert(keywordList);
             searcher.Dispose();
             searcher = null;
-            string IniFile = FileUtils.CreateAppDataFolderEmptyTextFile(Constants.INI_FILE);
-            url = url.Replace(".en.alibaba.com/", ".en.alibaba.com");
-            FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.COMPANY_URL, url, IniFile);
             this.pictureBox1.Visible = false;
             this.ImportBtn.Enabled = true;
             this.Close();

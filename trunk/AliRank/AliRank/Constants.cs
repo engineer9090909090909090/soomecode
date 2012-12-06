@@ -13,7 +13,8 @@ namespace AliRank
 
         public static string CLICK_SECTIONS = "Click Section";
         public static string AUTO_CLICK_NUM = "AutoClickNum";
-        public static string COMPANY_URL = "CompanyUrl";
+        public static string MAX_PAUSE_TIME = "MaxPauseTime";
+        public static string MAX_QUERY_PAGE = "MaxQueryPage";
         public static string AUTO_SHUTDOWN = "AutoShutDown";
         public static string NETWORK_CHOICE = "Network Choice";
         public static string YES = "1";

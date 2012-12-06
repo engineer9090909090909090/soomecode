@@ -16,7 +16,6 @@ namespace AliRank
     {
         private KeywordDAO keywordDAO;
         private VpnDAO vpnDao;
-        private RankInfoDAO rankInfoDAO;
         private static bool IsStopClicking;
 
         private string IniFile;
@@ -26,10 +25,20 @@ namespace AliRank
             this.Load += new EventHandler(MainForm_Load);
             IniFile = FileUtils.CreateAppDataFolderEmptyTextFile(Constants.INI_FILE);
             FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, Constants.NO, IniFile);
-            string clickNum = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, IniFile);
-            if (string.IsNullOrEmpty(clickNum))
+            string sAutoClickNum = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, IniFile);
+            if (string.IsNullOrEmpty(sAutoClickNum))
             {
                 FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, 50 + "", IniFile);
+            }
+            string sMaxPauseTime = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_PAUSE_TIME, IniFile);
+            if (string.IsNullOrEmpty(sMaxPauseTime))
+            {
+                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.MAX_PAUSE_TIME, 60 + "", IniFile);
+            }
+            string sMaxQueryPage = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_QUERY_PAGE, IniFile);
+            if (string.IsNullOrEmpty(sMaxQueryPage))
+            {
+                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.MAX_QUERY_PAGE, 20 + "", IniFile);
             }
             this.WindowState = FormWindowState.Maximized;
         }
@@ -38,7 +47,6 @@ namespace AliRank
         {
             CheckForIllegalCrossThreadCalls = false;
             vpnDao = DAOFactory.Instance.GetVpnDAO();
-            rankInfoDAO = DAOFactory.Instance.GetRankInfoDAO();
             LoadDataview();
         }
 
@@ -107,7 +115,6 @@ namespace AliRank
             dt.Columns.Add("rankKey", typeof(string));
             dt.Columns.Add("rank", typeof(string));
             dt.Columns.Add("clicked", typeof(string));
-            dt.Columns.Add("productUrl", typeof(string));
             dt.Columns.Add("updateTime", typeof(DateTime));
             this.dataGridView1.DataSource = dt;
 
@@ -117,7 +124,7 @@ namespace AliRank
             DataGridViewColumn column = this.dataGridView1.Columns[1];
             column.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             column.HeaderText = "产品名称";
-            column.Width = 150;
+            column.Width = 250;
             DataGridViewColumn column2 = this.dataGridView1.Columns[2];
             column2.HeaderText = "产品ID";
             column2.Width = 100;
@@ -127,24 +134,19 @@ namespace AliRank
             column3.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             DataGridViewColumn columnRankKey = this.dataGridView1.Columns[4];
             columnRankKey.HeaderText = "排名关键词";
-            columnRankKey.Width = 120;
+            columnRankKey.Width = 150;
             columnRankKey.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             DataGridViewColumn column4 = this.dataGridView1.Columns[5];
             column4.HeaderText = "排名状态";
-            column4.Width = 150;
+            column4.Width = 200;
             column4.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             DataGridViewColumn column5 = this.dataGridView1.Columns[6];
             column5.HeaderText = "点击";
             column5.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            column5.Width = 120;
+            column5.Width = 100;
             DataGridViewColumn column6 = this.dataGridView1.Columns[7];
-            column6.HeaderText = "产品URL";
-            column6.Width = 300;
-            column6.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-
-            DataGridViewColumn column7 = this.dataGridView1.Columns[8];
-            column7.HeaderText = "更新时间";
-            column7.Width = 120;
+            column6.HeaderText = "更新时间";
+            column6.Width = 120;
             List<ShowcaseRankInfo> productList = keywordDAO.GetKeywordList();
             if (productList.Count > 0)
             {
@@ -163,21 +165,12 @@ namespace AliRank
                     row["rankKey"] = item.RankKeyword;
                     row["rank"] = ShowcaseRankInfo.GetRankInfo(item);
                     row["clicked"] = Convert.ToString(item.Clicked);
-                    row["productUrl"] = item.CompanyUrl + item.ProductUrl;
                     row["updateTime"] = item.UpdateTime;
                     dt.Rows.Add(row);                
                 }
             }
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == 7)
-            {
-                DataGridViewCell cell = dataGridView1[e.ColumnIndex, e.RowIndex];
-                System.Diagnostics.Process.Start("iexplore.exe", Convert.ToString(cell.Value));
-            }
-        }
 
         private void dataGridView1_KeyUp(object sender, KeyEventArgs e)
         {
@@ -198,25 +191,8 @@ namespace AliRank
 
         private void AsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            QueryKwForm f = new QueryKwForm();
-            f.FormClosed += new FormClosedEventHandler(QueryKwForm_FormClosed);
-            f.StartPosition = FormStartPosition.CenterParent;
-            f.ShowDialog(this);
-
-           
-        }
-
-        void QueryKwForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            if (!QueryKwForm.IsQuery)
-            {
-                AsToolStripMenuItem.Enabled = true;
-                toolStripButton4.Enabled = true;
-                clickRunBtn.Enabled = true;
-                return;
-            }
-            List<RankInfo> queryList = rankInfoDAO.GetRankInfoList();
-            if (queryList == null || queryList.Count ==0)
+            List<ShowcaseRankInfo> kwList = keywordDAO.GetKeywordList();
+            if (kwList == null || kwList.Count == 0)
             {
                 return;
             }
@@ -242,12 +218,9 @@ namespace AliRank
         private int iCount = 0;
         private int MaxCount = 10;
         ManualResetEvent eventX;
-        private string QueryCompanyUrl;
         void bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            QueryCompanyUrl = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.COMPANY_URL, IniFile);
-            List<RankInfo> queryList = rankInfoDAO.GetRankInfoList();
-            rankInfoDAO.UpdateAllQueryStatus();
+            List<ShowcaseRankInfo> queryList = keywordDAO.GetKeywordList();
             keywordDAO.UpdateAllQueryStatus();
             MaxCount = queryList.Count;
             if (MaxCount > 0)
@@ -258,8 +231,7 @@ namespace AliRank
                 ThreadPool.SetMaxThreads(10, 200);
                 for (int i = 0; i < MaxCount; i++)
                 {
-                    string keyword = queryList[i].RankKeyword;
-                    ThreadPool.QueueUserWorkItem(new WaitCallback(DoRankSearch), (object)keyword);
+                    ThreadPool.QueueUserWorkItem(new WaitCallback(DoRankSearch), (object)queryList);
                 }
                 eventX.WaitOne(Timeout.Infinite, true);
             }
@@ -272,11 +244,11 @@ namespace AliRank
         
         private void DoRankSearch(object obj)
         {
-            string Item = (string)obj;
+            ShowcaseRankInfo item = (ShowcaseRankInfo)obj;
             RankQueryer queryer = new RankQueryer();
             queryer.OnRankSearchingEvent += new RankSearchingEvent(queryer_OnRankSearchingEvent);
             queryer.OnRankSearchEndEvent += new RankSearchEndEvent(queryer_OnRankSearchEndEvent);
-            queryer.Seacher(Item, QueryCompanyUrl);
+            queryer.Seacher(item.RankKeyword, item.CompanyUrl);
             queryer.OnRankSearchingEvent -= new RankSearchingEvent(queryer_OnRankSearchingEvent);
             queryer.OnRankSearchEndEvent -= new RankSearchEndEvent(queryer_OnRankSearchEndEvent);
             Interlocked.Increment(ref iCount);
@@ -297,7 +269,6 @@ namespace AliRank
             {
                 return;            
             }
-            rankInfoDAO.UpdateRankInfo(item);
             item = keywordDAO.UpdateRank(item);
             if (item.QueryStatus == 0)
             {
@@ -412,10 +383,14 @@ namespace AliRank
         {
             List<ShowcaseRankInfo> productList = keywordDAO.GetKeywordList();
             string ConfigClickNum = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, IniFile);
-            string Network = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.NETWORK_CHOICE, IniFile);
-            IEHandleUtils.ClearIECache();
+            string sNetwork = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.NETWORK_CHOICE, IniFile);
+            string sMaxPauseTime = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_PAUSE_TIME, IniFile);
+            string sMaxQueryPage = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_QUERY_PAGE, IniFile);
+            int iMaxQueryPage = Convert.ToInt32(sMaxQueryPage);
+            int iRandomMaxTime = Convert.ToInt32(sMaxPauseTime) * 1000;
+            //IEHandleUtils.ClearIECache();
             IEHandleUtils.ClearIECookie();
-            if (Network.Equals(Constants.NETWORK_VPN))
+            if (sNetwork.Equals(Constants.NETWORK_VPN))
             {
                 int clickNum = Convert.ToInt32(ConfigClickNum);
                 for (int n = 0; n < clickNum; n++)
@@ -427,14 +402,18 @@ namespace AliRank
                         break;
                     }
                     if (IsStopClicking) { break; }
-                    //IEHandleUtils.ClearIECache();
-                    //IEHandleUtils.ClearIECookie();
+                    
                     for (int i = 0; i < productList.Count; i++)
                     {
+                        //IEHandleUtils.ClearIECache();
+                        IEHandleUtils.ClearIECookie();
+                        Random r = new Random();
+                        int randomNumber = r.Next(1000, iRandomMaxTime);
+                        if (i > 0) Thread.Sleep(randomNumber);
                         ProductClicker clicker = new ProductClicker(webBrowser);
                         clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
                         clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
-                        clicker.DoClick(productList[i]);
+                        clicker.DoClick(productList[i], iMaxQueryPage);
                         clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
                         clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
                         if (IsStopClicking) { break; }
@@ -447,21 +426,23 @@ namespace AliRank
                 int clickNum = Convert.ToInt32(ConfigClickNum);
                 for (int n = 0; n < clickNum; n++)
                 {
-                    //IEHandleUtils.ClearIECache();
-                    //IEHandleUtils.ClearIECookie();
                     for (int i = 0; i < productList.Count; i++)
                     {
+                        //IEHandleUtils.ClearIECache();
+                        IEHandleUtils.ClearIECookie();
+                        Random r = new Random();
+                        int randomNumber = r.Next(1000, iRandomMaxTime);
+                        if (i > 0) Thread.Sleep(randomNumber);
                         ProductClicker clicker = new ProductClicker(webBrowser);
                         clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
                         clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
-                        clicker.DoClick(productList[i]);
+                        clicker.DoClick(productList[i], iMaxQueryPage);
                         clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
                         clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
                         if (IsStopClicking) { break; }
                     }
                     if (IsStopClicking) { break; }
                 }
-            
             }
             if (vpnEntity != null)
             {
@@ -486,7 +467,7 @@ namespace AliRank
             {
                 DataGridViewCell productIdCell = row.Cells[2];
                 string id = (string)productIdCell.Value;
-                if (id == item.ProductId)
+                if (Convert.ToInt32(id) == item.ProductId)
                 {
                     DataGridViewCell cell = row.Cells[6];
                     cell.Value = item.Clicked;
@@ -503,7 +484,7 @@ namespace AliRank
             {
                 DataGridViewCell productIdCell = row.Cells[2];
                 string id = (string)productIdCell.Value;
-                if (id == item.ProductId)
+                if (Convert.ToInt32(id) == item.ProductId)
                 {
                     DataGridViewCell cell = row.Cells[6];
                     cell.Value = "Clicking...";
@@ -527,6 +508,44 @@ namespace AliRank
                 vpnEntity.Dispose();
                 vpnEntity = null;
             }
+        }
+
+        private void dataGridView1_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                if (e.RowIndex >= 0)
+                {
+                    foreach (DataGridViewRow row in dataGridView1.Rows)
+                    {
+                        row.Selected = false;
+                    }
+                    dataGridView1.Rows[e.RowIndex].Selected = true;
+                    SelectedRowIndex = e.RowIndex;
+                    RowSelectedProductId = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[2].Value);
+                    contextMenuStrip1.Show(MousePosition.X, MousePosition.Y);
+                }
+            }
+        }
+
+        private int RowSelectedProductId = 0;
+        private int SelectedRowIndex = 0;
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowcaseRankInfo obj = keywordDAO.GetShowcaseRankInfo(RowSelectedProductId);
+            System.Diagnostics.Process.Start("iexplore.exe", obj.CompanyUrl + obj.ProductUrl);
+        }
+
+        private void DeleteRowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            keywordDAO.Delete(RowSelectedProductId);
+            dataGridView1.Rows.RemoveAt(SelectedRowIndex);
+            dataGridView1.Update();
+        }
+
+        private void QueryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
         
     }
