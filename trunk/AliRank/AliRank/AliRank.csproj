@@ -114,6 +114,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -146,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="rank.ico" />
+    <None Include="Resources\1G22R2W-5.gif" />
     <None Include="Resources\no_image.jpg" />
     <None Include="Resources\play.png" />
     <None Include="Resources\convert.png" />
