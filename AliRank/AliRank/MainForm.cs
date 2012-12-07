@@ -508,6 +508,9 @@ namespace AliRank
             }
         }
 
+
+        #region 右键菜单
+
         private void dataGridView1_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -553,7 +556,9 @@ namespace AliRank
         {
             toolStripButton4.Enabled = false;
             clickRunBtn.Enabled = false;
+            
             ShowcaseRankInfo item = keywordDAO.GetShowcaseRankInfo(RowSelectedProductId);
+            MessageLabel.Text = "开始查询["+item.RankKeyword+"]关键词排名...";
             RankQueryer queryer = new RankQueryer();
             queryer.OnRankSearchingEvent += new RankSearchingEvent(queryer_OnRankSearchingEvent);
             queryer.OnRankSearchEndEvent += new RankSearchEndEvent(queryer_OnRankSearchEndEvent);
@@ -562,13 +567,26 @@ namespace AliRank
             queryer.OnRankSearchEndEvent -= new RankSearchEndEvent(queryer_OnRankSearchEndEvent);
             toolStripButton4.Enabled = true;
             clickRunBtn.Enabled = true;
+            MessageLabel.Text = "";
         }
 
         private void ModifyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            ModifyWindow f = new ModifyWindow();
+            f.iModifyProductId = RowSelectedProductId;
+            f.FormClosed +=new FormClosedEventHandler(f_FormClosed1);
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
         }
-        
 
+        void f_FormClosed1(object sender, FormClosedEventArgs e)
+        {
+            if (ModifyWindow.updatedSuccess)
+            {
+                ShowcaseRankInfo obj = keywordDAO.GetShowcaseRankInfo(RowSelectedProductId);
+                dataGridView1.Rows[SelectedRowIndex].Cells[4].Value = obj.RankKeyword;
+            }
+        }
+        #endregion
     }
 }
