@@ -20,9 +20,9 @@ namespace AliRank
         private WebBrowser browser;
         ManualResetEvent eventX = new ManualResetEvent(false);
 
-        private string SEARCH_URL1 = "http://www.alibaba.com/trade/search?SearchText={0}&IndexArea=product_en&fsb=y";
-        private string SEARCH_URL2 = "http://www.alibaba.com/products/F0/{0}/{1}.html";
-        private string PURL_PREFIX = "http://www.alibaba.com/product-gs/";
+        private string SEARCH_URL1 = @"http://www.alibaba.com/trade/search?SearchText={0}&IndexArea=product_en&fsb=y";
+        private string SEARCH_URL2 = @"http://www.alibaba.com/products/F0/{0}/{1}.html";
+        private string PURL_PREFIX = @"http://www.alibaba.com/product-gs/";
         int currentPage = 1;
         int maxQueryPage = 10;
         private ShowcaseRankInfo item;
