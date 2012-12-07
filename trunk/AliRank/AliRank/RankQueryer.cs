@@ -48,19 +48,17 @@ namespace AliRank
             }
         }
 
-        public void Seacher(string key, string companyUrl)
+        public void Seacher(ShowcaseRankInfo item)
         {
             item.Rank = 0;
-            item.RankKeyword = key;
-            item.CompanyUrl = companyUrl;
-            string mainKey = key.Replace(" ", "_");
+            string mainKey = item.RankKeyword.Replace(" ", "_");
+            string companyUrl = item.CompanyUrl;
             HtmlDocument document = null;
-
             for (int i = 0; i < 10; i++)
             {
                 string url = string.Format(SEARCH_URL, mainKey, (i + 1));
                 HtmlWeb clinet = new HtmlWeb();
-                SearchingEvent(item, "Searching " + i + " page...");
+                SearchingEvent(item, "查询第[" + i + "]页.");
                 document = clinet.Load(url);
                 System.Diagnostics.Trace.WriteLine(url + " = " + mainKey);
                 if (i == 0)

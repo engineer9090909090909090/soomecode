@@ -22,7 +22,7 @@ namespace AliRank
         {
             if (item.Rank == 0)
             {
-                return "无排名，或没有设置查询关键词";
+                return "无排名";
             }
             int page = item.Rank / 38 + 1;
             int location = ( item.Rank % 38 == 0 )? 38 :  item.Rank % 38;
