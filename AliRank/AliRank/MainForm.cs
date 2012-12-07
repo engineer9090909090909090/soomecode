@@ -246,7 +246,7 @@ namespace AliRank
             RankQueryer queryer = new RankQueryer();
             queryer.OnRankSearchingEvent += new RankSearchingEvent(queryer_OnRankSearchingEvent);
             queryer.OnRankSearchEndEvent += new RankSearchEndEvent(queryer_OnRankSearchEndEvent);
-            queryer.Seacher(item.RankKeyword, item.CompanyUrl);
+            queryer.Seacher(item);
             queryer.OnRankSearchingEvent -= new RankSearchingEvent(queryer_OnRankSearchingEvent);
             queryer.OnRankSearchEndEvent -= new RankSearchEndEvent(queryer_OnRankSearchEndEvent);
             Interlocked.Increment(ref iCount);
@@ -258,6 +258,17 @@ namespace AliRank
 
         void queryer_OnRankSearchingEvent(object sender, RankEventArgs e)
         {
+            ShowcaseRankInfo item = e.Item;
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                DataGridViewCell productIdCell = row.Cells[2];
+                string id = (string)productIdCell.Value;
+                if (Convert.ToInt32(id) == item.ProductId)
+                {
+                    row.Cells[5].Value = e.Msg;
+                    break;
+                }
+            }
         }
 
         void queryer_OnRankSearchEndEvent(object sender, RankEventArgs e)
@@ -278,10 +289,8 @@ namespace AliRank
                 string id = (string)productIdCell.Value;
                 if (Convert.ToInt32(id) ==item.ProductId)
                 {
-                    DataGridViewCell SearchKeyCell = row.Cells[4];
-                    SearchKeyCell.Value = item.RankKeyword;
-                    DataGridViewCell cell = row.Cells[5];
-                    cell.Value = ShowcaseRankInfo.GetRankInfo(item);
+                    row.Cells[5].Value = ShowcaseRankInfo.GetRankInfo(item);
+                    break;
                 }
             }
         }
@@ -562,7 +571,7 @@ namespace AliRank
             RankQueryer queryer = new RankQueryer();
             queryer.OnRankSearchingEvent += new RankSearchingEvent(queryer_OnRankSearchingEvent);
             queryer.OnRankSearchEndEvent += new RankSearchEndEvent(queryer_OnRankSearchEndEvent);
-            queryer.Seacher(item.RankKeyword, item.CompanyUrl);
+            queryer.Seacher(item);
             queryer.OnRankSearchingEvent -= new RankSearchingEvent(queryer_OnRankSearchingEvent);
             queryer.OnRankSearchEndEvent -= new RankSearchEndEvent(queryer_OnRankSearchEndEvent);
             toolStripButton4.Enabled = true;
