@@ -177,10 +177,6 @@ namespace AliRank
                 }
                 
             }
-            if (list != null && list.Count > 0)
-            {
-                dbHelper.ExecuteNonQuery("UPDATE keywords SET status = 0");
-            }
             if (InsertParameters.Count > 0)
             {
                 dbHelper.ExecuteNonQuery(InsSql, InsertParameters);

@@ -6,13 +6,16 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace AliRank
 {
     public partial class ImpKwForm : Form
     {
 
-        List<ShowcaseRankInfo> keywordList;
+        List<ShowcaseRankInfo> ProductsList;
+        KeywordDAO keywordDAO;
+        Dictionary<int, ShowcaseRankInfo> ProductsDic = new Dictionary<int, ShowcaseRankInfo>();
         public ImpKwForm()
         {
             InitializeComponent();
@@ -21,7 +24,8 @@ namespace AliRank
         private void ImpKwForm_Load(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false;
-            UpdateListView();
+            keywordDAO = DAOFactory.Instance.GetKeywordDAO();
+            UpdateListView(null);
         }
         
         private void ImportBtn_Click(object sender, EventArgs e)
@@ -34,6 +38,7 @@ namespace AliRank
             }
             this.pictureBox1.Visible = true;
             this.ImportBtn.Enabled = true;
+            ProductsDic.Clear();
             BackgroundWorker bgWorker = new BackgroundWorker();
             bgWorker.DoWork += new DoWorkEventHandler(bgWorker_DoWork);
             bgWorker.RunWorkerAsync();
@@ -47,7 +52,8 @@ namespace AliRank
             string url = this.textBox1.Text;
             ShowcaseQueryer searcher = new ShowcaseQueryer();
             url = url.Replace(".en.alibaba.com/", ".en.alibaba.com");
-            keywordList = searcher.Seacher(url);
+            ProductsList = searcher.Seacher(url);
+            UpdateListView(ProductsList);
             searcher.Dispose();
             searcher = null;
             this.pictureBox1.Visible = false;
@@ -55,37 +61,40 @@ namespace AliRank
             
         }
 
-        public void UpdateListView()
+        public void UpdateListView(List<ShowcaseRankInfo> productList)
         {
-            this.listView1.GridLines = true; //显示表格线
-            this.listView1.View = View.Details;//显示表格细节
-            this.listView1.LabelEdit = false; //是否可编辑,ListView只可编辑第一列。
-            this.listView1.Scrollable = true;//有滚动条
-            this.listView1.FullRowSelect = false;//是否可以选择行
-
-            //添加表头
-            this.listView1.Columns.Add("", 0);
-            this.listView1.Columns.Add("列1", 80);
-            this.listView1.Columns.Add("列2", 160);
-            this.listView1.Columns.Add("列3", 160);
-            this.listView1.Columns.Add("列4", 160);
-            //添加各项
-            ListViewItem[] p = new ListViewItem[2];
-            p[0] = new ListViewItem(new string[] { "", "aaaa", "bbbb" });
-            p[1] = new ListViewItem(new string[] { "", "cccc", "ggggg" });
-            p[1] = new ListViewItem(new string[] { "", "eeee", "ffff" });
-            //p[0].SubItems[0].BackColor = Color.Red; //用于设置某行的背景颜色
-
-            this.listView1.Items.AddRange(p);
-            //也可以用this.listView1.Items.Add();不过需要在使用的前后添加Begin... 和End...防止界面自动刷新
-            // 添加分组
-            /*
-            this.listView1.Groups.Add(new ListViewGroup("tou"));
-            this.listView1.Groups.Add(new ListViewGroup("wei"));
-
-            this.listView1.Items[0].Group = this.listView1.Groups[0];
-            this.listView1.Items[1].Group = this.listView1.Groups[1];
-            */
+            this.listView1.Clear();
+            this.listView1.GridLines = true; 
+            this.listView1.View = View.LargeIcon;
+            this.listView1.Scrollable = true;
+            this.listView1.CheckBoxes = true;
+            ProductsDic.Clear();
+            if (productList == null)
+            {
+                return;
+            }
+            ImageList imageList1 = new ImageList();
+            imageList1.ImageSize = new System.Drawing.Size(100 , 100);
+            this.listView1.BeginUpdate();
+            for(int i = 0; i < productList.Count; i++)
+            {
+                ShowcaseRankInfo obj = productList[i];
+                ProductsDic.Add(obj.ProductId, obj);
+                Image img = global::AliRank.Properties.Resources.no_image; 
+                if (!string.IsNullOrEmpty(obj.ProductImg) && File.Exists(obj.ProductImg))
+                {
+                    img = new Bitmap(Image.FromFile(obj.ProductImg));
+                }
+                imageList1.Images.Add(img);
+                ListViewItem item = new ListViewItem();
+                item.ImageIndex = i;
+                item.Text = obj.ProductName;
+                item.Tag = obj.ProductId;
+                item.Checked = true;
+                this.listView1.Items.Add(item);
+            }
+            this.listView1.LargeImageList = imageList1;
+            this.listView1.EndUpdate();
         }
 
         private void CancelBtn_Click(object sender, EventArgs e)
@@ -95,9 +104,19 @@ namespace AliRank
 
         private void ConfirmBtn_Click(object sender, EventArgs e)
         {
-            KeywordDAO keywordDAO = DAOFactory.Instance.GetKeywordDAO();
-            keywordDAO.Insert(keywordList);
-            this.Close();
+            List<ShowcaseRankInfo> selectedList = new List<ShowcaseRankInfo>();
+            foreach (ListViewItem item in this.listView1.CheckedItems)
+            {
+                int productId = Convert.ToInt32(item.Tag);
+                ShowcaseRankInfo selectedObj = ProductsDic[productId];
+                selectedList.Add(selectedObj);
+            }
+            if (selectedList.Count > 0)
+            {
+                keywordDAO.Insert(selectedList);
+                selectedList.Clear();
+                this.Close();
+            }
         }
     }
 }

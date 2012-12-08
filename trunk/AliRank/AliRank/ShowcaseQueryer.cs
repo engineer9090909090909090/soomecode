@@ -44,8 +44,8 @@ namespace AliRank
             {
                 return showCaseProducts;
             }
-            ThreadPool.SetMinThreads(4, 40);
-            ThreadPool.SetMaxThreads(10, 200);
+            ThreadPool.SetMinThreads(2, 40);
+            ThreadPool.SetMaxThreads(4, 200);
             for (int i = 0; i < MaxCount; i++)
             {
                  
