@@ -102,7 +102,7 @@
             // 
             this.listView1.Location = new System.Drawing.Point(12, 17);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(740, 413);
+            this.listView1.Size = new System.Drawing.Size(765, 413);
             this.listView1.TabIndex = 6;
             this.listView1.UseCompatibleStateImageBehavior = false;
             // 
@@ -111,7 +111,7 @@
             this.groupBox1.Controls.Add(this.listView1);
             this.groupBox1.Location = new System.Drawing.Point(7, 50);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(762, 436);
+            this.groupBox1.Size = new System.Drawing.Size(783, 436);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "产品信息";
@@ -120,9 +120,9 @@
             // 
             this.ConfirmBtn.Location = new System.Drawing.Point(234, 492);
             this.ConfirmBtn.Name = "ConfirmBtn";
-            this.ConfirmBtn.Size = new System.Drawing.Size(75, 23);
+            this.ConfirmBtn.Size = new System.Drawing.Size(90, 23);
             this.ConfirmBtn.TabIndex = 8;
-            this.ConfirmBtn.Text = "确认(&S)";
+            this.ConfirmBtn.Text = "添加选中(&S)";
             this.ConfirmBtn.UseVisualStyleBackColor = true;
             this.ConfirmBtn.Click += new System.EventHandler(this.ConfirmBtn_Click);
             // 
@@ -140,7 +140,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(779, 526);
+            this.ClientSize = new System.Drawing.Size(802, 526);
             this.Controls.Add(this.CancelBtn);
             this.Controls.Add(this.ConfirmBtn);
             this.Controls.Add(this.groupBox1);
