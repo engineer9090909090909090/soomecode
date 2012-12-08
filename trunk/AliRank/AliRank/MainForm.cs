@@ -215,9 +215,12 @@ namespace AliRank
 
         private int iCount = 0;
         private int MaxCount = 10;
+        private int iMaxQueryPage = 10;
         ManualResetEvent eventX;
         void bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
+            string sMaxQueryPage = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_QUERY_PAGE, IniFile);
+            iMaxQueryPage = Convert.ToInt32(sMaxQueryPage);
             List<ShowcaseRankInfo> queryList = keywordDAO.GetKeywordList();
             keywordDAO.UpdateAllQueryStatus();
             MaxCount = queryList.Count;
@@ -225,8 +228,8 @@ namespace AliRank
             {
                 iCount = 0;
                 eventX = new ManualResetEvent(false);
-                ThreadPool.SetMinThreads(4, 40);
-                ThreadPool.SetMaxThreads(10, 200);
+                ThreadPool.SetMinThreads(2, 40);
+                ThreadPool.SetMaxThreads(5, 200);
                 for (int i = 0; i < MaxCount; i++)
                 {
                     ThreadPool.QueueUserWorkItem(new WaitCallback(DoRankSearch), (object)queryList[i]);
@@ -246,7 +249,7 @@ namespace AliRank
             RankQueryer queryer = new RankQueryer();
             queryer.OnRankSearchingEvent += new RankSearchingEvent(queryer_OnRankSearchingEvent);
             queryer.OnRankSearchEndEvent += new RankSearchEndEvent(queryer_OnRankSearchEndEvent);
-            queryer.Seacher(item);
+            queryer.Seacher(item, iMaxQueryPage);
             queryer.OnRankSearchingEvent -= new RankSearchingEvent(queryer_OnRankSearchingEvent);
             queryer.OnRankSearchEndEvent -= new RankSearchEndEvent(queryer_OnRankSearchEndEvent);
             Interlocked.Increment(ref iCount);
@@ -274,14 +277,9 @@ namespace AliRank
         void queryer_OnRankSearchEndEvent(object sender, RankEventArgs e)
         {
             ShowcaseRankInfo item = e.Item;
-            if (item.Rank == 0)
+            if (item.Rank > 0)
             {
-                return;            
-            }
-            item = keywordDAO.UpdateRank(item);
-            if (item.QueryStatus == 0)
-            {
-                return;
+                keywordDAO.UpdateRank(item);
             }
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
@@ -565,13 +563,14 @@ namespace AliRank
         {
             toolStripButton4.Enabled = false;
             clickRunBtn.Enabled = false;
-            
+            string sMaxQueryPage = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_QUERY_PAGE, IniFile);
+            iMaxQueryPage = Convert.ToInt32(sMaxQueryPage);
             ShowcaseRankInfo item = keywordDAO.GetShowcaseRankInfo(RowSelectedProductId);
             MessageLabel.Text = "开始查询["+item.RankKeyword+"]关键词排名...";
             RankQueryer queryer = new RankQueryer();
             queryer.OnRankSearchingEvent += new RankSearchingEvent(queryer_OnRankSearchingEvent);
             queryer.OnRankSearchEndEvent += new RankSearchEndEvent(queryer_OnRankSearchEndEvent);
-            queryer.Seacher(item);
+            queryer.Seacher(item, iMaxQueryPage);
             queryer.OnRankSearchingEvent -= new RankSearchingEvent(queryer_OnRankSearchingEvent);
             queryer.OnRankSearchEndEvent -= new RankSearchEndEvent(queryer_OnRankSearchEndEvent);
             toolStripButton4.Enabled = true;

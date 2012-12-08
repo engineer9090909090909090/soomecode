@@ -48,17 +48,17 @@ namespace AliRank
             }
         }
 
-        public void Seacher(ShowcaseRankInfo item)
+        public void Seacher(ShowcaseRankInfo item, int maxQueryPage)
         {
             item.Rank = 0;
             string mainKey = item.RankKeyword.Replace(" ", "_");
             string companyUrl = item.CompanyUrl;
             HtmlDocument document = null;
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < maxQueryPage; i++)
             {
                 string url = string.Format(SEARCH_URL, mainKey, (i + 1));
                 HtmlWeb clinet = new HtmlWeb();
-                SearchingEvent(item, "查询第[" + i + "]页.");
+                SearchingEvent(item, "搜索第[" + i + "]页..");
                 document = clinet.Load(url);
                 System.Diagnostics.Trace.WriteLine(url + " = " + mainKey);
                 if (i == 0)
@@ -92,10 +92,13 @@ namespace AliRank
                         string lsubject = aLinkNode.Id.ToLower();
                         string productName = aLinkNode.InnerText;
                         string proId = lsubject.Replace("lsubject_", "");
-                        item.ProductId = Convert.ToInt32(proId);
-                        item.Rank = i * 38 + (k + 1);
-                        item.ProductName = productName;
-                        break;
+                        int rankProductId = Convert.ToInt32(proId);
+                        if (rankProductId == item.ProductId)
+                        {
+                            item.Rank = i * 38 + (k + 1);
+                            item.ProductName = productName;
+                            break;
+                        }
                     }
                 }
                 if (item.Rank > 0)

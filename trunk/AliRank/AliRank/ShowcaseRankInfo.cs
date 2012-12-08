@@ -26,7 +26,7 @@ namespace AliRank
             }
             int page = item.Rank / 38 + 1;
             int location = ( item.Rank % 38 == 0 )? 38 :  item.Rank % 38;
-            string msg = (item.Rank == 0) ? "前380名找不到本产品," : "第" + item.Rank + "名,第" + page + "页第" + location + "位,";
+            string msg = (item.Rank == 0) ? "无排名," : "第" + item.Rank + "名,第" + page + "页第" + location + "位,";
             if (item.Rank  > 0 && item.PrevRank > 0)
             {
                 msg += "\r\n比上次提高了" + (item.PrevRank - item.Rank) + "名,";
