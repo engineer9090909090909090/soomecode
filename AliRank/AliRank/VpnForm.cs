@@ -135,7 +135,7 @@ namespace AliRank
                 model.VpnType = Constants.L2TP;
                 model.L2tpSec = L2tpKeyTxtBox.Text.Trim();
             }
-            bool existAddress = vpnDao.ExistAddress(model.Address);
+            bool existAddress = vpnDao.ExistAddress(model.Address, model.VpnType);
             if (existAddress)
             {
                 ErrorMsg.Text = "VPN 地址已经存在列表中.";

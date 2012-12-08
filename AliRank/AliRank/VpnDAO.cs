@@ -38,12 +38,13 @@ namespace AliRank
         }
 
 
-        public bool ExistAddress(string address)
+        public bool ExistAddress(string address, string type)
         {
-            string sql = "select count(1) from vpns where Address= @Address";
+            string sql = "select count(1) from vpns where Address= @Address and VpnType=@VpnType";
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {
-                new SQLiteParameter("@Address", address)
+                new SQLiteParameter("@Address", address),
+                new SQLiteParameter("@VpnType", type)
             };
             int  r = Convert.ToInt32(dbHelper.ExecuteScalar(sql, parameter));
             if (r > 0)
