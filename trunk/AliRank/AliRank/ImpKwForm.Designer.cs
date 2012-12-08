@@ -35,7 +35,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.errorMsg = new System.Windows.Forms.Label();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ConfirmBtn = new System.Windows.Forms.Button();
+            this.CancelBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // ImportBtn
@@ -93,11 +98,52 @@
             this.errorMsg.Size = new System.Drawing.Size(0, 12);
             this.errorMsg.TabIndex = 5;
             // 
+            // listView1
+            // 
+            this.listView1.Location = new System.Drawing.Point(12, 17);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(740, 413);
+            this.listView1.TabIndex = 6;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.listView1);
+            this.groupBox1.Location = new System.Drawing.Point(7, 50);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(762, 436);
+            this.groupBox1.TabIndex = 7;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "产品信息";
+            // 
+            // ConfirmBtn
+            // 
+            this.ConfirmBtn.Location = new System.Drawing.Point(234, 492);
+            this.ConfirmBtn.Name = "ConfirmBtn";
+            this.ConfirmBtn.Size = new System.Drawing.Size(75, 23);
+            this.ConfirmBtn.TabIndex = 8;
+            this.ConfirmBtn.Text = "确认(&S)";
+            this.ConfirmBtn.UseVisualStyleBackColor = true;
+            this.ConfirmBtn.Click += new System.EventHandler(this.ConfirmBtn_Click);
+            // 
+            // CancelBtn
+            // 
+            this.CancelBtn.Location = new System.Drawing.Point(447, 492);
+            this.CancelBtn.Name = "CancelBtn";
+            this.CancelBtn.Size = new System.Drawing.Size(75, 23);
+            this.CancelBtn.TabIndex = 9;
+            this.CancelBtn.Text = "取消(&C)";
+            this.CancelBtn.UseVisualStyleBackColor = true;
+            this.CancelBtn.Click += new System.EventHandler(this.CancelBtn_Click);
+            // 
             // ImpKwForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(836, 528);
+            this.ClientSize = new System.Drawing.Size(779, 526);
+            this.Controls.Add(this.CancelBtn);
+            this.Controls.Add(this.ConfirmBtn);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.errorMsg);
             this.Controls.Add(this.label2);
@@ -113,6 +159,7 @@
             this.Text = "从公司网站橱窗导入关键词排名产品信息";
             this.Load += new System.EventHandler(this.ImpKwForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -126,5 +173,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label errorMsg;
+        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button ConfirmBtn;
+        private System.Windows.Forms.Button CancelBtn;
     }
 }
