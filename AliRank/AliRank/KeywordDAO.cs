@@ -198,7 +198,7 @@ namespace AliRank
 
         public ShowcaseRankInfo UpdateRank(ShowcaseRankInfo item)
         {
-            Object prank = dbHelper.ExecuteScalar(@"select prevRank from keywords where productId = " + item.ProductId, null);
+            Object prank = dbHelper.ExecuteScalar(@"select rank from keywords where productId = " + item.ProductId, null);
             if (Convert.IsDBNull(prank))
             {
                 item.PrevRank = 0;
