@@ -58,7 +58,7 @@ namespace AliRank
             {
                 string url = string.Format(SEARCH_URL, mainKey, (i + 1));
                 HtmlWeb clinet = new HtmlWeb();
-                SearchingEvent(item, "搜索第[" + i + "]页..");
+                SearchingEvent(item, "搜索第[" + i + "]页...");
                 document = clinet.Load(url);
                 System.Diagnostics.Trace.WriteLine(url + " = " + mainKey);
                 if (i == 0)

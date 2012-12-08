@@ -55,8 +55,8 @@ namespace AliRank
         {
             item = kw;
             this.maxQueryPage = maxQueryPageNumber;
-            string searchKey = item.RankKeyword.Replace(" ", "+");
-            currentRequestUrl = string.Format(SEARCH_URL1, searchKey);
+            this.clickKey = item.RankKeyword.Replace(" ", "+");
+            currentRequestUrl = string.Format(SEARCH_URL1, this.clickKey);
             ClickingEvent(item, "Clicking " + currentRequestUrl);
             browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
             browser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
@@ -99,8 +99,10 @@ namespace AliRank
                     else
                     {
                         currentPage++;
-                        string mainKey = clickKey.Replace(" ", "_");
-                        currentRequestUrl = string.Format(SEARCH_URL2, mainKey, currentPage);
+                        currentRequestUrl = string.Format(SEARCH_URL2, this.clickKey, currentPage);
+                        Random r = new Random();
+                        int randomNumber = r.Next(100, 5000);
+                        if (currentPage > 0) Thread.Sleep(randomNumber);
                         ClickingEvent(item, "Clicking " + currentRequestUrl);
                         browser.Navigate(currentRequestUrl);
                     }
