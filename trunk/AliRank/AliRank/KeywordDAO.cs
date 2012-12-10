@@ -46,20 +46,6 @@ namespace AliRank
         private void UpdateTable()
         {
             bool ExistColumnStatus = dbHelper.IsExistColumn("keywords", "status");
-            if (!ExistColumnStatus)
-            {
-                dbHelper.ExecuteNonQuery("ALTER TABLE  keywords add COLUMN status integer default 1;");
-            }
-            bool ExistColumnRankKeyword = dbHelper.IsExistColumn("keywords", "rankKeyword");
-            if (!ExistColumnRankKeyword)
-            {
-                dbHelper.ExecuteNonQuery("ALTER TABLE  keywords add COLUMN rankKeyword varchar(300) default '';");
-            }
-            bool ExistColumnQueryStatus = dbHelper.IsExistColumn("keywords", "queryStatus");
-            if (!ExistColumnQueryStatus)
-            {
-                dbHelper.ExecuteNonQuery("ALTER TABLE  keywords add COLUMN queryStatus integer default 0;");
-            }
              bool ExistColumnId = dbHelper.IsExistColumn("keywords", "id");
              if (ExistColumnId)
              {
