@@ -161,19 +161,26 @@ namespace AliRank
                     }
                     return data.Rows[0][0];
                 }
-
             }
 
         }
 
         public bool IsExistColumn(string tableName, string columnName)
         {
-            string sql = "select * from " + tableName + " where 1 = 0";
-            DataTable table = ExecuteDataTable(sql, null);
-            bool rev = table.Columns.Contains(columnName);
-            table.Dispose();
-            table = null;
-            return rev;
+            try
+            {
+                string sql = "select * from " + tableName + " where 1 = 0";
+                DataTable table = ExecuteDataTable(sql, null);
+                bool rev = table.Columns.Contains(columnName);
+                table.Dispose();
+                table = null;
+                return rev;
+            }
+            catch
+            {
+                return false;
+            }
+
         }
 
         /// <summary> 
