@@ -39,6 +39,9 @@
     <Reference Include="DotRas">
       <HintPath>..\DotRas.dll</HintPath>
     </Reference>
+    <Reference Include="FiddlerCore">
+      <HintPath>..\FiddlerCore.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\..\lib\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -63,6 +66,7 @@
     <Compile Include="ModifyWindow.Designer.cs">
       <DependentUpon>ModifyWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Passporter.cs" />
     <Compile Include="RankInfo.cs" />
     <Compile Include="TopFiveInfo.cs" />
     <Compile Include="IEHandleUtils.cs" />
@@ -155,6 +159,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="makecert.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="rank.ico" />
     <None Include="Resources\search.png" />
     <None Include="Resources\modify.png" />
