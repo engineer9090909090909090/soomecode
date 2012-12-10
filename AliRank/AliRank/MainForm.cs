@@ -438,6 +438,8 @@ namespace AliRank
                         Random r = new Random();
                         int randomNumber = r.Next(1000, iRandomMaxTime);
                         if (i > 0) Thread.Sleep(randomNumber);
+                        Passporter passporter = new AliRank.Passporter(webBrowser);
+                        passporter.DoLogin("luke.yu@soomes.com", "soomes2008");
                         ProductClicker clicker = new ProductClicker(webBrowser);
                         clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
                         clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);

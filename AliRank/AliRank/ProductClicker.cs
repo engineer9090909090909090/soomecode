@@ -55,8 +55,8 @@ namespace AliRank
         {
             item = kw;
             this.maxQueryPage = maxQueryPageNumber;
-            this.clickKey = item.RankKeyword.Replace(" ", "+");
-            currentRequestUrl = string.Format(SEARCH_URL1, this.clickKey);
+            this.clickKey = item.RankKeyword;
+            currentRequestUrl = string.Format(SEARCH_URL1, clickKey.Replace(" ", "+"));
             ClickingEvent(item, "Clicking " + currentRequestUrl);
             browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
             browser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
@@ -78,9 +78,9 @@ namespace AliRank
                 if (productLink != null)
                 {
                     productLink.SetAttribute("target", "_self");
-                    //browser.Document.InvokeScript("onProductClick", new string[] { item.ProductId });
-                    browser.Document.InvokeScript("onProductClick('" + item.ProductId + "');");
-                    browser.Document.InvokeScript("logProductHistory", new object[] { item.ProductId, new string[]{}});
+                    browser.Document.InvokeScript("onProductClick", new object[] { item.ProductId });
+                    //browser.Document.InvokeScript("onProductClick('" + item.ProductId + "');");
+                    //browser.Document.InvokeScript("logProductHistory", new object[] { item.ProductId, new string[]{}});
                     productLink.InvokeMember("click");
                 }
                 else
@@ -91,15 +91,15 @@ namespace AliRank
                         string productUrl = item.ProductUrl.Substring(item.ProductUrl.LastIndexOf("/"));
                         currentRequestUrl = PURL_PREFIX + item.ProductId + productUrl;
                         ClickingEvent(item, "Enforce clicking " + currentRequestUrl);
-                        //browser.Document.InvokeScript("onProductClick", new string[] { item.ProductId });
-                        browser.Document.InvokeScript("onProductClick('" + item.ProductId + "');");
-                        browser.Document.InvokeScript("logProductHistory", new object[] { item.ProductId, new string[]{}});
+                        browser.Document.InvokeScript("onProductClick", new object[] { item.ProductId });
+                        //browser.Document.InvokeScript("onProductClick('" + item.ProductId + "');");
+                        //browser.Document.InvokeScript("logProductHistory", new object[] { item.ProductId, new string[]{}});
                         browser.Navigate(currentRequestUrl);
                     }
                     else
                     {
                         currentPage++;
-                        currentRequestUrl = string.Format(SEARCH_URL2, this.clickKey, currentPage);
+                        currentRequestUrl = string.Format(SEARCH_URL2, clickKey.Replace(" ", "_"), currentPage);
                         Random r = new Random();
                         int randomNumber = r.Next(100, 5000);
                         if (currentPage > 0) Thread.Sleep(randomNumber);
