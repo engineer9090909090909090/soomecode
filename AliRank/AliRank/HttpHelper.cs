@@ -79,9 +79,10 @@ namespace AliRank
                 //到这里为止，所有的对象都要释放掉，以免内存像滚雪球一样
                 return html;
             }
-            catch
+            catch(Exception e)
             {
-                DefaultConnectionLimit--; 
+                DefaultConnectionLimit--;
+                System.Diagnostics.Trace.WriteLine("Open " + url + "\r\n " + e.Message);
                 //我这里就没做任何处理了，这里最好还是处理一下
                 return null;
             }

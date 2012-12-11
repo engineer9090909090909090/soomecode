@@ -9,8 +9,11 @@ namespace AliRank
     public delegate void RankSearchingEvent(object sender, RankEventArgs e);
     public delegate void RankSearchEndEvent(object sender, RankEventArgs e);
 
+
     public delegate void RankClickEndEvent(object sender, RankEventArgs e);
     public delegate void RankClickingEvent(object sender, RankEventArgs e);
+
+    public delegate void RankInquiryEndEvent(object sender, RankEventArgs e);
 
     public class RankEventArgs : EventArgs
     {

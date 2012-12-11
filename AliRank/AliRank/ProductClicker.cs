@@ -17,12 +17,16 @@ namespace AliRank
     {
         public event RankClickEndEvent OnRankClickEndEvent;
         public event RankClickingEvent OnRankClickingEvent;
+        public event RankInquiryEndEvent OnInquiryEndEvent;
         private WebBrowser browser;
         ManualResetEvent eventX = new ManualResetEvent(false);
 
         private string SEARCH_URL1 = @"http://www.alibaba.com/trade/search?SearchText={0}&IndexArea=product_en&fsb=y";
         private string SEARCH_URL2 = @"http://www.alibaba.com/products/F0/{0}/{1}.html";
         private string PURL_PREFIX = @"http://www.alibaba.com/product-gs/";
+
+        private string SEND_MESSAGE = @"http://message.alibaba.com/msgsend/contact.htm";
+        private string INQUIRY_SUCCESS = "http://cn.message.alibaba.com/msgsend/memberInquirySuccess.htm";
         int currentPage = 1;
         int maxQueryPage = 10;
         private ShowcaseRankInfo item;
@@ -48,6 +52,15 @@ namespace AliRank
             {
                 RankEventArgs e = new RankEventArgs(kw, msg);
                 OnRankClickingEvent(this, e);
+            }
+        }
+
+        public virtual void InquiryEndEvent(ShowcaseRankInfo kw, string msg)
+        {
+            if (OnInquiryEndEvent != null)
+            {
+                RankEventArgs e = new RankEventArgs(kw, msg);
+                OnInquiryEndEvent(this, e);
             }
         }
 
@@ -112,6 +125,53 @@ namespace AliRank
             {
                 item.Clicked = item.Clicked + 1;
                 ClickedEvent(item, "This product has been successfully click.");
+                HtmlElement messageLink = browser.Document.GetElementById("position2");
+                if (messageLink != null)
+                {
+                    messageLink.SetAttribute("target", "_self");
+                    messageLink.InvokeMember("click");
+                }
+                bool isInquiry = true;
+                if (!isInquiry)
+                {
+                    browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
+                    eventX.Set();
+                }
+            }
+            if (browser.Url.ToString().StartsWith(SEND_MESSAGE))
+            {
+                HtmlElement orderQuantity = browser.Document.GetElementById("orderQuantity");
+                if (orderQuantity != null)
+                {
+                    Random r = new Random();
+                    int randomNumber = r.Next(1, 20) * 100;
+                    orderQuantity.SetAttribute("value", randomNumber.ToString());
+                    browser.Document.GetElementById("orderQuantityTemp").SetAttribute("value", randomNumber.ToString());
+                }
+
+                HtmlElement email = browser.Document.GetElementById("email");
+                if (email != null)
+                {
+                    email.SetAttribute("value", "hunan.yuyi@gmail.com");
+                }
+                HtmlElement contentMessage = browser.Document.GetElementById("contentMessage");
+                if (contentMessage != null)
+                {
+                    //browser.Document.InvokeScript("tinyMCE.getInstanceById('contentMessage').setContext(\"please send me quote about the product.\r\n=======InvokeScript=======by luke\");");
+                    contentMessage.SetAttribute("value", "please send me quote about the product.\r\n======SetAttribute========by luke");
+                }
+
+                HtmlElement sendButton = browser.Document.GetElementById("send");
+                if (sendButton != null)
+                {
+                    sendButton.InvokeMember("click");
+                }
+            }
+
+            if (browser.Url.ToString().StartsWith(INQUIRY_SUCCESS))
+            {
+                item.Clicked = item.InquiryNum + 1;
+                InquiryEndEvent(item, "This product has been send a Rank Inquiry.");
                 browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
                 eventX.Set();
             }

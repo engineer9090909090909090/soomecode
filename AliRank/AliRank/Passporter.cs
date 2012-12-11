@@ -12,7 +12,7 @@ namespace AliRank
     class Passporter
     {
         private string loginUrl = "https://login.alibaba.com/";
-        string homeUrl = "http://sh.vip.alibaba.com/";
+        string homeUrl = "http://www.alibaba.com/";
 
         private WebBrowser browser;
         ManualResetEvent eventX = new ManualResetEvent(false);
@@ -23,21 +23,44 @@ namespace AliRank
             browser = b;
         }
 
-        public void DoLogin(string u, string p)
+        public bool DoLogin(string u, string p)
         {
             this.UserName = u;
             this.Password = p;
             browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_LogoinCompleted);
             browser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(browser_LogoinCompleted);
-            browser.Navigate(loginUrl);
+
+            string html = HttpHelper.GetHtml(loginUrl);
+            string dmtrackPageid = GetDmtrackPageid(html);
+            
+            string token = GetToken(this.UserName, this.Password, dmtrackPageid);
+            string st = GetST(token);
+            if (string.IsNullOrEmpty(st))
+            {
+                return false;
+            }
+            CookieContainer cookieContainer = new CookieContainer();
+            GetLoginUrl(this.UserName, this.Password, dmtrackPageid, st, ref cookieContainer);
+            List<Cookie> cookies = IEHandleUtils.GetAllCookies(cookieContainer);
+            string cookie_string = string.Empty;
+            foreach (Cookie cookie in cookies)
+            {
+                string cookstring = cookie.Name + "=" + cookie.Value + ";";
+                Console.WriteLine(cookie.Domain.ToString() + " = " + cookstring);
+                cookie_string = cookstring + cookie_string;
+                IEHandleUtils.InternetSetCookie(homeUrl, cookie.Name, cookie.Value);
+            }
+            //browser.Navigate(homeUrl, "", null, "Cookie: " + cookie_string + Environment.NewLine);
+            browser.Navigate(homeUrl);
+
             eventX.WaitOne(Timeout.Infinite, true);
             Console.WriteLine("线程池结束！");
+            return true;
         }
 
         void browser_LogoinCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         { 
             WebBrowser browser = (WebBrowser)sender;
-            System.Diagnostics.Trace.WriteLine("= "+browser.Url.ToString());
             if (browser.ReadyState != System.Windows.Forms.WebBrowserReadyState.Complete)
                 return;
             if (e.Url.ToString() != browser.Url.ToString())
@@ -46,29 +69,6 @@ namespace AliRank
             {
                 browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_LogoinCompleted);
                 eventX.Set();
-            }
-            
-            if (browser.Url.ToString() == loginUrl)
-            {
-                string html = browser.Document.Body.InnerHtml;
-                string dmtrackPageid = GetDmtrackPageid(html);
-                CookieContainer cookieContainer = new CookieContainer();
-                string token = GetToken(this.UserName, this.Password, dmtrackPageid, ref cookieContainer);
-                string st = GetST(token, ref cookieContainer);
-                GetLoginUrl(this.UserName, this.Password, dmtrackPageid, st, ref cookieContainer);
-
-                CookieCollection cookies = cookieContainer.GetCookies(new Uri("http://www.alibaba.com"));
-                string cookie_string = string.Empty;
-                foreach (Cookie cook in cookies)
-                {
-                    string cookstring = cook.Name + "=" + cook.Value + ";";
-                    Console.WriteLine(cookstring);
-                    cookie_string = cookstring + cookie_string;
-                    IEHandleUtils.InternetSetCookie(homeUrl, cook.Name, cook.Value);
-                }
-                browser.Navigate(homeUrl, "", null, "Cookie: " + cookie_string + Environment.NewLine);
-
-               //browser.Navigate(homeUrl);
             }
         }
 
@@ -84,7 +84,7 @@ namespace AliRank
             return "";
         }
 
-        public string GetToken(string userId, string password, string dmtrackPageid, ref CookieContainer cookieContainer)
+        public string GetToken(string userId, string password, string dmtrackPageid)
         {
             string preUrl = "https://login.alibaba.com/xman/xlogin.js?pd=alibaba&pageFrom=standardlogin&u_token=&xloginPassport={0}&xloginPassword={1}&xloginCheckToken=&rememberme=rememberme&runatm=runatm&dmtrack_pageid={2}";
             string url = string.Format(preUrl, userId, password, dmtrackPageid);
@@ -99,13 +99,17 @@ namespace AliRank
             return "";
         }
 
-        public string GetST(string token, ref CookieContainer cookieContainer)
+        public string GetST(string token)
         {
             string preUrl = "https://passport.alibaba.com/mini_apply_st.js?site=4&callback=window.xmanDealTokenCallback&token={0}";
             string url = string.Format(preUrl, token);
             string html = HttpHelper.GetHtml(url);
             System.Diagnostics.Trace.WriteLine("GetST = " + html);
             Regex r = new Regex("{\"data\":{\"st\":\"(.*?)\"}");
+            if (string.IsNullOrEmpty(html))
+            {
+                return "";
+            }
             GroupCollection gc = r.Match(html).Groups;
             if (gc != null && gc.Count > 1)
             {
@@ -119,10 +123,9 @@ namespace AliRank
             string preUrl = "https://login.alibaba.com/validateST.htm?pd=alibaba&pageFrom=standardlogin&u_token=&xloginPassport={0}&xloginPassword={1}&xloginCheckToken=&rememberme=rememberme&runatm=runatm&dmtrack_pageid={2}&st={3}";
             string url = string.Format(preUrl, userId, password, dmtrackPageid, st);
             string html = HttpHelper.GetHtml(url);
-            System.Diagnostics.Trace.WriteLine("GetLoginUrl = " + html);
-
+            //System.Diagnostics.Trace.WriteLine("GetLoginUrl = " + html);
             string xloginCallBackForRisUrl = "https://login.alibaba.com/xloginCallBackForRisk.do";
-            string postString = "dmtrack_pageid_info=" + dmtrackPageid + ";xloginPassport=" + userId + ";xloginPassword=" + password + ";ua=;pd=alibaba";
+            string postString = "dmtrack_pageid_info=" + dmtrackPageid + "&xloginPassport=" + userId + "&xloginPassword=" + password + "&ua=&pd=alibaba";
             HttpHelper.GetHtml(xloginCallBackForRisUrl, postString, cookieContainer);
 
             if (!string.IsNullOrEmpty(html))
@@ -135,8 +138,7 @@ namespace AliRank
                     HttpHelper.GetHtml(urlstring, cookieContainer);
                 }
             }
-            //string vipHtml = HttpHelper.GetHtml("http://sh.vip.alibaba.com/", cookieContainer);
-            //System.Diagnostics.Trace.WriteLine("vipHtml = " + vipHtml);
+            string vipHtml = HttpHelper.GetHtml(homeUrl, cookieContainer);
         }
 
     }

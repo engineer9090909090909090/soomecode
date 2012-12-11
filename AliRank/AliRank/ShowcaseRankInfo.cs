@@ -14,6 +14,7 @@ namespace AliRank
         public string MainKey { get; set; }
         public Int32 PrevRank { get; set; }
         public Int32 Clicked { get; set; }
+        public Int32 InquiryNum { get; set; }
         public Int32 Status { get; set; }
 
         public string Image { get; set; }
