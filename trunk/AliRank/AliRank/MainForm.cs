@@ -433,19 +433,24 @@ namespace AliRank
                 {
                     for (int i = 0; i < productList.Count; i++)
                     {
-                        //IEHandleUtils.ClearIECache();
-                        IEHandleUtils.ClearIECookie();
+                        if (i % 3 == 0)
+                        {
+                            IEHandleUtils.ClearIECookie();
+                            Passporter passporter = new AliRank.Passporter(webBrowser);
+                            bool loginSuccess = passporter.DoLogin("sales01@soomes.com", "soomes2008");
+                        }
                         Random r = new Random();
                         int randomNumber = r.Next(1000, iRandomMaxTime);
                         if (i > 0) Thread.Sleep(randomNumber);
-                        Passporter passporter = new AliRank.Passporter(webBrowser);
-                        passporter.DoLogin("luke.yu@soomes.com", "soomes2008");
+                        
                         ProductClicker clicker = new ProductClicker(webBrowser);
                         clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
                         clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
+                        clicker.OnInquiryEndEvent += new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
                         clicker.DoClick(productList[i], iMaxQueryPage);
                         clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
                         clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
+                        clicker.OnInquiryEndEvent -= new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
                         if (IsStopClicking) { break; }
                     }
                     if (IsStopClicking) { break; }
@@ -464,6 +469,23 @@ namespace AliRank
             if (IsStopClicking == false && sdflag.Equals(Constants.YES))
             {
                 SoomesUtils.Shutdown();
+            }
+        }
+
+        void clicker_OnInquiryEndEvent(object sender, RankEventArgs e)
+        {
+            ShowcaseRankInfo item = e.Item;
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                DataGridViewCell productIdCell = row.Cells[2];
+                string id = (string)productIdCell.Value;
+                if (Convert.ToInt32(id) == item.ProductId)
+                {
+                    DataGridViewCell cell = row.Cells[6];
+                    //cell.Value = item.InquiryNum;
+                    toolStripStatusLabel1.Text = e.Msg;
+                    //keywordDAO.UpdateClicked(item);
+                }
             }
         }
 
