@@ -39,11 +39,11 @@
     <Reference Include="DotRas">
       <HintPath>..\DotRas.dll</HintPath>
     </Reference>
-    <Reference Include="FiddlerCore">
-      <HintPath>..\FiddlerCore.dll</HintPath>
-    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\..\lib\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -59,7 +59,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AliLoginUser.cs" />
     <Compile Include="CmdUtils.cs" />
+    <Compile Include="HttpHelper.cs" />
+    <Compile Include="JsonConvert.cs" />
     <Compile Include="ModifyWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -159,9 +162,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="makecert.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="rank.ico" />
     <None Include="Resources\search.png" />
     <None Include="Resources\modify.png" />
