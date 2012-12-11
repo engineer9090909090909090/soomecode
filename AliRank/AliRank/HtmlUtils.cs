@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Net;
 using System.IO;
+using System.Windows.Forms;
 
 namespace AliRank
 {
@@ -29,6 +30,6 @@ namespace AliRank
                 return strResult;
             }
             return strResult;
-        }  
+        }
     }
 }
