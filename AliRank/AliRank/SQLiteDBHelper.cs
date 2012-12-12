@@ -10,26 +10,29 @@ namespace AliRank
 {
     public class SQLiteDBHelper
     {
-
-        private string connectionString = string.Empty;
-        private string dbPath = string.Empty;
+        SQLiteConnectionStringBuilder builder = new SQLiteConnectionStringBuilder();
         /// <summary> 
-
         /// 构造函数 
-
         /// </summary> 
-
         /// <param name="dbPath">SQLite数据库文件路径</param> 
-
-        public SQLiteDBHelper(string dbPath)
+        public SQLiteDBHelper(string dbPath, string password)
         {
-            this.dbPath = dbPath;            
-            this.connectionString = "Data Source=" + dbPath;
+            builder.DataSource = dbPath;
+            builder.Password = password;
+        }
+
+        public static void EncryptDatabase(string dbPath, string password)
+        {
+            SQLiteConnection connection = new SQLiteConnection("Data Source=" + dbPath);
+            connection.Open();
+            connection.ChangePassword(password);
+            connection.Close();
+
         }
 
         public void ExecuteNonQuery(string sql)
         {
-            using (SQLiteConnection connection = new SQLiteConnection(this.connectionString))
+            using (SQLiteConnection connection = new SQLiteConnection(builder.ConnectionString))
             {
                 connection.Open();
                 using (SQLiteCommand command = new SQLiteCommand(connection))
@@ -50,7 +53,7 @@ namespace AliRank
         public int ExecuteNonQuery(string sql, SQLiteParameter[] parameters)
         {
             int affectedRows = 0;
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            using (SQLiteConnection connection = new SQLiteConnection(builder.ConnectionString))
             {
                 connection.Open();
                 using (DbTransaction transaction = connection.BeginTransaction())
@@ -72,7 +75,7 @@ namespace AliRank
 
         public void ExecuteNonQuery(string sql, List<SQLiteParameter[]> parametersList)
         {
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            using (SQLiteConnection connection = new SQLiteConnection(builder.ConnectionString))
             {
                 connection.Open();
                 using (DbTransaction transaction = connection.BeginTransaction())
@@ -102,7 +105,7 @@ namespace AliRank
         /// <returns></returns> 
         public SQLiteDataReader ExecuteReader(string sql, SQLiteParameter[] parameters)
         {
-            SQLiteConnection connection = new SQLiteConnection(connectionString);
+            SQLiteConnection connection = new SQLiteConnection(builder.ConnectionString);
             SQLiteCommand command = new SQLiteCommand(sql, connection);
             if (parameters != null)
             {
@@ -120,7 +123,7 @@ namespace AliRank
         /// <returns></returns> 
         public DataTable ExecuteDataTable(string sql, SQLiteParameter[] parameters)
         {
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            using (SQLiteConnection connection = new SQLiteConnection(builder.ConnectionString))
             {
                 using (SQLiteCommand command = new SQLiteCommand(sql, connection))
                 {
@@ -144,7 +147,7 @@ namespace AliRank
         /// <returns></returns> 
         public Object ExecuteScalar(string sql, SQLiteParameter[] parameters)
         {
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            using (SQLiteConnection connection = new SQLiteConnection(builder.ConnectionString))
             {
                 using (SQLiteCommand command = new SQLiteCommand(sql, connection))
                 {
@@ -189,7 +192,7 @@ namespace AliRank
         /// <returns></returns> 
         public DataTable GetSchema()
         {
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            using (SQLiteConnection connection = new SQLiteConnection(builder.ConnectionString))
             {
                 connection.Open();
                 DataTable data = connection.GetSchema("TABLES");
@@ -218,7 +221,5 @@ namespace AliRank
         };
         db.ExecuteNonQuery(sql, parameters);
         */
-
-
     }
 }
