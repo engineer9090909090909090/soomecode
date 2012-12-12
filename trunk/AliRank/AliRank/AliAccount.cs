@@ -30,5 +30,6 @@ namespace AliRank
         public Int32 MsgId { set; get; }
         public string Content { set; get; }
         public string Subject { set; get; }
+        public Int32 SendNum { set; get; }
     }
 }
