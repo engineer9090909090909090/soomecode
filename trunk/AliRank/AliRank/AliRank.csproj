@@ -59,9 +59,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AliAccount.cs" />
     <Compile Include="AliLoginUser.cs" />
     <Compile Include="CmdUtils.cs" />
     <Compile Include="HttpHelper.cs" />
+    <Compile Include="InquiryDAO.cs" />
     <Compile Include="JsonConvert.cs" />
     <Compile Include="ModifyWindow.cs">
       <SubType>Form</SubType>

@@ -24,21 +24,23 @@ namespace AliRank
             HtmlWeb clinet = new HtmlWeb();
             HtmlDocument document = clinet.Load(companyUrl);
             HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//div[@class='featureSelectProduct']");
-            
-            foreach (HtmlNode node in nodes)
-            {
-                ShowcaseRankInfo item = new ShowcaseRankInfo();
-                item.CompanyUrl = companyUrl;
-                string proId = node.Id.Replace("featureSelectProduct", "");
-                item.ProductId = Convert.ToInt32(proId);
-                HtmlNode linkNode = node.SelectSingleNode("div[@class='featureSelectProductName']/a");
-                item.ProductName = linkNode.InnerText;
-                item.ProductUrl = linkNode.Attributes["href"].Value;
-                HtmlNode imgNode = node.SelectSingleNode("div[@class='featureSelectProductPhoto']/div/a/img");
-                item.Image = imgNode.Attributes["src"].Value;
-                showCaseProducts.Add(item);
-            }
 
+            if (nodes != null)
+            {
+                foreach (HtmlNode node in nodes)
+                {
+                    ShowcaseRankInfo item = new ShowcaseRankInfo();
+                    item.CompanyUrl = companyUrl;
+                    string proId = node.Id.Replace("featureSelectProduct", "");
+                    item.ProductId = Convert.ToInt32(proId);
+                    HtmlNode linkNode = node.SelectSingleNode("div[@class='featureSelectProductName']/a");
+                    item.ProductName = linkNode.InnerText;
+                    item.ProductUrl = linkNode.Attributes["href"].Value;
+                    HtmlNode imgNode = node.SelectSingleNode("div[@class='featureSelectProductPhoto']/div/a/img");
+                    item.Image = imgNode.Attributes["src"].Value;
+                    showCaseProducts.Add(item);
+                }
+            }
             MaxCount = showCaseProducts.Count;
             if (MaxCount == 0)
             {
