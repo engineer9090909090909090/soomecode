@@ -19,7 +19,7 @@ namespace AliRank
         private DAOFactory()
         {
             string DataBasePath = FileUtils.GetAppDataFolder() + Path.DirectorySeparatorChar + Constants.DB_FILE;
-            File.Delete(DataBasePath);
+            //File.Delete(DataBasePath);
             if (!File.Exists(DataBasePath))
             {
                 SQLiteConnection.CreateFile(DataBasePath);
