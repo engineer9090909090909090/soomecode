@@ -33,8 +33,10 @@ namespace AliRank
             dt.Columns.Add("Address", typeof(string));
             dt.Columns.Add("Username", typeof(string));
             dt.Columns.Add("Password", typeof(string));
+            dt.Columns.Add("Country", typeof(string));
             dt.Columns.Add("VpnType", typeof(string));
             dt.Columns.Add("L2tpSec", typeof(string));
+            dt.Columns.Add("VpnName", typeof(string));
             dt.Columns.Add("UpdateTime", typeof(DateTime));
             dt.Columns.Add("ID", typeof(Int32));
             this.dataGridView.DataSource = dt;
@@ -44,7 +46,7 @@ namespace AliRank
             DataGridViewColumn column = this.dataGridView.Columns[1];
             column.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             column.HeaderText = "Address";
-            column.Width = 230;
+            column.Width = 180;
             DataGridViewColumn column2 = this.dataGridView.Columns[2];
             column2.HeaderText = "User Name";
             column2.Width = 100;
@@ -52,20 +54,26 @@ namespace AliRank
             column3.HeaderText = "Password";
             column3.Width = 100;
             DataGridViewColumn column4 = this.dataGridView.Columns[4];
-            column4.HeaderText = "VPN Type";
-            column4.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            column4.HeaderText = "Country";
             column4.Width = 100;
             DataGridViewColumn column5 = this.dataGridView.Columns[5];
-            column5.HeaderText = "L2TP Sec";
+            column5.HeaderText = "VPN Type";
             column5.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             column5.Width = 100;
             DataGridViewColumn column6 = this.dataGridView.Columns[6];
-            column6.HeaderText = "Update Time";
-            column6.Width = 120;
+            column6.HeaderText = "L2TP Sec";
+            column6.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            column6.Width = 100;
             DataGridViewColumn column7 = this.dataGridView.Columns[7];
-            column7.HeaderText = "Id";
-            column7.Width = 10;
-            column7.Visible = false;
+            column7.HeaderText = "VPN Name";
+            column7.Width = 100;
+            DataGridViewColumn column8 = this.dataGridView.Columns[8];
+            column8.HeaderText = "Update Time";
+            column8.Width = 120;
+            DataGridViewColumn column9 = this.dataGridView.Columns[9];
+            column9.HeaderText = "Id";
+            column9.Width = 10;
+            column9.Visible = false;
             List<VpnModel> vpnModelList = vpnDao.GetVpnModelList();
             if (vpnModelList.Count > 0)
             {
@@ -76,8 +84,10 @@ namespace AliRank
                     row["Address"] = item.Address;
                     row["Username"] = item.Username;
                     row["Password"] = "******";
+                    row["Country"] = item.Country;
                     row["VpnType"] = item.VpnType;
                     row["L2tpSec"] = item.L2tpSec;
+                    row["VpnName"] = item.Name;
                     row["updateTime"] = item.UpdateTime;
                     row["Id"] = item.Id;
                     dt.Rows.Add(row);
@@ -125,6 +135,12 @@ namespace AliRank
                 ErrorMsg.Text = "VPN 用户名密码不能为空.";
                 return;
             }
+            model.Country = countryTxt.Text.Trim();
+            if (string.IsNullOrEmpty(model.Country))
+            {
+                ErrorMsg.Text = "国家不能为空.";
+                return;
+            }
             if (PptpBtn.Checked)
             {
                 model.VpnType = Constants.PPTP;
@@ -135,6 +151,7 @@ namespace AliRank
                 model.VpnType = Constants.L2TP;
                 model.L2tpSec = L2tpKeyTxtBox.Text.Trim();
             }
+            model.Name = AgentTxt.Text.Trim();
             bool existAddress = vpnDao.ExistAddress(model.Address, model.VpnType);
             if (existAddress)
             {
@@ -162,7 +179,7 @@ namespace AliRank
                 Boolean chk = System.Boolean.Parse(dr[0].ToString());
                 if (chk)
                 {
-                    removeList.Add(dr[7].ToString());
+                    removeList.Add(dr[9].ToString());
                     dt.Rows.Remove(dr);
                 }
             }

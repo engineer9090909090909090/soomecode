@@ -30,6 +30,8 @@ namespace AliRank
                     + "Address varchar(20) NOT NULL,"
                     + "Username varchar(50) NOT NULL,"
                     + "Password varchar(50) NOT NULL,"
+                    + "Country varchar(100) NOT NULL,"
+                    + "Name varchar(100),"
                     + "VpnType varchar(50),"
                     + "L2tpSec varchar(20),"
                     + "createTime datetime,"
@@ -61,7 +63,7 @@ namespace AliRank
         public List<VpnModel> GetVpnModelList()
         {
             DataTable dt = dbHelper.ExecuteDataTable(
-                "SELECT Id, Address, Username, Password, VpnType, L2tpSec,updateTime FROM vpns order by updateTime desc", null);
+                "SELECT Id, Address, Username, Password, Country,Name, VpnType, L2tpSec,updateTime FROM vpns order by updateTime desc", null);
 
             List<VpnModel> list = new List<VpnModel>();
             foreach (DataRow row in dt.Rows)
@@ -71,6 +73,8 @@ namespace AliRank
                 model.Address = (string)row["Address"];
                 model.Username = (string)row["Username"];
                 model.Password = (string)row["Password"];
+                model.Country = (string)row["Country"];
+                model.Name = (string)row["Name"];
                 model.VpnType = (string)row["VpnType"];
                 model.L2tpSec = (string)row["L2tpSec"];
                 model.UpdateTime = Convert.ToDateTime(row["updateTime"]);
@@ -82,13 +86,15 @@ namespace AliRank
 
         public void Insert(VpnModel model)
         {
-            string sql = @"INSERT INTO vpns(Address, Username, Password, VpnType, L2tpSec, createTime, updateTime)"
-                            + "values(@Address,@Username,@Password,@VpnType,@L2tpSec, @createTime, @updateTime)";
+            string sql = @"INSERT INTO vpns(Address, Username, Password, Country, Name, VpnType, L2tpSec, createTime, updateTime)"
+                            + "values(@Address,@Username,@Password, @Country, @Name, @VpnType,@L2tpSec, @createTime, @updateTime)";
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {
                 new SQLiteParameter("@Address",model.Address), 
                 new SQLiteParameter("@Username", model.Username), 
                 new SQLiteParameter("@Password",model.Password), 
+                new SQLiteParameter("@Country",model.Country), 
+                new SQLiteParameter("@Name",model.Name), 
                 new SQLiteParameter("@VpnType",model.VpnType), 
                 new SQLiteParameter("@L2tpSec",model.L2tpSec), 
                 new SQLiteParameter("@createTime",DateTime.Now), 
@@ -99,12 +105,13 @@ namespace AliRank
 
         public void UpdateUserPassword(VpnModel model)
         {
-            string sql = @"UPDATE  vpns SET Username =@Username, Password =@Password, updateTime = @updateTime";
+            string sql = @"UPDATE  vpns SET Username =@Username, Password =@Password, updateTime = @updateTime where id = @id";
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {
                 new SQLiteParameter("@Username", model.Username), 
                 new SQLiteParameter("@Password",model.Password), 
-                new SQLiteParameter("@updateTime",DateTime.Now) 
+                new SQLiteParameter("@updateTime",DateTime.Now),
+                new SQLiteParameter("@id",model.Id)
             };
             dbHelper.ExecuteNonQuery(sql, parameter);
         }
