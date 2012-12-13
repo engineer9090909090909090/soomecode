@@ -15,6 +15,8 @@ namespace AliRank
         public string Country { set; get; }
         public string Name { set; get; }
         public string L2tpSec { get; set; }
+        public Int32 ConnQty { get; set; }
+        public Int32 Status { get; set; }
         public DateTime UpdateTime { get; set; }
     }
 }

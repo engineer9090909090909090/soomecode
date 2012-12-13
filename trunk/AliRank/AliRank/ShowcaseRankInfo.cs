@@ -16,7 +16,8 @@ namespace AliRank
         public Int32 Clicked { get; set; }
         public Int32 InquiryNum { get; set; }
         public Int32 Status { get; set; }
-
+        public Int32 MaxInquiryQty { get; set; }
+        public Int32 FactInquiryQty { get; set; }
         public string Image { get; set; }
 
         public static string GetRankInfo(ShowcaseRankInfo item)

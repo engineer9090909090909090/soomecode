@@ -32,6 +32,11 @@ namespace AliRank
             {
                 FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, 50 + "", IniFile);
             }
+            string sRunModel = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.RUN_MODEL, IniFile);
+            if (string.IsNullOrEmpty(sRunModel))
+            {
+                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.RUN_MODEL, Constants.RUN_CLICK_INQUIRY, IniFile);
+            }
             string sMaxPauseTime = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_PAUSE_TIME, IniFile);
             if (string.IsNullOrEmpty(sMaxPauseTime))
             {
@@ -49,17 +54,19 @@ namespace AliRank
         {
             CheckForIllegalCrossThreadCalls = false;
             vpnDao = DAOFactory.Instance.GetVpnDAO();
+            vpnDao.UpdateAllVPNStatus(Constants.EFFECTIVE);
             inquiryDao = DAOFactory.Instance.GetInquiryDAO();
             LoadDataview();
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (vpnEntity != null)
+            if (CurrVpnEntity != null)
             {
-                vpnEntity.Disconnect();
-                vpnEntity.Dispose();
-                vpnEntity = null;
+                vpnDao.UpdateAllVPNStatus(Constants.EFFECTIVE);
+                CurrVpnEntity.Disconnect();
+                CurrVpnEntity.Dispose();
+                CurrVpnEntity = null;
             }
         }
         #endregion
@@ -167,6 +174,8 @@ namespace AliRank
             dt.Columns.Add("rankKey", typeof(string));
             dt.Columns.Add("rank", typeof(string));
             dt.Columns.Add("clicked", typeof(string));
+            dt.Columns.Add("factInquiryQty", typeof(string));
+            dt.Columns.Add("maxInquiryQty", typeof(string));
             dt.Columns.Add("updateTime", typeof(DateTime));
             this.dataGridView1.DataSource = dt;
 
@@ -195,10 +204,18 @@ namespace AliRank
             DataGridViewColumn column5 = this.dataGridView1.Columns[6];
             column5.HeaderText = "点击";
             column5.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            column5.Width = 100;
+            column5.Width = 80;
             DataGridViewColumn column6 = this.dataGridView1.Columns[7];
-            column6.HeaderText = "更新时间";
-            column6.Width = 120;
+            column6.HeaderText = "排名询盘";
+            column6.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            column6.Width = 100;
+            DataGridViewColumn column7 = this.dataGridView1.Columns[8];
+            column7.HeaderText = "最大询盘";
+            column7.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            column7.Width = 100;
+            DataGridViewColumn column8 = this.dataGridView1.Columns[9];
+            column8.HeaderText = "更新时间";
+            column8.Width = 120;
             List<ShowcaseRankInfo> productList = keywordDAO.GetKeywordList();
             if (productList.Count > 0)
             {
@@ -217,6 +234,8 @@ namespace AliRank
                     row["rankKey"] = item.RankKeyword;
                     row["rank"] = ShowcaseRankInfo.GetRankInfo(item);
                     row["clicked"] = Convert.ToString(item.Clicked);
+                    row["factInquiryQty"] = item.FactInquiryQty;
+                    row["maxInquiryQty"] = item.MaxInquiryQty;
                     row["updateTime"] = item.UpdateTime;
                     dt.Rows.Add(row);                
                 }
@@ -352,18 +371,16 @@ namespace AliRank
         System.Timers.Timer clickTimer;
         DateTime beginTime;
         private BackgroundWorker bgClickWorker;
-        private List<VpnModel> VpnModelList;
-        private VPN vpnEntity;
-        private int CurrentActiveVpnIndex;
+        private VPN CurrVpnEntity;
+        private VpnModel CurrVpnModel;
+        private AliAccounts loginedAccount;
 
         private void clickRunBtn_Click(object sender, EventArgs e)
         {
             string network = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.NETWORK_CHOICE, IniFile);
             if (network.Equals(Constants.NETWORK_VPN))
             {
-                VpnModelList = null;
-                VpnModelList = vpnDao.GetVpnModelList();
-                CurrentActiveVpnIndex = 0;
+                List<VpnModel> VpnModelList = vpnDao.GetVpnModelList();
                 if (VpnModelList == null || VpnModelList.Count == 0)
                 {
                     MessageBox.Show("\r\n您选择了VPN网络点击，但您没有设置任何VPN数据信息.请到[VPN 管理]项设置.\r\n","提示");
@@ -409,29 +426,33 @@ namespace AliRank
             bgClickWorker.CancelAsync();
             clickStopBtn.Enabled = false;
         }
-        
+
         private bool ConnectNextVpn()
         {
             if (IsStopClicking)
             {
                 return true;
             }
-            if (vpnEntity != null)
+            if (CurrVpnEntity != null)
             {
-                vpnEntity.Disconnect();
-                vpnEntity.Dispose();
+                CurrVpnEntity.Disconnect();
+                CurrVpnEntity.Dispose();
             }
-            if (CurrentActiveVpnIndex >= VpnModelList.Count)
+            CurrVpnModel = vpnDao.GetEffctiveVPN();
+            if (CurrVpnModel == null)
             {
-                CurrentActiveVpnIndex = 0;
+                return false;
             }
-            VpnModel model = VpnModelList[CurrentActiveVpnIndex];
-            vpnEntity = new VPN("MyVPN", model);
-            CurrentActiveVpnIndex++;
-            bool Connected = vpnEntity.Connect();
+            CurrVpnEntity = new VPN("MyVPN", CurrVpnModel);
+            bool Connected = CurrVpnEntity.Connect();
             if (!Connected)
             {
+                vpnDao.UpdateVPNStatus(CurrVpnModel.Id, Constants.INVALID);
                 return ConnectNextVpn();
+            } 
+            else 
+            {
+                vpnDao.AddVPNConnQty(CurrVpnModel.Id, Constants.EFFECTIVE);
             }
             return true;
         }
@@ -439,7 +460,7 @@ namespace AliRank
 
         public AliAccounts DoLoginAliWebSite(WebBrowser webBrowser)
         {
-            string sQueryDate = DateTime.Now.AddDays(-2).ToShortDateString();
+            string sQueryDate = DateTime.Now.AddDays(-2).ToString("yyyyMMdd");
             int iQueryDate = Convert.ToInt32(sQueryDate);
             AliAccounts account = inquiryDao.GetCanInquiryAccounts(iQueryDate);
             if (account == null) return null;
@@ -459,11 +480,12 @@ namespace AliRank
             string sNetwork = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.NETWORK_CHOICE, IniFile);
             string sMaxPauseTime = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_PAUSE_TIME, IniFile);
             string sMaxQueryPage = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_QUERY_PAGE, IniFile);
+            string sRunModel = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.RUN_MODEL, IniFile);
             int iMaxQueryPage = Convert.ToInt32(sMaxQueryPage);
             int iRandomMaxTime = Convert.ToInt32(sMaxPauseTime) * 1000;
             //IEHandleUtils.ClearIECache();
             IEHandleUtils.ClearIECookie();
-            AliAccounts LoginedAccount;
+            
             if (sNetwork.Equals(Constants.NETWORK_VPN))
             {
                 int clickNum = Convert.ToInt32(ConfigClickNum);
@@ -482,15 +504,24 @@ namespace AliRank
                         if (i % 3 == 0)
                         {
                             IEHandleUtils.ClearIECookie();
-                            LoginedAccount = DoLoginAliWebSite(this.webBrowser);
+                            loginedAccount = DoLoginAliWebSite(this.webBrowser);
+                            loginedAccount.LoginIp = CurrVpnModel.Address;
                         }
-                        Random r = new Random();
-                        int randomNumber = r.Next(1000, iRandomMaxTime);
+                        int randomNumber = new Random().Next(1000, iRandomMaxTime);
                         if (i > 0) Thread.Sleep(randomNumber);
+                        ShowcaseRankInfo productObj = productList[i];
+                        InquiryMessages inquiryMessages = null;
+                        bool canInquiry = false;
+                        int todayInquiryQty = inquiryDao.TodayInquiryQty4Product(productObj.ProductId);
+                        if (todayInquiryQty < productObj.MaxInquiryQty && sRunModel == Constants.RUN_CLICK_INQUIRY)
+                        {
+                            inquiryMessages = inquiryDao.GetInquiryMinMessage();
+                            canInquiry = true;
+                        }
                         ProductClicker clicker = new ProductClicker(webBrowser);
                         clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
                         clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
-                        clicker.DoClick(productList[i], iMaxQueryPage, LoginedAccount, true, null);
+                        clicker.DoClick(productObj, iMaxQueryPage, loginedAccount, canInquiry, inquiryMessages);
                         clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
                         clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
                         if (IsStopClicking) { break; }
@@ -508,17 +539,25 @@ namespace AliRank
                         if (i % 3 == 0)
                         {
                             IEHandleUtils.ClearIECookie();
-                            LoginedAccount = DoLoginAliWebSite(this.webBrowser);
+                            loginedAccount = DoLoginAliWebSite(this.webBrowser);
+                            loginedAccount.LoginIp = "";
                         }
-                        Random r = new Random();
-                        int randomNumber = r.Next(1000, iRandomMaxTime);
+                        int randomNumber = new Random().Next(1000, iRandomMaxTime);
                         if (i > 0) Thread.Sleep(randomNumber);
-                        
+                        ShowcaseRankInfo productObj = productList[i];
+                        InquiryMessages inquiryMessages = null;
+                        bool canInquiry = false;
+                        int todayInquiryQty = inquiryDao.TodayInquiryQty4Product(productObj.ProductId);
+                        if (todayInquiryQty < productObj.MaxInquiryQty)
+                        {
+                            inquiryMessages = inquiryDao.GetInquiryMinMessage();
+                            canInquiry = true;
+                        }
                         ProductClicker clicker = new ProductClicker(webBrowser);
                         clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
                         clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
                         clicker.OnInquiryEndEvent += new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
-                        clicker.DoClick(productList[i], iMaxQueryPage, LoginedAccount, true, null);
+                        clicker.DoClick(productObj, iMaxQueryPage, loginedAccount, canInquiry, inquiryMessages);
                         clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
                         clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
                         clicker.OnInquiryEndEvent -= new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
@@ -527,11 +566,12 @@ namespace AliRank
                     if (IsStopClicking) { break; }
                 }
             }
-            if (vpnEntity != null)
+            if (CurrVpnEntity != null)
             {
-                vpnEntity.Disconnect();
-                vpnEntity.Dispose();
-                vpnEntity = null;
+                CurrVpnEntity.Disconnect();
+                CurrVpnEntity.Dispose();
+                CurrVpnModel = null;
+                CurrVpnEntity = null;
             }
             clickRunBtn.Enabled = true;
             clickStopBtn.Enabled = false;
@@ -552,10 +592,11 @@ namespace AliRank
                 string id = (string)productIdCell.Value;
                 if (Convert.ToInt32(id) == item.ProductId)
                 {
-                    DataGridViewCell cell = row.Cells[6];
-                    //cell.Value = item.InquiryNum;
+                    DataGridViewCell cell = row.Cells[7];
+                    cell.Value = (Convert.ToInt32(cell.Value) + 1).ToString();
                     toolStripStatusLabel1.Text = e.Msg;
-                    //keywordDAO.UpdateClicked(item);
+                    keywordDAO.AddProductFactInquiryQty(item.ProductId);
+                    inquiryDao.InsertInquiryInfos(item);
                 }
             }
         }
@@ -673,7 +714,18 @@ namespace AliRank
                 dataGridView1.Rows[SelectedRowIndex].Cells[4].Value = obj.RankKeyword;
             }
         }
+
+        private void MaxInToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MaxInWindow f = new MaxInWindow();
+            f.iModifyProductId = RowSelectedProductId;
+            f.FormClosed +=new FormClosedEventHandler(f_FormClosed1);
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
+        }
         #endregion
+
+        
 
     }
 }
