@@ -62,6 +62,18 @@
     <Compile Include="AliAccount.cs" />
     <Compile Include="AliLoginUser.cs" />
     <Compile Include="CmdUtils.cs" />
+    <Compile Include="AccountForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AccountForm.Designer.cs">
+      <DependentUpon>AccountForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MessageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MessageForm.Designer.cs">
+      <DependentUpon>MessageForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="HttpHelper.cs" />
     <Compile Include="InquiryDAO.cs" />
     <Compile Include="JsonConvert.cs" />
@@ -123,6 +135,12 @@
       <DependentUpon>VpnForm.cs</DependentUpon>
     </Compile>
     <Compile Include="VpnModel.cs" />
+    <EmbeddedResource Include="AccountForm.resx">
+      <DependentUpon>AccountForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MessageForm.resx">
+      <DependentUpon>MessageForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ImpKwForm.resx">
       <DependentUpon>ImpKwForm.cs</DependentUpon>
       <SubType>Designer</SubType>

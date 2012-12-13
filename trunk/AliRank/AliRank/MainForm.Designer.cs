@@ -41,6 +41,8 @@
             this.SetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ClickToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.VPNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MessageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.shutdownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CleanKeyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -137,6 +139,8 @@
             this.SetToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ClickToolStripMenuItem,
             this.VPNToolStripMenuItem,
+            this.AccountToolStripMenuItem,
+            this.MessageToolStripMenuItem,
             this.shutdownToolStripMenuItem,
             this.CleanKeyMenuItem});
             this.SetToolStripMenuItem.Name = "SetToolStripMenuItem";
@@ -146,28 +150,42 @@
             // ClickToolStripMenuItem
             // 
             this.ClickToolStripMenuItem.Name = "ClickToolStripMenuItem";
-            this.ClickToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.ClickToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.ClickToolStripMenuItem.Text = "点击设置(&C)";
             this.ClickToolStripMenuItem.Click += new System.EventHandler(this.ClickToolStripMenuItem_Click);
             // 
             // VPNToolStripMenuItem
             // 
             this.VPNToolStripMenuItem.Name = "VPNToolStripMenuItem";
-            this.VPNToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.VPNToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.VPNToolStripMenuItem.Text = "VPN数据管理(&V)";
             this.VPNToolStripMenuItem.Click += new System.EventHandler(this.VPNToolStripMenuItem_Click);
+            // 
+            // AccountToolStripMenuItem
+            // 
+            this.AccountToolStripMenuItem.Name = "AccountToolStripMenuItem";
+            this.AccountToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.AccountToolStripMenuItem.Text = "阿里帐号管理(&A)";
+            this.AccountToolStripMenuItem.Click += new System.EventHandler(this.AccountToolStripMenuItem_Click);
+            // 
+            // MessageToolStripMenuItem
+            // 
+            this.MessageToolStripMenuItem.Name = "MessageToolStripMenuItem";
+            this.MessageToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.MessageToolStripMenuItem.Text = "询盘信息管理(&M)";
+            this.MessageToolStripMenuItem.Click += new System.EventHandler(this.MessageToolStripMenuItem_Click);
             // 
             // shutdownToolStripMenuItem
             // 
             this.shutdownToolStripMenuItem.Name = "shutdownToolStripMenuItem";
-            this.shutdownToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.shutdownToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.shutdownToolStripMenuItem.Text = "完成后关机(&F)";
             this.shutdownToolStripMenuItem.Click += new System.EventHandler(this.shutdownStripMenuItem_Click);
             // 
             // CleanKeyMenuItem
             // 
             this.CleanKeyMenuItem.Name = "CleanKeyMenuItem";
-            this.CleanKeyMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.CleanKeyMenuItem.Size = new System.Drawing.Size(162, 22);
             this.CleanKeyMenuItem.Text = "清空关键词(&C)";
             this.CleanKeyMenuItem.Click += new System.EventHandler(this.CleanKeyMenuItem_Click);
             // 
@@ -277,7 +295,10 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.RowHeadersWidth = 20;
+            this.dataGridView1.RowTemplate.Height = 100;
+            this.dataGridView1.RowTemplate.ReadOnly = true;
+            this.dataGridView1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView1.Size = new System.Drawing.Size(778, 464);
             this.dataGridView1.TabIndex = 3;
             this.dataGridView1.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDown);
@@ -336,7 +357,7 @@
             this.QueryToolStripMenuItem,
             this.ModifyToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(175, 114);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(175, 92);
             // 
             // DeleteRowToolStripMenuItem
             // 
@@ -436,6 +457,8 @@
         private System.Windows.Forms.ToolStripMenuItem OpenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem QueryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ModifyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AccountToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem MessageToolStripMenuItem;
     }
 }
 

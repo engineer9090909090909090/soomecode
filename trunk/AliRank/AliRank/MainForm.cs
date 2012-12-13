@@ -16,9 +16,11 @@ namespace AliRank
     {
         private KeywordDAO keywordDAO;
         private VpnDAO vpnDao;
+        private InquiryDAO inquiryDao;
         private static bool IsStopClicking;
-
         private string IniFile;
+
+        #region Form 事件
         public MainForm()
         {
             InitializeComponent();
@@ -47,10 +49,22 @@ namespace AliRank
         {
             CheckForIllegalCrossThreadCalls = false;
             vpnDao = DAOFactory.Instance.GetVpnDAO();
+            inquiryDao = DAOFactory.Instance.GetInquiryDAO();
             LoadDataview();
         }
 
-        #region 导入关键词菜单，点击设计菜单
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (vpnEntity != null)
+            {
+                vpnEntity.Disconnect();
+                vpnEntity.Dispose();
+                vpnEntity = null;
+            }
+        }
+        #endregion
+
+        #region 导入关键词菜单，点击设置菜单
         private void ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             ImpKwForm f = new ImpKwForm();
@@ -66,22 +80,13 @@ namespace AliRank
         }
         #endregion
 
-        #region 关机菜单
-        private void shutdownStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (shutdownToolStripMenuItem.Checked)
-            {
-                shutdownToolStripMenuItem.Checked = false;
-                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, Constants.NO, IniFile);
-            }
-            else {
-                shutdownToolStripMenuItem.Checked = true;
-                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, Constants.YES, IniFile);
-            }
-        }
-        #endregion
+        #region 清空菜单，VPN管理菜单, 关机菜单
 
-        #region 清空菜单，VPN管理菜单
+        /// <summary>
+        /// 清空菜单
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CleanKeyMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -93,12 +98,59 @@ namespace AliRank
             }
         }
 
+        /// <summary>
+        /// VPN管理菜单
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void VPNToolStripMenuItem_Click(object sender, EventArgs e)
         {
             VpnForm f = new VpnForm();
             f.StartPosition = FormStartPosition.CenterParent;
             f.ShowDialog(this);
         }
+
+
+        private void MtToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TopFiveQueryForm f = new TopFiveQueryForm();
+            f.Show();
+        }
+
+        private void AccountToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AccountForm f = new AccountForm();
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
+        }
+
+        private void MessageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageForm f = new MessageForm();
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
+        }
+        /// <summary>
+        /// 关机菜单
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void shutdownStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (shutdownToolStripMenuItem.Checked)
+            {
+                shutdownToolStripMenuItem.Checked = false;
+                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, Constants.NO, IniFile);
+            }
+            else
+            {
+                shutdownToolStripMenuItem.Checked = true;
+                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, Constants.YES, IniFile);
+            }
+        }
+
+        
+
         #endregion
 
         #region DataGridView 初始化处理
@@ -384,6 +436,22 @@ namespace AliRank
             return true;
         }
 
+
+        public AliAccounts DoLoginAliWebSite(WebBrowser webBrowser)
+        {
+            string sQueryDate = DateTime.Now.AddDays(-2).ToShortDateString();
+            int iQueryDate = Convert.ToInt32(sQueryDate);
+            AliAccounts account = inquiryDao.GetCanInquiryAccounts(iQueryDate);
+            if (account == null) return null;
+            Passporter passporter = new AliRank.Passporter(webBrowser);
+            bool loginSuccess = passporter.DoLogin(account);
+            if (!loginSuccess)
+            {
+                return DoLoginAliWebSite(webBrowser);
+            }
+            return account;
+        }
+
         void bgWorker_DoWork2(object sender, DoWorkEventArgs e)
         {
             List<ShowcaseRankInfo> productList = keywordDAO.GetKeywordList();
@@ -395,6 +463,7 @@ namespace AliRank
             int iRandomMaxTime = Convert.ToInt32(sMaxPauseTime) * 1000;
             //IEHandleUtils.ClearIECache();
             IEHandleUtils.ClearIECookie();
+            AliAccounts LoginedAccount;
             if (sNetwork.Equals(Constants.NETWORK_VPN))
             {
                 int clickNum = Convert.ToInt32(ConfigClickNum);
@@ -410,15 +479,18 @@ namespace AliRank
                     
                     for (int i = 0; i < productList.Count; i++)
                     {
-                        //IEHandleUtils.ClearIECache();
-                        IEHandleUtils.ClearIECookie();
+                        if (i % 3 == 0)
+                        {
+                            IEHandleUtils.ClearIECookie();
+                            LoginedAccount = DoLoginAliWebSite(this.webBrowser);
+                        }
                         Random r = new Random();
                         int randomNumber = r.Next(1000, iRandomMaxTime);
                         if (i > 0) Thread.Sleep(randomNumber);
                         ProductClicker clicker = new ProductClicker(webBrowser);
                         clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
                         clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
-                        clicker.DoClick(productList[i], iMaxQueryPage);
+                        clicker.DoClick(productList[i], iMaxQueryPage, LoginedAccount, true, null);
                         clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
                         clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
                         if (IsStopClicking) { break; }
@@ -436,8 +508,7 @@ namespace AliRank
                         if (i % 3 == 0)
                         {
                             IEHandleUtils.ClearIECookie();
-                            Passporter passporter = new AliRank.Passporter(webBrowser);
-                            bool loginSuccess = passporter.DoLogin("sales01@soomes.com", "soomes2008");
+                            LoginedAccount = DoLoginAliWebSite(this.webBrowser);
                         }
                         Random r = new Random();
                         int randomNumber = r.Next(1000, iRandomMaxTime);
@@ -447,7 +518,7 @@ namespace AliRank
                         clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
                         clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
                         clicker.OnInquiryEndEvent += new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
-                        clicker.DoClick(productList[i], iMaxQueryPage);
+                        clicker.DoClick(productList[i], iMaxQueryPage, LoginedAccount, true, null);
                         clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
                         clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
                         clicker.OnInquiryEndEvent -= new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
@@ -472,9 +543,9 @@ namespace AliRank
             }
         }
 
-        void clicker_OnInquiryEndEvent(object sender, RankEventArgs e)
+        void clicker_OnInquiryEndEvent(object sender, InquiryEventArgs e)
         {
-            ShowcaseRankInfo item = e.Item;
+            InquiryInfos item = e.Item;
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 DataGridViewCell productIdCell = row.Cells[2];
@@ -523,24 +594,7 @@ namespace AliRank
         }
         #endregion 
 
-        private void MtToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            TopFiveQueryForm f = new TopFiveQueryForm();
-            f.Show();
-        }
-
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            if (vpnEntity != null)
-            {
-                vpnEntity.Disconnect();
-                vpnEntity.Dispose();
-                vpnEntity = null;
-            }
-        }
-
-
-        #region 右键菜单
+        #region GridView右键菜单
 
         private void dataGridView1_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -620,5 +674,6 @@ namespace AliRank
             }
         }
         #endregion
+
     }
 }

@@ -23,10 +23,10 @@ namespace AliRank
             browser = b;
         }
 
-        public bool DoLogin(string u, string p)
+        public bool DoLogin(AliAccounts account)
         {
-            this.UserName = u;
-            this.Password = p;
+            this.UserName = account.Email;
+            this.Password = account.Password;
             browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_LogoinCompleted);
             browser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(browser_LogoinCompleted);
 
