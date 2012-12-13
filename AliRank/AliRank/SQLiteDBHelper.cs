@@ -18,14 +18,14 @@ namespace AliRank
         public SQLiteDBHelper(string dbPath, string password)
         {
             builder.DataSource = dbPath;
-            builder.Password = password;
+           // builder.Password = password;
         }
 
         public static void EncryptDatabase(string dbPath, string password)
         {
             SQLiteConnection connection = new SQLiteConnection("Data Source=" + dbPath);
             connection.Open();
-            connection.ChangePassword(password);
+          //  connection.ChangePassword(password);
             connection.Close();
 
         }

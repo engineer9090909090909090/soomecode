@@ -30,6 +30,9 @@ namespace AliRank
         int currentPage = 1;
         int maxQueryPage = 10;
         private ShowcaseRankInfo item;
+        private AliAccounts aliAccount;
+        private InquiryMessages inquiryMessage;
+        private bool canInquiry;
         private string clickKey = string.Empty;
         private string currentRequestUrl;
         public ProductClicker(WebBrowser b) 
@@ -55,18 +58,21 @@ namespace AliRank
             }
         }
 
-        public virtual void InquiryEndEvent(ShowcaseRankInfo kw, string msg)
+        public virtual void InquiryEndEvent(InquiryInfos kw, string msg)
         {
             if (OnInquiryEndEvent != null)
             {
-                RankEventArgs e = new RankEventArgs(kw, msg);
+                InquiryEventArgs e = new InquiryEventArgs(kw, msg);
                 OnInquiryEndEvent(this, e);
             }
         }
 
-        public void DoClick(ShowcaseRankInfo kw, int maxQueryPageNumber)
+        public void DoClick(ShowcaseRankInfo kw, int maxQueryPageNumber, AliAccounts account, bool canInquiry, InquiryMessages msg)
         {
-            item = kw;
+            this.item = kw;
+            this.aliAccount = account;
+            this.inquiryMessage = msg;
+            this.canInquiry = canInquiry;
             this.maxQueryPage = maxQueryPageNumber;
             this.clickKey = item.RankKeyword;
             currentRequestUrl = string.Format(SEARCH_URL1, clickKey.Replace(" ", "+"));
@@ -131,8 +137,7 @@ namespace AliRank
                     messageLink.SetAttribute("target", "_self");
                     messageLink.InvokeMember("click");
                 }
-                bool isInquiry = true;
-                if (!isInquiry)
+                if (!this.canInquiry)
                 {
                     browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
                     eventX.Set();
@@ -143,8 +148,7 @@ namespace AliRank
                 HtmlElement orderQuantity = browser.Document.GetElementById("orderQuantity");
                 if (orderQuantity != null)
                 {
-                    Random r = new Random();
-                    int randomNumber = r.Next(1, 20) * 100;
+                    int randomNumber = new Random().Next(1, 20) * 100;
                     orderQuantity.SetAttribute("value", randomNumber.ToString());
                     browser.Document.GetElementById("orderQuantityTemp").SetAttribute("value", randomNumber.ToString());
                 }
@@ -154,11 +158,12 @@ namespace AliRank
                 {
                     email.SetAttribute("value", "hunan.yuyi@gmail.com");
                 }
+                string msgContent = inquiryMessage.Content + "\r\n." + DateTime.Now.ToLongTimeString();
                 HtmlElement contentMessage = browser.Document.GetElementById("contentMessage");
                 if (contentMessage != null)
                 {
                     //browser.Document.InvokeScript("tinyMCE.getInstanceById('contentMessage').setContext(\"please send me quote about the product.\r\n=======InvokeScript=======by luke\");");
-                    contentMessage.SetAttribute("value", "please send me quote about the product.\r\n======SetAttribute========by luke");
+                    contentMessage.SetAttribute("value", msgContent);
                 }
 
                 HtmlElement sendButton = browser.Document.GetElementById("send");
@@ -170,8 +175,14 @@ namespace AliRank
 
             if (browser.Url.ToString().StartsWith(INQUIRY_SUCCESS))
             {
-                item.Clicked = item.InquiryNum + 1;
-                InquiryEndEvent(item, "This product has been send a Rank Inquiry.");
+                InquiryInfos info = new InquiryInfos();
+                info.ProductId = item.ProductId;
+                info.AccountId = aliAccount.AccountId;
+                info.MsgId = inquiryMessage.MsgId;
+                info.InquiryDate = Convert.ToInt32(DateTime.Now.ToShortDateString());
+                info.Company = item.CompanyUrl;
+                info.InquiryIp = "";
+                InquiryEndEvent(info, "This product has been send a Rank Inquiry.");
                 browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
                 eventX.Set();
             }

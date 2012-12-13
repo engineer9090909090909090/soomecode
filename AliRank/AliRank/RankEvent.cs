@@ -12,7 +12,7 @@ namespace AliRank
 
     public delegate void RankClickEndEvent(object sender, RankEventArgs e);
     public delegate void RankClickingEvent(object sender, RankEventArgs e);
-    public delegate void RankInquiryEndEvent(object sender, RankEventArgs e);
+    public delegate void RankInquiryEndEvent(object sender, InquiryEventArgs e);
 
     public class RankEventArgs : EventArgs
     {
@@ -20,6 +20,18 @@ namespace AliRank
         public string Msg;
 
         public RankEventArgs(ShowcaseRankInfo _obj, string _msg)
+        {
+            this.Item = _obj;
+            this.Msg = _msg;
+        }
+    }
+
+    public class InquiryEventArgs : EventArgs
+    {
+        public InquiryInfos Item;
+        public string Msg;
+
+        public InquiryEventArgs(InquiryInfos _obj, string _msg)
         {
             this.Item = _obj;
             this.Msg = _msg;
