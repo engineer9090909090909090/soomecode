@@ -179,9 +179,9 @@ namespace AliRank
                 info.ProductId = item.ProductId;
                 info.AccountId = aliAccount.AccountId;
                 info.MsgId = inquiryMessage.MsgId;
-                info.InquiryDate = Convert.ToInt32(DateTime.Now.ToShortDateString());
+                info.InquiryDate = Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd"));
                 info.Company = item.CompanyUrl;
-                info.InquiryIp = "";
+                info.InquiryIp = aliAccount.LoginIp;
                 InquiryEndEvent(info, "This product has been send a Rank Inquiry.");
                 browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
                 eventX.Set();

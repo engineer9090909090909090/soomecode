@@ -28,6 +28,16 @@ namespace AliRank
             this.MaxPauseTime.Text = sMaxPauseTime;
             string sMaxQueryPage = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_QUERY_PAGE, IniFile);
             this.MaxQueryPage.Text = sMaxQueryPage;
+            string runModel = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.RUN_MODEL, IniFile);
+            if (runModel.Equals(Constants.RUN_ONLY_CLICK))
+            {
+                OnlyClickRadioButton.Checked = true;
+            }
+            else
+            {
+                ClickInquiryRadioButton.Checked = true;
+            }
+
             string network = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.NETWORK_CHOICE, IniFile);
             if (network.Equals(Constants.NETWORK_VPN))
             {
@@ -85,7 +95,17 @@ namespace AliRank
                 Network = Constants.NETWORK_NONE;
             }
             FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.NETWORK_CHOICE, Network, IniFile);
-            
+            string RunModel = Constants.RUN_CLICK_INQUIRY;
+            if (OnlyClickRadioButton.Checked)
+            {
+                RunModel = Constants.RUN_ONLY_CLICK;
+            }
+            if (ClickInquiryRadioButton.Checked)
+            {
+                RunModel = Constants.RUN_CLICK_INQUIRY;
+            }
+            FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.RUN_MODEL, RunModel, IniFile);
+
             this.Close();
         }
 

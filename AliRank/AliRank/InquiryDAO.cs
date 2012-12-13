@@ -171,7 +171,7 @@ namespace AliRank
 
         public void InsertInquiryInfos(InquiryInfos model)
         {
-            string sql = @"INSERT INTO InquiryInfos(AccountId, ProductId, MsgId, Company, InquiryIp,InquiryDate)values(@AccountId,@ProductId,@MsgId,@Company,@InquiryIp,@InquiryDate)";
+            string sql = @"INSERT INTO InquiryInfos(AccountId, ProductId, MsgId, Company, InquiryIp, InquiryDate)values(@AccountId,@ProductId,@MsgId,@Company,@InquiryIp,@InquiryDate)";
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {
                 new SQLiteParameter("@AccountId",model.AccountId), 
@@ -212,6 +212,22 @@ namespace AliRank
             return list;
         }
 
+        public InquiryMessages GetInquiryMinMessage()
+        {
+            DataTable dt = dbHelper.ExecuteDataTable(
+                "SELECT MsgId, Content, SendNum from InquiryMessages order by SendNum asc limit 0,1", null);
+            if (dt.Rows.Count > 0)
+            {
+                DataRow row = dt.Rows[0];
+                InquiryMessages kw = new InquiryMessages();
+                kw.MsgId = Convert.ToInt32(row["MsgId"]);
+                kw.Content = (string)row["Content"];
+                kw.SendNum = Convert.ToInt32(row["SendNum"]);
+                return kw;
+            }
+            return null;
+        }
+
         /// <summary>
         /// 查询今天可用来发询盘的帐号
         /// </summary>
@@ -237,8 +253,7 @@ namespace AliRank
             {
                 return null;
             }
-            Random r = new Random();
-            int randomNumber = r.Next(0, list.Count -1);
+            int randomNumber = new Random().Next(0, list.Count -1);
             return list[randomNumber];
         }
         
@@ -248,14 +263,14 @@ namespace AliRank
         /// <param name="productId"></param>
         /// <param name="todayDate"></param>
         /// <returns></returns>
-        public int TodayInquiryQty4Product(int productId, int todayDate)
+        public int TodayInquiryQty4Product(int productId)
         {
             string sql = "select count(1) from  inquiryInfos where productId = @productId "
                 + " and inquiryDate= @inquiryDate ";
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {
                 new SQLiteParameter("@productId", productId),
-                new SQLiteParameter("@inquiryDate", todayDate)
+                new SQLiteParameter("@inquiryDate", DateTime.Now.ToString("yyyyMMdd"))
             };
             return Convert.ToInt32(dbHelper.ExecuteScalar(sql, parameter));
         }

@@ -18,6 +18,7 @@ namespace AliRank
         public static string MAX_QUERY_PAGE = "MaxQueryPage";
         public static string AUTO_SHUTDOWN = "AutoShutDown";
         public static string NETWORK_CHOICE = "Network Choice";
+        public static string RUN_MODEL = "Run Model";
         public static string YES = "1";
         public static string NO =  "0";
 
@@ -25,7 +26,13 @@ namespace AliRank
         public static string NETWORK_AGENT = "1";
         public static string NETWORK_NONE = "0";
 
+        public static string RUN_ONLY_CLICK = "0";
+        public static string RUN_CLICK_INQUIRY = "1";
+
         public static string PPTP = "PPTP";
         public static string L2TP = "L2TP";
+
+        public static int EFFECTIVE = 1;
+        public static int INVALID = 0;
     }
 }

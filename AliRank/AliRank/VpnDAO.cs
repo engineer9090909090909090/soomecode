@@ -34,6 +34,8 @@ namespace AliRank
                     + "Name varchar(100),"
                     + "VpnType varchar(50),"
                     + "L2tpSec varchar(20),"
+                    + "ConnQty integer default 0,"
+                    + "Status integer default 0,"
                     + "createTime datetime,"
                     + "updateTime datetime)"
                     );
@@ -115,6 +117,66 @@ namespace AliRank
             };
             dbHelper.ExecuteNonQuery(sql, parameter);
         }
+
+        public void UpdateAllVPNStatus(int status)
+        {
+            string sql = @"UPDATE  vpns SET Status =@Status";
+            SQLiteParameter[] parameter = new SQLiteParameter[]
+            {
+                new SQLiteParameter("@Status",status)
+            };
+            dbHelper.ExecuteNonQuery(sql, parameter);
+        }
+
+        public VpnModel GetEffctiveVPN()
+        {
+            DataTable dt = dbHelper.ExecuteDataTable(
+            "SELECT Id, Address, Username, Password, Country,Name, VpnType, L2tpSec,updateTime, ConnQty, Status "
+            +"FROM vpns order by status = 1 order by ConnQty asc limit 0, 1", null);
+
+            if (dt.Rows.Count > 0)
+            {
+                DataRow row = dt.Rows[0]; 
+                VpnModel model = new VpnModel();
+                model.Id = Convert.ToInt32(row["id"]);
+                model.Address = (string)row["Address"];
+                model.Username = (string)row["Username"];
+                model.Password = (string)row["Password"];
+                model.Country = (string)row["Country"];
+                model.Name = (string)row["Name"];
+                model.VpnType = (string)row["VpnType"];
+                model.L2tpSec = (string)row["L2tpSec"];
+                model.ConnQty = Convert.ToInt32(row["ConnQty"]);
+                model.Status = Convert.ToInt32(row["Status"]);
+                model.UpdateTime = Convert.ToDateTime(row["updateTime"]);
+                return model;
+            }
+            return null;
+        }
+
+        public void UpdateVPNStatus(int id, int status)
+        {
+            string sql = @"UPDATE  vpns SET Status =@Status, updateTime = @updateTime where id = @id";
+            SQLiteParameter[] parameter = new SQLiteParameter[]
+            {
+                new SQLiteParameter("@Status",status), 
+                new SQLiteParameter("@updateTime",DateTime.Now),
+                new SQLiteParameter("@id",id)
+            };
+            dbHelper.ExecuteNonQuery(sql, parameter);
+        }
+
+        public void AddVPNConnQty(int id, int status)
+        {
+            string sql = @"UPDATE vpns SET ConnQty = ConnQty + 1, Status =1, updateTime = @updateTime where id = @id";
+            SQLiteParameter[] parameter = new SQLiteParameter[]
+            {
+                new SQLiteParameter("@updateTime",DateTime.Now),
+                new SQLiteParameter("@id",id)
+            };
+            dbHelper.ExecuteNonQuery(sql, parameter);
+        }
+
 
         public void DeleteVpn(List<string> idList)
         {

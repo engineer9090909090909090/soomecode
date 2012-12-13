@@ -34,17 +34,24 @@
             this.label1 = new System.Windows.Forms.Label();
             this.errorMsg = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.MaxQueryPage = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.MaxPauseTime = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.NoneRadioBtn = new System.Windows.Forms.RadioButton();
             this.VPNRadioBtn = new System.Windows.Forms.RadioButton();
             this.label3 = new System.Windows.Forms.Label();
             this.CancelBtn = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.MaxPauseTime = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.MaxQueryPage = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.ClickInquiryRadioButton = new System.Windows.Forms.RadioButton();
+            this.OnlyClickRadioButton = new System.Windows.Forms.RadioButton();
+            this.label8 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // ImportBtn
@@ -59,7 +66,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(198, 34);
+            this.textBox1.Location = new System.Drawing.Point(198, 23);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(102, 21);
             this.textBox1.TabIndex = 1;
@@ -69,7 +76,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(79, 37);
+            this.label2.Location = new System.Drawing.Point(79, 26);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(89, 12);
             this.label2.TabIndex = 3;
@@ -78,7 +85,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(306, 40);
+            this.label1.Location = new System.Drawing.Point(306, 29);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(17, 12);
             this.label1.TabIndex = 4;
@@ -88,13 +95,16 @@
             // 
             this.errorMsg.AutoSize = true;
             this.errorMsg.ForeColor = System.Drawing.Color.Red;
-            this.errorMsg.Location = new System.Drawing.Point(103, 196);
+            this.errorMsg.Location = new System.Drawing.Point(103, 199);
             this.errorMsg.Name = "errorMsg";
             this.errorMsg.Size = new System.Drawing.Size(0, 12);
             this.errorMsg.TabIndex = 6;
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.groupBox3);
+            this.groupBox2.Controls.Add(this.groupBox1);
+            this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.MaxQueryPage);
             this.groupBox2.Controls.Add(this.label7);
@@ -102,24 +112,74 @@
             this.groupBox2.Controls.Add(this.errorMsg);
             this.groupBox2.Controls.Add(this.MaxPauseTime);
             this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.NoneRadioBtn);
-            this.groupBox2.Controls.Add(this.VPNRadioBtn);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.CancelBtn);
             this.groupBox2.Controls.Add(this.ImportBtn);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.textBox1);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Location = new System.Drawing.Point(7, 2);
+            this.groupBox2.Location = new System.Drawing.Point(8, 2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(417, 260);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(79, 102);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(89, 12);
+            this.label6.TabIndex = 14;
+            this.label6.Text = "最大查询页数：";
+            // 
+            // MaxQueryPage
+            // 
+            this.MaxQueryPage.Location = new System.Drawing.Point(198, 99);
+            this.MaxQueryPage.Name = "MaxQueryPage";
+            this.MaxQueryPage.Size = new System.Drawing.Size(102, 21);
+            this.MaxQueryPage.TabIndex = 13;
+            this.MaxQueryPage.Text = "10";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(306, 105);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(17, 12);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "页";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(79, 65);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(113, 12);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "随机暂停最大时间：";
+            // 
+            // MaxPauseTime
+            // 
+            this.MaxPauseTime.Location = new System.Drawing.Point(198, 62);
+            this.MaxPauseTime.Name = "MaxPauseTime";
+            this.MaxPauseTime.Size = new System.Drawing.Size(102, 21);
+            this.MaxPauseTime.TabIndex = 10;
+            this.MaxPauseTime.Text = "60";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(306, 68);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(17, 12);
+            this.label5.TabIndex = 12;
+            this.label5.Text = "秒";
+            // 
             // NoneRadioBtn
             // 
             this.NoneRadioBtn.AutoSize = true;
-            this.NoneRadioBtn.Location = new System.Drawing.Point(276, 173);
+            this.NoneRadioBtn.Location = new System.Drawing.Point(93, 11);
             this.NoneRadioBtn.Name = "NoneRadioBtn";
             this.NoneRadioBtn.Size = new System.Drawing.Size(47, 16);
             this.NoneRadioBtn.TabIndex = 9;
@@ -130,7 +190,7 @@
             // 
             this.VPNRadioBtn.AutoSize = true;
             this.VPNRadioBtn.Checked = true;
-            this.VPNRadioBtn.Location = new System.Drawing.Point(197, 173);
+            this.VPNRadioBtn.Location = new System.Drawing.Point(6, 11);
             this.VPNRadioBtn.Name = "VPNRadioBtn";
             this.VPNRadioBtn.Size = new System.Drawing.Size(65, 16);
             this.VPNRadioBtn.TabIndex = 7;
@@ -141,7 +201,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(79, 175);
+            this.label3.Location = new System.Drawing.Point(79, 139);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(89, 12);
             this.label3.TabIndex = 6;
@@ -157,57 +217,56 @@
             this.CancelBtn.UseVisualStyleBackColor = true;
             this.CancelBtn.Click += new System.EventHandler(this.CancelBtn_Click);
             // 
-            // label4
+            // ClickInquiryRadioButton
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(79, 80);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(113, 12);
-            this.label4.TabIndex = 11;
-            this.label4.Text = "随机暂停最大时间：";
+            this.ClickInquiryRadioButton.AutoSize = true;
+            this.ClickInquiryRadioButton.Location = new System.Drawing.Point(90, 12);
+            this.ClickInquiryRadioButton.Name = "ClickInquiryRadioButton";
+            this.ClickInquiryRadioButton.Size = new System.Drawing.Size(83, 16);
+            this.ClickInquiryRadioButton.TabIndex = 18;
+            this.ClickInquiryRadioButton.Text = "点击且询盘";
+            this.ClickInquiryRadioButton.UseVisualStyleBackColor = true;
             // 
-            // MaxPauseTime
+            // OnlyClickRadioButton
             // 
-            this.MaxPauseTime.Location = new System.Drawing.Point(198, 77);
-            this.MaxPauseTime.Name = "MaxPauseTime";
-            this.MaxPauseTime.Size = new System.Drawing.Size(102, 21);
-            this.MaxPauseTime.TabIndex = 10;
-            this.MaxPauseTime.Text = "60";
+            this.OnlyClickRadioButton.AutoSize = true;
+            this.OnlyClickRadioButton.Checked = true;
+            this.OnlyClickRadioButton.Location = new System.Drawing.Point(6, 12);
+            this.OnlyClickRadioButton.Name = "OnlyClickRadioButton";
+            this.OnlyClickRadioButton.Size = new System.Drawing.Size(59, 16);
+            this.OnlyClickRadioButton.TabIndex = 17;
+            this.OnlyClickRadioButton.TabStop = true;
+            this.OnlyClickRadioButton.Text = "仅点击";
+            this.OnlyClickRadioButton.UseVisualStyleBackColor = true;
             // 
-            // label5
+            // label8
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(306, 83);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(17, 12);
-            this.label5.TabIndex = 12;
-            this.label5.Text = "秒";
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(79, 176);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(65, 12);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "运行模式：";
             // 
-            // label6
+            // groupBox1
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(79, 123);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(89, 12);
-            this.label6.TabIndex = 14;
-            this.label6.Text = "最大查询页数：";
+            this.groupBox1.Controls.Add(this.OnlyClickRadioButton);
+            this.groupBox1.Controls.Add(this.ClickInquiryRadioButton);
+            this.groupBox1.Location = new System.Drawing.Point(188, 163);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(188, 30);
+            this.groupBox1.TabIndex = 19;
+            this.groupBox1.TabStop = false;
             // 
-            // MaxQueryPage
+            // groupBox3
             // 
-            this.MaxQueryPage.Location = new System.Drawing.Point(198, 120);
-            this.MaxQueryPage.Name = "MaxQueryPage";
-            this.MaxQueryPage.Size = new System.Drawing.Size(102, 21);
-            this.MaxQueryPage.TabIndex = 13;
-            this.MaxQueryPage.Text = "10";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(306, 126);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(17, 12);
-            this.label7.TabIndex = 15;
-            this.label7.Text = "页";
+            this.groupBox3.Controls.Add(this.VPNRadioBtn);
+            this.groupBox3.Controls.Add(this.NoneRadioBtn);
+            this.groupBox3.Location = new System.Drawing.Point(188, 127);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(188, 30);
+            this.groupBox3.TabIndex = 20;
+            this.groupBox3.TabStop = false;
             // 
             // SetupForm
             // 
@@ -221,10 +280,14 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "点击设置";
+            this.Text = "点击参数设置";
             this.Load += new System.EventHandler(this.ImpKwForm_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -247,5 +310,10 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox MaxQueryPage;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.RadioButton ClickInquiryRadioButton;
+        private System.Windows.Forms.RadioButton OnlyClickRadioButton;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
