@@ -145,6 +145,27 @@ namespace AliRank
             }
             if (browser.Url.ToString().StartsWith(SEND_MESSAGE))
             {
+
+
+                string postUrl = "http://message.alibaba.com/msgsend/inquiry.htm";
+                string html = browser.Document.Body.InnerHtml;
+                string token = "_csrf_token_=" + browser.Document.All["_csrf_token_"].GetAttribute("value");
+                string action = "action=SendMemberInquiryAction";
+                string sh = "_fmm.b._0.sh=false";
+                string pageId = "pageId=" + GetDmtrackPageid(html);
+                string chkProductIds = "chkProductIds="+ browser.Document.All["chkProductIds"].GetAttribute("value");
+                string s = "_fmm.b._0.s=" + browser.Document.GetElementById("subject").GetAttribute("value");
+                string msgContent = inquiryMessage.Content + "\r\n." + DateTime.Now.ToLongTimeString();
+                string c = "_fmm.b._0.c=<p>" + msgContent.Replace("\r\n", "<br>") + "<p>";
+                int randomNumber = new Random().Next(1, 20) * 100;
+                string o = "_fmm.a._0.o=" + randomNumber + " Piece/Pieces";
+                string attachs = "attachs=";
+                string eventSubmitDoSend = "eventSubmitDoSend=Send";
+                string postString = token + "&" + action + "&" + sh + "&" + pageId + "&" + chkProductIds + "&" + s + "&"
+                    + c + "&" + o + "&" + attachs + "&" + eventSubmitDoSend;
+                byte[] postData = Encoding.Default.GetBytes(postString);
+                browser.Navigate(postUrl, "_self", postData, "");
+                /*
                 HtmlElement orderQuantity = browser.Document.GetElementById("orderQuantity");
                 if (orderQuantity != null)
                 {
@@ -156,7 +177,7 @@ namespace AliRank
                 HtmlElement email = browser.Document.GetElementById("email");
                 if (email != null)
                 {
-                    email.SetAttribute("value", "hunan.yuyi@gmail.com");
+                    //email.SetAttribute("value", "hunan.yuyi@gmail.com");
                 }
                 string msgContent = inquiryMessage.Content + "\r\n." + DateTime.Now.ToLongTimeString();
                 HtmlElement contentMessage = browser.Document.GetElementById("contentMessage");
@@ -171,6 +192,7 @@ namespace AliRank
                 {
                     sendButton.InvokeMember("click");
                 }
+                 * */
             }
 
             if (browser.Url.ToString().StartsWith(INQUIRY_SUCCESS))
@@ -187,5 +209,17 @@ namespace AliRank
                 eventX.Set();
             }
         }
+
+        public string GetDmtrackPageid(string html)
+        {
+            Regex r = new Regex("var dmtrack_pageid='(.*?)';");
+            GroupCollection gc = r.Match(html).Groups;
+            if (gc != null && gc.Count > 1)
+            {
+                return gc[1].Value.Trim();
+            }
+            return "";
+        }
+       
     }
 }

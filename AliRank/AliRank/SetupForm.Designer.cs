@@ -34,24 +34,24 @@
             this.label1 = new System.Windows.Forms.Label();
             this.errorMsg = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.VPNRadioBtn = new System.Windows.Forms.RadioButton();
+            this.NoneRadioBtn = new System.Windows.Forms.RadioButton();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.OnlyClickRadioButton = new System.Windows.Forms.RadioButton();
+            this.ClickInquiryRadioButton = new System.Windows.Forms.RadioButton();
+            this.label8 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.MaxQueryPage = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.MaxPauseTime = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.NoneRadioBtn = new System.Windows.Forms.RadioButton();
-            this.VPNRadioBtn = new System.Windows.Forms.RadioButton();
             this.label3 = new System.Windows.Forms.Label();
             this.CancelBtn = new System.Windows.Forms.Button();
-            this.ClickInquiryRadioButton = new System.Windows.Forms.RadioButton();
-            this.OnlyClickRadioButton = new System.Windows.Forms.RadioButton();
-            this.label8 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // ImportBtn
@@ -124,6 +124,79 @@
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.VPNRadioBtn);
+            this.groupBox3.Controls.Add(this.NoneRadioBtn);
+            this.groupBox3.Location = new System.Drawing.Point(188, 127);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(175, 32);
+            this.groupBox3.TabIndex = 20;
+            this.groupBox3.TabStop = false;
+            // 
+            // VPNRadioBtn
+            // 
+            this.VPNRadioBtn.AutoSize = true;
+            this.VPNRadioBtn.Checked = true;
+            this.VPNRadioBtn.Location = new System.Drawing.Point(6, 11);
+            this.VPNRadioBtn.Name = "VPNRadioBtn";
+            this.VPNRadioBtn.Size = new System.Drawing.Size(65, 16);
+            this.VPNRadioBtn.TabIndex = 7;
+            this.VPNRadioBtn.TabStop = true;
+            this.VPNRadioBtn.Text = "VPN网络";
+            this.VPNRadioBtn.UseVisualStyleBackColor = true;
+            // 
+            // NoneRadioBtn
+            // 
+            this.NoneRadioBtn.AutoSize = true;
+            this.NoneRadioBtn.Location = new System.Drawing.Point(83, 11);
+            this.NoneRadioBtn.Name = "NoneRadioBtn";
+            this.NoneRadioBtn.Size = new System.Drawing.Size(47, 16);
+            this.NoneRadioBtn.TabIndex = 9;
+            this.NoneRadioBtn.Text = "普通";
+            this.NoneRadioBtn.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.OnlyClickRadioButton);
+            this.groupBox1.Controls.Add(this.ClickInquiryRadioButton);
+            this.groupBox1.Location = new System.Drawing.Point(188, 163);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(175, 32);
+            this.groupBox1.TabIndex = 19;
+            this.groupBox1.TabStop = false;
+            // 
+            // OnlyClickRadioButton
+            // 
+            this.OnlyClickRadioButton.AutoSize = true;
+            this.OnlyClickRadioButton.Checked = true;
+            this.OnlyClickRadioButton.Location = new System.Drawing.Point(6, 12);
+            this.OnlyClickRadioButton.Name = "OnlyClickRadioButton";
+            this.OnlyClickRadioButton.Size = new System.Drawing.Size(59, 16);
+            this.OnlyClickRadioButton.TabIndex = 17;
+            this.OnlyClickRadioButton.TabStop = true;
+            this.OnlyClickRadioButton.Text = "仅点击";
+            this.OnlyClickRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // ClickInquiryRadioButton
+            // 
+            this.ClickInquiryRadioButton.AutoSize = true;
+            this.ClickInquiryRadioButton.Location = new System.Drawing.Point(83, 12);
+            this.ClickInquiryRadioButton.Name = "ClickInquiryRadioButton";
+            this.ClickInquiryRadioButton.Size = new System.Drawing.Size(83, 16);
+            this.ClickInquiryRadioButton.TabIndex = 18;
+            this.ClickInquiryRadioButton.Text = "点击且询盘";
+            this.ClickInquiryRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(79, 176);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(65, 12);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "运行模式：";
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -176,28 +249,6 @@
             this.label5.TabIndex = 12;
             this.label5.Text = "秒";
             // 
-            // NoneRadioBtn
-            // 
-            this.NoneRadioBtn.AutoSize = true;
-            this.NoneRadioBtn.Location = new System.Drawing.Point(93, 11);
-            this.NoneRadioBtn.Name = "NoneRadioBtn";
-            this.NoneRadioBtn.Size = new System.Drawing.Size(47, 16);
-            this.NoneRadioBtn.TabIndex = 9;
-            this.NoneRadioBtn.Text = "普通";
-            this.NoneRadioBtn.UseVisualStyleBackColor = true;
-            // 
-            // VPNRadioBtn
-            // 
-            this.VPNRadioBtn.AutoSize = true;
-            this.VPNRadioBtn.Checked = true;
-            this.VPNRadioBtn.Location = new System.Drawing.Point(6, 11);
-            this.VPNRadioBtn.Name = "VPNRadioBtn";
-            this.VPNRadioBtn.Size = new System.Drawing.Size(65, 16);
-            this.VPNRadioBtn.TabIndex = 7;
-            this.VPNRadioBtn.TabStop = true;
-            this.VPNRadioBtn.Text = "VPN网络";
-            this.VPNRadioBtn.UseVisualStyleBackColor = true;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -217,57 +268,6 @@
             this.CancelBtn.UseVisualStyleBackColor = true;
             this.CancelBtn.Click += new System.EventHandler(this.CancelBtn_Click);
             // 
-            // ClickInquiryRadioButton
-            // 
-            this.ClickInquiryRadioButton.AutoSize = true;
-            this.ClickInquiryRadioButton.Location = new System.Drawing.Point(90, 12);
-            this.ClickInquiryRadioButton.Name = "ClickInquiryRadioButton";
-            this.ClickInquiryRadioButton.Size = new System.Drawing.Size(83, 16);
-            this.ClickInquiryRadioButton.TabIndex = 18;
-            this.ClickInquiryRadioButton.Text = "点击且询盘";
-            this.ClickInquiryRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // OnlyClickRadioButton
-            // 
-            this.OnlyClickRadioButton.AutoSize = true;
-            this.OnlyClickRadioButton.Checked = true;
-            this.OnlyClickRadioButton.Location = new System.Drawing.Point(6, 12);
-            this.OnlyClickRadioButton.Name = "OnlyClickRadioButton";
-            this.OnlyClickRadioButton.Size = new System.Drawing.Size(59, 16);
-            this.OnlyClickRadioButton.TabIndex = 17;
-            this.OnlyClickRadioButton.TabStop = true;
-            this.OnlyClickRadioButton.Text = "仅点击";
-            this.OnlyClickRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(79, 176);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(65, 12);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "运行模式：";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.OnlyClickRadioButton);
-            this.groupBox1.Controls.Add(this.ClickInquiryRadioButton);
-            this.groupBox1.Location = new System.Drawing.Point(188, 163);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(188, 30);
-            this.groupBox1.TabIndex = 19;
-            this.groupBox1.TabStop = false;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.VPNRadioBtn);
-            this.groupBox3.Controls.Add(this.NoneRadioBtn);
-            this.groupBox3.Location = new System.Drawing.Point(188, 127);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(188, 30);
-            this.groupBox3.TabIndex = 20;
-            this.groupBox3.TabStop = false;
-            // 
             // SetupForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -284,10 +284,10 @@
             this.Load += new System.EventHandler(this.ImpKwForm_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
