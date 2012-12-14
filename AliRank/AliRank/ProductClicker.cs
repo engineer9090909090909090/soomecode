@@ -110,6 +110,7 @@ namespace AliRank
                 {
                     if (currentPage == maxQueryPage)
                     {
+                        this.canInquiry = false;
                         ClickedEvent(item, "The system does not find the product you need to click.");
                         string productUrl = item.ProductUrl.Substring(item.ProductUrl.LastIndexOf("/"));
                         currentRequestUrl = PURL_PREFIX + item.ProductId + productUrl;
@@ -123,8 +124,7 @@ namespace AliRank
                     {
                         currentPage++;
                         currentRequestUrl = string.Format(SEARCH_URL2, clickKey.Replace(" ", "_"), currentPage);
-                        Random r = new Random();
-                        int randomNumber = r.Next(100, 5000);
+                        int randomNumber = new Random().Next(100, 5000);
                         if (currentPage > 0) Thread.Sleep(randomNumber);
                         ClickingEvent(item, "Clicking " + currentRequestUrl);
                         browser.Navigate(currentRequestUrl);
