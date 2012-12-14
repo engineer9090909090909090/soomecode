@@ -238,7 +238,7 @@ namespace AliRank
             DataTable dt = dbHelper.ExecuteDataTable(
                 "select distinct a.AccountId, a.Email, a.Password,a.Country from aliaccounts  a "
                 +"left join inquiryInfos i on a.AccountId=i.AccountId "
-                + "where  i.inquiryDate > " + yesterday + " and i.accountId is null", null);
+                + "where  i.accountId is null  and (i.inquiryDate > " + yesterday + " or i.inquiryDate is null)", null);
             List<AliAccounts> list = new List<AliAccounts>();
             foreach (DataRow row in dt.Rows)
             {
