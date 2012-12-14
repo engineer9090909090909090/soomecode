@@ -67,7 +67,7 @@ namespace AliRank
                 {
                     DataRow row = dt.NewRow();
                     row["Check"] = false;
-                    row["Account"] = item.Email;
+                    row["Account"] = item.Account;
                     row["Country"] = item.Country;
                     row["Password"] = "******";
                     row["LoginIp"] = item.LoginIp;
@@ -84,8 +84,8 @@ namespace AliRank
         private void InsertBtn_Click(object sender, EventArgs e)
         {
             AliAccounts model = new AliAccounts();
-            model.Email = this.AccountBox.Text.Trim();
-            if (string.IsNullOrEmpty(model.Email))
+            model.Account = this.AccountBox.Text.Trim();
+            if (string.IsNullOrEmpty(model.Account))
             {
                 ErrorMsg.Text = "帐号不能为空.";
                 return;
@@ -102,7 +102,7 @@ namespace AliRank
                 ErrorMsg.Text = "国家不能为空.";
                 return;
             }
-            bool existAddress = inquiryDAO.ExistAccount(model.Email);
+            bool existAddress = inquiryDAO.ExistAccount(model.Account);
             if (existAddress)
             {
                 ErrorMsg.Text = "帐号已经存在列表中.";

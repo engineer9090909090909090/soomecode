@@ -597,6 +597,7 @@ namespace AliRank
                     toolStripStatusLabel1.Text = e.Msg;
                     keywordDAO.AddProductFactInquiryQty(item.ProductId);
                     inquiryDao.InsertInquiryInfos(item);
+                    inquiryDao.AddInqMessageSendNum(item.MsgId);
                 }
             }
         }
