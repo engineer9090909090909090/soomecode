@@ -28,18 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TopFiveQueryForm));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.MsgText = new System.Windows.Forms.Label();
             this.queryBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.keyBox = new System.Windows.Forms.TextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.MsgText = new System.Windows.Forms.Label();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.OpenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -63,6 +67,15 @@
             this.splitContainer1.Size = new System.Drawing.Size(792, 566);
             this.splitContainer1.SplitterDistance = 35;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // MsgText
+            // 
+            this.MsgText.AutoSize = true;
+            this.MsgText.ForeColor = System.Drawing.Color.Red;
+            this.MsgText.Location = new System.Drawing.Point(428, 12);
+            this.MsgText.Name = "MsgText";
+            this.MsgText.Size = new System.Drawing.Size(0, 12);
+            this.MsgText.TabIndex = 4;
             // 
             // queryBtn
             // 
@@ -114,15 +127,22 @@
             this.dataGridView.RowTemplate.Height = 23;
             this.dataGridView.Size = new System.Drawing.Size(792, 527);
             this.dataGridView.TabIndex = 0;
+            this.dataGridView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView_CellMouseDown);
             // 
-            // MsgText
+            // contextMenuStrip1
             // 
-            this.MsgText.AutoSize = true;
-            this.MsgText.ForeColor = System.Drawing.Color.Red;
-            this.MsgText.Location = new System.Drawing.Point(428, 12);
-            this.MsgText.Name = "MsgText";
-            this.MsgText.Size = new System.Drawing.Size(0, 12);
-            this.MsgText.TabIndex = 4;
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.OpenToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(147, 26);
+            // 
+            // OpenToolStripMenuItem
+            // 
+            this.OpenToolStripMenuItem.Image = global::AliRank.Properties.Resources.open;
+            this.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem";
+            this.OpenToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.OpenToolStripMenuItem.Text = "在浏览器打开";
+            this.OpenToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
             // 
             // TopFiveQueryForm
             // 
@@ -142,6 +162,7 @@
             this.splitContainer1.Panel2.PerformLayout();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -155,5 +176,7 @@
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.Label MsgText;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem OpenToolStripMenuItem;
     }
 }

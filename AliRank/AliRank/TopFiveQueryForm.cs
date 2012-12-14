@@ -31,6 +31,7 @@ namespace AliRank
             dt.Columns.Add("Key", typeof(string));
             dt.Columns.Add("Desc", typeof(string));
             dt.Columns.Add("Cate", typeof(string));
+            dt.Columns.Add("Href", typeof(string));
             this.dataGridView.DataSource = dt;
             DataGridViewColumn column0 = this.dataGridView.Columns[0];
             column0.HeaderText = "产品图片";
@@ -51,7 +52,10 @@ namespace AliRank
             column4.HeaderText = "产品类目";
             column4.Width = 400;
             column4.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-
+            DataGridViewColumn column5 = this.dataGridView.Columns[5];
+            column5.HeaderText = "Href";
+            column5.Width = 10;
+            column5.Visible = false;
         }
 
         void LoadItemToDataView(TopFiveInfo item)
@@ -68,6 +72,7 @@ namespace AliRank
             row["Key"] = item.Key;
             row["Desc"] = item.Desc;
             row["Cate"] = item.Category;
+            row["Href"] = item.Href;
             dt.Rows.Add(row);
         }
 
@@ -97,13 +102,13 @@ namespace AliRank
             bgWorker.RunWorkerAsync();
             bgWorker.Dispose();
         }
-
+        private TopFiveInfo lastTopFiveInfo;
         void bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             TopFiveQueryer query = new TopFiveQueryer();
             query.OnTopFiveSearchEndEvent += new TopFiveSearchEndEvent(query_OnTopFiveSearchEndEvent);
             query.Seacher(keyBox.Text.Trim());
-            MsgText.Text = "搜索完成.";
+            MsgText.Text = "搜索完成，此关键词有" + lastTopFiveInfo.KeyAdNum + "个固定排名产品，" + lastTopFiveInfo.KeyP4Num + "个P4P排名产品。";
             queryBtn.Enabled = true;
             keyBox.Enabled = true;
         }
@@ -113,6 +118,7 @@ namespace AliRank
         void query_OnTopFiveSearchEndEvent(object sender, TopFiveEventArgs e)
         {
             TopFiveInfo item = e.Item;
+            lastTopFiveInfo = e.Item;
             if (dataGridView.InvokeRequired)
             {
                 UpdateDataGridView uActive = LoadItemToDataView;
@@ -124,5 +130,32 @@ namespace AliRank
             }
 
         }
+
+        #region 右键菜单梆定　右键菜单操作
+        int SelectedRowIndex = 0;
+        private void dataGridView_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                if (e.RowIndex >= 0)
+                {
+                    foreach (DataGridViewRow row in dataGridView.Rows)
+                    {
+                        row.Selected = false;
+                    }
+                    dataGridView.Rows[e.RowIndex].Selected = true;
+                    SelectedRowIndex = e.RowIndex;
+                    contextMenuStrip1.Show(MousePosition.X, MousePosition.Y);
+                }
+            }
+        }
+
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string href = Convert.ToString(dataGridView.Rows[SelectedRowIndex].Cells[5].Value);
+            System.Diagnostics.Process.Start("iexplore.exe", href);
+        }
+
+        #endregion
     }
 }

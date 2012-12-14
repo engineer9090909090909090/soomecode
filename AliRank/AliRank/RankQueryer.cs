@@ -22,7 +22,7 @@ namespace AliRank
         private string SUBJECT_PATH = "div[@class='attr']/h2/a[@class='qrPTitle']";
         private string AD_PATH = "//div[@class='list-items AD']";
         private string P4P_PATH = "//div[@class='list-items  p4p']";
-
+        private string P4PV2_PATH = "//div[@class='list-items  p4pv2']";
         private ShowcaseRankInfo item;
 
         public RankQueryer() 
@@ -65,6 +65,8 @@ namespace AliRank
                 {
                     HtmlNodeCollection adNodes = document.DocumentNode.SelectNodes(AD_PATH);
                     HtmlNodeCollection p4pNodes = document.DocumentNode.SelectNodes(P4P_PATH);
+                    HtmlNodeCollection p4pv2Nodes = document.DocumentNode.SelectNodes(P4PV2_PATH);
+                    
                     if (adNodes != null)
                     {
                         item.KeyAdNum = adNodes.Count;
@@ -72,6 +74,10 @@ namespace AliRank
                     if (p4pNodes != null)
                     {
                         item.KeyP4Num = p4pNodes.Count;
+                    }
+                    if (p4pv2Nodes != null)
+                    {
+                        item.KeyP4Num = item.KeyP4Num + p4pv2Nodes.Count;
                     }
                 }
                 string comUrlPath = "//div[@class='supplier']/span/a[@href='" + companyUrl.ToLower() + "']";
