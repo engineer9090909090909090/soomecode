@@ -136,12 +136,12 @@ namespace AliRank
                 item.Clicked = item.Clicked + 1;
                 ClickedEvent(item, "This product has been successfully click.");
                 HtmlElement messageLink = browser.Document.GetElementById("position2");
-                if (messageLink != null)
+                if (this.canInquiry && messageLink != null)
                 {
                     messageLink.SetAttribute("target", "_self");
                     messageLink.InvokeMember("click");
                 }
-                if (!this.canInquiry)
+                else
                 {
                     browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
                     eventX.Set();
