@@ -485,7 +485,9 @@ namespace AliRank
             int iRandomMaxTime = Convert.ToInt32(sMaxPauseTime) * 1000;
             //IEHandleUtils.ClearIECache();
             IEHandleUtils.ClearIECookie();
-            
+            InquiryMessages inquiryMessages = null;
+            bool canInquiry = false;
+
             if (sNetwork.Equals(Constants.NETWORK_VPN))
             {
                 int clickNum = Convert.ToInt32(ConfigClickNum);
@@ -504,14 +506,15 @@ namespace AliRank
                         if (i % 3 == 0)
                         {
                             IEHandleUtils.ClearIECookie();
-                            loginedAccount = DoLoginAliWebSite(this.webBrowser);
-                            loginedAccount.LoginIp = CurrVpnModel.Address;
+                            if (sRunModel == Constants.RUN_CLICK_INQUIRY)
+                            {
+                                loginedAccount = DoLoginAliWebSite(this.webBrowser);
+                                loginedAccount.LoginIp = CurrVpnModel.Address;
+                            }
                         }
                         int randomNumber = new Random().Next(1000, iRandomMaxTime);
                         if (i > 0) Thread.Sleep(randomNumber);
                         ShowcaseRankInfo productObj = productList[i];
-                        InquiryMessages inquiryMessages = null;
-                        bool canInquiry = false;
                         int todayInquiryQty = inquiryDao.TodayInquiryQty4Product(productObj.ProductId);
                         if (todayInquiryQty < productObj.MaxInquiryQty && sRunModel == Constants.RUN_CLICK_INQUIRY)
                         {
@@ -539,16 +542,17 @@ namespace AliRank
                         if (i % 3 == 0)
                         {
                             IEHandleUtils.ClearIECookie();
-                            loginedAccount = DoLoginAliWebSite(this.webBrowser);
-                            loginedAccount.LoginIp = "";
+                            if (sRunModel == Constants.RUN_CLICK_INQUIRY)
+                            {
+                                loginedAccount = DoLoginAliWebSite(this.webBrowser);
+                                loginedAccount.LoginIp = "";
+                            }
                         }
                         int randomNumber = new Random().Next(1000, iRandomMaxTime);
                         if (i > 0) Thread.Sleep(randomNumber);
                         ShowcaseRankInfo productObj = productList[i];
-                        InquiryMessages inquiryMessages = null;
-                        bool canInquiry = false;
                         int todayInquiryQty = inquiryDao.TodayInquiryQty4Product(productObj.ProductId);
-                        if (todayInquiryQty < productObj.MaxInquiryQty)
+                        if (todayInquiryQty < productObj.MaxInquiryQty && sRunModel == Constants.RUN_CLICK_INQUIRY)
                         {
                             inquiryMessages = inquiryDao.GetInquiryMinMessage();
                             canInquiry = true;
