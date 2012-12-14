@@ -8,7 +8,7 @@ namespace AliRank
     public class AliAccounts
     {
         public Int32 AccountId { set; get; }
-        public string Email { set; get; }
+        public string Account { set; get; }
         public string Password { set; get; }
         public string Country { set; get; }
         public string LoginIp { set; get; }
@@ -18,7 +18,7 @@ namespace AliRank
 
     public class InquiryInfos
     {
-        public Int32 AccountId { set; get; }
+        public string Account { set; get; }
         public Int32 ProductId { set; get; }
         public Int32 MsgId { set; get; }
         public string Company { set; get; }

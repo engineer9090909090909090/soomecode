@@ -22,20 +22,20 @@ namespace AliRank
             dbHelper.ExecuteNonQuery(
               "CREATE TABLE IF NOT EXISTS AliAccounts("
             + "AccountId integer NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
-            + "Email varchar(100) NOT NULL,"
+            + "Account varchar(100) NOT NULL,"
             + "Password varchar(100) NOT NULL,"
             + "Country varchar(100) NOT NULL,"
             + "LoginIp varchar(50) default '') ");
 
             dbHelper.ExecuteNonQuery(
               "CREATE TABLE IF NOT EXISTS InquiryInfos("
-            + "AccountId integer NOT NULL,"
+            + "Account varchar(100) NOT NULL,"
             + "ProductId integer NOT NULL,"
             + "MsgId integer NOT NULL,"
             + "Company varchar(100) NOT NULL,"
             + "InquiryIp varchar(50)  NOT NULL,"
             + "InquiryDate datetime NOT NULL)");
-            dbHelper.ExecuteNonQuery("CREATE INDEX IF NOT EXISTS account_product on InquiryInfos(AccountId, ProductId, InquiryDate);");
+            dbHelper.ExecuteNonQuery("CREATE INDEX IF NOT EXISTS account_product on InquiryInfos(Account, ProductId, InquiryDate);");
             dbHelper.ExecuteNonQuery("CREATE INDEX IF NOT EXISTS idx_msgId on InquiryInfos(MsgId);");
 
             dbHelper.ExecuteNonQuery(
@@ -47,10 +47,10 @@ namespace AliRank
 
         public bool ExistAccount(string account)
         {
-            string sql = "select count(1) from AliAccounts where Email= @Email";
+            string sql = "select count(1) from AliAccounts where Account= @Account";
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {
-                new SQLiteParameter("@Email", account),
+                new SQLiteParameter("@Account", account),
             };
             int  r = Convert.ToInt32(dbHelper.ExecuteScalar(sql, parameter));
             if (r > 0)
@@ -67,7 +67,7 @@ namespace AliRank
         public List<AliAccounts> GetAccounts()
         {
             DataTable dt = dbHelper.ExecuteDataTable(
-                "SELECT a.AccountId, a.Email, "
+                "SELECT a.AccountId, a.Account, "
                 +" a.Password, a.Country, a.LoginIp, "
                 +" (select count(1) from InquiryInfos i where a.AccountId=i.AccountId) as InquiryNum "
                 +" from AliAccounts a", null);
@@ -76,7 +76,7 @@ namespace AliRank
             {
                 AliAccounts kw = new AliAccounts();
                 kw.AccountId = Convert.ToInt32(row["AccountId"]);
-                kw.Email = (string)row["Email"];
+                kw.Account = (string)row["Account"];
                 kw.Password = (string)row["Password"];
                 kw.Country = (string)row["Country"];
                 kw.LoginIp = (string)row["LoginIp"];
@@ -88,10 +88,10 @@ namespace AliRank
 
         public void InsertAccount(AliAccounts model)
         {
-            string sql = @"INSERT INTO AliAccounts(Email, Password, Country)values(@Email, @Password, @Country)";
+            string sql = @"INSERT INTO AliAccounts(Account, Password, Country)values(@Account, @Password, @Country)";
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {
-                new SQLiteParameter("@Email",model.Email), 
+                new SQLiteParameter("@Account",model.Account), 
                 new SQLiteParameter("@Password",model.Password), 
                 new SQLiteParameter("@Country",model.Country)
             };
@@ -100,23 +100,23 @@ namespace AliRank
 
         public void ImportAccounts(List<AliAccounts> list)
         {
-            string InsSql = @"INSERT INTO AliAccounts(Email, Password, Country)values(@Email,@Password,@Country)";
+            string InsSql = @"INSERT INTO AliAccounts(Account, Password, Country)values(@Account,@Password,@Country)";
 
-            string UpdSql = @"Update AliAccounts SET Password = @Password, Country = @Country WHERE Email = @Email";
+            string UpdSql = @"Update AliAccounts SET Password = @Password, Country = @Country WHERE Account = @Account";
 
-            string ExistRecordSql = "SELECT count(1) FROM AliAccounts WHERE Email = ";
+            string ExistRecordSql = "SELECT count(1) FROM AliAccounts WHERE Account = ";
             List<SQLiteParameter[]> InsertParameters = new List<SQLiteParameter[]>();
             List<SQLiteParameter[]> UpdateParameters = new List<SQLiteParameter[]>();
             foreach (AliAccounts item in list)
             {
-                int record = Convert.ToInt32(dbHelper.ExecuteScalar(ExistRecordSql + item.Email, null));
+                int record = Convert.ToInt32(dbHelper.ExecuteScalar(ExistRecordSql + item.Account, null));
                 if (record > 0)
                 {
                     SQLiteParameter[] parameter = new SQLiteParameter[]
                     {
                         new SQLiteParameter("@Password",item.Password), 
                         new SQLiteParameter("@Country",item.Country), 
-                        new SQLiteParameter("@Email",item.Email)
+                        new SQLiteParameter("@Account",item.Account)
                     };
                     UpdateParameters.Add(parameter);
                 }
@@ -124,7 +124,7 @@ namespace AliRank
                 {
                     SQLiteParameter[] parameter = new SQLiteParameter[]
                     {
-                        new SQLiteParameter("@Email",item.Email), 
+                        new SQLiteParameter("@Account",item.Account), 
                         new SQLiteParameter("@Password", item.Password), 
                         new SQLiteParameter("@Country",item.Country)
                     };
@@ -171,10 +171,10 @@ namespace AliRank
 
         public void InsertInquiryInfos(InquiryInfos model)
         {
-            string sql = @"INSERT INTO InquiryInfos(AccountId, ProductId, MsgId, Company, InquiryIp, InquiryDate)values(@AccountId,@ProductId,@MsgId,@Company,@InquiryIp,@InquiryDate)";
+            string sql = @"INSERT INTO InquiryInfos(Account, ProductId, MsgId, Company, InquiryIp, InquiryDate)values(@Account,@ProductId,@MsgId,@Company,@InquiryIp,@InquiryDate)";
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {
-                new SQLiteParameter("@AccountId",model.AccountId), 
+                new SQLiteParameter("@Account",model.Account), 
                 new SQLiteParameter("@ProductId", model.ProductId), 
                 new SQLiteParameter("@MsgId",model.MsgId), 
                 new SQLiteParameter("@Company",model.Company),
@@ -195,7 +195,15 @@ namespace AliRank
             dbHelper.ExecuteNonQuery(sql, parameter);
         }
 
-        
+        public void AddInqMessageSendNum(int msgId)
+        {
+            string sql = @"Update InquiryMessages set SendNum = SendNum + 1 where MsgId=@MsgId";
+            SQLiteParameter[] parameter = new SQLiteParameter[]
+            {
+                new SQLiteParameter("@MsgId", msgId)
+            };
+            dbHelper.ExecuteNonQuery(sql, parameter);
+        }
 
         public List<InquiryMessages> GetInquiryMessages()
         {
@@ -236,15 +244,15 @@ namespace AliRank
         public AliAccounts GetCanInquiryAccounts(int yesterday)
         {
             DataTable dt = dbHelper.ExecuteDataTable(
-                "select distinct a.AccountId, a.Email, a.Password,a.Country from aliaccounts  a "
-                +"left join inquiryInfos i on a.AccountId=i.AccountId "
-                + "where  i.accountId is null  and (i.inquiryDate > " + yesterday + " or i.inquiryDate is null)", null);
+                "select distinct a.AccountId, a.Account, a.Password,a.Country from aliaccounts  a "
+                +"left join inquiryInfos i on a.Account=i.Account "
+                + "where  i.Account is null  and (i.inquiryDate > " + yesterday + " or i.inquiryDate is null)", null);
             List<AliAccounts> list = new List<AliAccounts>();
             foreach (DataRow row in dt.Rows)
             {
                 AliAccounts kw = new AliAccounts();
                 kw.AccountId = Convert.ToInt32(row["AccountId"]);
-                kw.Email = (string)row["Email"];
+                kw.Account = (string)row["Account"];
                 kw.Password = (string)row["Password"];
                 kw.Country = (string)row["Country"];
                 list.Add(kw);

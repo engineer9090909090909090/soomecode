@@ -25,7 +25,7 @@ namespace AliRank
 
         public bool DoLogin(AliAccounts account)
         {
-            this.UserName = account.Email;
+            this.UserName = account.Account;
             this.Password = account.Password;
             browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_LogoinCompleted);
             browser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(browser_LogoinCompleted);

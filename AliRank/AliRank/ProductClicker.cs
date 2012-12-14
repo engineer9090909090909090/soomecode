@@ -26,7 +26,11 @@ namespace AliRank
         private string PURL_PREFIX = @"http://www.alibaba.com/product-gs/";
 
         private string SEND_MESSAGE = @"http://message.alibaba.com/msgsend/contact.htm";
-        private string INQUIRY_SUCCESS = "http://cn.message.alibaba.com/msgsend/memberInquirySuccess.htm";
+
+        //http://us.message.alibaba.com/msgsend/memberInquirySuccess.htm
+        //http://cn.message.alibaba.com/msgsend/memberInquirySuccess.htm
+        private string INQUIRY_SUCCESS = "msgsend/memberInquirySuccess.htm";
+
         int currentPage = 1;
         int maxQueryPage = 10;
         private ShowcaseRankInfo item;
@@ -145,61 +149,31 @@ namespace AliRank
             }
             if (browser.Url.ToString().StartsWith(SEND_MESSAGE))
             {
-
-
                 string postUrl = "http://message.alibaba.com/msgsend/inquiry.htm";
                 string html = browser.Document.Body.InnerHtml;
+                string msgContent = inquiryMessage.Content + "\r\n." + DateTime.Now.ToLongDateString();
+                int randomNumber = new Random().Next(1, 20) * 100;
                 string token = "_csrf_token_=" + browser.Document.All["_csrf_token_"].GetAttribute("value");
                 string action = "action=SendMemberInquiryAction";
                 string sh = "_fmm.b._0.sh=false";
                 string pageId = "pageId=" + GetDmtrackPageid(html);
                 string chkProductIds = "chkProductIds="+ browser.Document.All["chkProductIds"].GetAttribute("value");
                 string s = "_fmm.b._0.s=" + browser.Document.GetElementById("subject").GetAttribute("value");
-                string msgContent = inquiryMessage.Content + "\r\n." + DateTime.Now.ToLongTimeString();
                 string c = "_fmm.b._0.c=<p>" + msgContent.Replace("\r\n", "<br>") + "<p>";
-                int randomNumber = new Random().Next(1, 20) * 100;
                 string o = "_fmm.a._0.o=" + randomNumber + " Piece/Pieces";
                 string attachs = "attachs=";
                 string eventSubmitDoSend = "eventSubmitDoSend=Send";
                 string postString = token + "&" + action + "&" + sh + "&" + pageId + "&" + chkProductIds + "&" + s + "&"
                     + c + "&" + o + "&" + attachs + "&" + eventSubmitDoSend;
                 byte[] postData = Encoding.Default.GetBytes(postString);
-                browser.Navigate(postUrl, "_self", postData, "");
-                /*
-                HtmlElement orderQuantity = browser.Document.GetElementById("orderQuantity");
-                if (orderQuantity != null)
-                {
-                    int randomNumber = new Random().Next(1, 20) * 100;
-                    orderQuantity.SetAttribute("value", randomNumber.ToString());
-                    browser.Document.GetElementById("orderQuantityTemp").SetAttribute("value", randomNumber.ToString());
-                }
-
-                HtmlElement email = browser.Document.GetElementById("email");
-                if (email != null)
-                {
-                    //email.SetAttribute("value", "hunan.yuyi@gmail.com");
-                }
-                string msgContent = inquiryMessage.Content + "\r\n." + DateTime.Now.ToLongTimeString();
-                HtmlElement contentMessage = browser.Document.GetElementById("contentMessage");
-                if (contentMessage != null)
-                {
-                    //browser.Document.InvokeScript("tinyMCE.getInstanceById('contentMessage').setContext(\"please send me quote about the product.\r\n=======InvokeScript=======by luke\");");
-                    contentMessage.SetAttribute("value", msgContent);
-                }
-
-                HtmlElement sendButton = browser.Document.GetElementById("send");
-                if (sendButton != null)
-                {
-                    sendButton.InvokeMember("click");
-                }
-                 * */
+                string AdditionalHeaders = "Content-Type: application/x-www-form-urlencoded" + Environment.NewLine;
+                browser.Navigate(postUrl, "_self", postData, AdditionalHeaders);
             }
-
-            if (browser.Url.ToString().StartsWith(INQUIRY_SUCCESS))
+            if (browser.Url.ToString().IndexOf(INQUIRY_SUCCESS) >= 0)
             {
                 InquiryInfos info = new InquiryInfos();
                 info.ProductId = item.ProductId;
-                info.AccountId = aliAccount.AccountId;
+                info.Account = aliAccount.Account;
                 info.MsgId = inquiryMessage.MsgId;
                 info.InquiryDate = Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd"));
                 info.Company = item.CompanyUrl;
