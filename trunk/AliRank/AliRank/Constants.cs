@@ -9,7 +9,8 @@ namespace AliRank
     {
         public static string DB_PASSWORD = "soomes2008";
         public static string INI_FILE = "company.ini";
-        public static string DB_FILE = "aliRank1.db";
+        public static string DEBUG_DB_FILE = "AliRankDebug.db";
+        public static string DB_FILE = "AliRankRealse.db";
         public static string IMAGE_DIR = "images";
 
         public static string CLICK_SECTIONS = "Click Section";
