@@ -18,7 +18,12 @@ namespace AliRank
 
         private DAOFactory()
         {
-            string DataBasePath = FileUtils.GetAppDataFolder() + Path.DirectorySeparatorChar + Constants.DB_FILE;
+            string DataBasePath = string.Empty;
+#if DEBUG
+            DataBasePath = FileUtils.GetAppDataFolder() + Path.DirectorySeparatorChar + Constants.DEBUG_DB_FILE;
+#else
+            DataBasePath = FileUtils.GetAppDataFolder() + Path.DirectorySeparatorChar + Constants.DB_FILE;
+#endif
             //File.Delete(DataBasePath);
             if (!File.Exists(DataBasePath))
             {
