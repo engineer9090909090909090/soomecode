@@ -69,7 +69,7 @@ namespace AliRank
             DataTable dt = dbHelper.ExecuteDataTable(
                 "SELECT a.AccountId, a.Account, "
                 +" a.Password, a.Country, a.LoginIp, "
-                +" (select count(1) from InquiryInfos i where a.AccountId=i.AccountId) as InquiryNum "
+                +" (select count(1) from InquiryInfos i where a.Account=i.Account) as InquiryNum "
                 +" from AliAccounts a", null);
             List<AliAccounts> list = new List<AliAccounts>();
             foreach (DataRow row in dt.Rows)
@@ -142,6 +142,16 @@ namespace AliRank
             }
         }
 
+        public void UpdateAccountLoginIp(string account, string ip)
+        {
+            string sql = @"Update AliAccounts set LoginIp = @LoginIp where Account=@Account";
+            SQLiteParameter[] parameter = new SQLiteParameter[]
+            {
+                new SQLiteParameter("@LoginIp", ip),
+                 new SQLiteParameter("@Account", account)
+            };
+            dbHelper.ExecuteNonQuery(sql, parameter);
+        }
 
         public void DeleteAccount(List<string> idList)
         {

@@ -132,7 +132,7 @@ namespace AliRank
         {
             DataTable dt = dbHelper.ExecuteDataTable(
             "SELECT Id, Address, Username, Password, Country,Name, VpnType, L2tpSec,updateTime, ConnQty, Status "
-            +"FROM vpns order by status = 1 order by ConnQty asc limit 0, 1", null);
+            +"FROM vpns where status = 1 order by ConnQty asc limit 0, 1", null);
 
             if (dt.Rows.Count > 0)
             {
