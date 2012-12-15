@@ -18,6 +18,7 @@ namespace AliRank
         ManualResetEvent eventX = new ManualResetEvent(false);
         private string UserName;
         private string Password;
+        private bool LoginSuccess = true;
         public Passporter(WebBrowser b) 
         {
             browser = b;
@@ -32,30 +33,40 @@ namespace AliRank
 
             string html = HttpHelper.GetHtml(loginUrl);
             string dmtrackPageid = GetDmtrackPageid(html);
-            
+            if (string.IsNullOrEmpty(dmtrackPageid))
+            {
+                return false;
+            }
             string token = GetToken(this.UserName, this.Password, dmtrackPageid);
+            if (string.IsNullOrEmpty(token))
+            {
+                return false;
+            }
             string st = GetST(token);
             if (string.IsNullOrEmpty(st))
             {
                 return false;
             }
             CookieContainer cookieContainer = new CookieContainer();
-            GetLoginUrl(this.UserName, this.Password, dmtrackPageid, st, ref cookieContainer);
+            bool logined = GetLoginUrl(this.UserName, this.Password, dmtrackPageid, st, ref cookieContainer);
+            if (logined == false)
+            {
+                return false;
+            }
             List<Cookie> cookies = IEHandleUtils.GetAllCookies(cookieContainer);
             string cookie_string = string.Empty;
             foreach (Cookie cookie in cookies)
             {
                 string cookstring = cookie.Name + "=" + cookie.Value + ";";
-                Console.WriteLine(cookie.Domain.ToString() + " = " + cookstring);
+                System.Diagnostics.Trace.WriteLine(cookie.Domain.ToString() + " = " + cookstring);
                 cookie_string = cookstring + cookie_string;
                 IEHandleUtils.InternetSetCookie(homeUrl, cookie.Name, cookie.Value);
             }
-            //browser.Navigate(homeUrl, "", null, "Cookie: " + cookie_string + Environment.NewLine);
             browser.Navigate(homeUrl);
 
             eventX.WaitOne(Timeout.Infinite, true);
-            Console.WriteLine("线程池结束！");
-            return true;
+            Console.WriteLine("登录线程结束！");
+            return LoginSuccess;
         }
 
         void browser_LogoinCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
@@ -68,6 +79,7 @@ namespace AliRank
             if (e.Url.ToString() == homeUrl)
             {
                 browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_LogoinCompleted);
+                LoginSuccess = true;
                 eventX.Set();
             }
         }
@@ -118,7 +130,7 @@ namespace AliRank
             return "";
         }
 
-        public void GetLoginUrl(string userId, string password, string dmtrackPageid, string st, ref CookieContainer cookieContainer)
+        public bool GetLoginUrl(string userId, string password, string dmtrackPageid, string st, ref CookieContainer cookieContainer)
         {
             string preUrl = "https://login.alibaba.com/validateST.htm?pd=alibaba&pageFrom=standardlogin&u_token=&xloginPassport={0}&xloginPassword={1}&xloginCheckToken=&rememberme=rememberme&runatm=runatm&dmtrack_pageid={2}&st={3}";
             string url = string.Format(preUrl, userId, password, dmtrackPageid, st);
@@ -128,17 +140,19 @@ namespace AliRank
             string postString = "dmtrack_pageid_info=" + dmtrackPageid + "&xloginPassport=" + userId + "&xloginPassword=" + password + "&ua=&pd=alibaba";
             HttpHelper.GetHtml(xloginCallBackForRisUrl, postString, cookieContainer);
 
-            if (!string.IsNullOrEmpty(html))
+            if (string.IsNullOrEmpty(html) || html.IndexOf("var xman_success=") == -1)
             {
-                string context = html.Replace("var xman_success=", "").Trim();
-                AliLoginUser aliLoginUser = JsonConvert.FromJson<AliLoginUser>(context);
-                List<string> urls = aliLoginUser.xlogin_urls;
-                foreach (string urlstring in urls)
-                {
-                    HttpHelper.GetHtml(urlstring, cookieContainer);
-                }
+                return false;
+            }
+            string context = html.Replace("var xman_success=", "").Trim();
+            AliLoginUser aliLoginUser = JsonConvert.FromJson<AliLoginUser>(context);
+            List<string> urls = aliLoginUser.xlogin_urls;
+            foreach (string urlstring in urls)
+            {
+                HttpHelper.GetHtml(urlstring, cookieContainer);
             }
             string vipHtml = HttpHelper.GetHtml(homeUrl, cookieContainer);
+            return true;
         }
 
     }
