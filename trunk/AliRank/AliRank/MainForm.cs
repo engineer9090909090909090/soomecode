@@ -371,6 +371,7 @@ namespace AliRank
         System.Timers.Timer clickTimer;
         DateTime beginTime;
         private BackgroundWorker bgClickWorker;
+        private ProductClicker clicker;
         private VPN CurrVpnEntity;
         private VpnModel CurrVpnModel;
         private AliAccounts loginedAccount;
@@ -425,6 +426,10 @@ namespace AliRank
             clickTimer.Enabled = false; 
             bgClickWorker.CancelAsync();
             clickStopBtn.Enabled = false;
+            if (clicker != null)
+            {
+                clicker.Stop();
+            }
         }
 
         private bool ConnectNextVpn()
@@ -475,7 +480,7 @@ namespace AliRank
 
         void bgWorker_DoWork2(object sender, DoWorkEventArgs e)
         {
-            List<ShowcaseRankInfo> productList = keywordDAO.GetKeywordList();
+            List<ShowcaseRankInfo> productList = keywordDAO.GetClickProducts();
             string ConfigClickNum = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, IniFile);
             string sNetwork = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.NETWORK_CHOICE, IniFile);
             string sMaxPauseTime = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_PAUSE_TIME, IniFile);
@@ -521,12 +526,13 @@ namespace AliRank
                             inquiryMessages = inquiryDao.GetInquiryMinMessage();
                             canInquiry = true;
                         }
-                        ProductClicker clicker = new ProductClicker(webBrowser);
+                        clicker = new ProductClicker(webBrowser);
                         clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
                         clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
-                        clicker.DoClick(productObj, iMaxQueryPage, loginedAccount, canInquiry, inquiryMessages);
+                        clicker.Click(productObj, iMaxQueryPage, loginedAccount, canInquiry, inquiryMessages);
                         clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
                         clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
+                        clicker = null;
                         if (IsStopClicking) { break; }
                     }
                     if (IsStopClicking) { break; }
@@ -557,14 +563,15 @@ namespace AliRank
                             inquiryMessages = inquiryDao.GetInquiryMinMessage();
                             canInquiry = true;
                         }
-                        ProductClicker clicker = new ProductClicker(webBrowser);
+                        clicker = new ProductClicker(webBrowser);
                         clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
                         clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
                         clicker.OnInquiryEndEvent += new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
-                        clicker.DoClick(productObj, iMaxQueryPage, loginedAccount, canInquiry, inquiryMessages);
+                        clicker.Click(productObj, iMaxQueryPage, loginedAccount, canInquiry, inquiryMessages);
                         clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
                         clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
                         clicker.OnInquiryEndEvent -= new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
+                        clicker = null;
                         if (IsStopClicking) { break; }
                     }
                     if (IsStopClicking) { break; }

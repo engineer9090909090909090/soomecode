@@ -71,7 +71,14 @@ namespace AliRank
             }
         }
 
-        public void DoClick(ShowcaseRankInfo kw, int maxQueryPageNumber, AliAccounts account, bool canInquiry, InquiryMessages msg)
+        public void Stop()
+        {
+            browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
+            browser.Navigate("about:blank");
+            eventX.Set();
+        }
+
+        public void Click(ShowcaseRankInfo kw, int maxQueryPageNumber, AliAccounts account, bool canInquiry, InquiryMessages msg)
         {
             this.item = kw;
             this.aliAccount = account;
@@ -85,6 +92,9 @@ namespace AliRank
             browser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
             browser.Navigate(currentRequestUrl);
             eventX.WaitOne(Timeout.Infinite, true);
+            item = null;
+            aliAccount = null;
+            inquiryMessage = null;
             Console.WriteLine("线程池结束！");
         }
 
@@ -184,7 +194,7 @@ namespace AliRank
             }
         }
 
-        public string GetDmtrackPageid(string html)
+        private string GetDmtrackPageid(string html)
         {
             Regex r = new Regex("var dmtrack_pageid='(.*?)';");
             GroupCollection gc = r.Match(html).Groups;
