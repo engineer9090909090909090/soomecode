@@ -16,6 +16,9 @@ namespace AliRank
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            string CpuId = Tools.GetCpuID();
+            string MacAdd = Tools.getLocalMAC();
+            string ComputeName = Tools.GetComputerName();
             Application.Run(new MainForm());
         }
 

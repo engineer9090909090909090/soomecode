@@ -50,6 +50,7 @@
     <Reference Include="System.Data.SQLite">
       <HintPath>..\..\lib\System.Data.SQLite.DLL</HintPath>
     </Reference>
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -91,6 +92,7 @@
     </Compile>
     <Compile Include="Passporter.cs" />
     <Compile Include="RankInfo.cs" />
+    <Compile Include="Tools.cs" />
     <Compile Include="TopFiveInfo.cs" />
     <Compile Include="IEHandleUtils.cs" />
     <Compile Include="ProductClicker.cs" />
