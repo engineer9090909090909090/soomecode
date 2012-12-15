@@ -54,15 +54,27 @@ namespace AliRank
                  dbHelper.ExecuteNonQuery("Drop TABLE keywords");
              }
         }
-        
-
 
         public List<ShowcaseRankInfo> GetKeywordList()
         {
-            DataTable dt = dbHelper.ExecuteDataTable(
-                  "SELECT productId, productName, mainKey, rankKeyword, companyUrl, productUrl, "
+            return GetProducts("");
+        }
+
+        public List<ShowcaseRankInfo> GetClickProducts()
+        {
+            return GetProducts("clicked asc");
+        }
+
+        public List<ShowcaseRankInfo> GetProducts(string orderBy)
+        {
+            string SelectSql = "SELECT productId, productName, mainKey, rankKeyword, companyUrl, productUrl, "
                 + "productImage, prevRank,rank, keyAdNum, keyP4Num, clicked, updateTime, maxInquiryQty,factInquiryQty "
-                + "FROM keywords where status = 1", null);
+                + "FROM keywords where status = 1";
+            if (!string.IsNullOrEmpty(orderBy))
+            {
+                SelectSql = SelectSql + " order by " + orderBy;
+            }
+            DataTable dt = dbHelper.ExecuteDataTable(SelectSql, null);
 
             List<ShowcaseRankInfo> list = new List<ShowcaseRankInfo>();
             foreach (DataRow row in dt.Rows)
