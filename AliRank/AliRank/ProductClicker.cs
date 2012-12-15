@@ -87,7 +87,7 @@ namespace AliRank
             this.maxQueryPage = maxQueryPageNumber;
             this.clickKey = item.RankKeyword;
             currentRequestUrl = string.Format(SEARCH_URL1, clickKey.Replace(" ", "+"));
-            ClickingEvent(item, "Clicking " + currentRequestUrl);
+            ClickingEvent(item, @"Clicking " + currentRequestUrl);
             browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
             browser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
             browser.Navigate(currentRequestUrl);
@@ -136,7 +136,7 @@ namespace AliRank
                         currentRequestUrl = string.Format(SEARCH_URL2, clickKey.Replace(" ", "_"), currentPage);
                         int randomNumber = new Random().Next(100, 5000);
                         if (currentPage > 0) Thread.Sleep(randomNumber);
-                        ClickingEvent(item, "Clicking " + currentRequestUrl);
+                        ClickingEvent(item, @"Clicking " + currentRequestUrl);
                         browser.Navigate(currentRequestUrl);
                     }
                 }
@@ -161,7 +161,7 @@ namespace AliRank
             {
                 string postUrl = "http://message.alibaba.com/msgsend/inquiry.htm";
                 string html = browser.Document.Body.InnerHtml;
-                string msgContent = inquiryMessage.Content + "\r\n." + DateTime.Now.ToLongDateString();
+                string msgContent = inquiryMessage.Content + "\r\n." + DateTime.Now.ToString("yyyyMMddHHmmss");
                 int randomNumber = new Random().Next(1, 20) * 100;
                 string token = "_csrf_token_=" + browser.Document.All["_csrf_token_"].GetAttribute("value");
                 string action = "action=SendMemberInquiryAction";

@@ -24,7 +24,6 @@ namespace AliRank
         public MainForm()
         {
             InitializeComponent();
-            this.Load += new EventHandler(MainForm_Load);
             IniFile = FileUtils.CreateAppDataFolderEmptyTextFile(Constants.INI_FILE);
             FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, Constants.NO, IniFile);
             string sAutoClickNum = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, IniFile);
@@ -56,6 +55,7 @@ namespace AliRank
             vpnDao = DAOFactory.Instance.GetVpnDAO();
             vpnDao.UpdateAllVPNStatus(Constants.EFFECTIVE);
             inquiryDao = DAOFactory.Instance.GetInquiryDAO();
+            keywordDAO = DAOFactory.Instance.GetKeywordDAO();
             LoadDataview();
         }
 
@@ -164,7 +164,7 @@ namespace AliRank
         void LoadDataview()
         {
             this.dataGridView1.DataBindings.Clear();
-            keywordDAO = DAOFactory.Instance.GetKeywordDAO();
+            
             this.dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
             DataTable dt = new DataTable();
             dt.Columns.Add("Image", typeof(Image));
@@ -374,7 +374,7 @@ namespace AliRank
         private ProductClicker clicker;
         private VPN CurrVpnEntity;
         private VpnModel CurrVpnModel;
-        private AliAccounts loginedAccount;
+        private AliAccounts loginedUser;
 
         private void clickRunBtn_Click(object sender, EventArgs e)
         {
@@ -471,6 +471,7 @@ namespace AliRank
             if (account == null) return null;
             Passporter passporter = new AliRank.Passporter(webBrowser);
             bool loginSuccess = passporter.DoLogin(account);
+            passporter = null;
             if (!loginSuccess)
             {
                 return DoLoginAliWebSite(webBrowser);
@@ -513,8 +514,9 @@ namespace AliRank
                             IEHandleUtils.ClearIECookie();
                             if (sRunModel == Constants.RUN_CLICK_INQUIRY)
                             {
-                                loginedAccount = DoLoginAliWebSite(this.webBrowser);
-                                loginedAccount.LoginIp = CurrVpnModel.Address;
+                                loginedUser = DoLoginAliWebSite(this.webBrowser);
+                                loginedUser.LoginIp = CurrVpnModel.Address;
+                                inquiryDao.UpdateAccountLoginIp(loginedUser.Account, loginedUser.LoginIp);
                             }
                         }
                         int randomNumber = new Random().Next(1000, iRandomMaxTime);
@@ -529,9 +531,11 @@ namespace AliRank
                         clicker = new ProductClicker(webBrowser);
                         clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
                         clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
-                        clicker.Click(productObj, iMaxQueryPage, loginedAccount, canInquiry, inquiryMessages);
+                        clicker.OnInquiryEndEvent += new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
+                        clicker.Click(productObj, iMaxQueryPage, loginedUser, canInquiry, inquiryMessages);
                         clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
                         clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
+                        clicker.OnInquiryEndEvent -= new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
                         clicker = null;
                         if (IsStopClicking) { break; }
                     }
@@ -550,8 +554,8 @@ namespace AliRank
                             IEHandleUtils.ClearIECookie();
                             if (sRunModel == Constants.RUN_CLICK_INQUIRY)
                             {
-                                loginedAccount = DoLoginAliWebSite(this.webBrowser);
-                                loginedAccount.LoginIp = "";
+                                loginedUser = DoLoginAliWebSite(this.webBrowser);
+                                loginedUser.LoginIp = "";
                             }
                         }
                         int randomNumber = new Random().Next(1000, iRandomMaxTime);
@@ -567,7 +571,7 @@ namespace AliRank
                         clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
                         clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
                         clicker.OnInquiryEndEvent += new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
-                        clicker.Click(productObj, iMaxQueryPage, loginedAccount, canInquiry, inquiryMessages);
+                        clicker.Click(productObj, iMaxQueryPage, loginedUser, canInquiry, inquiryMessages);
                         clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
                         clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
                         clicker.OnInquiryEndEvent -= new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
