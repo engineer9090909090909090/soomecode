@@ -359,7 +359,7 @@
             this.ModifyToolStripMenuItem,
             this.MaxInToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 136);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 114);
             // 
             // DeleteRowToolStripMenuItem
             // 

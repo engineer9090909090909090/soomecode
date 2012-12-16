@@ -51,6 +51,8 @@
       <HintPath>..\..\lib\System.Data.SQLite.DLL</HintPath>
     </Reference>
     <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -93,6 +95,11 @@
     </Compile>
     <Compile Include="Passporter.cs" />
     <Compile Include="RankInfo.cs" />
+    <Compile Include="Service References\IpSearch\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Tools.cs" />
     <Compile Include="TopFiveInfo.cs" />
     <Compile Include="IEHandleUtils.cs" />
@@ -183,6 +190,7 @@
     <EmbeddedResource Include="VpnForm.resx">
       <DependentUpon>VpnForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -192,9 +200,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Service References\IpSearch\IpAddressSearchWebService.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="rank.ico" />
+    <None Include="Service References\IpSearch\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\IpSearch\configuration.svcinfo" />
+    <None Include="Service References\IpSearch\configuration91.svcinfo" />
+    <None Include="Service References\IpSearch\IpAddressSearchWebService.disco" />
     <None Include="Resources\search.png" />
     <None Include="Resources\modify.png" />
     <None Include="Resources\delete.png" />
@@ -208,7 +224,12 @@
     <None Include="Resources\rank.png" />
     <None Include="Resources\rank.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\IpSearch\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

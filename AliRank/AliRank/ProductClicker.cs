@@ -74,6 +74,7 @@ namespace AliRank
         public void Stop()
         {
             browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
+            browser.Stop();
             browser.Navigate("about:blank");
             eventX.Set();
         }
