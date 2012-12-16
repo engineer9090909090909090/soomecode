@@ -2,7 +2,8 @@
 using System.Collections.Generic; 
 using System.Text; 
 using System.Net; 
-using System.IO;  
+using System.IO;
+using System.Net.NetworkInformation;  
 
 namespace AliRank
 
@@ -146,5 +147,46 @@ namespace AliRank
                 return null;
             }
         }
+
+        public static string GetWebAccessIpAddress()
+        {
+            string address = string.Empty;
+            NetworkInterface[] interfaces = NetworkInterface.GetAllNetworkInterfaces();
+            foreach (NetworkInterface item in interfaces)
+            {
+                if (item.NetworkInterfaceType == NetworkInterfaceType.Ppp)
+                {
+                    address = item.GetIPProperties().UnicastAddresses[0].Address.ToString();
+                }
+            }
+            if (string.IsNullOrEmpty(address))
+            {
+                address = Ip138GetIp();
+            }
+            return address;
+        }
+
+        private static string Ip138GetIp()
+        {
+            string address = string.Empty;
+            try
+            {
+                string strUrl = "http://iframe.ip138.com/ic.asp";//获得IP的网址
+                Uri uri = new Uri(strUrl);
+                WebRequest webreq = WebRequest.Create(uri);
+                Stream s = webreq.GetResponse().GetResponseStream();
+                StreamReader sr = new StreamReader(s, Encoding.Default);
+                string all = sr.ReadToEnd(); //读取网站返回的数据  格式：您的IP地址是：[x.x.x.x] 
+                int i = all.IndexOf("[") + 1;
+                string tempip = all.Substring(i, 15);
+                address =  tempip.Replace("]", "").Replace(" ", "").Replace("<", "");
+            }
+            catch(Exception e)
+            {
+                address = "";
+            }
+            return address;
+        }
+
     }
 }
