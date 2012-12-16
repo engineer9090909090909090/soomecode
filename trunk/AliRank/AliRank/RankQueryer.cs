@@ -51,6 +51,8 @@ namespace AliRank
         public void Seacher(ShowcaseRankInfo item, int maxQueryPage)
         {
             item.Rank = 0;
+            item.KeyAdNum = 0;
+            item.KeyP4Num = 0;
             string mainKey = item.RankKeyword.Replace(" ", "_");
             string companyUrl = item.CompanyUrl;
             HtmlDocument document = null;
