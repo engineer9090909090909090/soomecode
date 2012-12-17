@@ -101,23 +101,24 @@ namespace AliRank
 
         public void ImportAccounts(List<AliAccounts> list)
         {
-            string InsSql = @"INSERT INTO AliAccounts(Account, Password, Country)values(@Account,@Password,@Country)";
+            string InsSql = @"INSERT INTO AliAccounts(Account, Password, Country, LoginIp)values(@Account,@Password,@Country, @LoginIp)";
 
-            string UpdSql = @"Update AliAccounts SET Password = @Password, Country = @Country WHERE Account = @Account";
+            string UpdSql = @"Update AliAccounts SET Password = @Password, Country = @Country, LoginIp=@LoginIp WHERE Account = @Account";
 
-            string ExistRecordSql = "SELECT count(1) FROM AliAccounts WHERE Account = ";
+            string ExistRecordSql = "SELECT count(1) FROM AliAccounts WHERE Account = '{0}'";
             List<SQLiteParameter[]> InsertParameters = new List<SQLiteParameter[]>();
             List<SQLiteParameter[]> UpdateParameters = new List<SQLiteParameter[]>();
             foreach (AliAccounts item in list)
             {
-                int record = Convert.ToInt32(dbHelper.ExecuteScalar(ExistRecordSql + item.Account, null));
+                int record = Convert.ToInt32(dbHelper.ExecuteScalar(string.Format(ExistRecordSql, item.Account), null));
                 if (record > 0)
                 {
                     SQLiteParameter[] parameter = new SQLiteParameter[]
                     {
                         new SQLiteParameter("@Password",item.Password), 
                         new SQLiteParameter("@Country",item.Country), 
-                        new SQLiteParameter("@Account",item.Account)
+                        new SQLiteParameter("@Account",item.Account),
+                        new SQLiteParameter("@LoginIp",item.LoginIp)
                     };
                     UpdateParameters.Add(parameter);
                 }
@@ -127,7 +128,8 @@ namespace AliRank
                     {
                         new SQLiteParameter("@Account",item.Account), 
                         new SQLiteParameter("@Password", item.Password), 
-                        new SQLiteParameter("@Country",item.Country)
+                        new SQLiteParameter("@Country",item.Country),
+                         new SQLiteParameter("@LoginIp",item.LoginIp)
                     };
                     InsertParameters.Add(parameter);
                 }

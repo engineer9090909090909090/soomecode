@@ -118,6 +118,64 @@ namespace AliRank
             dbHelper.ExecuteNonQuery(sql, parameter);
         }
 
+
+        public void ImportVpns(List<VpnModel> list)
+        {
+            string InsSql = @"INSERT INTO vpns(Address, Username, Password, Country, Name, VpnType, L2tpSec, createTime, updateTime)"
+                            + "values(@Address,@Username,@Password, @Country, @Name, @VpnType,@L2tpSec, @createTime, @updateTime)";
+
+            string UpdSql = @"UPDATE  vpns SET Username =@Username, Password =@Password, Country = @Country, Name = @Name,"
+                + " VpnType = @VpnType, L2tpSec = @L2tpSec, updateTime = @updateTime where Address = @Address ";
+
+            string ExistRecordSql = "SELECT count(1) FROM vpns WHERE Address = '{0}'";
+            List<SQLiteParameter[]> InsertParameters = new List<SQLiteParameter[]>();
+            List<SQLiteParameter[]> UpdateParameters = new List<SQLiteParameter[]>();
+            foreach (VpnModel model in list)
+            {
+                int record = Convert.ToInt32(dbHelper.ExecuteScalar(string.Format(ExistRecordSql, model.Address), null));
+                if (record > 0)
+                {
+                    SQLiteParameter[] parameter = new SQLiteParameter[]
+                    {
+                        new SQLiteParameter("@Username", model.Username), 
+                        new SQLiteParameter("@Password",model.Password), 
+                        new SQLiteParameter("@Country",model.Country), 
+                        new SQLiteParameter("@Name",model.Name), 
+                        new SQLiteParameter("@VpnType",model.VpnType), 
+                        new SQLiteParameter("@L2tpSec",model.L2tpSec), 
+                        new SQLiteParameter("@updateTime",DateTime.Now),
+                        new SQLiteParameter("@Address",model.Address)
+                    };
+                    UpdateParameters.Add(parameter);
+                }
+                else
+                {
+                    SQLiteParameter[] parameter = new SQLiteParameter[]
+                    {
+                       new SQLiteParameter("@Address",model.Address), 
+                        new SQLiteParameter("@Username", model.Username), 
+                        new SQLiteParameter("@Password",model.Password), 
+                        new SQLiteParameter("@Country",model.Country), 
+                        new SQLiteParameter("@Name",model.Name), 
+                        new SQLiteParameter("@VpnType",model.VpnType), 
+                        new SQLiteParameter("@L2tpSec",model.L2tpSec), 
+                        new SQLiteParameter("@createTime",DateTime.Now), 
+                        new SQLiteParameter("@updateTime",DateTime.Now) 
+                    };
+                    InsertParameters.Add(parameter);
+                }
+
+            }
+            if (InsertParameters.Count > 0)
+            {
+                dbHelper.ExecuteNonQuery(InsSql, InsertParameters);
+            }
+            if (UpdateParameters.Count > 0)
+            {
+                dbHelper.ExecuteNonQuery(UpdSql, UpdateParameters);
+            }
+        }
+
         public void UpdateAllVPNStatus(int status)
         {
             string sql = @"UPDATE  vpns SET Status =@Status";

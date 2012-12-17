@@ -30,6 +30,10 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.AgentTxt = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.countryTxt = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.AddressBox = new System.Windows.Forms.TextBox();
             this.ErrorMsg = new System.Windows.Forms.Label();
             this.L2tpBtn = new System.Windows.Forms.RadioButton();
@@ -46,10 +50,8 @@
             this.DeleteBtn = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.countryTxt = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.AgentTxt = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.ImportBtn = new System.Windows.Forms.Button();
+            this.ExportBtn = new System.Windows.Forms.Button();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -73,11 +75,13 @@
             this.splitContainer1.Panel2.Controls.Add(this.statusStrip1);
             this.splitContainer1.Panel2.Controls.Add(this.dataGridView);
             this.splitContainer1.Size = new System.Drawing.Size(925, 517);
-            this.splitContainer1.SplitterDistance = 150;
+            this.splitContainer1.SplitterDistance = 126;
             this.splitContainer1.TabIndex = 0;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.ExportBtn);
+            this.groupBox1.Controls.Add(this.ImportBtn);
             this.groupBox1.Controls.Add(this.AgentTxt);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.countryTxt);
@@ -96,11 +100,44 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.InsertBtn);
             this.groupBox1.Controls.Add(this.DeleteBtn);
-            this.groupBox1.Location = new System.Drawing.Point(12, 3);
+            this.groupBox1.Location = new System.Drawing.Point(12, -2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(901, 121);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
+            // 
+            // AgentTxt
+            // 
+            this.AgentTxt.Location = new System.Drawing.Point(461, 68);
+            this.AgentTxt.Name = "AgentTxt";
+            this.AgentTxt.Size = new System.Drawing.Size(103, 21);
+            this.AgentTxt.TabIndex = 19;
+            this.AgentTxt.Text = "51VPN";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(409, 73);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(53, 12);
+            this.label6.TabIndex = 18;
+            this.label6.Text = "代理商：";
+            // 
+            // countryTxt
+            // 
+            this.countryTxt.Location = new System.Drawing.Point(641, 26);
+            this.countryTxt.Name = "countryTxt";
+            this.countryTxt.Size = new System.Drawing.Size(137, 21);
+            this.countryTxt.TabIndex = 17;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(578, 31);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(65, 12);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "IP属国家：";
             // 
             // AddressBox
             // 
@@ -113,7 +150,7 @@
             // 
             this.ErrorMsg.AutoSize = true;
             this.ErrorMsg.ForeColor = System.Drawing.Color.Red;
-            this.ErrorMsg.Location = new System.Drawing.Point(35, 115);
+            this.ErrorMsg.Location = new System.Drawing.Point(35, 103);
             this.ErrorMsg.Name = "ErrorMsg";
             this.ErrorMsg.Size = new System.Drawing.Size(0, 12);
             this.ErrorMsg.TabIndex = 14;
@@ -121,7 +158,7 @@
             // L2tpBtn
             // 
             this.L2tpBtn.AutoSize = true;
-            this.L2tpBtn.Location = new System.Drawing.Point(167, 78);
+            this.L2tpBtn.Location = new System.Drawing.Point(167, 71);
             this.L2tpBtn.Name = "L2tpBtn";
             this.L2tpBtn.Size = new System.Drawing.Size(47, 16);
             this.L2tpBtn.TabIndex = 12;
@@ -134,7 +171,7 @@
             // 
             this.PptpBtn.AutoSize = true;
             this.PptpBtn.Checked = true;
-            this.PptpBtn.Location = new System.Drawing.Point(92, 78);
+            this.PptpBtn.Location = new System.Drawing.Point(92, 71);
             this.PptpBtn.Name = "PptpBtn";
             this.PptpBtn.Size = new System.Drawing.Size(47, 16);
             this.PptpBtn.TabIndex = 11;
@@ -145,7 +182,7 @@
             // 
             // L2tpKeyTxtBox
             // 
-            this.L2tpKeyTxtBox.Location = new System.Drawing.Point(294, 75);
+            this.L2tpKeyTxtBox.Location = new System.Drawing.Point(294, 68);
             this.L2tpKeyTxtBox.Name = "L2tpKeyTxtBox";
             this.L2tpKeyTxtBox.Size = new System.Drawing.Size(110, 21);
             this.L2tpKeyTxtBox.TabIndex = 10;
@@ -168,7 +205,7 @@
             // L2tpKeyLabel
             // 
             this.L2tpKeyLabel.AutoSize = true;
-            this.L2tpKeyLabel.Location = new System.Drawing.Point(229, 78);
+            this.L2tpKeyLabel.Location = new System.Drawing.Point(229, 71);
             this.L2tpKeyLabel.Name = "L2tpKeyLabel";
             this.L2tpKeyLabel.Size = new System.Drawing.Size(65, 12);
             this.L2tpKeyLabel.TabIndex = 6;
@@ -177,7 +214,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(32, 80);
+            this.label4.Location = new System.Drawing.Point(32, 73);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(59, 12);
             this.label4.TabIndex = 5;
@@ -222,7 +259,7 @@
             // 
             // DeleteBtn
             // 
-            this.DeleteBtn.Location = new System.Drawing.Point(807, 75);
+            this.DeleteBtn.Location = new System.Drawing.Point(807, 68);
             this.DeleteBtn.Name = "DeleteBtn";
             this.DeleteBtn.Size = new System.Drawing.Size(75, 23);
             this.DeleteBtn.TabIndex = 1;
@@ -232,7 +269,7 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 341);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 365);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(925, 22);
             this.statusStrip1.TabIndex = 1;
@@ -247,41 +284,28 @@
             this.dataGridView.RowHeadersVisible = false;
             this.dataGridView.RowTemplate.Height = 23;
             this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView.Size = new System.Drawing.Size(925, 363);
+            this.dataGridView.Size = new System.Drawing.Size(925, 387);
             this.dataGridView.TabIndex = 0;
             // 
-            // countryTxt
+            // ImportBtn
             // 
-            this.countryTxt.Location = new System.Drawing.Point(641, 26);
-            this.countryTxt.Name = "countryTxt";
-            this.countryTxt.Size = new System.Drawing.Size(137, 21);
-            this.countryTxt.TabIndex = 17;
+            this.ImportBtn.Location = new System.Drawing.Point(622, 68);
+            this.ImportBtn.Name = "ImportBtn";
+            this.ImportBtn.Size = new System.Drawing.Size(75, 23);
+            this.ImportBtn.TabIndex = 20;
+            this.ImportBtn.Text = "导入(&I)";
+            this.ImportBtn.UseVisualStyleBackColor = true;
+            this.ImportBtn.Click += new System.EventHandler(this.ImportBtn_Click);
             // 
-            // label5
+            // ExportBtn
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(578, 31);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(65, 12);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "IP属国家：";
-            // 
-            // AgentTxt
-            // 
-            this.AgentTxt.Location = new System.Drawing.Point(642, 77);
-            this.AgentTxt.Name = "AgentTxt";
-            this.AgentTxt.Size = new System.Drawing.Size(137, 21);
-            this.AgentTxt.TabIndex = 19;
-            this.AgentTxt.Text = "51VPN";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(577, 83);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(71, 12);
-            this.label6.TabIndex = 18;
-            this.label6.Text = "VPN代理商：";
+            this.ExportBtn.Location = new System.Drawing.Point(715, 68);
+            this.ExportBtn.Name = "ExportBtn";
+            this.ExportBtn.Size = new System.Drawing.Size(75, 23);
+            this.ExportBtn.TabIndex = 21;
+            this.ExportBtn.Text = "导出(&E)";
+            this.ExportBtn.UseVisualStyleBackColor = true;
+            this.ExportBtn.Click += new System.EventHandler(this.ExportBtn_Click);
             // 
             // VpnForm
             // 
@@ -330,5 +354,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox AgentTxt;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button ExportBtn;
+        private System.Windows.Forms.Button ImportBtn;
     }
 }
