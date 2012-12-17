@@ -166,7 +166,7 @@ namespace AliRank
             return address;
         }
 
-        private static string Ip138GetIp()
+        public static string Ip138GetIp()
         {
             string address = string.Empty;
             try
@@ -183,6 +183,7 @@ namespace AliRank
             }
             catch(Exception e)
             {
+                System.Diagnostics.Trace.WriteLine(e.Message);
                 address = "";
             }
             return address;

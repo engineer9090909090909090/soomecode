@@ -73,7 +73,7 @@ namespace AliRank
                 entry.Options.ShowDialingProgress = false;
                 entry.Options.PromoteAlternates = false;
                 entry.Options.DoNotNegotiateMultilink = false;
-                entry.DnsAddress = IPAddress.Parse("121.0.21.2");
+                entry.DnsAddress = IPAddress.Parse("8.8.8.8");
                 entry.DnsAddressAlt = IPAddress.Parse("110.75.217.1");
                 if (model.VpnType.ToUpper().Equals("L2TP") && !string.IsNullOrEmpty(model.L2tpSec))
                 {
@@ -144,7 +144,10 @@ namespace AliRank
 
         public void Dispose()
         {
-            dialer.DialCompleted -= new EventHandler<DialCompletedEventArgs>(Dialer_DialCompleted);
+            if (dialer != null)
+            {
+                dialer.DialCompleted -= new EventHandler<DialCompletedEventArgs>(Dialer_DialCompleted);
+            }
             connName = null;
             model = null;
             dialer = null;
