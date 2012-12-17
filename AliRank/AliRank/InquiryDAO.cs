@@ -25,7 +25,8 @@ namespace AliRank
             + "Account varchar(100) NOT NULL,"
             + "Password varchar(100) NOT NULL,"
             + "Country varchar(100) NOT NULL,"
-            + "LoginIp varchar(50) default '') ");
+            + "LoginIp varchar(50) default '',"
+            + "LoginTime datetime ) ");
 
             dbHelper.ExecuteNonQuery(
               "CREATE TABLE IF NOT EXISTS InquiryInfos("
@@ -144,11 +145,12 @@ namespace AliRank
 
         public void UpdateAccountLoginIp(string account, string ip)
         {
-            string sql = @"Update AliAccounts set LoginIp = @LoginIp where Account=@Account";
+            string sql = @"Update AliAccounts set LoginIp = @LoginIp, LoginTime=@LoginTime where Account=@Account";
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {
                 new SQLiteParameter("@LoginIp", ip),
-                 new SQLiteParameter("@Account", account)
+                new SQLiteParameter("@LoginTime", DateTime.Now),
+                new SQLiteParameter("@Account", account)
             };
             dbHelper.ExecuteNonQuery(sql, parameter);
         }
@@ -251,12 +253,14 @@ namespace AliRank
         /// </summary>
         /// <param name="yesterday"></param>
         /// <returns></returns>
-        public AliAccounts GetCanInquiryAccounts(int yesterday)
+        public AliAccounts GetCanInquiryAccount(int yesterday, string loginIp)
         {
             DataTable dt = dbHelper.ExecuteDataTable(
                 "select distinct a.AccountId, a.Account, a.Password,a.Country from aliaccounts  a "
-                +"left join inquiryInfos i on a.Account=i.Account "
-                + "where  i.Account is null  and (i.inquiryDate > " + yesterday + " or i.inquiryDate is null)", null);
+                + "left join inquiryInfos i on a.Account=i.Account "
+                + "where (a.loginIp = '' or a.loginIp ='" + loginIp 
+                + "') and i.Account is null  and (i.inquiryDate > " + yesterday 
+                + " or i.inquiryDate is null)", null);
             List<AliAccounts> list = new List<AliAccounts>();
             foreach (DataRow row in dt.Rows)
             {
@@ -267,12 +271,34 @@ namespace AliRank
                 kw.Country = (string)row["Country"];
                 list.Add(kw);
             }
-            if (list.Count == 0)
+            if (list.Count > 0)
             {
-                return null;
+                int randomNumber = new Random().Next(0, list.Count - 1);
+                return list[randomNumber];
             }
-            int randomNumber = new Random().Next(0, list.Count -1);
-            return list[randomNumber];
+
+            string sql = "select a.AccountId, a.Account, a.Password, a.Country from aliaccounts a  "
+                + "where a.LoginTime is null or a.LoginTime <= @LoginTime";
+            SQLiteParameter[] parameter = new SQLiteParameter[]
+            {
+                new SQLiteParameter("@LoginTime", DateTime.Now.AddDays(-3))
+            };
+            dt = dbHelper.ExecuteDataTable(sql, parameter);
+            foreach (DataRow row in dt.Rows)
+            {
+                AliAccounts kw = new AliAccounts();
+                kw.AccountId = Convert.ToInt32(row["AccountId"]);
+                kw.Account = (string)row["Account"];
+                kw.Password = (string)row["Password"];
+                kw.Country = (string)row["Country"];
+                list.Add(kw);
+            } 
+            if (list.Count > 0)
+            {
+                int randomNumber = new Random().Next(0, list.Count - 1);
+                return list[randomNumber];
+            }
+            return null;
         }
         
         /// <summary>

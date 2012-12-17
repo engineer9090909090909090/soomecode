@@ -154,25 +154,25 @@ namespace AliRank
             return null;
         }
 
-        public void UpdateVPNStatus(int id, int status)
+        public void UpdateVPNStatus(string Address, int status)
         {
-            string sql = @"UPDATE  vpns SET Status =@Status, updateTime = @updateTime where id = @id";
+            string sql = @"UPDATE  vpns SET Status =@Status, updateTime = @updateTime where Address = @Address";
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {
                 new SQLiteParameter("@Status",status), 
                 new SQLiteParameter("@updateTime",DateTime.Now),
-                new SQLiteParameter("@id",id)
+                new SQLiteParameter("@Address",Address)
             };
             dbHelper.ExecuteNonQuery(sql, parameter);
         }
 
-        public void AddVPNConnQty(int id, int status)
+        public void AddVPNConnQty(string Address, int status)
         {
-            string sql = @"UPDATE vpns SET ConnQty = ConnQty + 1, Status =1, updateTime = @updateTime where id = @id";
+            string sql = @"UPDATE vpns SET ConnQty = ConnQty + 1, Status =1, updateTime = @updateTime where Address = @Address";
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {
                 new SQLiteParameter("@updateTime",DateTime.Now),
-                new SQLiteParameter("@id",id)
+                new SQLiteParameter("@Address",Address)
             };
             dbHelper.ExecuteNonQuery(sql, parameter);
         }
