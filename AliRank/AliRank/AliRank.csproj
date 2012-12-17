@@ -36,6 +36,9 @@
     <ApplicationIcon>rank.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.Cells">
+      <HintPath>..\..\lib\Aspose\Aspose.Cells.dll</HintPath>
+    </Reference>
     <Reference Include="DotRas">
       <HintPath>..\DotRas.dll</HintPath>
     </Reference>
@@ -72,6 +75,7 @@
     <Compile Include="AccountForm.Designer.cs">
       <DependentUpon>AccountForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormatValidation.cs" />
     <Compile Include="MaxInWindow.cs">
       <SubType>Form</SubType>
     </Compile>
