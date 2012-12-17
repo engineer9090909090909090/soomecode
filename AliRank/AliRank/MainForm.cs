@@ -569,7 +569,7 @@ namespace AliRank
                     clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
                     clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
                     clicker.OnInquiryEndEvent += new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
-                    clicker.Click(productObj, iMaxQueryPage, loginedUser, false, inquiryMessages);
+                    clicker.Click(productObj, iMaxQueryPage, loginedUser, canInquiry, inquiryMessages);
                     clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
                     clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
                     clicker.OnInquiryEndEvent -= new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
