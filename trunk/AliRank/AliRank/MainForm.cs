@@ -40,7 +40,7 @@ namespace AliRank
             string sMaxPauseTime = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_PAUSE_TIME, IniFile);
             if (string.IsNullOrEmpty(sMaxPauseTime))
             {
-                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.MAX_PAUSE_TIME, 60 + "", IniFile);
+                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.MAX_PAUSE_TIME, 300 + "", IniFile);
             }
             string sMaxQueryPage = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_QUERY_PAGE, IniFile);
             if (string.IsNullOrEmpty(sMaxQueryPage))
@@ -512,8 +512,7 @@ namespace AliRank
             {
                 for (int i = 0; i < productList.Count; i++)
                 {
-                    int randomNumber = new Random().Next(1000, iRandomMaxTime);
-                    if (i > 0 && !IsStopClicking) Thread.Sleep(randomNumber);
+                    
 
                     if (IsStopClicking) { break; }
                     if (i % 6 == 0 && sNetwork == Constants.NETWORK_VPN)
@@ -526,8 +525,6 @@ namespace AliRank
                             break;
                         }
                     }
-
-                    if (IsStopClicking) { break; }
                     string IpAddress = (sNetwork == Constants.NETWORK_VPN) ? CurrVpnModel.Address :HttpHelper.Ip138GetIp();
                     IpAddressSearchWebServiceSoapClient client = new IpAddressSearchWebServiceSoapClient();
                     string[] ips = client.getCountryCityByIp(IpAddress);
@@ -547,7 +544,6 @@ namespace AliRank
                             inquiryDao.UpdateAccountLoginIp(loginedUser.Account, IpAddress);
                         }
                     }
-                    
                     if (IsStopClicking) { break; }
                     ShowcaseRankInfo productObj = productList[i];
                     int todayInquiryQty = inquiryDao.TodayInquiryQty4Product(productObj.ProductId);
@@ -565,6 +561,12 @@ namespace AliRank
                             canInquiry = true;
                         }
                     }
+                    if (i > 0  && canInquiry)
+                    {
+                        int randomNumber = new Random().Next(30000, iRandomMaxTime);
+                        if (!IsStopClicking) Thread.Sleep(randomNumber);
+                    }
+                    if (IsStopClicking) { break; }
                     clicker = new ProductClicker(webBrowser);
                     clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
                     clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
