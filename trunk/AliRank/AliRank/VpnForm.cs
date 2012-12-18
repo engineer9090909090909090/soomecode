@@ -25,6 +25,11 @@ namespace AliRank
             LoadDataview();
         }
 
+        private void VpnForm_Load(object sender, EventArgs e)
+        {
+            CheckForIllegalCrossThreadCalls = false;
+        }
+
         void LoadDataview()
         {
             this.dataGridView.DataBindings.Clear();
@@ -311,8 +316,17 @@ namespace AliRank
                 return;
             }
             vpnDao.ImportVpns(vpnList);
-            LoadDataview();
+            if (dataGridView.InvokeRequired)
+            {
+                UpdateDataGridView uActive = LoadDataview;
+                this.BeginInvoke(uActive, null);
+            }
+            else
+            {
+                LoadDataview();
+            }
         }
+        private delegate void UpdateDataGridView();
 
 
         #region Excel导出
@@ -427,5 +441,7 @@ namespace AliRank
             workbook.Save(path);
         }
         #endregion
+
+        
     }
 }
