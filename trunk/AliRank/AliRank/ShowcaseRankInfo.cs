@@ -35,6 +35,7 @@ namespace AliRank
             }
             msg += "\r\n"+ item.KeyAdNum + "个固定排名";
             msg += "\r\n" + item.KeyP4Num + "个P4P排名";
+            msg += "\r\n自然排名" + (item.Rank - item.KeyAdNum - item.KeyP4Num) + "名";
             return msg;
         }
 
