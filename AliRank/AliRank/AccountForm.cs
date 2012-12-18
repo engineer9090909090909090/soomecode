@@ -22,6 +22,10 @@ namespace AliRank
             inquiryDAO = DAOFactory.Instance.GetInquiryDAO();
             LoadDataview();
         }
+        private void AccountForm_Load(object sender, EventArgs e)
+        {
+            CheckForIllegalCrossThreadCalls = false;
+        }
 
         void LoadDataview()
         {
@@ -241,8 +245,18 @@ namespace AliRank
                 return;
             }
             inquiryDAO.ImportAccounts(accountList);
-            LoadDataview();
+            if (dataGridView.InvokeRequired)
+            {
+                UpdateDataGridView uActive = LoadDataview;
+                this.BeginInvoke(uActive, null);
+            }
+            else
+            {
+                LoadDataview();
+            }
         }
+        private delegate void UpdateDataGridView();
+
         #endregion
 
         #region 导出Excel
@@ -342,6 +356,8 @@ namespace AliRank
             workbook.Save(path);
         }
         #endregion
+
+        
 
 
     }

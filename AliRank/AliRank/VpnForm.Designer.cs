@@ -30,6 +30,8 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ExportBtn = new System.Windows.Forms.Button();
+            this.ImportBtn = new System.Windows.Forms.Button();
             this.AgentTxt = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.countryTxt = new System.Windows.Forms.TextBox();
@@ -50,8 +52,6 @@
             this.DeleteBtn = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.ImportBtn = new System.Windows.Forms.Button();
-            this.ExportBtn = new System.Windows.Forms.Button();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -105,6 +105,26 @@
             this.groupBox1.Size = new System.Drawing.Size(901, 121);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
+            // 
+            // ExportBtn
+            // 
+            this.ExportBtn.Location = new System.Drawing.Point(715, 68);
+            this.ExportBtn.Name = "ExportBtn";
+            this.ExportBtn.Size = new System.Drawing.Size(75, 23);
+            this.ExportBtn.TabIndex = 21;
+            this.ExportBtn.Text = "导出(&E)";
+            this.ExportBtn.UseVisualStyleBackColor = true;
+            this.ExportBtn.Click += new System.EventHandler(this.ExportBtn_Click);
+            // 
+            // ImportBtn
+            // 
+            this.ImportBtn.Location = new System.Drawing.Point(622, 68);
+            this.ImportBtn.Name = "ImportBtn";
+            this.ImportBtn.Size = new System.Drawing.Size(75, 23);
+            this.ImportBtn.TabIndex = 20;
+            this.ImportBtn.Text = "导入(&I)";
+            this.ImportBtn.UseVisualStyleBackColor = true;
+            this.ImportBtn.Click += new System.EventHandler(this.ImportBtn_Click);
             // 
             // AgentTxt
             // 
@@ -287,26 +307,6 @@
             this.dataGridView.Size = new System.Drawing.Size(925, 387);
             this.dataGridView.TabIndex = 0;
             // 
-            // ImportBtn
-            // 
-            this.ImportBtn.Location = new System.Drawing.Point(622, 68);
-            this.ImportBtn.Name = "ImportBtn";
-            this.ImportBtn.Size = new System.Drawing.Size(75, 23);
-            this.ImportBtn.TabIndex = 20;
-            this.ImportBtn.Text = "导入(&I)";
-            this.ImportBtn.UseVisualStyleBackColor = true;
-            this.ImportBtn.Click += new System.EventHandler(this.ImportBtn_Click);
-            // 
-            // ExportBtn
-            // 
-            this.ExportBtn.Location = new System.Drawing.Point(715, 68);
-            this.ExportBtn.Name = "ExportBtn";
-            this.ExportBtn.Size = new System.Drawing.Size(75, 23);
-            this.ExportBtn.TabIndex = 21;
-            this.ExportBtn.Text = "导出(&E)";
-            this.ExportBtn.UseVisualStyleBackColor = true;
-            this.ExportBtn.Click += new System.EventHandler(this.ExportBtn_Click);
-            // 
             // VpnForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -319,6 +319,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "VPN信息维护";
+            this.Load += new System.EventHandler(this.VpnForm_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
