@@ -60,7 +60,7 @@ namespace AliRank
         {
             if (DateTime.Now > new DateTime(2013, 2, 1))
             {
-                DialogResult rs = MessageBox.Show("\r\n测试版只能使用到2012年12月20日，请索取新版本。\r\n","提示");
+                DialogResult rs = MessageBox.Show("\r\n测试版只能使用到2013年2月1日，请索取新版本。\r\n","提示");
                 Application.Exit();
             }
             CheckForIllegalCrossThreadCalls = false;
