@@ -101,7 +101,7 @@ namespace AliRank
             string preUrl = "https://login.alibaba.com/xman/xlogin.js?pd=alibaba&pageFrom=standardlogin&u_token=&xloginPassport={0}&xloginPassword={1}&xloginCheckToken=&rememberme=rememberme&runatm=runatm&dmtrack_pageid={2}";
             string url = string.Format(preUrl, userId, password, dmtrackPageid);
             string html = HttpHelper.GetHtml(url);
-            System.Diagnostics.Trace.WriteLine("GetToken = " + html);
+            //System.Diagnostics.Trace.WriteLine("GetToken = " + html);
             Regex r = new Regex("var xman_login_token={\"token\":\"(.*?)\"}");
             GroupCollection gc = r.Match(html).Groups;
             if (gc != null && gc.Count > 1)
@@ -116,7 +116,7 @@ namespace AliRank
             string preUrl = "https://passport.alibaba.com/mini_apply_st.js?site=4&callback=window.xmanDealTokenCallback&token={0}";
             string url = string.Format(preUrl, token);
             string html = HttpHelper.GetHtml(url);
-            System.Diagnostics.Trace.WriteLine("GetST = " + html);
+            //System.Diagnostics.Trace.WriteLine("GetST = " + html);
             Regex r = new Regex("{\"data\":{\"st\":\"(.*?)\"}");
             if (string.IsNullOrEmpty(html))
             {
