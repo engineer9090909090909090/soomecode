@@ -43,6 +43,11 @@ namespace AliRank
             {
                 FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.MAX_PAUSE_TIME, 300 + "", IniFile);
             }
+            string sMinIntervalTime = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MIn_INTERVAL_TIME, IniFile);
+            if (string.IsNullOrEmpty(sMinIntervalTime))
+            {
+                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.MIn_INTERVAL_TIME, 10 + "", IniFile);
+            }
             string sMaxQueryPage = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_QUERY_PAGE, IniFile);
             if (string.IsNullOrEmpty(sMaxQueryPage))
             {
@@ -53,6 +58,11 @@ namespace AliRank
 
         void MainForm_Load(object sender, EventArgs e)
         {
+            if (DateTime.Now > new DateTime(2013, 2, 1))
+            {
+                DialogResult rs = MessageBox.Show("\r\n测试版只能使用到2012年12月20日，请索取新版本。\r\n","提示");
+                Application.Exit();
+            }
             CheckForIllegalCrossThreadCalls = false;
             vpnDao = DAOFactory.Instance.GetVpnDAO();
             vpnDao.UpdateAllVPNStatus(Constants.EFFECTIVE);
@@ -485,7 +495,6 @@ namespace AliRank
             } 
             else 
             {
-                CurrVpnModel.PrevInquiryTime = DateTime.Now.AddMinutes(-5);
                 vpnDao.AddVPNConnQty(CurrVpnModel.Address, Constants.EFFECTIVE);
             }
             return true;
@@ -546,7 +555,9 @@ namespace AliRank
             string sMaxQueryPage = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_QUERY_PAGE, IniFile);
             string sRunModel = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.RUN_MODEL, IniFile);
             string sShutDownflag = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, IniFile);
+            string sMinInterval = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MIn_INTERVAL_TIME, IniFile);
             int iMaxQueryPage = Convert.ToInt32(sMaxQueryPage);
+            int iMinInterval = Convert.ToInt32(sMinInterval);
             int iRandomMaxTime = Convert.ToInt32(sMaxPauseTime) * 1000;
             if (iRandomMaxTime < 10000) iRandomMaxTime = 5000;
 
@@ -579,6 +590,7 @@ namespace AliRank
                             break;
                         }
                         ipAddress = CurrVpnModel.Address;
+                        CurrVpnModel.PrevInquiryTime = DateTime.Now.AddMinutes(-iMinInterval);
                     }
                     if (sNetwork == Constants.NETWORK_NONE)
                     {
@@ -588,8 +600,7 @@ namespace AliRank
                             CurrVpnModel = null;
                             CurrVpnModel = new VpnModel();
                             CurrVpnModel.Address = currAddress;
-                            CurrVpnModel.InquiryQty = 0;
-                            CurrVpnModel.PrevInquiryTime = DateTime.Now.AddMinutes(-5);
+                            CurrVpnModel.PrevInquiryTime = DateTime.Now.AddMinutes(-iMinInterval);
                             ipAddress = currAddress;
                         }
                     }
@@ -604,7 +615,7 @@ namespace AliRank
                     //判断这个产品今天的询盘数是否小于等于设置的最大询盘数
                     if (todayInquiryQty <= productObj.MaxInquiryQty && sRunModel == Constants.RUN_CLICK_INQUIRY)
                     {
-                        if (CurrVpnModel.InquiryQty < 3 && CurrVpnModel.PrevInquiryTime <= DateTime.Now.AddMinutes(-5)) //每个IP地址只能发送３个询盘，每次询盘间隔大于等于5分钟
+                        if (CurrVpnModel.InquiryQty < 3 && CurrVpnModel.PrevInquiryTime <= DateTime.Now.AddMinutes(-iMinInterval)) //每个IP地址只能发送３个询盘，每次询盘间隔大于等于5分钟
                         {
                             toolStripStatusLabel1.Text = "获取一个用户进行登录操作。";
                             loginedUser = DoLoginAliWebSite(this.webBrowser, ipAddress);

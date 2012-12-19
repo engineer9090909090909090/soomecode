@@ -15,6 +15,7 @@ namespace AliRank
         { 
             this.dbHelper = dbHelper;
             CreateTable();
+            UpdateTable();
         }
 
         private void CreateTable()
@@ -46,6 +47,15 @@ namespace AliRank
             + "MsgId integer NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
             + "Content varchar(8000) NOT NULL,"
             + "SendNum integer NOT NULL default 0)");
+        }
+
+        private void UpdateTable()
+        {
+            bool ExistColumnEnable = dbHelper.IsExistColumn("AliAccounts", "Enable");
+            if (!ExistColumnEnable)
+            {
+                dbHelper.ExecuteNonQuery("alter table AliAccounts add column Enable integer default 1;");
+            }
         }
 
         public bool ExistAccount(string account)

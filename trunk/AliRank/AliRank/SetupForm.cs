@@ -26,6 +26,8 @@ namespace AliRank
             this.textBox1.Text = clickNum;
             string sMaxPauseTime = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_PAUSE_TIME, IniFile);
             this.MaxPauseTime.Text = sMaxPauseTime;
+            string sMinIntervalTime = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MIn_INTERVAL_TIME, IniFile);
+            this.MinIntervalBox.Text = sMinIntervalTime;
             string sMaxQueryPage = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_QUERY_PAGE, IniFile);
             this.MaxQueryPage.Text = sMaxQueryPage;
             string runModel = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.RUN_MODEL, IniFile);
@@ -71,19 +73,26 @@ namespace AliRank
                 return;
             }
             string maxPauseTime = this.MaxPauseTime.Text;
-            if (string.IsNullOrEmpty(maxPauseTime) || int.TryParse(str, out a) == false)
+            if (string.IsNullOrEmpty(maxPauseTime) || int.TryParse(maxPauseTime, out a) == false)
             {
                 errorMsg.Text = "随机暂停最大时间不能为空且只能为数字！";
                 return;
             }
+            string minIntervalBox = this.MinIntervalBox.Text;
+            if (string.IsNullOrEmpty(minIntervalBox) || int.TryParse(minIntervalBox, out a) == false)
+            {
+                errorMsg.Text = "最小询盘时间不能为空且只能为数字！";
+                return;
+            }
             string maxQueryPage = this.MaxQueryPage.Text;
-            if (string.IsNullOrEmpty(maxQueryPage) || int.TryParse(str, out a) == false)
+            if (string.IsNullOrEmpty(maxQueryPage) || int.TryParse(maxQueryPage, out a) == false)
             {
                 errorMsg.Text = "最大查询页数不能为空或且只能为数字！";
                 return;
             }
             FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, str, IniFile);
             FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.MAX_PAUSE_TIME, maxPauseTime, IniFile);
+            FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.MIn_INTERVAL_TIME, minIntervalBox, IniFile);
             FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.MAX_QUERY_PAGE, maxQueryPage, IniFile);
             string Network = Constants.NETWORK_VPN;
             if (VPNRadioBtn.Checked)

@@ -49,6 +49,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.CancelBtn = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.MinIntervalBox = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -56,7 +59,7 @@
             // 
             // ImportBtn
             // 
-            this.ImportBtn.Location = new System.Drawing.Point(105, 223);
+            this.ImportBtn.Location = new System.Drawing.Point(105, 263);
             this.ImportBtn.Name = "ImportBtn";
             this.ImportBtn.Size = new System.Drawing.Size(75, 23);
             this.ImportBtn.TabIndex = 0;
@@ -95,13 +98,16 @@
             // 
             this.errorMsg.AutoSize = true;
             this.errorMsg.ForeColor = System.Drawing.Color.Red;
-            this.errorMsg.Location = new System.Drawing.Point(103, 199);
+            this.errorMsg.Location = new System.Drawing.Point(103, 239);
             this.errorMsg.Name = "errorMsg";
             this.errorMsg.Size = new System.Drawing.Size(0, 12);
             this.errorMsg.TabIndex = 6;
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label9);
+            this.groupBox2.Controls.Add(this.MinIntervalBox);
+            this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.groupBox3);
             this.groupBox2.Controls.Add(this.groupBox1);
             this.groupBox2.Controls.Add(this.label8);
@@ -120,7 +126,7 @@
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Location = new System.Drawing.Point(8, 2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(417, 260);
+            this.groupBox2.Size = new System.Drawing.Size(417, 305);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             // 
@@ -128,7 +134,7 @@
             // 
             this.groupBox3.Controls.Add(this.VPNRadioBtn);
             this.groupBox3.Controls.Add(this.NoneRadioBtn);
-            this.groupBox3.Location = new System.Drawing.Point(188, 127);
+            this.groupBox3.Location = new System.Drawing.Point(188, 167);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(175, 32);
             this.groupBox3.TabIndex = 20;
@@ -160,7 +166,7 @@
             // 
             this.groupBox1.Controls.Add(this.OnlyClickRadioButton);
             this.groupBox1.Controls.Add(this.ClickInquiryRadioButton);
-            this.groupBox1.Location = new System.Drawing.Point(188, 163);
+            this.groupBox1.Location = new System.Drawing.Point(188, 203);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(175, 32);
             this.groupBox1.TabIndex = 19;
@@ -191,7 +197,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(79, 176);
+            this.label8.Location = new System.Drawing.Point(79, 216);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(65, 12);
             this.label8.TabIndex = 16;
@@ -200,7 +206,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(79, 102);
+            this.label6.Location = new System.Drawing.Point(79, 64);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(89, 12);
             this.label6.TabIndex = 14;
@@ -208,7 +214,7 @@
             // 
             // MaxQueryPage
             // 
-            this.MaxQueryPage.Location = new System.Drawing.Point(198, 99);
+            this.MaxQueryPage.Location = new System.Drawing.Point(198, 61);
             this.MaxQueryPage.Name = "MaxQueryPage";
             this.MaxQueryPage.Size = new System.Drawing.Size(102, 21);
             this.MaxQueryPage.TabIndex = 13;
@@ -217,7 +223,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(306, 105);
+            this.label7.Location = new System.Drawing.Point(306, 67);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(17, 12);
             this.label7.TabIndex = 15;
@@ -226,7 +232,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(79, 65);
+            this.label4.Location = new System.Drawing.Point(79, 100);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(113, 12);
             this.label4.TabIndex = 11;
@@ -234,7 +240,7 @@
             // 
             // MaxPauseTime
             // 
-            this.MaxPauseTime.Location = new System.Drawing.Point(198, 62);
+            this.MaxPauseTime.Location = new System.Drawing.Point(198, 97);
             this.MaxPauseTime.Name = "MaxPauseTime";
             this.MaxPauseTime.Size = new System.Drawing.Size(102, 21);
             this.MaxPauseTime.TabIndex = 10;
@@ -243,7 +249,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(306, 68);
+            this.label5.Location = new System.Drawing.Point(306, 103);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(17, 12);
             this.label5.TabIndex = 12;
@@ -252,7 +258,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(79, 139);
+            this.label3.Location = new System.Drawing.Point(79, 179);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(89, 12);
             this.label3.TabIndex = 6;
@@ -260,7 +266,7 @@
             // 
             // CancelBtn
             // 
-            this.CancelBtn.Location = new System.Drawing.Point(225, 223);
+            this.CancelBtn.Location = new System.Drawing.Point(225, 263);
             this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.Size = new System.Drawing.Size(75, 23);
             this.CancelBtn.TabIndex = 5;
@@ -268,11 +274,37 @@
             this.CancelBtn.UseVisualStyleBackColor = true;
             this.CancelBtn.Click += new System.EventHandler(this.CancelBtn_Click);
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(79, 137);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(113, 12);
+            this.label9.TabIndex = 22;
+            this.label9.Text = "询盘最小间隔时间：";
+            // 
+            // MinIntervalBox
+            // 
+            this.MinIntervalBox.Location = new System.Drawing.Point(198, 134);
+            this.MinIntervalBox.Name = "MinIntervalBox";
+            this.MinIntervalBox.Size = new System.Drawing.Size(102, 21);
+            this.MinIntervalBox.TabIndex = 21;
+            this.MinIntervalBox.Text = "10";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(306, 140);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(17, 12);
+            this.label10.TabIndex = 23;
+            this.label10.Text = "分";
+            // 
             // SetupForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(432, 274);
+            this.ClientSize = new System.Drawing.Size(432, 314);
             this.Controls.Add(this.groupBox2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -315,5 +347,8 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox MinIntervalBox;
+        private System.Windows.Forms.Label label10;
     }
 }
