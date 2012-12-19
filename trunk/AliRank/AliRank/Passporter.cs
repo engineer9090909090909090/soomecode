@@ -58,7 +58,7 @@ namespace AliRank
             foreach (Cookie cookie in cookies)
             {
                 string cookstring = cookie.Name + "=" + cookie.Value + ";";
-                System.Diagnostics.Trace.WriteLine(cookie.Domain.ToString() + " = " + cookstring);
+                //System.Diagnostics.Trace.WriteLine(cookie.Domain.ToString() + " = " + cookstring);
                 cookie_string = cookstring + cookie_string;
                 IEHandleUtils.InternetSetCookie(homeUrl, cookie.Name, cookie.Value);
             }

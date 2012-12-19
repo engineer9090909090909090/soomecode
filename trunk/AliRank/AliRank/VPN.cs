@@ -34,6 +34,14 @@ namespace AliRank
 
         public void Disconnect()
         {
+            using (RasPhoneBook phoneBook = new RasPhoneBook())
+            {
+                phoneBook.Open();
+                if (phoneBook.Entries.Contains(connName))
+                {
+                    phoneBook.Entries.Remove(connName);
+                }
+            }
             dialer.DialCompleted -= new EventHandler<DialCompletedEventArgs>(Dialer_DialCompleted);
             if (dialer.IsBusy)
             {
@@ -52,8 +60,8 @@ namespace AliRank
         public bool Connect()
         {
             dialer = new RasDialer();
-            string AppDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
-                + Path.DirectorySeparatorChar + Application.ProductName + Path.DirectorySeparatorChar + "PhoneBook.pbk";
+            //string AppDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
+            //    + Path.DirectorySeparatorChar + Application.ProductName + Path.DirectorySeparatorChar + "PhoneBook.pbk";
             using (RasPhoneBook phoneBook = new RasPhoneBook())
             {
                 phoneBook.Open();
