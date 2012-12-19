@@ -12,6 +12,7 @@ namespace AliRank
         public string Password { set; get; }
         public string Country { set; get; }
         public string LoginIp { set; get; }
+        public Int32 Enable { set; get; }
 
         public int InquiryNum { set; get; }
     }

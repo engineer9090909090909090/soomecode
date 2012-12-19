@@ -36,6 +36,7 @@ namespace AliRank
             dt.Columns.Add("Account", typeof(string));
             dt.Columns.Add("Password", typeof(string));
             dt.Columns.Add("Country", typeof(string));
+            dt.Columns.Add("Enable", typeof(string));
             dt.Columns.Add("LoginIp", typeof(string));
             dt.Columns.Add("InquiryNum", typeof(string));
             dt.Columns.Add("ID", typeof(Int32));
@@ -49,22 +50,25 @@ namespace AliRank
             column.Width = 230;
             DataGridViewColumn column2 = this.dataGridView.Columns[2];
             column2.HeaderText = "Password";
-            column2.Width = 100;
+            column2.Width = 80;
             DataGridViewColumn column3 = this.dataGridView.Columns[3];
             column3.HeaderText = "Country";
-            column3.Width = 150;
+            column3.Width = 100;
             DataGridViewColumn column4 = this.dataGridView.Columns[4];
-            column4.HeaderText = "Last LoginIp";
-            column4.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            column4.Width = 150;
+            column4.HeaderText = "Enable";
+            column4.Width = 80;
             DataGridViewColumn column5 = this.dataGridView.Columns[5];
-            column5.HeaderText = "InquiryNum";
+            column5.HeaderText = "Last LoginIp";
             column5.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            column5.Width = 120;
+            column5.Width = 100;
             DataGridViewColumn column6 = this.dataGridView.Columns[6];
-            column6.HeaderText = "Id";
-            column6.Width = 10;
-            column6.Visible = false;
+            column6.HeaderText = "InquiryNum";
+            column6.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            column6.Width = 120;
+            DataGridViewColumn column7 = this.dataGridView.Columns[7];
+            column7.HeaderText = "Id";
+            column7.Width = 10;
+            column7.Visible = false;
             List<AliAccounts> accountList = inquiryDAO.GetAccounts();
             if (accountList.Count > 0)
             {
@@ -75,6 +79,7 @@ namespace AliRank
                     row["Account"] = item.Account;
                     row["Country"] = item.Country;
                     row["Password"] = "******";
+                    row["Enable"] = item.Enable == 1 ? "Yes" : "No";
                     row["LoginIp"] = item.LoginIp;
                     row["InquiryNum"] = item.InquiryNum;
                     row["Id"] = item.AccountId;
@@ -135,7 +140,7 @@ namespace AliRank
                 Boolean chk = System.Boolean.Parse(dr[0].ToString());
                 if (chk)
                 {
-                    removeList.Add(dr[6].ToString());
+                    removeList.Add(dr[7].ToString());
                     dt.Rows.Remove(dr);
                 }
             }
@@ -338,6 +343,9 @@ namespace AliRank
             cells[0, 3].PutValue("LoginIP");
             cells[0, 3].SetStyle(style2);
             cells.SetColumnWidth(3, 20);
+            cells[0, 4].PutValue("Enable");
+            cells[0, 4].SetStyle(style2);
+            cells.SetColumnWidth(4, 20);
             cells.SetRowHeight(0, 25);
             //生成数据行 
             for (int i = 1; i < Rownum; i++)
@@ -351,6 +359,8 @@ namespace AliRank
                 cells[i, 2].SetStyle(style3);
                 cells[i, 3].PutValue(model.LoginIp);
                 cells[i, 3].SetStyle(style3);
+                cells[i, 4].PutValue(model.Enable);
+                cells[i, 4].SetStyle(style3);
                 cells.SetRowHeight(i, 24);
             }
             workbook.Save(path);

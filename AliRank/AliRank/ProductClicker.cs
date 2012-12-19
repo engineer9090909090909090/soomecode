@@ -85,6 +85,10 @@ namespace AliRank
             this.aliAccount = account;
             this.inquiryMessage = msg;
             this.canInquiry = canInquiry;
+            if (this.aliAccount == null)
+            {
+                this.canInquiry = false;
+            }
             this.maxQueryPage = maxQueryPageNumber;
             this.clickKey = item.RankKeyword;
             currentRequestUrl = string.Format(SEARCH_URL1, clickKey.Replace(" ", "+"));
@@ -190,6 +194,7 @@ namespace AliRank
                 info.Company = item.CompanyUrl;
                 info.InquiryIp = aliAccount.LoginIp;
                 InquiryEndEvent(info, "This product has been send a Rank Inquiry.");
+                browser.Navigate("about:blank;");
                 browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
                 eventX.Set();
             }

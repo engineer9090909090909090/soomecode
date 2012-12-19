@@ -19,6 +19,7 @@ namespace AliRank
 
         private void CreateTable()
         {
+            //dbHelper.ExecuteNonQuery(" drop table IF NOT EXISTS AliAccounts");
             dbHelper.ExecuteNonQuery(
               "CREATE TABLE IF NOT EXISTS AliAccounts("
             + "AccountId integer NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
@@ -26,7 +27,8 @@ namespace AliRank
             + "Password varchar(100) NOT NULL,"
             + "Country varchar(100) NOT NULL,"
             + "LoginIp varchar(50) default '',"
-            + "LoginTime datetime ) ");
+            + "LoginTime datetime,"
+            + "Enable integer default 1) ");
 
             dbHelper.ExecuteNonQuery(
               "CREATE TABLE IF NOT EXISTS InquiryInfos("
@@ -69,7 +71,7 @@ namespace AliRank
         {
             DataTable dt = dbHelper.ExecuteDataTable(
                 "SELECT a.AccountId, a.Account, "
-                +" a.Password, a.Country, a.LoginIp, "
+                +" a.Password, a.Country, a.LoginIp, a.Enable,"
                 +" (select count(1) from InquiryInfos i where a.Account=i.Account) as InquiryNum "
                 +" from AliAccounts a", null);
             List<AliAccounts> list = new List<AliAccounts>();
@@ -81,6 +83,7 @@ namespace AliRank
                 kw.Password = (string)row["Password"];
                 kw.Country = (string)row["Country"];
                 kw.LoginIp = (string)row["LoginIp"];
+                kw.Enable = Convert.ToInt32(row["Enable"]);
                 kw.InquiryNum = Convert.ToInt32(row["InquiryNum"]);
                 list.Add(kw);
             }
@@ -103,7 +106,7 @@ namespace AliRank
         {
             string InsSql = @"INSERT INTO AliAccounts(Account, Password, Country, LoginIp)values(@Account,@Password,@Country, @LoginIp)";
 
-            string UpdSql = @"Update AliAccounts SET Password = @Password, Country = @Country, LoginIp=@LoginIp WHERE Account = @Account";
+            string UpdSql = @"Update AliAccounts SET Password = @Password, Country = @Country, LoginIp=@LoginIp, Enable = 1 WHERE Account = @Account";
 
             string ExistRecordSql = "SELECT count(1) FROM AliAccounts WHERE Account = '{0}'";
             List<SQLiteParameter[]> InsertParameters = new List<SQLiteParameter[]>();
@@ -133,7 +136,6 @@ namespace AliRank
                     };
                     InsertParameters.Add(parameter);
                 }
-
             }
             if (InsertParameters.Count > 0)
             {
@@ -143,6 +145,16 @@ namespace AliRank
             {
                 dbHelper.ExecuteNonQuery(UpdSql, UpdateParameters);
             }
+        }
+
+        public void DisableAccount(string account)
+        {
+            string sql = @"Update AliAccounts set Enable = 0 where Account=@Account";
+            SQLiteParameter[] parameter = new SQLiteParameter[]
+            {
+                new SQLiteParameter("@Account", account)
+            };
+            dbHelper.ExecuteNonQuery(sql, parameter);
         }
 
         public void UpdateAccountLoginIp(string account, string ip)
@@ -260,7 +272,7 @@ namespace AliRank
             DataTable dt = dbHelper.ExecuteDataTable(
                 "select distinct a.AccountId, a.Account, a.Password,a.Country from aliaccounts  a "
                 + "left join inquiryInfos i on a.Account=i.Account "
-                + "where (a.loginIp = '' or a.loginIp ='" + loginIp 
+                + "where a.Enable = 1 and (a.loginIp = '' or a.loginIp ='" + loginIp 
                 + "') and i.Account is null  and (i.inquiryDate > " + yesterday 
                 + " or i.inquiryDate is null)", null);
             List<AliAccounts> list = new List<AliAccounts>();
@@ -283,7 +295,7 @@ namespace AliRank
                 + "where a.LoginTime is null or a.LoginTime <= @LoginTime";
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {
-                new SQLiteParameter("@LoginTime", DateTime.Now.AddDays(-3))
+                new SQLiteParameter("@LoginTime", DateTime.Now.AddDays(-1))
             };
             dt = dbHelper.ExecuteDataTable(sql, parameter);
             foreach (DataRow row in dt.Rows)

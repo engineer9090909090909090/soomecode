@@ -34,6 +34,7 @@ namespace AliRank
 
         public void Disconnect()
         {
+            dialer.DialCompleted -= new EventHandler<DialCompletedEventArgs>(Dialer_DialCompleted);
             if (dialer.IsBusy)
             {
                 dialer.DialAsyncCancel();
@@ -46,6 +47,7 @@ namespace AliRank
                     connection.HangUp();
                 }
             }
+
         }
         public bool Connect()
         {
@@ -144,10 +146,6 @@ namespace AliRank
 
         public void Dispose()
         {
-            if (dialer != null)
-            {
-                dialer.DialCompleted -= new EventHandler<DialCompletedEventArgs>(Dialer_DialCompleted);
-            }
             connName = null;
             model = null;
             dialer = null;
