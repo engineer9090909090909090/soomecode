@@ -471,6 +471,7 @@ namespace AliRank
             
             CurrVpnModel = vpnDao.GetEffctiveVPN();
             this.MessageLabel.Text = "正在连接到VPN地址" + CurrVpnModel.Address;
+            this.toolStripStatusLabel1.Text = "正在连接到VPN地址" + CurrVpnModel.Address;
             if (CurrVpnModel == null)
             {
                 return false;
@@ -516,6 +517,26 @@ namespace AliRank
             return account;
         }
 
+        private string GetIpInfo(string address) 
+        {
+            string ipInfo = string.Empty;
+            try
+            {
+                string[] ips = soapClient.getCountryCityByIp(address);
+                if (ips != null && ips.Length > 1)
+                {
+                    ipInfo = ips[0] + "[" + ips[1].Trim() + "]";
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Trace.WriteLine(e.Message);
+                ipInfo = address + "[获取地址失败]";
+            }
+            return ipInfo;
+        }
+
+
         void bgWorker_DoWork2(object sender, DoWorkEventArgs e)
         {
             List<ShowcaseRankInfo> productList = keywordDAO.GetClickProducts();
@@ -524,9 +545,10 @@ namespace AliRank
             string sMaxPauseTime = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_PAUSE_TIME, IniFile);
             string sMaxQueryPage = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_QUERY_PAGE, IniFile);
             string sRunModel = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.RUN_MODEL, IniFile);
+            string sShutDownflag = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, IniFile);
             int iMaxQueryPage = Convert.ToInt32(sMaxQueryPage);
             int iRandomMaxTime = Convert.ToInt32(sMaxPauseTime) * 1000;
-            if (iRandomMaxTime < 10000) iRandomMaxTime = 10000;
+            if (iRandomMaxTime < 10000) iRandomMaxTime = 5000;
 
             //IEHandleUtils.ClearIECache();
             IEHandleUtils.ClearIECookie();
@@ -540,12 +562,12 @@ namespace AliRank
                 for (int i = 0; i < productList.Count; i++)
                 {
                     canInquiry = false;
-                    if (IsStopClicking) { break; }
-                    IEHandleUtils.ClearIECookie();
-                    int randomNumber = new Random().Next(10000, iRandomMaxTime);
-                    System.Diagnostics.Trace.WriteLine("轮循到下一个产品，暂停" + randomNumber / 1000 + "秒.");
-                    if (!IsStopClicking) Thread.Sleep(randomNumber);
-
+                    if (i > 0)
+                    {
+                        int randomNumber = new Random().Next(5000, iRandomMaxTime);
+                        toolStripStatusLabel1.Text = "轮循到下一个产品，暂停" + randomNumber / 1000 + "秒.";
+                        if (!IsStopClicking) Thread.Sleep(randomNumber);
+                    }
                     
                     if (sNetwork == Constants.NETWORK_VPN && i % 10 == 0)
                     {
@@ -573,12 +595,8 @@ namespace AliRank
                     }
 
                     //显示IP信息
-                    System.Diagnostics.Trace.WriteLine("读了IP信息数据.");
-                    string[] ips = soapClient.getCountryCityByIp(ipAddress);
-                    if (ips != null && ips.Length > 1)
-                    {
-                        this.MessageLabel.Text = "当前IP：" + ips[0] + "[" + ips[1].Trim() + "]";
-                    }
+                    toolStripStatusLabel1.Text = "读了IP信息数据.";
+                    this.MessageLabel.Text = GetIpInfo(ipAddress);
                     if (IsStopClicking) { break; }
 
                     ShowcaseRankInfo productObj = productList[i];
@@ -586,9 +604,9 @@ namespace AliRank
                     //判断这个产品今天的询盘数是否小于等于设置的最大询盘数
                     if (todayInquiryQty <= productObj.MaxInquiryQty && sRunModel == Constants.RUN_CLICK_INQUIRY)
                     {
-                        if (CurrVpnModel.InquiryQty < 3 && CurrVpnModel.PrevInquiryTime <= DateTime.Now.AddMinutes(-2)) //每个IP地址只能发送３个询盘，每次询盘间隔大于等于5分钟
+                        if (CurrVpnModel.InquiryQty < 3 && CurrVpnModel.PrevInquiryTime <= DateTime.Now.AddMinutes(-5)) //每个IP地址只能发送３个询盘，每次询盘间隔大于等于5分钟
                         {
-                            System.Diagnostics.Trace.WriteLine("获取一个用户进行登录操作。");
+                            toolStripStatusLabel1.Text = "获取一个用户进行登录操作。";
                             loginedUser = DoLoginAliWebSite(this.webBrowser, ipAddress);
                             inquiryMessages = inquiryDao.GetInquiryMinMessage();
                             canInquiry = true;
@@ -596,11 +614,12 @@ namespace AliRank
                     }
                     
                     if (IsStopClicking) { break; }
+                    IEHandleUtils.ClearIECookie();
                     clicker = new ProductClicker(webBrowser);
                     clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
                     clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
                     clicker.OnInquiryEndEvent += new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
-                    System.Diagnostics.Trace.WriteLine("点击并且做询盘操作。");
+                    toolStripStatusLabel1.Text = "点击并且做询盘操作。";
                     clicker.Click(productObj, iMaxQueryPage, loginedUser, canInquiry, inquiryMessages);
                     clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
                     clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
@@ -611,6 +630,7 @@ namespace AliRank
                         CurrVpnModel.PrevInquiryTime = DateTime.Now;
                         CurrVpnModel.InquiryQty++;
                     }
+                    toolStripStatusLabel1.Text = "点击并且做询盘操作结束。";
                     if (IsStopClicking) { break; }
                 }
                 if (IsStopClicking) { break; }
@@ -618,6 +638,7 @@ namespace AliRank
             
             if (CurrVpnEntity != null)
             {
+                toolStripStatusLabel1.Text = "断开VPN连接。";
                 CurrVpnEntity.Disconnect();
                 CurrVpnEntity.Dispose();
                 CurrVpnModel = null;
@@ -626,8 +647,8 @@ namespace AliRank
             clickRunBtn.Enabled = true;
             clickStopBtn.Enabled = false;
             clickTimer.Enabled = false; 
-            string sdflag = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, IniFile);
-            if (IsStopClicking == false && sdflag.Equals(Constants.YES))
+            
+            if (IsStopClicking == false && sShutDownflag == Constants.YES)
             {
                 SoomesUtils.Shutdown();
             }
