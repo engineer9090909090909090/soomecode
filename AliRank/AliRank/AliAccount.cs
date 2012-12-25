@@ -33,4 +33,12 @@ namespace AliRank
         public string Content { set; get; }
         public Int32 SendNum { set; get; }
     }
+
+
+    public class LoginInfo
+    {
+        public string Message { set; get; }
+        public string Token { set; get; }
+    }
+
 }
