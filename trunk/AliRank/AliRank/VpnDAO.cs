@@ -65,7 +65,7 @@ namespace AliRank
         public List<VpnModel> GetVpnModelList()
         {
             DataTable dt = dbHelper.ExecuteDataTable(
-                "SELECT Id, Address, Username, Password, Country,Name, VpnType, L2tpSec,updateTime FROM vpns order by updateTime desc", null);
+                "SELECT Id, Address, Username, Password, Country,Name, VpnType, L2tpSec,updateTime,Status FROM vpns order by updateTime desc", null);
 
             List<VpnModel> list = new List<VpnModel>();
             foreach (DataRow row in dt.Rows)
@@ -79,6 +79,7 @@ namespace AliRank
                 model.Name = (string)row["Name"];
                 model.VpnType = (string)row["VpnType"];
                 model.L2tpSec = (string)row["L2tpSec"];
+                model.Status = Convert.ToInt32(row["Status"]);
                 model.UpdateTime = Convert.ToDateTime(row["updateTime"]);
                 list.Add(model);
             }

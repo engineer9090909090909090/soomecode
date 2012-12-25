@@ -10,6 +10,7 @@ using System.IO;
 using System.Threading;
 using System.Resources;
 using AliRank.IpSearch;
+using AliRank.Bussness;
 
 namespace AliRank
 {
@@ -58,11 +59,15 @@ namespace AliRank
 
         void MainForm_Load(object sender, EventArgs e)
         {
-            if (DateTime.Now > new DateTime(2013, 2, 1))
+            if (DateTime.Now > new DateTime(2013, 1, 4))
             {
-                DialogResult rs = MessageBox.Show("\r\n测试版只能使用到2013年2月1日，请索取新版本。\r\n","提示");
+                DialogResult rs = MessageBox.Show("\r\n测试版只能使用到2013年1月4日，请索取新版本。\r\n","提示");
                 Application.Exit();
             }
+            RemoteDataManager.Instance.UserLoginSystem("alirank", "123321");
+            RemoteDataManager.Instance.PostAccounts();
+            RemoteDataManager.Instance.PostVpns();
+
             CheckForIllegalCrossThreadCalls = false;
             vpnDao = DAOFactory.Instance.GetVpnDAO();
             vpnDao.UpdateAllVPNStatus(Constants.EFFECTIVE);
