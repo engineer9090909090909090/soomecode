@@ -85,7 +85,7 @@ namespace AliRank
                 DefaultConnectionLimit--;
                 System.Diagnostics.Trace.WriteLine("Open " + url + "\r\n " + e.Message);
                 //我这里就没做任何处理了，这里最好还是处理一下
-                return null;
+                return string.Empty;
             }
         }
         
