@@ -45,9 +45,12 @@ namespace AliRank.Bussness
             try
             {
                 List<AliAccounts> accounts = inqDao.GetAccounts();
-                string postString = "_token=" + this.OnlyToken;
-                postString = postString + "&accounts=" + HttpUtility.UrlEncode(JsonConvert.ToJson(accounts),Encoding.UTF8);
-                returnstring = HttpHelper.GetHtml(REMOTE_ADDRESS + "uploadAccounts", postString, null);
+                if (accounts.Count> 0)
+                {
+                    string postString = "_token=" + this.OnlyToken;
+                    postString = postString + "&accounts=" + HttpUtility.UrlEncode(JsonConvert.ToJson(accounts), Encoding.UTF8);
+                    returnstring = HttpHelper.GetHtml(REMOTE_ADDRESS + "uploadAccounts", postString, null);
+                }
             }
             catch (Exception e)
             {
@@ -62,9 +65,12 @@ namespace AliRank.Bussness
             try
             {
                 List<VpnModel> vpns = vpnDao.GetVpnModelList();
-                string postString = "_token=" + this.OnlyToken;
-                postString = postString + "&vpns=" + HttpUtility.UrlEncode(JsonConvert.ToJson(vpns), Encoding.UTF8);
-                returnstring = HttpHelper.GetHtml(REMOTE_ADDRESS + "uploadVpns", postString, null);
+                if (vpns.Count > 0)
+                {
+                    string postString = "_token=" + this.OnlyToken;
+                    postString = postString + "&vpns=" + HttpUtility.UrlEncode(JsonConvert.ToJson(vpns), Encoding.UTF8);
+                    returnstring = HttpHelper.GetHtml(REMOTE_ADDRESS + "uploadVpns", postString, null);
+                }
             }
             catch (Exception e)
             {
