@@ -32,9 +32,12 @@ namespace AliRank
                 this.ErrorMsg.Text = "密码不能为空！";
                 return;
             }
+            this.ErrorMsg.Text = "正在进行登录，请稍候...";
             string msg = RemoteDataManager.Instance.UserLoginSystem(account, password);
             if (string.IsNullOrEmpty(msg))
             {
+                RemoteDataManager.Instance.PostAccounts();
+                RemoteDataManager.Instance.PostVpns();
                 this.DialogResult = DialogResult.OK;
             }
             else {
@@ -44,7 +47,7 @@ namespace AliRank
 
         private void cannelBtn_Click(object sender, EventArgs e)
         {
-            
+            this.DialogResult = DialogResult.No;
         }
     }
 }

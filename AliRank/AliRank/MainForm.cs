@@ -59,11 +59,8 @@ namespace AliRank
 
         void MainForm_Load(object sender, EventArgs e)
         {
-            RemoteDataManager.Instance.PostAccounts();
-            RemoteDataManager.Instance.PostVpns();
             CheckForIllegalCrossThreadCalls = false;
             vpnDao = DAOFactory.Instance.GetVpnDAO();
-            vpnDao.UpdateAllVPNStatus(Constants.EFFECTIVE);
             inquiryDao = DAOFactory.Instance.GetInquiryDAO();
             keywordDAO = DAOFactory.Instance.GetKeywordDAO();
             soapClient = new IpAddressSearchWebServiceSoapClient();
@@ -424,7 +421,7 @@ namespace AliRank
             bgClickWorker.WorkerSupportsCancellation = true;
             bgClickWorker.DoWork += new DoWorkEventHandler(bgWorker_DoWork2);
             bgClickWorker.RunWorkerAsync();
-
+            vpnDao.UpdateAllVPNStatus(Constants.EFFECTIVE);
             if (clickTimer != null)
             {
                 clickTimer.Dispose();
