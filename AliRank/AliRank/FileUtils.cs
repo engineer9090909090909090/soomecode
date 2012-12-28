@@ -54,6 +54,7 @@ namespace AliRank
         [DllImport("kernel32")]
         private static extern int GetPrivateProfileString(string section, string key, string def, StringBuilder retVal, int size, string filePath);
 
+        /*
         public static string IniReadValue(string Section, string Key, string filePath)
         {
             StringBuilder temp = new StringBuilder(255);
@@ -64,6 +65,6 @@ namespace AliRank
         {
             WritePrivateProfileString(Section, Key, val, filePath);
         }
-
+        */
     }
 }

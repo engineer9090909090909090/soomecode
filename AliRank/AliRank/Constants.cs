@@ -18,7 +18,6 @@ namespace AliRank
         public static string MAX_PAUSE_TIME = "MaxPauseTime";
         public static string MIn_INTERVAL_TIME = "MinIntervalTime";
         public static string MAX_QUERY_PAGE = "MaxQueryPage";
-        public static string AUTO_SHUTDOWN = "AutoShutDown";
         public static string NETWORK_CHOICE = "Network Choice";
         public static string LOGIN_USER = "LoginUser";
         public static string LOGIN_PASS = "LoginPass";

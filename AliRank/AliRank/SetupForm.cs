@@ -22,15 +22,15 @@ namespace AliRank
 
         void SetupForm_Load(object sender, EventArgs e)
         {
-            string clickNum = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, IniFile);
+            string clickNum = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.AUTO_CLICK_NUM);
             this.textBox1.Text = clickNum;
-            string sMaxPauseTime = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_PAUSE_TIME, IniFile);
+            string sMaxPauseTime = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_PAUSE_TIME);
             this.MaxPauseTime.Text = sMaxPauseTime;
-            string sMinIntervalTime = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MIn_INTERVAL_TIME, IniFile);
+            string sMinIntervalTime = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MIn_INTERVAL_TIME);
             this.MinIntervalBox.Text = sMinIntervalTime;
-            string sMaxQueryPage = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_QUERY_PAGE, IniFile);
+            string sMaxQueryPage = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_QUERY_PAGE);
             this.MaxQueryPage.Text = sMaxQueryPage;
-            string runModel = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.RUN_MODEL, IniFile);
+            string runModel = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.RUN_MODEL);
             if (runModel.Equals(Constants.RUN_ONLY_CLICK))
             {
                 OnlyClickRadioButton.Checked = true;
@@ -40,7 +40,7 @@ namespace AliRank
                 ClickInquiryRadioButton.Checked = true;
             }
 
-            string network = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.NETWORK_CHOICE, IniFile);
+            string network = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.NETWORK_CHOICE);
             if (network.Equals(Constants.NETWORK_VPN))
             {
                 VPNRadioBtn.Checked = true;
@@ -90,10 +90,10 @@ namespace AliRank
                 errorMsg.Text = "最大查询页数不能为空或且只能为数字！";
                 return;
             }
-            FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, str, IniFile);
-            FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.MAX_PAUSE_TIME, maxPauseTime, IniFile);
-            FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.MIn_INTERVAL_TIME, minIntervalBox, IniFile);
-            FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.MAX_QUERY_PAGE, maxQueryPage, IniFile);
+            DAOFactory.Instance.GetProfileDAO().SetValue(Constants.AUTO_CLICK_NUM, str);
+            DAOFactory.Instance.GetProfileDAO().SetValue(Constants.MAX_PAUSE_TIME, maxPauseTime);
+            DAOFactory.Instance.GetProfileDAO().SetValue(Constants.MIn_INTERVAL_TIME, minIntervalBox);
+            DAOFactory.Instance.GetProfileDAO().SetValue(Constants.MAX_QUERY_PAGE, maxQueryPage);
             string Network = Constants.NETWORK_VPN;
             if (VPNRadioBtn.Checked)
             {
@@ -103,7 +103,7 @@ namespace AliRank
             {
                 Network = Constants.NETWORK_NONE;
             }
-            FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.NETWORK_CHOICE, Network, IniFile);
+            DAOFactory.Instance.GetProfileDAO().SetValue(Constants.NETWORK_CHOICE, Network);
             string RunModel = Constants.RUN_CLICK_INQUIRY;
             if (OnlyClickRadioButton.Checked)
             {
@@ -113,7 +113,7 @@ namespace AliRank
             {
                 RunModel = Constants.RUN_CLICK_INQUIRY;
             }
-            FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.RUN_MODEL, RunModel, IniFile);
+            DAOFactory.Instance.GetProfileDAO().SetValue(Constants.RUN_MODEL, RunModel);
 
             this.Close();
         }

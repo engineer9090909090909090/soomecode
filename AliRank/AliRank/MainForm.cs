@@ -20,39 +20,37 @@ namespace AliRank
         private VpnDAO vpnDao;
         private InquiryDAO inquiryDao;
         private static bool IsStopClicking;
-        private string IniFile;
+        private bool AutoShutdown;
         private IpAddressSearchWebServiceSoapClient soapClient;
 
         #region Form 事件
         public MainForm()
         {
             InitializeComponent();
-            IniFile = FileUtils.CreateAppDataFolderEmptyTextFile(Constants.INI_FILE);
-            FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, Constants.NO, IniFile);
-            string sAutoClickNum = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, IniFile);
+            string sAutoClickNum = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.AUTO_CLICK_NUM);
             if (string.IsNullOrEmpty(sAutoClickNum))
             {
-                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, 50 + "", IniFile);
+                DAOFactory.Instance.GetProfileDAO().SetValue(Constants.AUTO_CLICK_NUM, 50 + "");
             }
-            string sRunModel = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.RUN_MODEL, IniFile);
+            string sRunModel = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.RUN_MODEL);
             if (string.IsNullOrEmpty(sRunModel))
             {
-                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.RUN_MODEL, Constants.RUN_CLICK_INQUIRY, IniFile);
+                DAOFactory.Instance.GetProfileDAO().SetValue(Constants.RUN_MODEL, Constants.RUN_CLICK_INQUIRY);
             }
-            string sMaxPauseTime = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_PAUSE_TIME, IniFile);
+            string sMaxPauseTime = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_PAUSE_TIME);
             if (string.IsNullOrEmpty(sMaxPauseTime))
             {
-                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.MAX_PAUSE_TIME, 300 + "", IniFile);
+                DAOFactory.Instance.GetProfileDAO().SetValue(Constants.MAX_PAUSE_TIME, 300 + "");
             }
-            string sMinIntervalTime = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MIn_INTERVAL_TIME, IniFile);
+            string sMinIntervalTime = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MIn_INTERVAL_TIME);
             if (string.IsNullOrEmpty(sMinIntervalTime))
             {
-                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.MIn_INTERVAL_TIME, 10 + "", IniFile);
+                DAOFactory.Instance.GetProfileDAO().SetValue(Constants.MIn_INTERVAL_TIME, 10 + "");
             }
-            string sMaxQueryPage = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_QUERY_PAGE, IniFile);
+            string sMaxQueryPage = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_QUERY_PAGE);
             if (string.IsNullOrEmpty(sMaxQueryPage))
             {
-                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.MAX_QUERY_PAGE, 20 + "", IniFile);
+                DAOFactory.Instance.GetProfileDAO().SetValue(Constants.MAX_QUERY_PAGE, 20 + "");
             }
             this.WindowState = FormWindowState.Maximized;
         }
@@ -155,12 +153,12 @@ namespace AliRank
             if (shutdownToolStripMenuItem.Checked)
             {
                 shutdownToolStripMenuItem.Checked = false;
-                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, Constants.NO, IniFile);
+                AutoShutdown = false;
             }
             else
             {
                 shutdownToolStripMenuItem.Checked = true;
-                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, Constants.YES, IniFile);
+                AutoShutdown = true;
             }
         }
 
@@ -298,7 +296,7 @@ namespace AliRank
         ManualResetEvent eventX;
         void bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            string sMaxQueryPage = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_QUERY_PAGE, IniFile);
+            string sMaxQueryPage = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_QUERY_PAGE);
             iMaxQueryPage = Convert.ToInt32(sMaxQueryPage);
             List<ShowcaseRankInfo> queryList = keywordDAO.GetKeywordList();
             keywordDAO.UpdateAllQueryStatus();
@@ -386,8 +384,8 @@ namespace AliRank
 
         private void clickRunBtn_Click(object sender, EventArgs e)
         {
-            string network = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.NETWORK_CHOICE, IniFile);
-            string sRunModel = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.RUN_MODEL, IniFile);
+            string network = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.NETWORK_CHOICE);
+            string sRunModel = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.RUN_MODEL);
             if (network.Equals(Constants.NETWORK_VPN))
             {
                 List<VpnModel> VpnModelList = vpnDao.GetVpnModelList();
@@ -544,13 +542,12 @@ namespace AliRank
         void bgWorker_DoWork2(object sender, DoWorkEventArgs e)
         {
             List<ShowcaseRankInfo> productList = keywordDAO.GetClickProducts();
-            string ConfigClickNum = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.AUTO_CLICK_NUM, IniFile);
-            string sNetwork = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.NETWORK_CHOICE, IniFile);
-            string sMaxPauseTime = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_PAUSE_TIME, IniFile);
-            string sMaxQueryPage = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_QUERY_PAGE, IniFile);
-            string sRunModel = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.RUN_MODEL, IniFile);
-            string sShutDownflag = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.AUTO_SHUTDOWN, IniFile);
-            string sMinInterval = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MIn_INTERVAL_TIME, IniFile);
+            string ConfigClickNum = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.AUTO_CLICK_NUM);
+            string sNetwork = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.NETWORK_CHOICE);
+            string sMaxPauseTime = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_PAUSE_TIME);
+            string sMaxQueryPage = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_QUERY_PAGE);
+            string sRunModel = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.RUN_MODEL);
+            string sMinInterval = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MIn_INTERVAL_TIME);
             int iMaxQueryPage = Convert.ToInt32(sMaxQueryPage);
             int iMinInterval = Convert.ToInt32(sMinInterval);
             int iRandomMaxTime = Convert.ToInt32(sMaxPauseTime) * 1000;
@@ -652,9 +649,9 @@ namespace AliRank
             }
             clickRunBtn.Enabled = true;
             clickStopBtn.Enabled = false;
-            clickTimer.Enabled = false; 
-            
-            if (IsStopClicking == false && sShutDownflag == Constants.YES)
+            clickTimer.Enabled = false;
+
+            if (IsStopClicking == false && this.AutoShutdown)
             {
                 SoomesUtils.Shutdown();
             }
@@ -760,7 +757,7 @@ namespace AliRank
         {
             toolStripButton4.Enabled = false;
             clickRunBtn.Enabled = false;
-            string sMaxQueryPage = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.MAX_QUERY_PAGE, IniFile);
+            string sMaxQueryPage = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_QUERY_PAGE);
             iMaxQueryPage = Convert.ToInt32(sMaxQueryPage);
             ShowcaseRankInfo item = keywordDAO.GetShowcaseRankInfo(RowSelectedProductId);
             MessageLabel.Text = "开始查询["+item.RankKeyword+"]关键词排名...";
