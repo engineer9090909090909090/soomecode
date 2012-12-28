@@ -50,71 +50,79 @@ namespace AliRank
 
         public void Seacher(ShowcaseRankInfo item, int maxQueryPage)
         {
-            item.Rank = 0;
-            item.KeyAdNum = 0;
-            item.KeyP4Num = 0;
-            string mainKey = item.RankKeyword.Replace(" ", "_");
-            string companyUrl = item.CompanyUrl;
-            HtmlDocument document = null;
-            for (int i = 0; i < maxQueryPage; i++)
+            try
             {
-                string url = string.Format(SEARCH_URL, mainKey, (i + 1));
-                HtmlWeb clinet = new HtmlWeb();
-                SearchingEvent(item, "搜索第[" + i + "]页...");
-                document = clinet.Load(url);
-                System.Diagnostics.Trace.WriteLine(url + " = " + mainKey);
-                if (i == 0)
+                item.Rank = 0;
+                item.KeyAdNum = 0;
+                item.KeyP4Num = 0;
+                string mainKey = item.RankKeyword.Replace(" ", "_");
+                string companyUrl = item.CompanyUrl;
+                HtmlDocument document = null;
+                for (int i = 0; i < maxQueryPage; i++)
                 {
-                    HtmlNodeCollection adNodes = document.DocumentNode.SelectNodes(AD_PATH);
-                    HtmlNodeCollection p4pNodes = document.DocumentNode.SelectNodes(P4P_PATH);
-                    HtmlNodeCollection p4pv2Nodes = document.DocumentNode.SelectNodes(P4PV2_PATH);
-                    
-                    if (adNodes != null)
+                    string url = string.Format(SEARCH_URL, mainKey, (i + 1));
+                    HtmlWeb clinet = new HtmlWeb();
+                    SearchingEvent(item, "搜索第[" + i + "]页...");
+                    document = clinet.Load(url);
+                    System.Diagnostics.Trace.WriteLine(url + " = " + mainKey);
+                    if (i == 0)
                     {
-                        item.KeyAdNum = adNodes.Count;
-                    }
-                    if (p4pNodes != null)
-                    {
-                        item.KeyP4Num = p4pNodes.Count;
-                    }
-                    if (p4pv2Nodes != null)
-                    {
-                        item.KeyP4Num = item.KeyP4Num + p4pv2Nodes.Count;
-                    }
-                }
-                string comUrlPath = "//div[@class='supplier']/span/a[@href='" + companyUrl.ToLower() + "']";
-                HtmlNodeCollection comUrlNode = document.DocumentNode.SelectNodes(comUrlPath);
-                if (comUrlNode == null || comUrlNode.Count == 0)
-                {
-                    continue;
-                }
-                comUrlPath = "div[@class='supplier']/span/a[@href='" + companyUrl.ToLower() + "']";
-                HtmlNodeCollection nodes = document.DocumentNode.SelectNodes(PERCENT_PATH);
-                for (int k = 0; k < nodes.Count; k++)
-                {
-                    HtmlNode percentNode = nodes[k];
-                    HtmlNode companyNode = percentNode.SelectSingleNode(comUrlPath);
-                    if (companyNode != null)
-                    {
-                        HtmlNode aLinkNode = percentNode.SelectSingleNode(SUBJECT_PATH);
-                        string lsubject = aLinkNode.Id.ToLower();
-                        string productName = aLinkNode.InnerText;
-                        string proId = lsubject.Replace("lsubject_", "");
-                        int rankProductId = Convert.ToInt32(proId);
-                        if (rankProductId == item.ProductId)
+                        HtmlNodeCollection adNodes = document.DocumentNode.SelectNodes(AD_PATH);
+                        HtmlNodeCollection p4pNodes = document.DocumentNode.SelectNodes(P4P_PATH);
+                        HtmlNodeCollection p4pv2Nodes = document.DocumentNode.SelectNodes(P4PV2_PATH);
+
+                        if (adNodes != null)
                         {
-                            item.Rank = i * 38 + (k + 1);
-                            item.ProductName = productName;
-                            break;
+                            item.KeyAdNum = adNodes.Count;
+                        }
+                        if (p4pNodes != null)
+                        {
+                            item.KeyP4Num = p4pNodes.Count;
+                        }
+                        if (p4pv2Nodes != null)
+                        {
+                            item.KeyP4Num = item.KeyP4Num + p4pv2Nodes.Count;
                         }
                     }
+                    string comUrlPath = "//div[@class='supplier']/span/a[@href='" + companyUrl.ToLower() + "']";
+                    HtmlNodeCollection comUrlNode = document.DocumentNode.SelectNodes(comUrlPath);
+                    if (comUrlNode == null || comUrlNode.Count == 0)
+                    {
+                        continue;
+                    }
+                    comUrlPath = "div[@class='supplier']/span/a[@href='" + companyUrl.ToLower() + "']";
+                    HtmlNodeCollection nodes = document.DocumentNode.SelectNodes(PERCENT_PATH);
+                    for (int k = 0; k < nodes.Count; k++)
+                    {
+                        HtmlNode percentNode = nodes[k];
+                        HtmlNode companyNode = percentNode.SelectSingleNode(comUrlPath);
+                        if (companyNode != null)
+                        {
+                            HtmlNode aLinkNode = percentNode.SelectSingleNode(SUBJECT_PATH);
+                            string lsubject = aLinkNode.Id.ToLower();
+                            string productName = aLinkNode.InnerText;
+                            string proId = lsubject.Replace("lsubject_", "");
+                            int rankProductId = Convert.ToInt32(proId);
+                            if (rankProductId == item.ProductId)
+                            {
+                                item.Rank = i * 38 + (k + 1);
+                                item.ProductName = productName;
+                                break;
+                            }
+                        }
+                    }
+                    if (item.Rank > 0)
+                    {
+                        break;
+                    }
                 }
-                if (item.Rank > 0)
-                {
-                    break;                
-                }
+                FinishedEvent(item, "Rank search finished.");
             }
-            FinishedEvent(item, "Rank search finished.");
+            catch (Exception e)
+            {
+                System.Diagnostics.Trace.WriteLine(e.Message);
+                FinishedEvent(item, "搜索时出现系统异常.");
+            }
         }
     }
 }
