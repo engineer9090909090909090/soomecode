@@ -12,8 +12,6 @@ namespace AliRank
 {
     public partial class LoginForm : Form
     {
-        private string IniFile;
-
         public LoginForm()
         {
             InitializeComponent();
@@ -36,14 +34,14 @@ namespace AliRank
             }
             if (this.remind.Checked)
             {
-                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.LOGIN_USER, account, IniFile);
-                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.LOGIN_PASS, password, IniFile);
-                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.LOGIN_REMINDE, "1", IniFile);
+                DAOFactory.Instance.GetProfileDAO().SetValue(Constants.LOGIN_USER, account);
+                DAOFactory.Instance.GetProfileDAO().SetValue(Constants.LOGIN_PASS, password);
+                DAOFactory.Instance.GetProfileDAO().SetValue(Constants.LOGIN_REMINDE, "1");
             }
             else {
-                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.LOGIN_USER, "", IniFile);
-                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.LOGIN_PASS, "", IniFile);
-                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.LOGIN_REMINDE, "", IniFile);
+                DAOFactory.Instance.GetProfileDAO().SetValue(Constants.LOGIN_USER, "");
+                DAOFactory.Instance.GetProfileDAO().SetValue(Constants.LOGIN_PASS, "");
+                DAOFactory.Instance.GetProfileDAO().SetValue(Constants.LOGIN_REMINDE, "");
             }
             this.ErrorMsg.Text = "正在进行登录，请稍候...";
             string msg = RemoteDataManager.Instance.UserLoginSystem(account, password);
@@ -65,10 +63,9 @@ namespace AliRank
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-            IniFile = FileUtils.CreateAppDataFolderEmptyTextFile(Constants.INI_FILE);
-            string remind = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.LOGIN_REMINDE, IniFile);
-            string remindUser = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.LOGIN_USER, IniFile);
-            string remindPass = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.LOGIN_PASS, IniFile);
+            string remind = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.LOGIN_REMINDE);
+            string remindUser = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.LOGIN_USER);
+            string remindPass = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.LOGIN_PASS);
             if (!string.IsNullOrEmpty(remind))
             {
                 this.remind.Checked = true;

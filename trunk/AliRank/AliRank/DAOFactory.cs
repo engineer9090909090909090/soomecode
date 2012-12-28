@@ -15,6 +15,7 @@ namespace AliRank
         private KeywordDAO keywordDAO;
         private VpnDAO vpnDAO;
         private InquiryDAO inquiryDAO;
+        private ProfileDAO profileDAO;
 
         private DAOFactory()
         {
@@ -34,6 +35,7 @@ namespace AliRank
             keywordDAO = new KeywordDAO(dbHelper);
             vpnDAO = new VpnDAO(dbHelper);
             inquiryDAO = new InquiryDAO(dbHelper);
+            profileDAO = new ProfileDAO(dbHelper);
         }
 
         public KeywordDAO GetKeywordDAO()
@@ -48,6 +50,11 @@ namespace AliRank
         public InquiryDAO GetInquiryDAO()
         {
             return inquiryDAO;
+        }
+
+        public ProfileDAO GetProfileDAO()
+        {
+            return profileDAO;
         }
 
     }

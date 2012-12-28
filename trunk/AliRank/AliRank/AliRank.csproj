@@ -105,6 +105,7 @@
       <DependentUpon>ModifyWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Passporter.cs" />
+    <Compile Include="ProfileDAO.cs" />
     <Compile Include="RankInfo.cs" />
     <Compile Include="Service References\IpSearch\Reference.cs">
       <AutoGen>True</AutoGen>
