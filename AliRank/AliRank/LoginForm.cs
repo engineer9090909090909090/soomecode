@@ -12,6 +12,8 @@ namespace AliRank
 {
     public partial class LoginForm : Form
     {
+        private string IniFile;
+
         public LoginForm()
         {
             InitializeComponent();
@@ -32,6 +34,17 @@ namespace AliRank
                 this.ErrorMsg.Text = "密码不能为空！";
                 return;
             }
+            if (this.remind.Checked)
+            {
+                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.LOGIN_USER, account, IniFile);
+                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.LOGIN_PASS, password, IniFile);
+                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.LOGIN_REMINDE, "1", IniFile);
+            }
+            else {
+                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.LOGIN_USER, "", IniFile);
+                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.LOGIN_PASS, "", IniFile);
+                FileUtils.IniWriteValue(Constants.CLICK_SECTIONS, Constants.LOGIN_REMINDE, "", IniFile);
+            }
             this.ErrorMsg.Text = "正在进行登录，请稍候...";
             string msg = RemoteDataManager.Instance.UserLoginSystem(account, password);
             if (string.IsNullOrEmpty(msg))
@@ -48,6 +61,27 @@ namespace AliRank
         private void cannelBtn_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.No;
+        }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+            IniFile = FileUtils.CreateAppDataFolderEmptyTextFile(Constants.INI_FILE);
+            string remind = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.LOGIN_REMINDE, IniFile);
+            string remindUser = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.LOGIN_USER, IniFile);
+            string remindPass = FileUtils.IniReadValue(Constants.CLICK_SECTIONS, Constants.LOGIN_PASS, IniFile);
+            if (!string.IsNullOrEmpty(remind))
+            {
+                this.remind.Checked = true;
+            }
+            if (!string.IsNullOrEmpty(remindUser))
+            {
+                this.accountBox.Text = remindUser;
+            }
+            if (!string.IsNullOrEmpty(remindPass))
+            {
+                this.passwordBox.Text = remindPass;
+            }
+            
         }
     }
 }

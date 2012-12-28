@@ -67,6 +67,13 @@ namespace AliRank.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap bg {
+            get {
+                object obj = ResourceManager.GetObject("bg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap convert {
             get {
                 object obj = ResourceManager.GetObject("convert", resourceCulture);
