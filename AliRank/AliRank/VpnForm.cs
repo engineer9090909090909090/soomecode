@@ -419,7 +419,7 @@ namespace AliRank
             cells.SetColumnWidth(6, 20);
             cells.SetRowHeight(0, 25);
             //生成数据行
-            for (int i = 1; i < Rownum; i++)
+            for (int i = 1; i <= Rownum; i++)
             {
                 VpnModel model = list[i - 1];
                 cells[i, 0].PutValue(model.Address);
