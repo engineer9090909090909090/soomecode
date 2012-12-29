@@ -521,6 +521,8 @@ namespace AliRank
 
         private string GetIpInfo(string address) 
         {
+            return "[" + address + "]"; ;
+            /*
             string ipInfo = string.Empty;
             try
             {
@@ -535,7 +537,7 @@ namespace AliRank
                 System.Diagnostics.Trace.WriteLine(e.Message);
                 ipInfo = address + "[获取地址失败]";
             }
-            return ipInfo;
+            return ipInfo;*/
         }
 
 

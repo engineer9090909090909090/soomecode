@@ -21,7 +21,7 @@ namespace AliRank
         private WebBrowser browser;
         ManualResetEvent eventX = new ManualResetEvent(false);
 
-        private string SEARCH_URL1 = @"http://www.alibaba.com/trade/search?SearchText={0}&IndexArea=product_en&fsb=y";
+        private string SEARCH_URL1 = @"http://www.alibaba.com/trade/search?fsb=y&IndexArea=product_en&CatId=&SearchText={0}";
         private string SEARCH_URL2 = @"http://www.alibaba.com/products/F0/{0}/{1}.html";
         private string PURL_PREFIX = @"http://www.alibaba.com/product-gs/";
 
@@ -31,6 +31,7 @@ namespace AliRank
         //http://us.message.alibaba.com/msgsend/memberInquirySuccess.htm
         //http://cn.message.alibaba.com/msgsend/memberInquirySuccess.htm
         private string INQUIRY_SUCCESS = "msgsend/memberInquirySuccess.htm";
+        private string additionalHeaders = Constants.UserAgent;
 
         int currentPage = 1;
         int maxQueryPage = 10;
@@ -90,13 +91,14 @@ namespace AliRank
             {
                 this.canInquiry = false;
             }
+            
             this.maxQueryPage = maxQueryPageNumber;
             this.clickKey = item.RankKeyword;
             currentRequestUrl = string.Format(SEARCH_URL1, clickKey.Replace(" ", "+"));
             ClickingEvent(item, @"Clicking " + currentRequestUrl);
             browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
             browser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
-            browser.Navigate(currentRequestUrl);
+            browser.Navigate(currentRequestUrl, "_self", null, additionalHeaders);
             eventX.WaitOne(Timeout.Infinite, true);
             item = null;
             aliAccount = null;
@@ -106,7 +108,7 @@ namespace AliRank
 
         void browser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            WebBrowser browser = (WebBrowser)sender;
+            //WebBrowser browser = (WebBrowser)sender;
             if (browser.ReadyState != System.Windows.Forms.WebBrowserReadyState.Complete)
                 return;
             if (e.Url.ToString() != browser.Url.ToString())
@@ -116,11 +118,11 @@ namespace AliRank
                 HtmlElement productLink = browser.Document.GetElementById("lsubject_" + this.item.ProductId);
                 if (productLink != null)
                 {
-                    productLink.SetAttribute("target", "_self");
-                    browser.Document.InvokeScript("onProductClick", new object[] { item.ProductId });
-                    //browser.Document.InvokeScript("onProductClick('" + item.ProductId + "');");
-                    //browser.Document.InvokeScript("logProductHistory", new object[] { item.ProductId, new string[]{}});
-                    productLink.InvokeMember("click");
+                    browser.Document.InvokeScript("onProductClick", new string[] { item.ProductId.ToString() });
+                    //productLink.InvokeMember("click");
+                    string productUrl = item.ProductUrl.Substring(item.ProductUrl.LastIndexOf("/"));
+                    currentRequestUrl = PURL_PREFIX + item.ProductId + productUrl;
+                    browser.Navigate(currentRequestUrl, "_self", null, additionalHeaders);
                 }
                 else
                 {
@@ -131,19 +133,16 @@ namespace AliRank
                         string productUrl = item.ProductUrl.Substring(item.ProductUrl.LastIndexOf("/"));
                         currentRequestUrl = PURL_PREFIX + item.ProductId + productUrl;
                         ClickingEvent(item, "Enforce clicking " + currentRequestUrl);
-                        browser.Document.InvokeScript("onProductClick", new object[] { item.ProductId });
-                        //browser.Document.InvokeScript("onProductClick('" + item.ProductId + "');");
-                        //browser.Document.InvokeScript("logProductHistory", new object[] { item.ProductId, new string[]{}});
-                        browser.Navigate(currentRequestUrl);
+                        browser.Document.InvokeScript("onProductClick", new string[] { item.ProductId.ToString() });
+                        browser.Navigate(currentRequestUrl, "_self", null, additionalHeaders);
                     }
                     else
                     {
                         currentPage++;
                         currentRequestUrl = string.Format(SEARCH_URL2, clickKey.Replace(" ", "_"), currentPage);
-                        int randomNumber = new Random().Next(100, 5000);
-                        if (currentPage > 0) Thread.Sleep(randomNumber);
+                        Thread.Sleep(new Random().Next(1000, 10000));
                         ClickingEvent(item, @"Clicking " + currentRequestUrl);
-                        browser.Navigate(currentRequestUrl);
+                        browser.Navigate(currentRequestUrl, "_self", null, additionalHeaders);
                     }
                 }
             }
@@ -182,8 +181,8 @@ namespace AliRank
                 string postString = token + "&" + action + "&" + sh + "&" + pageId + "&" + chkProductIds + "&" + s + "&"
                     + c + "&" + o + "&" + attachs + "&" + eventSubmitDoSend;
                 byte[] postData = Encoding.Default.GetBytes(postString);
-                string AdditionalHeaders = "Content-Type: application/x-www-form-urlencoded" + Environment.NewLine;
-                browser.Navigate(postUrl, "_self", postData, AdditionalHeaders);
+                string Headers = this.additionalHeaders  + "Content-Type: application/x-www-form-urlencoded" + Environment.NewLine;
+                browser.Navigate(postUrl, "_self", postData, Headers);
             }
             if (browser.Url.ToString().IndexOf(INQUIRY_SUCCESS) >= 0)
             {
@@ -195,7 +194,7 @@ namespace AliRank
                 info.Company = item.CompanyUrl;
                 info.InquiryIp = aliAccount.LoginIp;
                 InquiryEndEvent(info, "This product has been send a Rank Inquiry.");
-                browser.Navigate(LOGOUT_URL);
+                IEHandleUtils.ClearIECookie();
                 browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
                 eventX.Set();
             }

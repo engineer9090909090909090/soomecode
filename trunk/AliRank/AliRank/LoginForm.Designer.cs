@@ -79,7 +79,7 @@
             this.loginBtn.Location = new System.Drawing.Point(104, 172);
             this.loginBtn.Name = "loginBtn";
             this.loginBtn.Size = new System.Drawing.Size(75, 23);
-            this.loginBtn.TabIndex = 3;
+            this.loginBtn.TabIndex = 4;
             this.loginBtn.Text = "登录";
             this.loginBtn.UseVisualStyleBackColor = true;
             this.loginBtn.Click += new System.EventHandler(this.loginBtn_Click);
@@ -89,7 +89,7 @@
             this.cannelBtn.Location = new System.Drawing.Point(216, 172);
             this.cannelBtn.Name = "cannelBtn";
             this.cannelBtn.Size = new System.Drawing.Size(75, 23);
-            this.cannelBtn.TabIndex = 4;
+            this.cannelBtn.TabIndex = 5;
             this.cannelBtn.Text = "取消";
             this.cannelBtn.UseVisualStyleBackColor = true;
             this.cannelBtn.Click += new System.EventHandler(this.cannelBtn_Click);
@@ -116,7 +116,7 @@
             this.remind.Location = new System.Drawing.Point(224, 113);
             this.remind.Name = "remind";
             this.remind.Size = new System.Drawing.Size(96, 16);
-            this.remind.TabIndex = 5;
+            this.remind.TabIndex = 3;
             this.remind.Text = "记住登录信息";
             this.remind.UseVisualStyleBackColor = false;
             // 

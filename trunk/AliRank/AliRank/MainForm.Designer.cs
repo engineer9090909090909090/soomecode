@@ -315,6 +315,7 @@
             this.webBrowser.ScriptErrorsSuppressed = true;
             this.webBrowser.Size = new System.Drawing.Size(778, 464);
             this.webBrowser.TabIndex = 5;
+            this.webBrowser.Url = new System.Uri("", System.UriKind.Relative);
             this.webBrowser.WebBrowserShortcutsEnabled = false;
             // 
             // tabControl
