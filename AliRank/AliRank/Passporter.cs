@@ -62,7 +62,7 @@ namespace AliRank
                 cookie_string = cookstring + cookie_string;
                 IEHandleUtils.InternetSetCookie(homeUrl, cookie.Name, cookie.Value);
             }
-            browser.Navigate(homeUrl);
+            browser.Navigate(homeUrl, "_self", null, Constants.UserAgent);
 
             eventX.WaitOne(Timeout.Infinite, true);
             Console.WriteLine("登录线程结束！");

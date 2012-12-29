@@ -66,10 +66,6 @@ namespace AliRank
             string remind = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.LOGIN_REMINDE);
             string remindUser = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.LOGIN_USER);
             string remindPass = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.LOGIN_PASS);
-            if (!string.IsNullOrEmpty(remind))
-            {
-                this.remind.Checked = true;
-            }
             if (!string.IsNullOrEmpty(remindUser))
             {
                 this.accountBox.Text = remindUser;
@@ -78,7 +74,11 @@ namespace AliRank
             {
                 this.passwordBox.Text = remindPass;
             }
-            
+            if (!string.IsNullOrEmpty(remind))
+            {
+                this.remind.Checked = true;
+                this.loginBtn.Focus();
+            }
         }
     }
 }
