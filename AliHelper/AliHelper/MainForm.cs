@@ -10,9 +10,7 @@ using System.Net;
 using System.IO;
 using System.Text.RegularExpressions;
 using Soomes;
-using AliHelper.Bussness;
 using System.Collections;
-using AliHelper.Http;
 
 namespace AliHelper
 {
@@ -20,7 +18,6 @@ namespace AliHelper
     {
         //alibaba vip manage url
         public static string url = "http://hz.productposting.alibaba.com/product/manage_products.htm#tab=approved";
-
 
         public static string CsrfToken = string.Empty;
 
@@ -30,11 +27,9 @@ namespace AliHelper
         {
             InitializeComponent();
             productsManager = new ProductsManager();
-            string html = IEHandleUtils.WebRequestGetUrlHtml(url);
+            string html = IEHandleUtils.GetHtml(url);
             CsrfToken = GetCsrfToken(html);
 
-            //  IEHandleUtils.WebBrowerSetCookies_NavigateToUrl(this.webBrowser1, url);
-            //  this.webBrowser1.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(webBrowser1_DocumentCompleted);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -42,20 +37,6 @@ namespace AliHelper
             List<AliGroup> groups = productsManager.GetGroupList();
             UpdateGroupUI(groups);
             
-        }
-
-        void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
-        {
-            WebBrowser browser = (WebBrowser)sender;
-            if (browser.ReadyState != System.Windows.Forms.WebBrowserReadyState.Complete)
-                return;
-            if (e.Url.ToString() != browser.Url.ToString())
-                return;
-            if (browser.Url.ToString() == url)
-            {
-
-            }
-            System.Diagnostics.Trace.WriteLine("========================" + this.webBrowser1.Url.ToString());
         }
 
 
@@ -157,6 +138,17 @@ namespace AliHelper
             produtList.AddRange(products);
 
             return produtList;
+        }
+
+        private void newProductBtn_Click(object sender, EventArgs e)
+        {
+            //EditCategory f = new EditCategory();
+            //f.StartPosition = FormStartPosition.CenterParent;
+            //f.ShowDialog(this);
+
+            ImageForm f = new ImageForm();
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
         }
         
 

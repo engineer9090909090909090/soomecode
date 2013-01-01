@@ -2,7 +2,8 @@
 using System.Collections.Generic; 
 using System.Text; 
 using System.Net; 
-using System.IO;  
+using System.IO;
+using System.Net.NetworkInformation;
 
 namespace AliHelper
 
@@ -12,16 +13,16 @@ namespace AliHelper
     //////主要考虑请求后的具体结果 
     ///此类出自 uu102.com，请尊重原作者，转载请加上此链接 
     /// </summary>
-    class HttpHelper1 
+    class HttpHelper
     { 
         /// <summary>
         /// 请求并发限制数目
         /// </summary> 
-        private static int DefaultConnectionLimit=1; 
+        public static int DefaultConnectionLimit = 1; 
      
-        private const string Accept = "*/*";
-        private const string UserAgent = "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; .NET CLR 2.0.50727; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)"; 
-        private const string ContentType = "application/x-www-form-urlencoded"; 
+        public const string Accept = "*/*";
+        public const string UserAgent = "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; .NET CLR 2.0.50727; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)";
+        public const string ContentType = "application/x-www-form-urlencoded"; 
         
         /// <summary>
         /// 发送资源请求。返回请求到的响应文本
@@ -79,11 +80,12 @@ namespace AliHelper
                 //到这里为止，所有的对象都要释放掉，以免内存像滚雪球一样
                 return html;
             }
-            catch
+            catch(Exception e)
             {
-                DefaultConnectionLimit--; 
+                DefaultConnectionLimit--;
+                System.Diagnostics.Trace.WriteLine("Open " + url + "\r\n " + e.Message);
                 //我这里就没做任何处理了，这里最好还是处理一下
-                return null;
+                return string.Empty;
             }
         }
         
@@ -145,5 +147,47 @@ namespace AliHelper
                 return null;
             }
         }
+
+        public static string GetWebAccessIpAddress()
+        {
+            string address = string.Empty;
+            NetworkInterface[] interfaces = NetworkInterface.GetAllNetworkInterfaces();
+            foreach (NetworkInterface item in interfaces)
+            {
+                if (item.NetworkInterfaceType == NetworkInterfaceType.Ppp)
+                {
+                    address = item.GetIPProperties().UnicastAddresses[0].Address.ToString();
+                }
+            }
+            if (string.IsNullOrEmpty(address))
+            {
+                address = Ip138GetIp();
+            }
+            return address;
+        }
+
+        public static string Ip138GetIp()
+        {
+            string address = string.Empty;
+            try
+            {
+                string strUrl = "http://iframe.ip138.com/ic.asp";//获得IP的网址
+                Uri uri = new Uri(strUrl);
+                WebRequest webreq = WebRequest.Create(uri);
+                Stream s = webreq.GetResponse().GetResponseStream();
+                StreamReader sr = new StreamReader(s, Encoding.Default);
+                string all = sr.ReadToEnd(); //读取网站返回的数据  格式：您的IP地址是：[x.x.x.x] 
+                int i = all.IndexOf("[") + 1;
+                string tempip = all.Substring(i, 15);
+                address =  tempip.Replace("]", "").Replace(" ", "").Replace("<", "");
+            }
+            catch(Exception e)
+            {
+                System.Diagnostics.Trace.WriteLine(e.Message);
+                address = "";
+            }
+            return address;
+        }
+
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Net;
 
 namespace AliHelper
 {
@@ -23,7 +24,7 @@ namespace AliHelper
 
         public static string GetImageFolder()
         {
-            string imageDir = GetAppDataFolder() + Path.DirectorySeparatorChar + Constants.IMAGE_DIR;
+            string imageDir = Environment.CurrentDirectory + Path.DirectorySeparatorChar + Constants.IMAGE_DIR;
             if (!Directory.Exists(imageDir))
             {
                 Directory.CreateDirectory(imageDir);
@@ -39,16 +40,18 @@ namespace AliHelper
             return result;
         } 
 
-        public static string CreateAppDataFolderEmptyTextFile(string txtFileName)
+        public static string DownloadImage(WebClient webClient, string url, int id)
         {
-            string txtFile = GetAppDataFolder() + Path.DirectorySeparatorChar + txtFileName;
-            if (!File.Exists(txtFile)) {
-                File.CreateText(txtFile);
+            string imageFile = FileUtils.GetImageFolder() + Path.DirectorySeparatorChar + id + ".jpg";
+            if (File.Exists(imageFile))
+            {
+                return imageFile;
             }
-            return txtFile;
+            webClient.DownloadFile(url, imageFile);
+            return imageFile;
         }
 
-
+        /*
         [DllImport("kernel32")]
         private static extern long WritePrivateProfileString(string section, string key, string val, string filePath);
         [DllImport("kernel32")]
@@ -64,6 +67,6 @@ namespace AliHelper
         {
             WritePrivateProfileString(Section, Key, val, filePath);
         }
-
+        */
     }
 }

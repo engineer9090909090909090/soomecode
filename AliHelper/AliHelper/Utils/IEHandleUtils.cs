@@ -74,12 +74,14 @@ namespace AliHelper
             webBrowser1.Navigate(url, "", null, "Cookie: " + cookie_string + Environment.NewLine);
         }
 
-        public static string WebRequestGetUrlHtml(string url)
+        public static string GetHtml(string url)
         {
+            return GetHtml(url, null);
+            /*
             HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(url);
             myHttpWebRequest.Timeout = 20 * 1000; //连接超时
-            myHttpWebRequest.Accept = "*/*";
-            myHttpWebRequest.AllowAutoRedirect = false;
+            myHttpWebRequest.Accept = HttpHelper.Accept;
+            /*myHttpWebRequest.AllowAutoRedirect = false;
             myHttpWebRequest.UserAgent = "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0;)";
             myHttpWebRequest.Headers.Add("Cookie", ShareCookie.Instance.LoginCookie); //使用已经保存的cookies 方法二
             HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
@@ -88,6 +90,57 @@ namespace AliHelper
             StreamReader sr = new StreamReader(stream, Encoding.GetEncoding("utf-8"));
             string strWebData = sr.ReadToEnd();
             return strWebData;
+            */
+        }
+
+        public static string GetHtml(string url, string postString)
+        {
+            string html = string.Empty;
+            bool IsPost = true;
+            ServicePointManager.Expect100Continue = false;
+            ServicePointManager.DefaultConnectionLimit = HttpHelper.DefaultConnectionLimit;
+            //设置并发连接数限制上额 
+            HttpHelper.DefaultConnectionLimit++;
+            if (string.IsNullOrEmpty(postString)) IsPost = false;
+            HttpWebRequest httpWebRequest = null;
+
+            HttpWebResponse httpWebResponse = null;
+            try
+            {
+                httpWebRequest = (HttpWebRequest)HttpWebRequest.Create(url);//创建连接请求
+                httpWebRequest.Method = IsPost ? "POST" : "GET";
+                httpWebRequest.AllowAutoRedirect = true;//【注意】这里有个时候在特殊情况下要设置为否，否则会造成cookie丢失
+                httpWebRequest.ContentType = HttpHelper.ContentType;
+                httpWebRequest.Accept = HttpHelper.Accept;
+                httpWebRequest.UserAgent = HttpHelper.UserAgent;
+                httpWebRequest.Headers.Add("Cookie", ShareCookie.Instance.LoginCookie); //使用已经保存的cookies 方法二
+                if (IsPost)  //如果是Post递交数据，则写入传的字符串数据 
+                {
+                    byte[] byteRequest = Encoding.Default.GetBytes(postString);
+                    httpWebRequest.ContentLength = byteRequest.Length;
+                    Stream stream = httpWebRequest.GetRequestStream();
+                    stream.Write(byteRequest, 0, byteRequest.Length);
+                    stream.Close();
+                }
+                httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse();//开始获取响应流 
+                Stream responseStream = httpWebResponse.GetResponseStream();
+                StreamReader streamReader = new StreamReader(responseStream, Encoding.UTF8);
+                html = streamReader.ReadToEnd();//注意这里是直接将所有的字节从头读到尾，也可以一行一行的控制，节省时间 
+                streamReader.Close();
+                responseStream.Close();
+                httpWebRequest.Abort();
+                httpWebResponse.Close();
+                //到这里为止，所有的对象都要释放掉，以免内存像滚雪球一样
+                return html;
+            }
+            catch (Exception e)
+            {
+                HttpHelper.DefaultConnectionLimit--;
+                System.Diagnostics.Trace.WriteLine("Open " + url + "\r\n " + e.Message);
+                //我这里就没做任何处理了，这里最好还是处理一下
+                return string.Empty;
+            }
+        
         }
     }
 }
