@@ -21,7 +21,7 @@ namespace AliHelper
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
+            //Application.Run(new EditCategory());
             /*
              StreamReader sr = new StreamReader("c://aa.txt");
              string code = sr.ReadToEnd();
@@ -36,8 +36,8 @@ namespace AliHelper
              }
              System.Diagnostics.Trace.WriteLine("========================");
              Application.Run(new MainForm());
-             */
-
+             
+            */
              LoginForm login = new LoginForm();
              if (login.ShowDialog() == DialogResult.OK)
              {

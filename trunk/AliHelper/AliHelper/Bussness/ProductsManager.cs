@@ -5,7 +5,7 @@ using System.Text;
 using Soomes;
 using AliHelper.DAO;
 
-namespace AliHelper.Bussness
+namespace AliHelper
 {
     public class ProductsManager
     {

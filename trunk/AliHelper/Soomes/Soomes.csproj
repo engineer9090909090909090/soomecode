@@ -45,8 +45,12 @@
     <Compile Include="AliGroup.cs" />
     <Compile Include="AliGroupInfo.cs" />
     <Compile Include="AliProductInfo.cs" />
+    <Compile Include="AttributeNode.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="AliProduct.cs" />
+    <Compile Include="CategroyNode.cs" />
+    <Compile Include="ImageGroupNode.cs" />
+    <Compile Include="ImageInfo.cs" />
     <Compile Include="ProductStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
