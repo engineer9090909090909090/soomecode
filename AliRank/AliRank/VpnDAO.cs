@@ -191,7 +191,7 @@ namespace AliRank
         {
             DataTable dt = dbHelper.ExecuteDataTable(
             "SELECT Id, Address, Username, Password, Country,Name, VpnType, L2tpSec,updateTime, ConnQty, Status "
-            +"FROM vpns where status = 1 order by ConnQty asc limit 0, 1", null);
+            +"FROM vpns where status = 1 order by ConnQty asc, updateTime asc limit 0, 1", null);
 
             if (dt.Rows.Count > 0)
             {
@@ -213,12 +213,41 @@ namespace AliRank
             return null;
         }
 
+        public VpnModel GetVpnModelByIpAddress(string ipAddress)
+        {
+            string sql = "SELECT Id, Address, Username, Password, Country,Name, VpnType, L2tpSec,updateTime, ConnQty, Status "
+            + "FROM vpns where status = 1 Address = @Address";
+            DataTable dt = dbHelper.ExecuteDataTable(sql, 
+                new SQLiteParameter[]{
+                    new SQLiteParameter("@Address",ipAddress)
+                }
+            );
+            if (dt.Rows.Count > 0)
+            {
+                DataRow row = dt.Rows[0]; 
+                VpnModel model = new VpnModel();
+                model.Id = Convert.ToInt32(row["id"]);
+                model.Address = (string)row["Address"];
+                model.Username = (string)row["Username"];
+                model.Password = (string)row["Password"];
+                model.Country = (string)row["Country"];
+                model.Name = (string)row["Name"];
+                model.VpnType = (string)row["VpnType"];
+                model.L2tpSec = (string)row["L2tpSec"];
+                model.ConnQty = Convert.ToInt32(row["ConnQty"]);
+                model.Status = Convert.ToInt32(row["Status"]);
+                model.UpdateTime = Convert.ToDateTime(row["updateTime"]);
+                return model;
+            }
+            return GetEffctiveVPN();
+        }
+
         public void UpdateVPNStatus(string Address, int status)
         {
             string sql = @"UPDATE  vpns SET Status =@Status, updateTime = @updateTime where Address = @Address";
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {
-                new SQLiteParameter("@Status",status), 
+                new SQLiteParameter("@Status",status),
                 new SQLiteParameter("@updateTime",DateTime.Now),
                 new SQLiteParameter("@Address",Address)
             };

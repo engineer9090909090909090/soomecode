@@ -131,6 +131,36 @@ namespace AliRank
             return null;
         }
 
+        public ShowcaseRankInfo GetEffctiveProduct()
+        {
+            string sql = "select distinct k.*,  count(i.account) inquiryQty from keywords k "
+                + " left join inquiryinfos i on k.productId = i.productId "
+                +" group by k.productId order by inquiryQty asc limit 0,1";
+            DataTable dt = dbHelper.ExecuteDataTable(sql, null);
+            if (dt.Rows.Count > 0)
+            {
+                DataRow row = dt.Rows[0];
+                ShowcaseRankInfo kw = new ShowcaseRankInfo();
+                kw.ProductId = Convert.ToInt32(row["productId"]);
+                kw.ProductName = (string)row["productName"];
+                kw.MainKey = (string)row["mainKey"];
+                kw.RankKeyword = (string)row["rankKeyword"];
+                kw.CompanyUrl = (string)row["companyUrl"];
+                kw.ProductUrl = (string)row["productUrl"];
+                kw.ProductImg = (string)row["productImage"];
+                kw.PrevRank = Convert.ToInt32(row["prevRank"]);
+                kw.Rank = Convert.ToInt32(row["rank"]);
+                kw.MaxInquiryQty = Convert.ToInt32(row["maxInquiryQty"]);
+                kw.FactInquiryQty = Convert.ToInt32(row["factInquiryQty"]);
+                kw.KeyAdNum = Convert.ToInt32(row["keyAdNum"]);
+                kw.KeyP4Num = Convert.ToInt32(row["keyP4Num"]);
+                kw.Clicked = Convert.ToInt32(row["clicked"]);
+                kw.UpdateTime = Convert.ToDateTime(row["updateTime"]);
+                return kw;
+            }
+            return null;
+        }
+
         public void Insert(List<ShowcaseRankInfo> list)
         {
             string InsSql = @"INSERT INTO keywords(mainKey,rankKeyword, productId,productName,productImage,productUrl,companyUrl, createTime, updateTime, status, maxInquiryQty)"

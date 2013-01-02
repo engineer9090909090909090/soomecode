@@ -277,14 +277,12 @@ namespace AliRank
         /// </summary>
         /// <param name="yesterday"></param>
         /// <returns></returns>
-        public AliAccounts GetCanInquiryAccount(int yesterday, string loginIp)
+        public AliAccounts GetCanInquiryAccount(int today)
         {
             DataTable dt = dbHelper.ExecuteDataTable(
                 "select distinct a.AccountId, a.Account, a.Password,a.Country from aliaccounts  a "
                 + "left join inquiryInfos i on a.Account=i.Account "
-                + "where a.Enable = 1 and (a.loginIp = '' or a.loginIp ='" + loginIp 
-                + "') and i.Account is null  and (i.inquiryDate > " + yesterday 
-                + " or i.inquiryDate is null)", null);
+                + "where a.Enable = 1 and (i.Account is null  or i.inquiryDate < " + today + ")", null);
             List<AliAccounts> list = new List<AliAccounts>();
             foreach (DataRow row in dt.Rows)
             {
@@ -302,10 +300,10 @@ namespace AliRank
             }
 
             string sql = "select a.AccountId, a.Account, a.Password, a.Country from aliaccounts a  "
-                + "where a.LoginTime is null or a.LoginTime <= @LoginTime";
+                + "where a.Enable = 1 and (a.LoginTime is null or a.LoginTime < @LoginTime)";
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {
-                new SQLiteParameter("@LoginTime", DateTime.Now.AddDays(-1))
+                new SQLiteParameter("@LoginTime", DateTime.Now.AddHours(-2))
             };
             dt = dbHelper.ExecuteDataTable(sql, parameter);
             foreach (DataRow row in dt.Rows)

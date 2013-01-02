@@ -462,9 +462,7 @@ namespace AliRank
             this.RunTime.Text = ts.Hours.ToString("00") + " : " + ts.Minutes.ToString("00") + " : " + ts.Seconds.ToString("00"); 
         }
 
-        
-
-        private bool ConnectNextVpn()
+        private bool ConnectNextVpn(string vpnAddress)
         {
             if (IsStopClicking)
             {
@@ -475,20 +473,26 @@ namespace AliRank
                 CurrVpnEntity.Disconnect();
                 CurrVpnEntity.Dispose();
             }
-            
-            CurrVpnModel = vpnDao.GetEffctiveVPN();
-            this.MessageLabel.Text = "正在连接到VPN地址" + CurrVpnModel.Address;
-            this.toolStripStatusLabel1.Text = "正在连接到VPN地址" + CurrVpnModel.Address;
+            if (!string.IsNullOrEmpty(vpnAddress))
+            {
+                CurrVpnModel = vpnDao.GetVpnModelByIpAddress(vpnAddress);
+            }
+            else
+            {
+                CurrVpnModel = vpnDao.GetEffctiveVPN();
+            }
             if (CurrVpnModel == null)
             {
                 return false;
             }
+            this.MessageLabel.Text = "正在连接到VPN地址" + CurrVpnModel.Address;
+            this.toolStripStatusLabel1.Text = "正在连接到VPN地址" + CurrVpnModel.Address;
             CurrVpnEntity = new VPN("MyVPN", CurrVpnModel);
             bool Connected = CurrVpnEntity.Connect();
             if (!Connected)
             {
                 vpnDao.UpdateVPNStatus(CurrVpnModel.Address, Constants.INVALID);
-                return ConnectNextVpn();
+                return ConnectNextVpn(null);
             } 
             else 
             {
@@ -496,10 +500,7 @@ namespace AliRank
             }
             return true;
         }
-
-
         
-
         private string GetIpInfo(string address) 
         {
             return "[" + address + "]";
@@ -521,7 +522,6 @@ namespace AliRank
             return ipInfo;*/
         }
 
-
         void bgWorker_Click(object sender, DoWorkEventArgs e)
         {
             List<ShowcaseRankInfo> productList = keywordDAO.GetClickProducts();
@@ -541,7 +541,7 @@ namespace AliRank
             {
                 if (sNetwork == Constants.NETWORK_VPN)
                 {
-                    if (!ConnectNextVpn())//连接到一个新的VPN地址
+                    if (!ConnectNextVpn(null))//连接到一个新的VPN地址
                     {
                         toolStripStatusLabel1.Text = "没有正确可用的VPN可以连接.";
                         IsStopClicking = true;
@@ -852,17 +852,20 @@ namespace AliRank
             string sMaxInterval = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_INTERVAL_TIME);
             int iMaxQueryPage = Convert.ToInt32(sMaxQueryPage);
             int iMinInterval = Convert.ToInt32(sMinInterval);
+            int iMaxInterval = Convert.ToInt32(sMaxInterval);
             InquiryMessages inquiryMessages = null;
             string ipAddress = string.Empty;
 
             while (!IsStopClicking)
             {
-                //查找一个未询盘的阿里帐号
-                InquiryUser = null;
 
+
+                //查找一个未询盘的阿里帐号
+                int today = Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd"));
+                InquiryUser = inquiryDao.GetCanInquiryAccount(today);
                 if (sNetwork == Constants.NETWORK_VPN)
                 {
-                    if (!ConnectNextVpn())//连接到一个新的VPN地址
+                    if (!ConnectNextVpn(InquiryUser.LoginIp))//连接到一个新的VPN地址
                     {
                         toolStripStatusLabel1.Text = "没有正确可用的VPN可以连接.";
                         IsStopClicking = true;
@@ -880,9 +883,6 @@ namespace AliRank
                 this.MessageLabel.Text = GetIpInfo(ipAddress);
                 if (IsStopClicking) { break; }
 
-                //查找一个要询盘的产品
-                ShowcaseRankInfo productItem = null;
-
                 toolStripStatusLabel1.Text = "进行用户[" + InquiryUser.Account + "]自动登录操作。";
                 bool LoginSuccess = DoLoginAliWebSite(this.webBrowser,InquiryUser, ipAddress);
                 if (!LoginSuccess)
@@ -890,6 +890,9 @@ namespace AliRank
                     toolStripStatusLabel1.Text = "用户[" + InquiryUser.Account + "]自动登录失败, 转到下一个用户。";
                     break;
                 }
+
+                //查找一个要询盘的产品
+                ShowcaseRankInfo productItem = keywordDAO.GetEffctiveProduct();
                 inquiryMessages = inquiryDao.GetInquiryMinMessage();
 
                 if (IsStopClicking) { break; }
@@ -899,7 +902,7 @@ namespace AliRank
                 clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
                 clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
                 clicker.OnInquiryEndEvent += new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
-                toolStripStatusLabel1.Text = "开始询盘操作。";
+                toolStripStatusLabel1.Text = "开始自动询盘操作。";
                 clicker.Click(productItem, iMaxQueryPage, InquiryUser, true, inquiryMessages);
                 clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
                 clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
@@ -916,6 +919,8 @@ namespace AliRank
                     CurrVpnModel = null;
                     CurrVpnEntity = null;
                 }
+
+                Thread.Sleep(new Random().Next(iMinInterval, iMaxInterval));
             }
 
             InquiryRunBtn.Checked = false;
