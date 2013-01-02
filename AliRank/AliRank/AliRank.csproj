@@ -112,6 +112,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="SoomsUser.cs" />
     <Compile Include="Tools.cs" />
     <Compile Include="TopFiveInfo.cs" />
     <Compile Include="IEHandleUtils.cs" />

@@ -12,6 +12,7 @@ namespace AliRank
         public static string DEBUG_DB_FILE = "AliRankDebug.db";
         public static string DB_FILE = "AliRankRealse.db";
         public static string IMAGE_DIR = "images";
+        public static string DES_KEY = "83697732";
 
         public static string CLICK_SECTIONS = "Click Section";
         public static string AUTO_CLICK_NUM = "AutoClickNum";
