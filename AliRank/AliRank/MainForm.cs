@@ -32,20 +32,21 @@ namespace AliRank
             {
                 DAOFactory.Instance.GetProfileDAO().SetValue(Constants.AUTO_CLICK_NUM, 50 + "");
             }
-            string sRunModel = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.RUN_MODEL);
-            if (string.IsNullOrEmpty(sRunModel))
-            {
-                DAOFactory.Instance.GetProfileDAO().SetValue(Constants.RUN_MODEL, Constants.RUN_CLICK_INQUIRY);
-            }
             string sMaxPauseTime = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_PAUSE_TIME);
             if (string.IsNullOrEmpty(sMaxPauseTime))
             {
                 DAOFactory.Instance.GetProfileDAO().SetValue(Constants.MAX_PAUSE_TIME, 300 + "");
             }
-            string sMinIntervalTime = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MIn_INTERVAL_TIME);
+            string sMaxIntervalTime = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_INTERVAL_TIME);
+            if (string.IsNullOrEmpty(sMaxIntervalTime))
+            {
+                DAOFactory.Instance.GetProfileDAO().SetValue(Constants.MAX_INTERVAL_TIME, 50 + "");
+            }
+
+            string sMinIntervalTime = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MIN_INTERVAL_TIME);
             if (string.IsNullOrEmpty(sMinIntervalTime))
             {
-                DAOFactory.Instance.GetProfileDAO().SetValue(Constants.MIn_INTERVAL_TIME, 10 + "");
+                DAOFactory.Instance.GetProfileDAO().SetValue(Constants.MIN_INTERVAL_TIME, 10 + "");
             }
             string sMaxQueryPage = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_QUERY_PAGE);
             if (string.IsNullOrEmpty(sMaxQueryPage))
@@ -380,12 +381,21 @@ namespace AliRank
         private ProductClicker clicker;
         private VPN CurrVpnEntity;
         private VpnModel CurrVpnModel;
-        private AliAccounts loginedUser;
+        private AliAccounts InquiryUser;
 
         private void clickRunBtn_Click(object sender, EventArgs e)
         {
+            if (clickRunBtn.Checked == false)
+            {
+                ClickRun_Click(sender, e);
+            }else {
+                ClickStop_Click(sender, e);
+            }
+        }
+
+        private void ClickRun_Click(object sender, EventArgs e)
+        {
             string network = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.NETWORK_CHOICE);
-            string sRunModel = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.RUN_MODEL);
             if (network.Equals(Constants.NETWORK_VPN))
             {
                 List<VpnModel> VpnModelList = vpnDao.GetVpnModelList();
@@ -395,19 +405,9 @@ namespace AliRank
                     return;
                 }
             }
-            if (sRunModel == Constants.RUN_CLICK_INQUIRY)
-            {
-                List<InquiryMessages> msgList = inquiryDao.GetInquiryMessages();
-                if (msgList == null || msgList.Count == 0)
-                {
-                    MessageBox.Show("\r\n您选择了点击询盘模式，但您没有设置任何询盘信息数据信息.请到[询盘信息管理]项添加.\r\n", "提示");
-                    return;
-                }
-            }
-
-
-            clickRunBtn.Enabled = false;
-            clickStopBtn.Enabled = true;
+            clickRunBtn.Checked = true;
+            clickRunBtn.Image = AliRank.Properties.Resources.stop;
+            clickRunBtn.Text = "停止点击";
             IsStopClicking = false;
             tabControl.SelectedIndex = 1;
             if (bgClickWorker != null)
@@ -417,7 +417,7 @@ namespace AliRank
             }
             bgClickWorker = new BackgroundWorker();
             bgClickWorker.WorkerSupportsCancellation = true;
-            bgClickWorker.DoWork += new DoWorkEventHandler(bgWorker_DoWork2);
+            bgClickWorker.DoWork += new DoWorkEventHandler(bgWorker_Click);
             bgClickWorker.RunWorkerAsync();
             vpnDao.UpdateAllVPNStatus(Constants.EFFECTIVE);
             if (clickTimer != null)
@@ -425,6 +425,7 @@ namespace AliRank
                 clickTimer.Dispose();
                 clickTimer = null;
             }
+            bgClickWorker.Dispose();
             clickTimer = new System.Timers.Timer(1000);
             beginTime = DateTime.Now;
             clickTimer.Elapsed += new System.Timers.ElapsedEventHandler(theout);
@@ -432,18 +433,14 @@ namespace AliRank
             clickTimer.Enabled = true; 
         }
 
-        public void theout(object source, System.Timers.ElapsedEventArgs e) 
+        private void ClickStop_Click(object sender, EventArgs e)
         {
-            TimeSpan ts = DateTime.Now - beginTime;
-            this.RunTime.Text = ts.Hours.ToString("00") + " : " + ts.Minutes.ToString("00") + " : " + ts.Seconds.ToString("00"); 
-        } 
-
-        private void clickStopBtn_Click(object sender, EventArgs e)
-        {
+            clickRunBtn.Checked = false;
+            clickRunBtn.Image = AliRank.Properties.Resources.play;
+            clickRunBtn.Text = "点击";
             IsStopClicking = true;
-            clickTimer.Enabled = false; 
+            clickTimer.Enabled = false;
             bgClickWorker.CancelAsync();
-            clickStopBtn.Enabled = false;
             if (clicker != null)
             {
                 clicker.Stop();
@@ -456,9 +453,16 @@ namespace AliRank
                 CurrVpnEntity = null;
             }
             clickRunBtn.Enabled = true;
-            clickStopBtn.Enabled = false;
-            clickTimer.Enabled = false; 
+            clickTimer.Enabled = false;
         }
+
+        public void theout(object source, System.Timers.ElapsedEventArgs e) 
+        {
+            TimeSpan ts = DateTime.Now - beginTime;
+            this.RunTime.Text = ts.Hours.ToString("00") + " : " + ts.Minutes.ToString("00") + " : " + ts.Seconds.ToString("00"); 
+        }
+
+        
 
         private bool ConnectNextVpn()
         {
@@ -494,34 +498,11 @@ namespace AliRank
         }
 
 
-        public AliAccounts DoLoginAliWebSite(WebBrowser webBrowser, string loginedIp)
-        {
-            string sQueryDate = DateTime.Now.ToString("yyyyMMdd");
-            int iQueryDate = Convert.ToInt32(sQueryDate);
-            AliAccounts account = inquiryDao.GetCanInquiryAccount(iQueryDate, loginedIp);
-            if (account == null)
-            {
-                return null;
-            }
-            Passporter passporter = new AliRank.Passporter(webBrowser);
-            bool loginSuccess = passporter.DoLogin(account);
-            passporter = null;
-            if (!loginSuccess)
-            {
-                inquiryDao.DisableAccount(account.Account);
-                return DoLoginAliWebSite(webBrowser, loginedIp);
-            }
-            else
-            {
-                account.LoginIp = loginedIp;
-                inquiryDao.UpdateAccountLoginIp(account.Account, loginedIp);
-            }
-            return account;
-        }
+        
 
         private string GetIpInfo(string address) 
         {
-            return "[" + address + "]"; ;
+            return "[" + address + "]";
             /*
             string ipInfo = string.Empty;
             try
@@ -541,101 +522,63 @@ namespace AliRank
         }
 
 
-        void bgWorker_DoWork2(object sender, DoWorkEventArgs e)
+        void bgWorker_Click(object sender, DoWorkEventArgs e)
         {
             List<ShowcaseRankInfo> productList = keywordDAO.GetClickProducts();
             string ConfigClickNum = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.AUTO_CLICK_NUM);
             string sNetwork = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.NETWORK_CHOICE);
             string sMaxPauseTime = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_PAUSE_TIME);
             string sMaxQueryPage = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_QUERY_PAGE);
-            string sRunModel = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.RUN_MODEL);
-            string sMinInterval = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MIn_INTERVAL_TIME);
             int iMaxQueryPage = Convert.ToInt32(sMaxQueryPage);
-            int iMinInterval = Convert.ToInt32(sMinInterval);
             int iRandomMaxTime = Convert.ToInt32(sMaxPauseTime) * 1000;
-            if (iRandomMaxTime < 10000) iRandomMaxTime = 5000;
+            if (iRandomMaxTime < 10000) iRandomMaxTime = 2000;
 
-            //IEHandleUtils.ClearIECache();
             IEHandleUtils.ClearIECookie();
-            InquiryMessages inquiryMessages = null;
-            bool canInquiry = false;
             string ipAddress = string.Empty;
 
             int clickNum = Convert.ToInt32(ConfigClickNum);
             for (int n = 0; n < clickNum; n++)
             {
+                if (sNetwork == Constants.NETWORK_VPN)
+                {
+                    if (!ConnectNextVpn())//连接到一个新的VPN地址
+                    {
+                        toolStripStatusLabel1.Text = "没有正确可用的VPN可以连接.";
+                        IsStopClicking = true;
+                        break;
+                    }
+                    ipAddress = CurrVpnModel.Address;
+                }
                 for (int i = 0; i < productList.Count; i++)
                 {
-                    canInquiry = false;
                     if (i > 0)
                     {
-                        int randomNumber = new Random().Next(5000, iRandomMaxTime);
+                        int randomNumber = new Random().Next(2000, iRandomMaxTime);
                         toolStripStatusLabel1.Text = "轮循到下一个产品，暂停" + randomNumber / 1000 + "秒.";
                         if (!IsStopClicking) Thread.Sleep(randomNumber);
                     }
                     
-                    if (sNetwork == Constants.NETWORK_VPN && i % 10 == 0)
-                    {
-                        //连接到一个新的VPN地址
-                        if (!ConnectNextVpn())
-                        {
-                            toolStripStatusLabel1.Text = "没有正确可用的VPN可以连接.";
-                            IsStopClicking = true;
-                            break;
-                        }
-                        ipAddress = CurrVpnModel.Address;
-                        CurrVpnModel.PrevInquiryTime = DateTime.Now.AddMinutes(-iMinInterval);
-                    }
                     if (sNetwork == Constants.NETWORK_NONE)
                     {
-                        string currAddress= HttpHelper.Ip138GetIp();
-                        if (ipAddress != currAddress)
-                        {
-                            CurrVpnModel = null;
-                            CurrVpnModel = new VpnModel();
-                            CurrVpnModel.Address = currAddress;
-                            CurrVpnModel.PrevInquiryTime = DateTime.Now.AddMinutes(-iMinInterval);
-                            ipAddress = currAddress;
-                        }
+                        ipAddress = HttpHelper.Ip138GetIp();
                     }
 
                     //显示IP信息
-                    toolStripStatusLabel1.Text = "读了IP信息数据.";
+                    toolStripStatusLabel1.Text = "读取IP信息数据.";
                     this.MessageLabel.Text = GetIpInfo(ipAddress);
                     if (IsStopClicking) { break; }
-
                     ShowcaseRankInfo productObj = productList[i];
-                    int todayInquiryQty = inquiryDao.TodayInquiryQty4Product(productObj.ProductId);
-                    //判断这个产品今天的询盘数是否小于等于设置的最大询盘数
-                    if (todayInquiryQty <= productObj.MaxInquiryQty && sRunModel == Constants.RUN_CLICK_INQUIRY)
-                    {
-                        if (CurrVpnModel.InquiryQty < 3 && CurrVpnModel.PrevInquiryTime <= DateTime.Now.AddMinutes(-iMinInterval)) //每个IP地址只能发送３个询盘，每次询盘间隔大于等于5分钟
-                        {
-                            toolStripStatusLabel1.Text = "获取一个用户进行登录操作。";
-                            loginedUser = DoLoginAliWebSite(this.webBrowser, ipAddress);
-                            inquiryMessages = inquiryDao.GetInquiryMinMessage();
-                            canInquiry = true;
-                        }
-                    }
-                    
                     if (IsStopClicking) { break; }
                     IEHandleUtils.ClearIECookie();
                     clicker = new ProductClicker(webBrowser);
                     clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
                     clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
-                    clicker.OnInquiryEndEvent += new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
-                    toolStripStatusLabel1.Text = "点击并且做询盘操作。";
-                    clicker.Click(productObj, iMaxQueryPage, loginedUser, canInquiry, inquiryMessages);
+                    toolStripStatusLabel1.Text = "开始点击操作。";
+                    clicker.Click(productObj, iMaxQueryPage, null, false, null);
                     clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
                     clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
-                    clicker.OnInquiryEndEvent -= new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
                     clicker = null;
-                    if (sNetwork == Constants.NETWORK_VPN && canInquiry)
-                    {
-                        CurrVpnModel.PrevInquiryTime = DateTime.Now;
-                        CurrVpnModel.InquiryQty++;
-                    }
-                    toolStripStatusLabel1.Text = "点击并且做询盘操作结束。";
+                    toolStripStatusLabel1.Text = "点击操作结束。";
                     if (IsStopClicking) { break; }
                 }
                 if (IsStopClicking) { break; }
@@ -649,32 +592,14 @@ namespace AliRank
                 CurrVpnModel = null;
                 CurrVpnEntity = null;
             }
-            clickRunBtn.Enabled = true;
-            clickStopBtn.Enabled = false;
+            clickRunBtn.Checked = false;
+            clickRunBtn.Image = AliRank.Properties.Resources.play;
+            clickRunBtn.Text = "点击";
             clickTimer.Enabled = false;
 
             if (IsStopClicking == false && this.AutoShutdown)
             {
                 SoomesUtils.Shutdown();
-            }
-        }
-
-        void clicker_OnInquiryEndEvent(object sender, InquiryEventArgs e)
-        {
-            InquiryInfos item = e.Item;
-            foreach (DataGridViewRow row in dataGridView1.Rows)
-            {
-                DataGridViewCell productIdCell = row.Cells[2];
-                string id = (string)productIdCell.Value;
-                if (Convert.ToInt32(id) == item.ProductId)
-                {
-                    DataGridViewCell cell = row.Cells[7];
-                    cell.Value = (Convert.ToInt32(cell.Value) + 1).ToString();
-                    toolStripStatusLabel1.Text = e.Msg;
-                    keywordDAO.AddProductFactInquiryQty(item.ProductId);
-                    inquiryDao.InsertInquiryInfos(item);
-                    inquiryDao.AddInqMessageSendNum(item.MsgId);
-                }
             }
         }
 
@@ -802,7 +727,203 @@ namespace AliRank
         }
         #endregion
 
-        
+        #region 询盘
+        public bool DoLoginAliWebSite(WebBrowser webBrowser, AliAccounts account, string loginedIp)
+        {
+            Passporter passporter = new AliRank.Passporter(webBrowser);
+            bool loginSuccess = passporter.DoLogin(account);
+            passporter = null;
+            if (!loginSuccess)
+            {
+                inquiryDao.DisableAccount(account.Account);
+                return false;
+            }
+            else
+            {
+                account.LoginIp = loginedIp;
+                inquiryDao.UpdateAccountLoginIp(account.Account, loginedIp);
+            }
+            return true;
+        }
 
+        void clicker_OnInquiryEndEvent(object sender, InquiryEventArgs e)
+        {
+            InquiryInfos item = e.Item;
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                DataGridViewCell productIdCell = row.Cells[2];
+                string id = (string)productIdCell.Value;
+                if (Convert.ToInt32(id) == item.ProductId)
+                {
+                    DataGridViewCell cell = row.Cells[7];
+                    cell.Value = (Convert.ToInt32(cell.Value) + 1).ToString();
+                    toolStripStatusLabel1.Text = e.Msg;
+                    keywordDAO.AddProductFactInquiryQty(item.ProductId);
+                    inquiryDao.InsertInquiryInfos(item);
+                    inquiryDao.AddInqMessageSendNum(item.MsgId);
+                }
+            }
+        }
+
+        private void InquiryRunBtn_Click(object sender, EventArgs e)
+        {
+            if (clickRunBtn.Checked == false)
+            {
+                InquiryRun_Click(sender, e);
+            }
+            else
+            {
+                InquiryStop_Click(sender, e);
+            }
+        }
+
+        private void InquiryRun_Click(object sender, EventArgs e)
+        {
+            List<InquiryMessages> msgList = inquiryDao.GetInquiryMessages();
+            if (msgList == null || msgList.Count == 0)
+            {
+                MessageBox.Show("\r\n您没有设置任何询盘信息数据信息.请到[询盘信息管理]项添加.\r\n", "提示");
+                return;
+            }
+            List<AliAccounts> accoutList = inquiryDao.GetAccounts();
+            if (accoutList == null || accoutList.Count == 0)
+            {
+                MessageBox.Show("\r\n您没有设置任何阿里帐号信息.请到[阿里帐号管理]项添加.\r\n", "提示");
+                return;
+            }
+            InquiryRunBtn.Checked = true;
+            InquiryRunBtn.Image = AliRank.Properties.Resources.stop;
+            InquiryRunBtn.Text = "停止询盘";
+            IsStopClicking = false;
+            tabControl.SelectedIndex = 1;
+            if (bgClickWorker != null)
+            {
+                bgClickWorker.Dispose();
+                bgClickWorker = null;
+            }
+            bgClickWorker = new BackgroundWorker();
+            bgClickWorker.WorkerSupportsCancellation = true;
+            bgClickWorker.DoWork += new DoWorkEventHandler(bgWorker_Inquiry);
+            bgClickWorker.RunWorkerAsync();
+            vpnDao.UpdateAllVPNStatus(Constants.EFFECTIVE);
+            if (clickTimer != null)
+            {
+                clickTimer.Dispose();
+                clickTimer = null;
+            }
+            bgClickWorker.Dispose();
+            clickTimer = new System.Timers.Timer(1000);
+            beginTime = DateTime.Now;
+            clickTimer.Elapsed += new System.Timers.ElapsedEventHandler(theout);
+            clickTimer.AutoReset = true;
+            clickTimer.Enabled = true;
+        }
+
+        private void InquiryStop_Click(object sender, EventArgs e)
+        {
+            InquiryRunBtn.Checked = false;
+            InquiryRunBtn.Image = AliRank.Properties.Resources.play;
+            InquiryRunBtn.Text = "询盘";
+            IsStopClicking = true;
+            clickTimer.Enabled = false;
+            bgClickWorker.CancelAsync();
+            if (clicker != null)
+            {
+                clicker.Stop();
+            }
+            if (CurrVpnEntity != null)
+            {
+                CurrVpnEntity.Disconnect();
+                CurrVpnEntity.Dispose();
+                CurrVpnModel = null;
+                CurrVpnEntity = null;
+            }
+            clickRunBtn.Enabled = true;
+            clickTimer.Enabled = false;
+        }
+
+
+        void bgWorker_Inquiry(object sender, DoWorkEventArgs e)
+        {
+            List<ShowcaseRankInfo> productList = keywordDAO.GetClickProducts();
+            string sNetwork = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.NETWORK_CHOICE);
+            string sMaxQueryPage = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_QUERY_PAGE);
+            string sMinInterval = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MIN_INTERVAL_TIME);
+            string sMaxInterval = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_INTERVAL_TIME);
+            int iMaxQueryPage = Convert.ToInt32(sMaxQueryPage);
+            int iMinInterval = Convert.ToInt32(sMinInterval);
+            InquiryMessages inquiryMessages = null;
+            string ipAddress = string.Empty;
+
+            while (!IsStopClicking)
+            {
+                //查找一个未询盘的阿里帐号
+                InquiryUser = null;
+
+                if (sNetwork == Constants.NETWORK_VPN)
+                {
+                    if (!ConnectNextVpn())//连接到一个新的VPN地址
+                    {
+                        toolStripStatusLabel1.Text = "没有正确可用的VPN可以连接.";
+                        IsStopClicking = true;
+                        break;
+                    }
+                    ipAddress = CurrVpnModel.Address;
+                }
+                if (sNetwork == Constants.NETWORK_NONE)
+                {
+                    string currAddress = HttpHelper.Ip138GetIp();
+                }
+
+                //显示IP信息
+                toolStripStatusLabel1.Text = "读取IP信息数据.";
+                this.MessageLabel.Text = GetIpInfo(ipAddress);
+                if (IsStopClicking) { break; }
+
+                //查找一个要询盘的产品
+                ShowcaseRankInfo productItem = null;
+
+                toolStripStatusLabel1.Text = "进行用户[" + InquiryUser.Account + "]自动登录操作。";
+                bool LoginSuccess = DoLoginAliWebSite(this.webBrowser,InquiryUser, ipAddress);
+                if (!LoginSuccess)
+                {
+                    toolStripStatusLabel1.Text = "用户[" + InquiryUser.Account + "]自动登录失败, 转到下一个用户。";
+                    break;
+                }
+                inquiryMessages = inquiryDao.GetInquiryMinMessage();
+
+                if (IsStopClicking) { break; }
+
+                IEHandleUtils.ClearIECookie();
+                clicker = new ProductClicker(webBrowser);
+                clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
+                clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
+                clicker.OnInquiryEndEvent += new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
+                toolStripStatusLabel1.Text = "开始询盘操作。";
+                clicker.Click(productItem, iMaxQueryPage, InquiryUser, true, inquiryMessages);
+                clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
+                clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
+                clicker.OnInquiryEndEvent -= new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
+                clicker = null;
+                toolStripStatusLabel1.Text = "询盘操作结束。";
+                if (IsStopClicking) { break; }
+
+                if (CurrVpnEntity != null)
+                {
+                    toolStripStatusLabel1.Text = "断开VPN连接。";
+                    CurrVpnEntity.Disconnect();
+                    CurrVpnEntity.Dispose();
+                    CurrVpnModel = null;
+                    CurrVpnEntity = null;
+                }
+            }
+
+            InquiryRunBtn.Checked = false;
+            InquiryRunBtn.Image = AliRank.Properties.Resources.play;
+            InquiryRunBtn.Text = "询盘";
+            InquiryRunBtn.Enabled = false;
+
+        }
+        #endregion
     }
 }

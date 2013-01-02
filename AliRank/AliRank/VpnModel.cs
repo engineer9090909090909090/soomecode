@@ -18,8 +18,5 @@ namespace AliRank
         public Int32 ConnQty { get; set; }
         public Int32 Status { get; set; }
         public DateTime UpdateTime { get; set; }
-
-        public Int32 InquiryQty { get; set; }
-        public DateTime PrevInquiryTime { get; set; }
     }
 }

@@ -53,9 +53,27 @@ namespace AliRank
                  
                  ThreadPool.QueueUserWorkItem(new WaitCallback(DoWork), (object)i);
             }
-            eventX.WaitOne(Timeout.Infinite, true); //WaitOne()方法使调用它的线程等待直到eventX.Set()方法被调用
-            Console.WriteLine("线程池结束！");
 
+            eventX.WaitOne(Timeout.Infinite, true); //WaitOne()方法使调用它的线程等待直到eventX.Set()方法被调用
+
+            WebClient webClient = new WebClient();
+            foreach (ShowcaseRankInfo productItem in showCaseProducts)
+            {
+                try
+                {
+                    string imageFile = FileUtils.GetImageFolder() + Path.DirectorySeparatorChar + productItem.ProductId + ".jpg";
+                    if (File.Exists(imageFile)) File.Delete(imageFile);
+                    webClient.DownloadFile(productItem.Image, imageFile);
+                    productItem.ProductImg = imageFile;
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Trace.WriteLine(e.InnerException.Message);
+                    productItem.ProductImg = "";
+                }
+            }
+            webClient.Dispose();
+            Console.WriteLine("线程池结束！");
             return showCaseProducts;
         }
 
@@ -75,21 +93,6 @@ namespace AliRank
                 System.Diagnostics.Trace.WriteLine(url + " = " + jsKwString);
             }
             ProductPageHtml = null;
-
-            try
-            {
-                WebClient webClient = new WebClient();
-                string imageFile = FileUtils.GetImageFolder() + Path.DirectorySeparatorChar + productItem.ProductId + ".jpg";
-                if (File.Exists(imageFile)) File.Delete(imageFile);
-                webClient.DownloadFile(productItem.Image, imageFile);
-                productItem.ProductImg = imageFile;
-                webClient.Dispose();
-            }
-            catch (Exception e){
-                System.Diagnostics.Trace.WriteLine(e.InnerException.Message);
-                productItem.ProductImg = "";
-            }
-
             Interlocked.Increment(ref iCount);
             if (iCount == MaxCount)
             {

@@ -25,7 +25,7 @@ namespace AliRank
         private string SEARCH_URL2 = @"http://www.alibaba.com/products/F0/{0}/{1}.html";
         private string PURL_PREFIX = @"http://www.alibaba.com/product-gs/";
 
-        private string LOGOUT_URL = @"http://us.my.alibaba.com/user/sign/sign_out.htm";
+        //private string LOGOUT_URL = @"http://us.my.alibaba.com/user/sign/sign_out.htm";
         private string SEND_MESSAGE = @"http://message.alibaba.com/msgsend/contact.htm";
 
         //http://us.message.alibaba.com/msgsend/memberInquirySuccess.htm

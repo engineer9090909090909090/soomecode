@@ -47,11 +47,11 @@
             this.CleanKeyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.clickRunBtn = new System.Windows.Forms.ToolStripButton();
-            this.clickStopBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.clickRunBtn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.InquiryRunBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.RunTime = new System.Windows.Forms.ToolStripLabel();
             this.MessageLabel = new System.Windows.Forms.ToolStripLabel();
@@ -152,7 +152,7 @@
             // 
             this.ClickToolStripMenuItem.Name = "ClickToolStripMenuItem";
             this.ClickToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.ClickToolStripMenuItem.Text = "点击设置(&C)";
+            this.ClickToolStripMenuItem.Text = "系统参数设置(&C)";
             this.ClickToolStripMenuItem.Click += new System.EventHandler(this.ClickToolStripMenuItem_Click);
             // 
             // VPNToolStripMenuItem
@@ -166,14 +166,14 @@
             // 
             this.AccountToolStripMenuItem.Name = "AccountToolStripMenuItem";
             this.AccountToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.AccountToolStripMenuItem.Text = "阿里帐号管理(&A)";
+            this.AccountToolStripMenuItem.Text = "询盘帐号管理(&A)";
             this.AccountToolStripMenuItem.Click += new System.EventHandler(this.AccountToolStripMenuItem_Click);
             // 
             // MessageToolStripMenuItem
             // 
             this.MessageToolStripMenuItem.Name = "MessageToolStripMenuItem";
             this.MessageToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.MessageToolStripMenuItem.Text = "询盘信息管理(&M)";
+            this.MessageToolStripMenuItem.Text = "询盘内容管理(&M)";
             this.MessageToolStripMenuItem.Click += new System.EventHandler(this.MessageToolStripMenuItem_Click);
             // 
             // shutdownToolStripMenuItem
@@ -199,11 +199,11 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.clickRunBtn,
-            this.clickStopBtn,
             this.toolStripSeparator1,
-            this.toolStripButton4,
             this.toolStripSeparator3,
+            this.clickRunBtn,
+            this.toolStripButton4,
+            this.InquiryRunBtn,
             this.toolStripLabel1,
             this.RunTime,
             this.MessageLabel});
@@ -213,34 +213,25 @@
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
             // clickRunBtn
             // 
             this.clickRunBtn.Image = global::AliRank.Properties.Resources.play;
             this.clickRunBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.clickRunBtn.Name = "clickRunBtn";
-            this.clickRunBtn.Size = new System.Drawing.Size(75, 22);
-            this.clickRunBtn.Text = "开始点击";
+            this.clickRunBtn.Size = new System.Drawing.Size(51, 22);
+            this.clickRunBtn.Text = "点击";
             this.clickRunBtn.ToolTipText = "运行";
             this.clickRunBtn.Click += new System.EventHandler(this.clickRunBtn_Click);
-            // 
-            // clickStopBtn
-            // 
-            this.clickStopBtn.Enabled = false;
-            this.clickStopBtn.Image = global::AliRank.Properties.Resources.stop;
-            this.clickStopBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.clickStopBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.clickStopBtn.Name = "clickStopBtn";
-            this.clickStopBtn.RightToLeftAutoMirrorImage = true;
-            this.clickStopBtn.Size = new System.Drawing.Size(75, 22);
-            this.clickStopBtn.Text = "停止点击";
-            this.clickStopBtn.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
-            this.clickStopBtn.ToolTipText = "停止";
-            this.clickStopBtn.Click += new System.EventHandler(this.clickStopBtn_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripButton4
             // 
@@ -251,10 +242,15 @@
             this.toolStripButton4.Text = "排名查询";
             this.toolStripButton4.Click += new System.EventHandler(this.AsToolStripMenuItem_Click);
             // 
-            // toolStripSeparator3
+            // InquiryRunBtn
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            this.InquiryRunBtn.Image = global::AliRank.Properties.Resources.play;
+            this.InquiryRunBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.InquiryRunBtn.Name = "InquiryRunBtn";
+            this.InquiryRunBtn.Size = new System.Drawing.Size(51, 22);
+            this.InquiryRunBtn.Text = "询盘";
+            this.InquiryRunBtn.ToolTipText = "运行";
+            this.InquiryRunBtn.Click += new System.EventHandler(this.InquiryRunBtn_Click);
             // 
             // toolStripLabel1
             // 
@@ -441,7 +437,6 @@
         private System.Windows.Forms.ToolStripMenuItem KwToolStripMenuItem;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton clickRunBtn;
-        private System.Windows.Forms.ToolStripButton clickStopBtn;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ToolStripMenuItem SetToolStripMenuItem;
@@ -471,6 +466,7 @@
         private System.Windows.Forms.ToolStripMenuItem AccountToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem MessageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem MaxInToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton InquiryRunBtn;
     }
 }
 
