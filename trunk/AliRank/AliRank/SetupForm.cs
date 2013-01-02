@@ -26,19 +26,10 @@ namespace AliRank
             this.textBox1.Text = clickNum;
             string sMaxPauseTime = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_PAUSE_TIME);
             this.MaxPauseTime.Text = sMaxPauseTime;
-            string sMinIntervalTime = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MIn_INTERVAL_TIME);
-            this.MinIntervalBox.Text = sMinIntervalTime;
+            string sMinIntervalTime = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MIN_INTERVAL_TIME);
+            this.MaxIntervalBox.Text = sMinIntervalTime;
             string sMaxQueryPage = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_QUERY_PAGE);
             this.MaxQueryPage.Text = sMaxQueryPage;
-            string runModel = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.RUN_MODEL);
-            if (runModel.Equals(Constants.RUN_ONLY_CLICK))
-            {
-                OnlyClickRadioButton.Checked = true;
-            }
-            else
-            {
-                ClickInquiryRadioButton.Checked = true;
-            }
 
             string network = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.NETWORK_CHOICE);
             if (network.Equals(Constants.NETWORK_VPN))
@@ -84,6 +75,12 @@ namespace AliRank
                 errorMsg.Text = "最小询盘时间不能为空且只能为数字！";
                 return;
             }
+            string maxIntervalBox = this.MaxIntervalBox.Text;
+            if (string.IsNullOrEmpty(maxIntervalBox) || int.TryParse(maxIntervalBox, out a) == false)
+            {
+                errorMsg.Text = "最小询盘时间不能为空且只能为数字！";
+                return;
+            }
             string maxQueryPage = this.MaxQueryPage.Text;
             if (string.IsNullOrEmpty(maxQueryPage) || int.TryParse(maxQueryPage, out a) == false)
             {
@@ -92,7 +89,8 @@ namespace AliRank
             }
             DAOFactory.Instance.GetProfileDAO().SetValue(Constants.AUTO_CLICK_NUM, str);
             DAOFactory.Instance.GetProfileDAO().SetValue(Constants.MAX_PAUSE_TIME, maxPauseTime);
-            DAOFactory.Instance.GetProfileDAO().SetValue(Constants.MIn_INTERVAL_TIME, minIntervalBox);
+            DAOFactory.Instance.GetProfileDAO().SetValue(Constants.MIN_INTERVAL_TIME, minIntervalBox);
+            DAOFactory.Instance.GetProfileDAO().SetValue(Constants.MAX_INTERVAL_TIME, maxIntervalBox);
             DAOFactory.Instance.GetProfileDAO().SetValue(Constants.MAX_QUERY_PAGE, maxQueryPage);
             string Network = Constants.NETWORK_VPN;
             if (VPNRadioBtn.Checked)
@@ -104,17 +102,6 @@ namespace AliRank
                 Network = Constants.NETWORK_NONE;
             }
             DAOFactory.Instance.GetProfileDAO().SetValue(Constants.NETWORK_CHOICE, Network);
-            string RunModel = Constants.RUN_CLICK_INQUIRY;
-            if (OnlyClickRadioButton.Checked)
-            {
-                RunModel = Constants.RUN_ONLY_CLICK;
-            }
-            if (ClickInquiryRadioButton.Checked)
-            {
-                RunModel = Constants.RUN_CLICK_INQUIRY;
-            }
-            DAOFactory.Instance.GetProfileDAO().SetValue(Constants.RUN_MODEL, RunModel);
-
             this.Close();
         }
 
