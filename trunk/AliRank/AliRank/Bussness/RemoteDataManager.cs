@@ -15,6 +15,7 @@ namespace AliRank.Bussness
         private string ComputeName;
         private string OnlyToken;
         private string REMOTE_ADDRESS = "http://rank.soomes.com/Api/";
+        //private string REMOTE_ADDRESS = "http://localhost/AliRank/Api/";
         public static RemoteDataManager Instance = new RemoteDataManager();
 
         private RemoteDataManager()
@@ -28,10 +29,28 @@ namespace AliRank.Bussness
 
         public string UserLoginSystem(string username, string password)
         {
-            string postString = "username=" + username + "&password=" + password;
-            postString = postString + "&cupId=" + CpuId + "&macAddress=" + MacAdd + "&ComputeName=" + ComputeName;
+            LoginInfo loginInfo = null;
+            SoomsUser user = new SoomsUser();
+            user.Username = username;
+            user.Password = password;
+            user.CpuId = CpuId;
+            user.MacAddress = MacAdd;
+            user.ComputeName = ComputeName;
+            string data = JsonConvert.ToJson(user);
+            string postString = "data=" + FileUtils.DesEncrypt(data, Constants.DES_KEY);
             string jsonString  = HttpHelper.GetHtml(REMOTE_ADDRESS + "login", postString, null);
-            LoginInfo loginInfo = JsonConvert.FromJson<LoginInfo>(jsonString);
+            try
+            {
+                loginInfo = JsonConvert.FromJson<LoginInfo>(jsonString);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Trace.WriteLine(e.Message);
+            }
+            if (loginInfo == null)
+            {
+                return "登录失败，请联系管理员";
+            }
             if (string.IsNullOrEmpty(loginInfo.Message))
             {
                 this.OnlyToken = loginInfo.Token;
@@ -48,7 +67,8 @@ namespace AliRank.Bussness
                 if (accounts.Count> 0)
                 {
                     string postString = "_token=" + this.OnlyToken;
-                    postString = postString + "&accounts=" + HttpUtility.UrlEncode(JsonConvert.ToJson(accounts), Encoding.UTF8);
+                    string data =  JsonConvert.ToJson(accounts);
+                    postString = postString + "&data=" + FileUtils.DesEncrypt(data, Constants.DES_KEY); 
                     returnstring = HttpHelper.GetHtml(REMOTE_ADDRESS + "uploadAccounts", postString, null);
                 }
             }
@@ -68,7 +88,8 @@ namespace AliRank.Bussness
                 if (vpns.Count > 0)
                 {
                     string postString = "_token=" + this.OnlyToken;
-                    postString = postString + "&vpns=" + HttpUtility.UrlEncode(JsonConvert.ToJson(vpns), Encoding.UTF8);
+                    string data = JsonConvert.ToJson(vpns);
+                    postString = postString + "&data=" + FileUtils.DesEncrypt(data, Constants.DES_KEY); 
                     returnstring = HttpHelper.GetHtml(REMOTE_ADDRESS + "uploadVpns", postString, null);
                 }
             }
