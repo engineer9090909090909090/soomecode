@@ -49,10 +49,13 @@ namespace AliRank
             }
             else
             {
-                RasConnection connection = RasConnection.GetActiveConnectionByHandle(handle);
-                if (connection != null)
+                if (handle != null)
                 {
-                    connection.HangUp();
+                    RasConnection connection = RasConnection.GetActiveConnectionByHandle(handle);
+                    if (connection != null)
+                    {
+                        connection.HangUp();
+                    }
                 }
             }
 
