@@ -66,6 +66,11 @@
             this.QueryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ModifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MaxInToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clickStopBtn = new System.Windows.Forms.ToolStripButton();
+            this.InquiryStopBtn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -200,13 +205,18 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSeparator1,
-            this.toolStripSeparator3,
             this.clickRunBtn,
+            this.clickStopBtn,
+            this.toolStripSeparator2,
             this.toolStripButton4,
+            this.toolStripSeparator4,
             this.InquiryRunBtn,
+            this.InquiryStopBtn,
+            this.toolStripSeparator5,
             this.toolStripLabel1,
             this.RunTime,
-            this.MessageLabel});
+            this.MessageLabel,
+            this.toolStripSeparator3});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(792, 25);
@@ -398,6 +408,41 @@
             this.MaxInToolStripMenuItem.Text = "修改最大询盘数";
             this.MaxInToolStripMenuItem.Click += new System.EventHandler(this.MaxInToolStripMenuItem_Click);
             // 
+            // clickStopBtn
+            // 
+            this.clickStopBtn.Enabled = false;
+            this.clickStopBtn.Image = global::AliRank.Properties.Resources.stop;
+            this.clickStopBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.clickStopBtn.Name = "clickStopBtn";
+            this.clickStopBtn.Size = new System.Drawing.Size(75, 22);
+            this.clickStopBtn.Text = "停止点击";
+            this.clickStopBtn.ToolTipText = "运行";
+            // 
+            // InquiryStopBtn
+            // 
+            this.InquiryStopBtn.Enabled = false;
+            this.InquiryStopBtn.Image = global::AliRank.Properties.Resources.stop;
+            this.InquiryStopBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.InquiryStopBtn.Name = "InquiryStopBtn";
+            this.InquiryStopBtn.Size = new System.Drawing.Size(75, 22);
+            this.InquiryStopBtn.Text = "停止询盘";
+            this.InquiryStopBtn.ToolTipText = "运行";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -467,6 +512,11 @@
         private System.Windows.Forms.ToolStripMenuItem MessageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem MaxInToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton InquiryRunBtn;
+        private System.Windows.Forms.ToolStripButton clickStopBtn;
+        private System.Windows.Forms.ToolStripButton InquiryStopBtn;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
     }
 }
 
