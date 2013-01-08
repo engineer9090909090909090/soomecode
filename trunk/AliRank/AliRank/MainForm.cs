@@ -802,8 +802,8 @@ namespace AliRank
             string sMinInterval = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MIN_INTERVAL_TIME);
             string sMaxInterval = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_INTERVAL_TIME);
             int iMaxQueryPage = Convert.ToInt32(sMaxQueryPage);
-            int iMinInterval = Convert.ToInt32(sMinInterval) * 60;
-            int iMaxInterval = Convert.ToInt32(sMaxInterval) * 60;
+            int iMinInterval = Convert.ToInt32(sMinInterval) * 1000 * 60;
+            int iMaxInterval = Convert.ToInt32(sMaxInterval) * 1000 * 60;
             InquiryMessages inquiryMessages = null;
             string ipAddress = string.Empty;
             while (!IsStop)
