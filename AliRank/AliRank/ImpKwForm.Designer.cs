@@ -39,6 +39,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.ConfirmBtn = new System.Windows.Forms.Button();
             this.CancelBtn = new System.Windows.Forms.Button();
+            this.SelectChk = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -118,7 +119,7 @@
             // 
             // ConfirmBtn
             // 
-            this.ConfirmBtn.Location = new System.Drawing.Point(234, 492);
+            this.ConfirmBtn.Location = new System.Drawing.Point(331, 491);
             this.ConfirmBtn.Name = "ConfirmBtn";
             this.ConfirmBtn.Size = new System.Drawing.Size(90, 23);
             this.ConfirmBtn.TabIndex = 8;
@@ -128,7 +129,7 @@
             // 
             // CancelBtn
             // 
-            this.CancelBtn.Location = new System.Drawing.Point(447, 492);
+            this.CancelBtn.Location = new System.Drawing.Point(438, 491);
             this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.Size = new System.Drawing.Size(75, 23);
             this.CancelBtn.TabIndex = 9;
@@ -136,11 +137,23 @@
             this.CancelBtn.UseVisualStyleBackColor = true;
             this.CancelBtn.Click += new System.EventHandler(this.CancelBtn_Click);
             // 
+            // SelectChk
+            // 
+            this.SelectChk.AutoSize = true;
+            this.SelectChk.Location = new System.Drawing.Point(253, 495);
+            this.SelectChk.Name = "SelectChk";
+            this.SelectChk.Size = new System.Drawing.Size(48, 16);
+            this.SelectChk.TabIndex = 10;
+            this.SelectChk.Text = "全选";
+            this.SelectChk.UseVisualStyleBackColor = true;
+            this.SelectChk.CheckedChanged += new System.EventHandler(this.SelectChk_CheckedChanged);
+            // 
             // ImpKwForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(802, 526);
+            this.Controls.Add(this.SelectChk);
             this.Controls.Add(this.CancelBtn);
             this.Controls.Add(this.ConfirmBtn);
             this.Controls.Add(this.groupBox1);
@@ -177,5 +190,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button ConfirmBtn;
         private System.Windows.Forms.Button CancelBtn;
+        private System.Windows.Forms.CheckBox SelectChk;
     }
 }
