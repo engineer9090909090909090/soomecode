@@ -27,7 +27,9 @@ namespace AliRank
             string sMaxPauseTime = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_PAUSE_TIME);
             this.MaxPauseTime.Text = sMaxPauseTime;
             string sMinIntervalTime = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MIN_INTERVAL_TIME);
-            this.MaxIntervalBox.Text = sMinIntervalTime;
+            this.MinIntervalBox.Text = sMinIntervalTime;
+            string sMaxIntervalTime = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_INTERVAL_TIME);
+            this.MaxIntervalBox.Text = sMaxIntervalTime;
             string sMaxQueryPage = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_QUERY_PAGE);
             this.MaxQueryPage.Text = sMaxQueryPage;
 
@@ -78,7 +80,7 @@ namespace AliRank
             string maxIntervalBox = this.MaxIntervalBox.Text;
             if (string.IsNullOrEmpty(maxIntervalBox) || int.TryParse(maxIntervalBox, out a) == false)
             {
-                errorMsg.Text = "最小询盘时间不能为空且只能为数字！";
+                errorMsg.Text = "最大询盘时间不能为空且只能为数字！";
                 return;
             }
             string maxQueryPage = this.MaxQueryPage.Text;
