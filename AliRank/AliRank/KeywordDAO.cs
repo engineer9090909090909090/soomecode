@@ -133,9 +133,10 @@ namespace AliRank
 
         public ShowcaseRankInfo GetEffctiveProduct()
         {
+            string today = DateTime.Now.ToString("yyyyMMdd");
             string sql = "select * from (select distinct k.*, count(i.account) inquiryQty from keywords k "
                 + " left join inquiryinfos i on k.productId = i.productId and strftime('%Y%m%d',i.inquiryDate) ="
-                + "'" + DateTime.Now.ToString("yyyyMMdd") + "' "
+                + "'" + today + "' "
                 + " group by k.productId ) where inquiryQty < maxInquiryQty  order by inquiryQty asc limit 0,1";
             DataTable dt = dbHelper.ExecuteDataTable(sql, null);
             if (dt.Rows.Count > 0)
