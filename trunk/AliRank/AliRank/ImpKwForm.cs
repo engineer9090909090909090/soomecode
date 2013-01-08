@@ -90,7 +90,6 @@ namespace AliRank
                 item.ImageIndex = i;
                 item.Text = obj.ProductName;
                 item.Tag = obj.ProductId;
-                item.Checked = true;
                 this.listView1.Items.Add(item);
             }
             this.listView1.LargeImageList = imageList1;
@@ -116,6 +115,21 @@ namespace AliRank
                 keywordDAO.Insert(selectedList);
                 selectedList.Clear();
                 this.Close();
+            }
+        }
+
+        private void SelectChk_CheckedChanged(object sender, EventArgs e)
+        {
+            if (SelectChk.Checked)
+            {
+                SelectChk.Text = "反选";
+            }
+            else {
+                SelectChk.Text = "全选";
+            }
+            foreach (ListViewItem item in listView1.Items)
+            {
+                item.Checked = SelectChk.Checked;
             }
         }
     }
