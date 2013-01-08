@@ -34,6 +34,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.errorMsg = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.MinIntervalBox = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.MaxIntervalBox = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -48,9 +51,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.CancelBtn = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
-            this.MinIntervalBox = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
@@ -128,6 +128,32 @@
             this.groupBox2.Size = new System.Drawing.Size(417, 305);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(79, 134);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(113, 12);
+            this.label8.TabIndex = 25;
+            this.label8.Text = "询盘最小间隔时间：";
+            // 
+            // MinIntervalBox
+            // 
+            this.MinIntervalBox.Location = new System.Drawing.Point(198, 131);
+            this.MinIntervalBox.Name = "MinIntervalBox";
+            this.MinIntervalBox.Size = new System.Drawing.Size(102, 21);
+            this.MinIntervalBox.TabIndex = 24;
+            this.MinIntervalBox.Text = "10";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(306, 137);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(17, 12);
+            this.label11.TabIndex = 26;
+            this.label11.Text = "分";
             // 
             // label9
             // 
@@ -228,7 +254,7 @@
             this.MaxPauseTime.Name = "MaxPauseTime";
             this.MaxPauseTime.Size = new System.Drawing.Size(102, 21);
             this.MaxPauseTime.TabIndex = 10;
-            this.MaxPauseTime.Text = "60";
+            this.MaxPauseTime.Text = "5";
             // 
             // label5
             // 
@@ -257,32 +283,6 @@
             this.CancelBtn.Text = "取消(&C)";
             this.CancelBtn.UseVisualStyleBackColor = true;
             this.CancelBtn.Click += new System.EventHandler(this.CancelBtn_Click);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(79, 134);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(113, 12);
-            this.label8.TabIndex = 25;
-            this.label8.Text = "询盘最小间隔时间：";
-            // 
-            // MinIntervalBox
-            // 
-            this.MinIntervalBox.Location = new System.Drawing.Point(198, 131);
-            this.MinIntervalBox.Name = "MinIntervalBox";
-            this.MinIntervalBox.Size = new System.Drawing.Size(102, 21);
-            this.MinIntervalBox.TabIndex = 24;
-            this.MinIntervalBox.Text = "10";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(306, 137);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(17, 12);
-            this.label11.TabIndex = 26;
-            this.label11.Text = "分";
             // 
             // SetupForm
             // 

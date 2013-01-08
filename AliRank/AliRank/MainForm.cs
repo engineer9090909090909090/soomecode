@@ -35,7 +35,7 @@ namespace AliRank
             string sMaxPauseTime = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_PAUSE_TIME);
             if (string.IsNullOrEmpty(sMaxPauseTime))
             {
-                DAOFactory.Instance.GetProfileDAO().SetValue(Constants.MAX_PAUSE_TIME, 300 + "");
+                DAOFactory.Instance.GetProfileDAO().SetValue(Constants.MAX_PAUSE_TIME, 5 + "");
             }
             string sMaxIntervalTime = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_INTERVAL_TIME);
             if (string.IsNullOrEmpty(sMaxIntervalTime))
@@ -823,7 +823,7 @@ namespace AliRank
                 }
                 if (sNetwork == Constants.NETWORK_NONE)
                 {
-                    string currAddress = HttpHelper.Ip138GetIp();
+                    ipAddress = HttpHelper.Ip138GetIp();
                 }
 
                 //显示IP信息
@@ -886,8 +886,5 @@ namespace AliRank
         }
         #endregion
 
-        
-
-        
     }
 }
