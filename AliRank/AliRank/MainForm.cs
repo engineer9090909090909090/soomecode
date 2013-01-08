@@ -385,16 +385,6 @@ namespace AliRank
 
         private void clickRunBtn_Click(object sender, EventArgs e)
         {
-            if (clickRunBtn.Checked == false)
-            {
-                ClickRun_Click(sender, e);
-            }else {
-                ClickStop_Click(sender, e);
-            }
-        }
-
-        private void ClickRun_Click(object sender, EventArgs e)
-        {
             string network = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.NETWORK_CHOICE);
             if (network.Equals(Constants.NETWORK_VPN))
             {
@@ -433,22 +423,15 @@ namespace AliRank
             clickStopBtn.Enabled = true;
         }
 
-        private void ClickStop_Click(object sender, EventArgs e)
+        private void clickStopBtn_Click(object sender, EventArgs e)
         {
-            IsStop = true;
             clickStopBtn.Enabled = false;
             clickTimer.Enabled = false;
+            IsStop = true;
             bgClickWorker.CancelAsync();
             if (clicker != null)
             {
                 clicker.Stop();
-            }
-            if (CurrVpnEntity != null)
-            {
-                CurrVpnEntity.Disconnect();
-                CurrVpnEntity.Dispose();
-                CurrVpnModel = null;
-                CurrVpnEntity = null;
             }
         }
 
@@ -759,18 +742,6 @@ namespace AliRank
 
         private void InquiryRunBtn_Click(object sender, EventArgs e)
         {
-            if (clickRunBtn.Checked == false)
-            {
-                InquiryRun_Click(sender, e);
-            }
-            else
-            {
-                InquiryStop_Click(sender, e);
-            }
-        }
-
-        private void InquiryRun_Click(object sender, EventArgs e)
-        {
             List<InquiryMessages> msgList = inquiryDao.GetInquiryMessages();
             if (msgList == null || msgList.Count == 0)
             {
@@ -807,26 +778,19 @@ namespace AliRank
             clickTimer.Elapsed += new System.Timers.ElapsedEventHandler(theout);
             clickTimer.AutoReset = true;
             InquiryRunBtn.Enabled = false;
-            InquiryStopBtn.Enabled = false;
+            InquiryStopBtn.Enabled = true;
             clickTimer.Enabled = true;
         }
 
-        private void InquiryStop_Click(object sender, EventArgs e)
+        private void InquiryStopBtn_Click(object sender, EventArgs e)
         {
-            IsStop = true;
             InquiryStopBtn.Enabled = false;
             clickTimer.Enabled = false;
+            IsStop = true;
             bgClickWorker.CancelAsync();
             if (clicker != null)
             {
                 clicker.Stop();
-            }
-            if (CurrVpnEntity != null)
-            {
-                CurrVpnEntity.Disconnect();
-                CurrVpnEntity.Dispose();
-                CurrVpnModel = null;
-                CurrVpnEntity = null;
             }
         }
 
@@ -914,10 +878,16 @@ namespace AliRank
                 toolStripStatusLabel1.Text = "询盘操作替停" + (puaseTime / 1000 / 60) + "分钟。";
                 Thread.Sleep(puaseTime);
             }
+            toolStripStatusLabel1.Text = "";
+            MessageLabel.Text = "";
             InquiryRunBtn.Enabled = true;
             InquiryStopBtn.Enabled = false;
 
         }
         #endregion
+
+        
+
+        
     }
 }

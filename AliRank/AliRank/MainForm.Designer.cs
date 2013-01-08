@@ -48,13 +48,18 @@
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.clickRunBtn = new System.Windows.Forms.ToolStripButton();
+            this.clickStopBtn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.InquiryRunBtn = new System.Windows.Forms.ToolStripButton();
+            this.InquiryStopBtn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.RunTime = new System.Windows.Forms.ToolStripLabel();
             this.MessageLabel = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.tabControl = new System.Windows.Forms.TabControl();
@@ -66,11 +71,6 @@
             this.QueryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ModifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MaxInToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clickStopBtn = new System.Windows.Forms.ToolStripButton();
-            this.InquiryStopBtn = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -228,11 +228,6 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
-            // 
             // clickRunBtn
             // 
             this.clickRunBtn.Image = global::AliRank.Properties.Resources.play;
@@ -243,6 +238,22 @@
             this.clickRunBtn.ToolTipText = "运行";
             this.clickRunBtn.Click += new System.EventHandler(this.clickRunBtn_Click);
             // 
+            // clickStopBtn
+            // 
+            this.clickStopBtn.Enabled = false;
+            this.clickStopBtn.Image = global::AliRank.Properties.Resources.stop;
+            this.clickStopBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.clickStopBtn.Name = "clickStopBtn";
+            this.clickStopBtn.Size = new System.Drawing.Size(75, 22);
+            this.clickStopBtn.Text = "停止点击";
+            this.clickStopBtn.ToolTipText = "运行";
+            this.clickStopBtn.Click += new System.EventHandler(this.clickStopBtn_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
             // toolStripButton4
             // 
             this.toolStripButton4.Image = global::AliRank.Properties.Resources.query;
@@ -251,6 +262,11 @@
             this.toolStripButton4.Size = new System.Drawing.Size(75, 22);
             this.toolStripButton4.Text = "排名查询";
             this.toolStripButton4.Click += new System.EventHandler(this.AsToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
             // 
             // InquiryRunBtn
             // 
@@ -261,6 +277,22 @@
             this.InquiryRunBtn.Text = "询盘";
             this.InquiryRunBtn.ToolTipText = "运行";
             this.InquiryRunBtn.Click += new System.EventHandler(this.InquiryRunBtn_Click);
+            // 
+            // InquiryStopBtn
+            // 
+            this.InquiryStopBtn.Enabled = false;
+            this.InquiryStopBtn.Image = global::AliRank.Properties.Resources.stop;
+            this.InquiryStopBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.InquiryStopBtn.Name = "InquiryStopBtn";
+            this.InquiryStopBtn.Size = new System.Drawing.Size(75, 22);
+            this.InquiryStopBtn.Text = "停止询盘";
+            this.InquiryStopBtn.ToolTipText = "运行";
+            this.InquiryStopBtn.Click += new System.EventHandler(this.InquiryStopBtn_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripLabel1
             // 
@@ -279,6 +311,11 @@
             this.MessageLabel.ForeColor = System.Drawing.Color.Red;
             this.MessageLabel.Name = "MessageLabel";
             this.MessageLabel.Size = new System.Drawing.Size(0, 22);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
             // dataGridView1
             // 
@@ -407,41 +444,6 @@
             this.MaxInToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.MaxInToolStripMenuItem.Text = "修改最大询盘数";
             this.MaxInToolStripMenuItem.Click += new System.EventHandler(this.MaxInToolStripMenuItem_Click);
-            // 
-            // clickStopBtn
-            // 
-            this.clickStopBtn.Enabled = false;
-            this.clickStopBtn.Image = global::AliRank.Properties.Resources.stop;
-            this.clickStopBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.clickStopBtn.Name = "clickStopBtn";
-            this.clickStopBtn.Size = new System.Drawing.Size(75, 22);
-            this.clickStopBtn.Text = "停止点击";
-            this.clickStopBtn.ToolTipText = "运行";
-            // 
-            // InquiryStopBtn
-            // 
-            this.InquiryStopBtn.Enabled = false;
-            this.InquiryStopBtn.Image = global::AliRank.Properties.Resources.stop;
-            this.InquiryStopBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.InquiryStopBtn.Name = "InquiryStopBtn";
-            this.InquiryStopBtn.Size = new System.Drawing.Size(75, 22);
-            this.InquiryStopBtn.Text = "停止询盘";
-            this.InquiryStopBtn.ToolTipText = "运行";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
             // MainForm
             // 
