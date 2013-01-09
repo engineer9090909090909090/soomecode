@@ -120,8 +120,7 @@ namespace AliRank
                 {
                     browser.Document.InvokeScript("onProductClick", new string[] { item.ProductId.ToString() });
                     //productLink.InvokeMember("click");
-                    string productUrl = item.ProductUrl.Substring(item.ProductUrl.LastIndexOf("/"));
-                    currentRequestUrl = PURL_PREFIX + item.ProductId + productUrl;
+                    currentRequestUrl = productLink.GetAttribute("href").ToString();
                     browser.Navigate(currentRequestUrl, "_self", null, additionalHeaders);
                 }
                 else
@@ -153,8 +152,8 @@ namespace AliRank
                 HtmlElement messageLink = browser.Document.GetElementById("position2");
                 if (this.canInquiry && messageLink != null)
                 {
-                    messageLink.SetAttribute("target", "_self");
-                    messageLink.InvokeMember("click");
+                    string messageUrl = messageLink.GetAttribute("href").ToString();
+                    browser.Navigate(messageUrl, "_self", null, additionalHeaders);
                 }
                 else
                 {
