@@ -864,19 +864,18 @@ namespace AliRank
                 clicker = null;
                 toolStripStatusLabel1.Text = "询盘操作结束。";
                 if (IsStop) { break; }
-
-                if (CurrVpnEntity != null)
-                {
-                    toolStripStatusLabel1.Text = "断开VPN连接。";
-                    CurrVpnEntity.Disconnect();
-                    CurrVpnEntity.Dispose();
-                    CurrVpnModel = null;
-                    CurrVpnEntity = null;
-                }
-
                 int puaseTime = new Random().Next(iMinInterval, iMaxInterval);
                 toolStripStatusLabel1.Text = "询盘操作替停" + (puaseTime / 1000 / 60) + "分钟。";
                 Thread.Sleep(puaseTime);
+            }
+
+            if (CurrVpnEntity != null)
+            {
+                toolStripStatusLabel1.Text = "断开VPN连接。";
+                CurrVpnEntity.Disconnect();
+                CurrVpnEntity.Dispose();
+                CurrVpnModel = null;
+                CurrVpnEntity = null;
             }
             toolStripStatusLabel1.Text = "";
             MessageLabel.Text = "";
