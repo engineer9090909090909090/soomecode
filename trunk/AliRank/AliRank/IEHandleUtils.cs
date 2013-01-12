@@ -71,6 +71,21 @@ namespace AliRank
         }
 
 
+        public static void Navigate(WebBrowser webBrowser1, string url, string postString, string additionalHeaders)
+        {
+            List<Cookie> cookies = ShareCookie.Instance.LoginCookies;
+            foreach (Cookie cook in cookies)
+            {
+                IEHandleUtils.InternetSetCookie(url, cook.Name, cook.Value);
+            }
+            byte[] postData = null;
+            if (!string.IsNullOrEmpty(postString))
+            {
+                postData = Encoding.Default.GetBytes(postString);
+            }
+            webBrowser1.Navigate(url, "_self", postData, additionalHeaders);
+        }
+
         /// <summary>
         /// 遍历CookieContainer
         /// </summary>
