@@ -559,6 +559,7 @@ namespace AliRank
                     if (IsStop) { break; }
                 }
                 if (IsStop) { break; }
+                GC.Collect();
             }
             
             if (CurrVpnEntity != null)
@@ -867,6 +868,7 @@ namespace AliRank
                 int puaseTime = new Random().Next(iMinInterval, iMaxInterval);
                 toolStripStatusLabel1.Text = "询盘操作替停" + (puaseTime / 1000 / 60) + "分钟。";
                 Thread.Sleep(puaseTime);
+                GC.Collect();
             }
 
             if (CurrVpnEntity != null)
