@@ -91,14 +91,15 @@ namespace AliRank
             {
                 this.canInquiry = false;
             }
-            
+
             this.maxQueryPage = maxQueryPageNumber;
             this.clickKey = item.RankKeyword;
             currentRequestUrl = string.Format(SEARCH_URL1, clickKey.Replace(" ", "+"));
             ClickingEvent(item, @"Clicking " + currentRequestUrl);
             browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
             browser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
-            browser.Navigate(currentRequestUrl, "_self", null, additionalHeaders);
+            IEHandleUtils.Navigate(browser, currentRequestUrl, null, additionalHeaders);
+            //browser.Navigate(currentRequestUrl, "_self", null, additionalHeaders);
             eventX.WaitOne(Timeout.Infinite, true);
             item = null;
             aliAccount = null;
@@ -121,7 +122,8 @@ namespace AliRank
                     browser.Document.InvokeScript("onProductClick", new string[] { item.ProductId.ToString() });
                     //productLink.InvokeMember("click");
                     currentRequestUrl = productLink.GetAttribute("href").ToString();
-                    browser.Navigate(currentRequestUrl, "_self", null, additionalHeaders);
+                    IEHandleUtils.Navigate(browser, currentRequestUrl, null, additionalHeaders);
+                   // browser.Navigate(currentRequestUrl, "_self", null, additionalHeaders);
                 }
                 else
                 {
@@ -133,7 +135,8 @@ namespace AliRank
                         currentRequestUrl = PURL_PREFIX + item.ProductId + productUrl;
                         ClickingEvent(item, "Enforce clicking " + currentRequestUrl);
                         browser.Document.InvokeScript("onProductClick", new string[] { item.ProductId.ToString() });
-                        browser.Navigate(currentRequestUrl, "_self", null, additionalHeaders);
+                        IEHandleUtils.Navigate(browser, currentRequestUrl, null, additionalHeaders);
+                        //browser.Navigate(currentRequestUrl, "_self", null, additionalHeaders);
                     }
                     else
                     {
@@ -141,7 +144,8 @@ namespace AliRank
                         currentRequestUrl = string.Format(SEARCH_URL2, clickKey.Replace(" ", "_"), currentPage);
                         Thread.Sleep(new Random().Next(1000, 10000));
                         ClickingEvent(item, @"Clicking " + currentRequestUrl);
-                        browser.Navigate(currentRequestUrl, "_self", null, additionalHeaders);
+                        IEHandleUtils.Navigate(browser, currentRequestUrl, null, additionalHeaders);
+                       // browser.Navigate(currentRequestUrl, "_self", null, additionalHeaders);
                     }
                 }
             }
@@ -153,7 +157,8 @@ namespace AliRank
                 if (this.canInquiry && messageLink != null)
                 {
                     string messageUrl = messageLink.GetAttribute("href").ToString();
-                    browser.Navigate(messageUrl, "_self", null, additionalHeaders);
+                    IEHandleUtils.Navigate(browser, messageUrl, null, additionalHeaders);
+                    //browser.Navigate(messageUrl, "_self", null, additionalHeaders);
                 }
                 else
                 {
@@ -178,10 +183,11 @@ namespace AliRank
                 string attachs = "attachs=";
                 string eventSubmitDoSend = "eventSubmitDoSend=Send";
                 string postString = token + "&" + action + "&" + sh + "&" + pageId + "&" + chkProductIds + "&" + s + "&"
-                    + c + "&" + o + "&" + attachs + "&" + eventSubmitDoSend;
-                byte[] postData = Encoding.Default.GetBytes(postString);
-                string Headers = this.additionalHeaders  + "Content-Type: application/x-www-form-urlencoded" + Environment.NewLine;
-                browser.Navigate(postUrl, "_self", postData, Headers);
+                       + c + "&" + o + "&" + attachs + "&" + eventSubmitDoSend;
+                string headers = additionalHeaders + Environment.NewLine + 
+                       "Content-Type: application/x-www-form-urlencoded" + Environment.NewLine;
+                IEHandleUtils.Navigate(browser, postUrl, postString, headers);
+                //browser.Navigate(postUrl, "_self", postData, Headers);
             }
             if (browser.Url.ToString().IndexOf(INQUIRY_SUCCESS) >= 0)
             {
@@ -193,9 +199,9 @@ namespace AliRank
                 info.Company = item.CompanyUrl;
                 info.InquiryIp = aliAccount.LoginIp;
                 InquiryEndEvent(info, "This product has been send a Rank Inquiry.");
-                IEHandleUtils.ClearIECookie();
                 browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
-                browser.Navigate(LOGOUT_URL, "_self", null, additionalHeaders);
+                IEHandleUtils.Navigate(browser, LOGOUT_URL, null, additionalHeaders);
+                //browser.Navigate(LOGOUT_URL, "_self", null, additionalHeaders);
                 eventX.Set();
             }
         }
