@@ -36,7 +36,7 @@
             this.SearchGroup = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.pager1 = new AliHelper.Controls.Pager();
+            this.pager1 = new AliHelper.Pager();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -125,14 +125,14 @@
             // 
             // pager1
             // 
-            this.pager1.Location = new System.Drawing.Point(31, 458);
+            this.pager1.Location = new System.Drawing.Point(252, 459);
             this.pager1.Name = "pager1";
-            this.pager1.NMax = 0;
-            this.pager1.PageCount = 0;
-            this.pager1.PageCurrent = 0;
-            this.pager1.PageSize = 50;
-            this.pager1.Size = new System.Drawing.Size(761, 26);
+            this.pager1.PageSize = 20;
+            this.pager1.RecordCount = 0;
+            this.pager1.ShowPageSizeDropdown = false;
+            this.pager1.Size = new System.Drawing.Size(530, 25);
             this.pager1.TabIndex = 9;
+            this.pager1.PageIndexChanged += new System.EventHandler(this.pager1_PageIndexChanged);
             // 
             // ImageForm
             // 
@@ -171,6 +171,6 @@
         private System.Windows.Forms.ComboBox SearchGroup;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private Controls.Pager pager1;
+        private Pager pager1;
     }
 }

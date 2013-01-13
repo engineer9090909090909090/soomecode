@@ -1,13 +1,4 @@
-﻿#region  版权信息
-/*---------------------------------------------------------------------*
-// 项目  名称：《Winform分页控件》
-// 文  件  名： Pager.cs
-// 描      述： 分页控件
-// 作      者：kwon yan
-*----------------------------------------------------------------------*/
-#endregion
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -15,228 +6,283 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
-namespace AliHelper.Controls
+namespace AliHelper
 {
-    /**/
-    /// <summary>
-    /// 申明委托
-    /// </summary>
-    /// <param name="e"></param>
-    /// <returns></returns>
-    public delegate int EventPagingHandler(EventPagingArg e);
-    /**/
-    /// <summary>
-    /// 分页控件呈现
-    /// </summary>
     public partial class Pager : UserControl
     {
+
+        private int _PageCount = 1;
+        private int _PageIndex = 1;
+        private int _PageSize = 20;
+        private int _RecordCount;
+        private bool _DisplayPageSize;
+        private string PagerText = "当前{1}/{2}页,每页{3}条,总共{0}条记录";
+
+        public event EventHandler PageIndexChanged;
+
         public Pager()
         {
             InitializeComponent();
         }
-        public event EventPagingHandler EventPaging;
-        /**/
-        /// <summary>
-        /// 每页显示记录数
-        /// </summary>
-        private int _pageSize = 50;
-        /**/
-        /// <summary>
-        /// 每页显示记录数
-        /// </summary>
+
+
+        [DefaultValue(true), Category("自定义属性"), Description("是否显示每页显示记录数")]
+        public bool ShowPageSizeDropdown
+        {
+            get
+            {
+                return this._DisplayPageSize;
+            }
+            set
+            {
+                this._DisplayPageSize = value;
+                ShowPageSizeList();
+            }
+        }
+
+        
+
+        private int PageCount
+        {
+            get
+            {
+                return this._PageCount;
+            }
+        }
+
+        [DefaultValue(1), Category("自定义属性"), Description("当前显示的页数")]
+        public int PageIndex
+        {
+            get
+            {
+                return this._PageIndex;
+            }
+            set
+            {
+                this._PageIndex = value;
+            }
+        }
+
+        [DefaultValue(10), Description("每页显示的记录数"), Category("自定义属性")]
         public int PageSize
         {
-            get { return _pageSize; }
+            get
+            {
+                return this._PageSize;
+            }
             set
             {
-                _pageSize = value;
-                GetPageCount();
+                if (value <= 1)
+                {
+                    value = 10;
+                }
+                this._PageSize = value;
             }
         }
 
-        private int _nMax = 0;
-        /**/
-        /// <summary>
-        /// 总记录数
-        /// </summary>
-        public int NMax
+        [Description("要分页的总记录数"), Category("自定义属性")]
+        public int RecordCount
         {
-            get { return _nMax; }
+            get
+            {
+                return this._RecordCount;
+            }
             set
             {
-                _nMax = value;
-                GetPageCount();
+                if (value != this._RecordCount)
+                {
+                    this._RecordCount = value;
+                    UpdateUI();
+                }
+            }
+        }
+        
+        protected int GetPageCount(int RecordCounts, int PageSizes)
+        {
+            int num = 0;
+            string str = (Convert.ToDouble(RecordCounts) / Convert.ToDouble(PageSizes)).ToString();
+            if (str.IndexOf(".") < 0)
+            {
+                return Convert.ToInt32(str);
+            }
+            string[] strArray = Regex.Split(str, @"\.", RegexOptions.IgnoreCase);
+            if (!string.IsNullOrEmpty(strArray[1].ToString()))
+            {
+                num = Convert.ToInt32(strArray[0]) + 1;
+            }
+            return num;
+        }
+
+        protected void SetBtnEnabled()
+        {
+            if (this._PageIndex == 1)
+            {
+                this.btnFirst.Enabled = false;
+                this.btnPrev.Enabled = false;
+                this.btnNext.Enabled =  true;
+                this.btnLast.Enabled = true;
+            }
+            else if ((this._PageIndex > 1) && (this._PageIndex < this._PageCount))
+            {
+                this.btnFirst.Enabled = true;
+                this.btnPrev.Enabled = true;
+                this.btnNext.Enabled = true;
+                this.btnLast.Enabled = true;
+            }
+            else if (this._PageIndex == this._PageCount)
+            {
+                this.btnFirst.Enabled = true;
+                this.btnPrev.Enabled = true;
+                this.btnNext.Enabled = false;
+                this.btnLast.Enabled = false;
+            }
+            if (this._PageCount == 1)
+            {
+                this.btnNext.Enabled = false;
+                this.btnLast.Enabled = false;
             }
         }
 
-        private int _pageCount = 0;
-        /**/
-        /// <summary>
-        /// 页数=总记录数/每页显示记录数
-        /// </summary>
-        public int PageCount
-        {
-            get { return _pageCount; }
-            set { _pageCount = value; }
-        }
 
-        private int _pageCurrent = 0;
-        /**/
-        /// <summary>
-        /// 当前页号
-        /// </summary>
-        public int PageCurrent
+        private void SetPagerText()
         {
-            get { return _pageCurrent; }
-            set { _pageCurrent = value; }
-        }
-
-        /// <summary>
-        /// 设置页面大小
-        /// </summary>
-        private void GetPageCount()
-        {
-            if (this.NMax > 0)
+            this.txtCurrentPage.Text = this.PageIndex.ToString();
+            string[] strArray = new string[] { this.RecordCount.ToString(), this.PageIndex.ToString(), this.PageCount.ToString(), this.PageSize.ToString() };
+            this.lblPager.Text = string.Format(this.PagerText, (object[])strArray);
+            this.cmbCurrentPage.Items.Clear();
+            for(int i = 1; i <= this.PageCount; i ++ )
             {
-                this.PageCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(this.NMax) / Convert.ToDouble(this.PageSize)));
-                lblPageCount.Text = " / " + PageCount.ToString();
-                lblPageCount1.Text = "每页"+PageSize .ToString ()+"条，共"+PageCount.ToString()+"页";
-                //lblPageCount1.Text = "Page no: " + PageSize.ToString() + ",Total:" + PageCount.ToString() + " pages";
+                this.cmbCurrentPage.Items.Add(i.ToString());
+            }
+            if (this.PageIndex >= 1)
+            {
+                this.cmbCurrentPage.SelectedIndex = this.PageIndex - 1;
+            }
+        }
+
+
+        private void CustomEvent(object sender, EventArgs e)
+        {
+            try
+            {
+                this.PageIndexChanged(sender, e);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("未找到PageIndexChanged事件！");
+            }
+        }
+
+        private void btnFirst_Click(object sender, EventArgs e)
+        {
+            this._PageIndex = 1;
+            this.SetPagerText();
+            this.SetBtnEnabled();
+            this.CustomEvent(sender, e);
+        }
+
+        private void btnLast_Click(object sender, EventArgs e)
+        {
+            this._PageIndex = this._PageCount;
+            this.SetPagerText();
+            this.SetBtnEnabled();
+            this.CustomEvent(sender, e);
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            int num = this._PageIndex;
+            try
+            {
+                int num2 = Convert.ToInt32(num) + 1;
+                if (num2 >= this._RecordCount)
+                {
+                    num2 = this._RecordCount;
+                }
+                this._PageIndex = num2;
+                this.SetPagerText();
+                this.SetBtnEnabled();
+                this.CustomEvent(sender, e);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void btnPrev_Click(object sender, EventArgs e)
+        {
+            int num = this._PageIndex;
+            try
+            {
+                int num2 = Convert.ToInt32(num) - 1;
+                if (num2 <= 0)
+                {
+                    num2 = 1;
+                }
+                this._PageIndex = num2;
+                this.SetPagerText();
+                this.SetBtnEnabled();
+                this.CustomEvent(sender, e);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void btnGo_Click(object sender, EventArgs e)
+        {
+            string text = this.cmbCurrentPage.SelectedItem.ToString();
+            this._PageIndex = Convert.ToInt32(text);
+            this.SetPagerText();
+            this.SetBtnEnabled();
+            this.CustomEvent(sender, e);
+        }
+
+        private void WinFormPager_Load(object sender, EventArgs e)
+        {
+            this.ShowPageSizeList();
+            this.SetPagerText();
+            this.SetBtnEnabled();
+        }
+
+        private void UpdateUI()
+        {
+            int pageCount = this.GetPageCount(this._RecordCount, this._PageSize);
+            this._PageCount = pageCount;
+            this.SetPagerText();
+            this.SetBtnEnabled();
+        }
+
+        private void ShowPageSizeList()
+        {
+            if (!this._DisplayPageSize)
+            {
+                this.lab1PageSize.Visible = false;
+                this.lab2PageSize.Visible = false;
+                this.lab3PageSize.Visible = false;
+                this.cmbPageSize.Visible = false;
+                this.Size = new Size(530, 25);
             }
             else
             {
-                this.PageCount = 0;
+                this.lab1PageSize.Visible = true;
+                this.lab2PageSize.Visible = true;
+                this.lab3PageSize.Visible = true;
+                this.cmbPageSize.Visible = true;
+                this.Size = new Size(630, 25);
             }
         }
 
-        /**/
-        /// <summary>
-        /// 翻页控件数据绑定的方法 关键是这步，都是调用这里
-        /// </summary>
-        public void Bind()
+        private void cmbPageSize_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.EventPaging != null)
-            {
-                this.NMax = this.EventPaging(new EventPagingArg(this.PageCurrent));
+            if (this.ShowPageSizeDropdown)
+            { 
+                string text = this.cmbPageSize.SelectedItem.ToString();
+                this._PageSize = Convert.ToInt32(text);
             }
+        }
 
-            if (this.PageCurrent > this.PageCount)
-            {
-                this.PageCurrent = this.PageCount;
-            }
-            if (this.PageCount == 1)
-            {
-                this.PageCurrent = 1;
-            }
-            lblcurentpage.Text = PageCurrent.ToString();
-            lblRecordCount.Text = "共" + NMax.ToString() + "条记录";
-            //lblRecordCount.Text = "Total: " + NMax.ToString() + " records";
-          
-
-            btnPrev.Enabled = true;
-            btnFirst.Enabled = true;
-            btnLast.Enabled = true;
-            btnNext.Enabled = true;
-
-            if (this.PageCurrent == 1)
-            {
-                this.btnPrev.Enabled = false;
-                this.btnFirst.Enabled = false;
-            }
-      
-
-            if (this.PageCurrent == this.PageCount)
-            {
-                this.btnLast.Enabled = false;
-                this.btnNext.Enabled = false;
-            }
-     
-            if (this.NMax == 0)
-            {
-                btnNext.Enabled = false;
-                btnLast.Enabled = false;
-                btnFirst.Enabled = false;
-                btnPrev.Enabled = false;
-            }
-            cmbPagecount.Items.Clear();
-            for (int i = 1; i <= PageCount; i++)
-                cmbPagecount.Items.Add(i.ToString());
-            cmbPagecount.SelectedIndex = PageCurrent - 1;
-            
-        }
-        /// <summary>
-        /// 首页
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnFirst_Click(object sender, EventArgs e)
-        {
-            PageCurrent = 1;
-            this.Bind();
-        }
-        //上一页
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnPrev_Click(object sender, EventArgs e)
-        {
-            PageCurrent -= 1;
-            if (PageCurrent <= 0)
-            {
-                PageCurrent = 1;
-            }
-            this.Bind();
-        }
-        /// <summary>
-        /// 下一页
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnNext_Click(object sender, EventArgs e)
-        {
-            this.PageCurrent += 1;
-            if (PageCurrent > PageCount)
-            {
-                PageCurrent = PageCount;
-            }
-            this.Bind();
-        }
-        /// <summary>
-        /// 最后页
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnLast_Click(object sender, EventArgs e)
-        {
-            PageCurrent = PageCount;
-            this.Bind();
-        }
-        /// <summary>
-        /// 转到新页
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void btnGo_Click(object sender, EventArgs e)
-        {
-            if (Int32.TryParse(cmbPagecount.SelectedItem.ToString(), out _pageCurrent))
-            {
-                this.Bind();
-            } 
-        }
-    }
-    /**/
-    /// <summary>
-    /// 自定义事件数据基类
-    /// </summary>
-    public class EventPagingArg : EventArgs
-    {
-        private int _intPageIndex;
-        public EventPagingArg(int PageIndex)
-        {
-            _intPageIndex = PageIndex;
-        }
     }
 }
