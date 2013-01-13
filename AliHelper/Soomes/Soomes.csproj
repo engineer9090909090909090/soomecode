@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="AliGroup.cs" />
     <Compile Include="AliGroupInfo.cs" />
+    <Compile Include="AliLoginUser.cs" />
     <Compile Include="AliProductInfo.cs" />
     <Compile Include="AttributeNode.cs" />
     <Compile Include="Category.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="ImageInfo.cs" />
     <Compile Include="ProductStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryObject.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
