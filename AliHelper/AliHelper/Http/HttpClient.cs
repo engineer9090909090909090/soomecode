@@ -146,8 +146,8 @@ namespace AliHelper
             imageInfoList.AddRange(infoJson.ImageInfos);
             for (int i = 2; i <= infoJson.Query.TotalPage; i++)
             {
-                //ImageInfoJson itemJson = GetAllGroupImages(i);
-                //imageInfoList.AddRange(itemJson.ImageInfos);
+                ImageInfoJson itemJson = GetAllGroupImages(i);
+                imageInfoList.AddRange(itemJson.ImageInfos);
             }
             WebClient webClient = new WebClient();
             foreach (ImageInfo imageInfo in imageInfoList)
