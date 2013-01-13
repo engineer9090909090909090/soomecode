@@ -78,20 +78,6 @@ namespace AliHelper
         public static string GetHtml(string url)
         {
             return GetHtml(url, null);
-            /*
-            HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(url);
-            myHttpWebRequest.Timeout = 20 * 1000; //连接超时
-            myHttpWebRequest.Accept = HttpHelper.Accept;
-            /*myHttpWebRequest.AllowAutoRedirect = false;
-            myHttpWebRequest.UserAgent = "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0;)";
-            myHttpWebRequest.Headers.Add("Cookie", ShareCookie.Instance.LoginCookie); //使用已经保存的cookies 方法二
-            HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
-            Stream stream = myHttpWebResponse.GetResponseStream();
-            stream.ReadTimeout = 15 * 1000; //读取超时
-            StreamReader sr = new StreamReader(stream, Encoding.GetEncoding("utf-8"));
-            string strWebData = sr.ReadToEnd();
-            return strWebData;
-            */
         }
 
         public static string GetHtml(string url, string postString)
@@ -114,7 +100,14 @@ namespace AliHelper
                 httpWebRequest.ContentType = HttpHelper.ContentType;
                 httpWebRequest.Accept = HttpHelper.Accept;
                 httpWebRequest.UserAgent = HttpHelper.UserAgent;
-                httpWebRequest.Headers.Add("Cookie", ShareCookie.Instance.LoginCookie); //使用已经保存的cookies 方法二
+                if (ShareCookie.Instance.LoginCookieContainer == null)
+                {
+                    httpWebRequest.Headers.Add("Cookie", ShareCookie.Instance.LoginCookie); //使用已经保存的cookies 方法二
+                }
+                else 
+                {
+                    httpWebRequest.CookieContainer = ShareCookie.Instance.LoginCookieContainer;
+                }
                 if (IsPost)  //如果是Post递交数据，则写入传的字符串数据 
                 {
                     byte[] byteRequest = Encoding.Default.GetBytes(postString);
@@ -130,8 +123,7 @@ namespace AliHelper
                 streamReader.Close();
                 responseStream.Close();
                 httpWebRequest.Abort();
-                httpWebResponse.Close();
-                //到这里为止，所有的对象都要释放掉，以免内存像滚雪球一样
+                httpWebResponse.Close();//到这里为止，所有的对象都要释放掉，以免内存像滚雪球一样
                 return html;
             }
             catch (Exception e)
@@ -152,7 +144,6 @@ namespace AliHelper
         public static List<Cookie> GetAllCookies(CookieContainer cc)
         {
             List<Cookie> lstCookies = new List<Cookie>();
-
             Hashtable table = (Hashtable)cc.GetType().InvokeMember("m_domainTable",
                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.GetField |
                 System.Reflection.BindingFlags.Instance, null, cc, new object[] { });

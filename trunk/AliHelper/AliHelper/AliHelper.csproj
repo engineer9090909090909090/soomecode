@@ -55,6 +55,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="DAO\AliGroupDao.cs" />
     <Compile Include="DAO\AliProductDao.cs" />
+    <Compile Include="DAO\AliImageDao.cs" />
     <Compile Include="DAO\DAOFactory.cs" />
     <Compile Include="DAO\SQLiteDBHelper.cs" />
     <Compile Include="EditCategory.cs">
@@ -144,6 +145,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\no_image.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loading.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

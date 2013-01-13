@@ -139,6 +139,47 @@ namespace AliHelper
             return imageGroupNodes;
         }
 
+        public static List<ImageInfo> GetAllImages()
+        {
+            List<ImageInfo> imageInfoList = new List<ImageInfo>();
+            ImageInfoJson infoJson = GetAllGroupImages(1);
+            imageInfoList.AddRange(infoJson.ImageInfos);
+            for (int i = 2; i <= infoJson.Query.TotalPage; i++)
+            {
+                //ImageInfoJson itemJson = GetAllGroupImages(i);
+                //imageInfoList.AddRange(itemJson.ImageInfos);
+            }
+            WebClient webClient = new WebClient();
+            foreach (ImageInfo imageInfo in imageInfoList)
+            {
+                try
+                {
+                    imageInfo.LocationUrl = FileUtils.DownloadImage(webClient, imageInfo.Url, imageInfo.Id);
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Trace.WriteLine(e.Message);
+                    imageInfo.LocationUrl = "";
+                }
+            }
+            webClient.Dispose();
+            return imageInfoList;
+        }
+
+        public static ImageInfoJson GetAllGroupImages(int page)
+        {
+            string url = "http://sh.vip.alibaba.com/photobank/ajaxPhotobank.htm";
+            string postString = string.Format("event=searchImage&location=allGroup&page={0}", page);
+            string html = IEHandleUtils.GetHtml(url, postString);
+            ImageInfoJson imageInfoJson = JsonConvert.FromJson<ImageInfoJson>(html);
+            Dictionary<int, string> dic = imageInfoJson.UrlMap;
+            foreach (ImageInfo imageInfo in imageInfoJson.ImageInfos)
+            {
+                imageInfo.Url = dic[imageInfo.Id];
+            }
+            return imageInfoJson;
+        }
+
         public static ImageInfoJson GetImages(int groupId, int page)
         {
             string url = "http://sh.vip.alibaba.com/photobank/ajaxPhotobank.htm";
@@ -164,6 +205,16 @@ namespace AliHelper
             return imageInfoJson;
         }
 
+        public static string GetCsrfToken(string html)
+        {
+            Regex r = new Regex("var _csrf_ = {'_csrf_token_':'(.*?)'};");
+            GroupCollection gc = r.Match(html).Groups;
+            if (gc != null && gc.Count > 1)
+            {
+                return gc[1].Value.Trim();
+            }
+            return "";
+        }
     }
 }
 

@@ -12,10 +12,12 @@ namespace AliHelper
 
         public AliGroupDao groupDao;
         public AliProductDao productDao;
+        public AliImageDao aliImageDao;
         public ProductsManager()
         {
             groupDao = DAOFactory.Instance.GetAliGroupDao();
             productDao = DAOFactory.Instance.GetAliProductDao();
+            aliImageDao = DAOFactory.Instance.GetAliImageDao();
         }
 
         public void UpdateGroupProdcuts(int GroupId, List<AliProduct> products)
@@ -54,6 +56,18 @@ namespace AliHelper
         public List<AliGroup> GetGroupList()
         {
             return groupDao.GetAliGroupList();
+        }
+
+
+        public void UpdateImageInfos(List<ImageInfo> images)
+        {
+            aliImageDao.DeleteAllImages();
+            aliImageDao.Insert(images);
+        }
+
+        public QueryObject<ImageInfo> GetImageInfoList(QueryObject<ImageInfo> query)
+        {
+            return aliImageDao.GetAliImageList(query);
         }
 
     }
