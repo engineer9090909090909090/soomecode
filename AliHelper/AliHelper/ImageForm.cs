@@ -13,25 +13,21 @@ namespace AliHelper
 {
     public partial class ImageForm : Form
     {
-
+        private ProductsManager productsManager;
         private int CurrentGroupId;
+        private string SearchName;
         public ImageForm()
         {
             InitializeComponent();
+            productsManager = new ProductsManager();
         }
 
         private void ImageForm_Load(object sender, EventArgs e)
         {
             List<ImageGroupNode> imageGroupNodeList = HttpClient.GetImageGroup(null);
             UpdateImageGroupUI(imageGroupNodeList);
-            if (imageGroupNodeList.Count > 0)
-            {
-                ImageGroupNode firstNode = imageGroupNodeList[0];
-                CurrentGroupId = firstNode.Node.Value;
-                BindDataWithPage(1);
-                //ImageInfoJson imageInfo = HttpClient.GetImages(firstNode.Node.Value, 1);
-                //UpdateListView(imageInfo.ImageInfos);
-            }
+            CurrentGroupId = -1;
+            BindDataWithPage(1);
         }
 
         public void UpdateListView(List<ImageInfo> ImageInfoList)
@@ -109,24 +105,32 @@ namespace AliHelper
             TreeNode currentNode = e.Node;
             if (currentNode.Tag == null)
             {
-                return;
+                CurrentGroupId = -1;
             }
-            ImageGroupNode node = (ImageGroupNode)currentNode.Tag;
-            CurrentGroupId = node.Node.Value;
+            else 
+            {
+                ImageGroupNode node = (ImageGroupNode)currentNode.Tag;
+                CurrentGroupId = node.Node.Value;
+            }
             BindDataWithPage(1);
         }
 
         
         private void BindDataWithPage(int Page)
         {
-            
-            ImageInfoJson imageInfo = HttpClient.GetImages(CurrentGroupId, Page);
-            if (imageInfo != null)
+            QueryObject<ImageInfo> query = new QueryObject<ImageInfo>();
+            query.Page = Page;
+            query.PageSize = pager1.PageSize;
+            query.Condition = new ImageInfo();
+            query.Condition.GroupId = CurrentGroupId;
+            query.Condition.DisplayNameUtf8 = SearchName;
+            QueryObject<ImageInfo> result = productsManager.GetImageInfoList(query);
+            if (result.Result != null)
             {
-                pager1.PageIndex = imageInfo.Query.CurrentPage;
-                pager1.PageSize = imageInfo.Query.PageSize;
-                pager1.RecordCount = imageInfo.Query.TotalItem;
-                UpdateListView(imageInfo.ImageInfos);
+                pager1.PageIndex = result.Page;
+                pager1.PageSize = result.PageSize;
+                pager1.RecordCount = result.RecordCount;
+                UpdateListView(result.Result);
             }
             else
             {
@@ -139,6 +143,12 @@ namespace AliHelper
         private void pager1_PageIndexChanged(object sender, EventArgs e)
         {
             BindDataWithPage(this.pager1.PageIndex);
+        }
+
+        private void BtnSearch_Click(object sender, EventArgs e)
+        {
+            this.SearchName = this.txtSearchKey.Text.Trim();
+            BindDataWithPage(1);
         }
     }
 }

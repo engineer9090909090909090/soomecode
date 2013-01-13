@@ -29,8 +29,6 @@ namespace AliHelper
         {
             this.UserName = Account;
             this.Password = Password;
-            browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_LogoinCompleted);
-            browser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(browser_LogoinCompleted);
 
             string html = HttpHelper.GetHtml(loginUrl);
             string dmtrackPageid = GetDmtrackPageid(html);
@@ -49,42 +47,7 @@ namespace AliHelper
                 return false;
             }
             CookieContainer cookieContainer = new CookieContainer();
-            bool logined = GetLoginUrl(this.UserName, this.Password, dmtrackPageid, st, ref cookieContainer);
-            if (logined == false)
-            {
-                return false;
-            }
-            List<Cookie> cookies = IEHandleUtils.GetAllCookies(cookieContainer);
-            string cookie_string = string.Empty;
-            foreach (Cookie cookie in cookies)
-            {
-                string cookstring = cookie.Name + "=" + cookie.Value + ";";
-                //System.Diagnostics.Trace.WriteLine(cookie.Domain.ToString() + " = " + cookstring);
-                cookie_string = cookstring + cookie_string;
-                IEHandleUtils.InternetSetCookie(homeUrl, cookie.Name, cookie.Value);
-            }
-            ShareCookie.Instance.LoginCookie = cookie_string;
-            ShareCookie.Instance.LoginCookies = cookies;
-            browser.Navigate(homeUrl, "_self", null, Constants.UserAgent);
-
-            eventX.WaitOne(Timeout.Infinite, true);
-            Console.WriteLine("登录线程结束！");
-            return LoginSuccess;
-        }
-
-        void browser_LogoinCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
-        { 
-            WebBrowser browser = (WebBrowser)sender;
-            if (browser.ReadyState != System.Windows.Forms.WebBrowserReadyState.Complete)
-                return;
-            if (e.Url.ToString() != browser.Url.ToString())
-                return;
-            if (e.Url.ToString() == homeUrl)
-            {
-                browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_LogoinCompleted);
-                LoginSuccess = true;
-                eventX.Set();
-            }
+            return GetLoginUrl(this.UserName, this.Password, dmtrackPageid, st, ref cookieContainer);
         }
 
 
@@ -138,7 +101,6 @@ namespace AliHelper
             string preUrl = "https://login.alibaba.com/validateST.htm?pd=alibaba&pageFrom=standardlogin&u_token=&xloginPassport={0}&xloginPassword={1}&xloginCheckToken=&rememberme=rememberme&runatm=runatm&dmtrack_pageid={2}&st={3}";
             string url = string.Format(preUrl, userId, password, dmtrackPageid, st);
             string html = HttpHelper.GetHtml(url);
-            //System.Diagnostics.Trace.WriteLine("GetLoginUrl = " + html);
             string xloginCallBackForRisUrl = "https://login.alibaba.com/xloginCallBackForRisk.do";
             string postString = "dmtrack_pageid_info=" + dmtrackPageid + "&xloginPassport=" + userId + "&xloginPassword=" + password + "&ua=&pd=alibaba";
             HttpHelper.GetHtml(xloginCallBackForRisUrl, postString, cookieContainer);
@@ -154,7 +116,9 @@ namespace AliHelper
             {
                 HttpHelper.GetHtml(urlstring, cookieContainer);
             }
-            string vipHtml = HttpHelper.GetHtml(homeUrl, cookieContainer);
+            string manageHtml = HttpHelper.GetHtml(MainForm.ManageHtml, cookieContainer);
+            ShareCookie.Instance.CsrfToken = HttpClient.GetCsrfToken(manageHtml);
+            ShareCookie.Instance.LoginCookieContainer = cookieContainer;
             return true;
         }
 

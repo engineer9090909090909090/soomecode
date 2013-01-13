@@ -17,19 +17,14 @@ namespace AliHelper
     public partial class MainForm : Form
     {
         //alibaba vip manage url
-        public static string url = "http://hz.productposting.alibaba.com/product/manage_products.htm#tab=approved";
+        public static string ManageHtml = "http://hz.productposting.alibaba.com/product/manage_products.htm#tab=approved";
 
-        public static string CsrfToken = string.Empty;
-
-        public ProductsManager productsManager;
+        private ProductsManager productsManager;
         
         public MainForm()
         {
             InitializeComponent();
             productsManager = new ProductsManager();
-            string html = IEHandleUtils.GetHtml(url);
-            CsrfToken = GetCsrfToken(html);
-
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -40,16 +35,7 @@ namespace AliHelper
         }
 
 
-        public string GetCsrfToken(string html)
-        {
-            Regex r = new Regex("var _csrf_ = {'_csrf_token_':'(.*?)'};");
-            GroupCollection gc = r.Match(html).Groups;
-            if (gc != null && gc.Count > 1)
-            {
-                return gc[1].Value.Trim();
-            }
-            return "";
-        }
+        
 
         public void UpdateGroupUI(List<AliGroup> groups)
         {
@@ -84,25 +70,25 @@ namespace AliHelper
 
         private void updateGroup_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(CsrfToken))
+            if (string.IsNullOrEmpty(ShareCookie.Instance.CsrfToken))
             {
                 return;
             }
-            List<AliGroup> groups = HttpClient.GetGroups(-1, 0, CsrfToken);
+            List<AliGroup> groups = HttpClient.GetGroups(-1, 0, ShareCookie.Instance.CsrfToken);
             productsManager.UpdateGroups(groups);
             UpdateGroupUI(groups);
         }
 
         private void updateAllProduct_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(CsrfToken))
+            if (string.IsNullOrEmpty(ShareCookie.Instance.CsrfToken))
             {
                 return;
             }
-            List<AliGroup> groups = HttpClient.GetGroups(-1, 0, CsrfToken);
+            List<AliGroup> groups = HttpClient.GetGroups(-1, 0, ShareCookie.Instance.CsrfToken);
             productsManager.UpdateGroups(groups);
             UpdateGroupUI(groups);
-            GetGroupProduct(groups, CsrfToken);
+            GetGroupProduct(groups, ShareCookie.Instance.CsrfToken);
         }
 
         public List<AliProduct> GetGroupProduct(List<AliGroup> groups, string csrfToken)
@@ -149,6 +135,12 @@ namespace AliHelper
             ImageForm f = new ImageForm();
             f.StartPosition = FormStartPosition.CenterParent;
             f.ShowDialog(this);
+        }
+
+        private void updateAllImages_Click(object sender, EventArgs e)
+        {
+            List<ImageInfo> imageList = HttpClient.GetAllImages();
+            productsManager.UpdateImageInfos(imageList);
         }
         
 

@@ -16,6 +16,6 @@ namespace AliHelper
 
         public CookieContainer LoginCookieContainer { get; set; }
 
-        public List<Cookie> LoginCookies { get; set; }
+        public string CsrfToken { get; set; }
     }
 }

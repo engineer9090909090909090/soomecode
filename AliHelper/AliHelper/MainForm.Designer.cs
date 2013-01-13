@@ -41,6 +41,7 @@
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.updateAllImages = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -94,6 +95,7 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.updateGroup,
             this.updateAllProduct,
+            this.updateAllImages,
             this.newProductBtn});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
@@ -107,7 +109,7 @@
             this.updateGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.updateGroup.Name = "updateGroup";
             this.updateGroup.Size = new System.Drawing.Size(75, 22);
-            this.updateGroup.Text = "更新分组";
+            this.updateGroup.Text = "同步分组";
             this.updateGroup.Click += new System.EventHandler(this.updateGroup_Click);
             // 
             // updateAllProduct
@@ -116,7 +118,7 @@
             this.updateAllProduct.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.updateAllProduct.Name = "updateAllProduct";
             this.updateAllProduct.Size = new System.Drawing.Size(99, 22);
-            this.updateAllProduct.Text = "更新所有产品";
+            this.updateAllProduct.Text = "同步所有产品";
             this.updateAllProduct.Click += new System.EventHandler(this.updateAllProduct_Click);
             // 
             // newProductBtn
@@ -163,6 +165,15 @@
             this.dataGridView1.Size = new System.Drawing.Size(655, 447);
             this.dataGridView1.TabIndex = 0;
             // 
+            // updateAllImages
+            // 
+            this.updateAllImages.Image = ((System.Drawing.Image)(resources.GetObject("updateAllImages.Image")));
+            this.updateAllImages.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.updateAllImages.Name = "updateAllImages";
+            this.updateAllImages.Size = new System.Drawing.Size(75, 22);
+            this.updateAllImages.Text = "同步图片";
+            this.updateAllImages.Click += new System.EventHandler(this.updateAllImages_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -206,5 +217,6 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripButton newProductBtn;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.ToolStripButton updateAllImages;
     }
 }

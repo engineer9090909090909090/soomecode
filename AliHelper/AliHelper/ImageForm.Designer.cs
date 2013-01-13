@@ -32,9 +32,8 @@
             this.ImageListView = new System.Windows.Forms.ListView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.label1 = new System.Windows.Forms.Label();
-            this.SearchName = new System.Windows.Forms.TextBox();
-            this.SearchGroup = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.txtSearchKey = new System.Windows.Forms.TextBox();
+            this.BtnSearch = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.pager1 = new AliHelper.Pager();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -84,35 +83,28 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(38, 12);
+            this.label1.Location = new System.Drawing.Point(169, 12);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(101, 12);
             this.label1.TabIndex = 3;
             this.label1.Text = "按图片名称搜索：";
             // 
-            // SearchName
+            // txtSearchKey
             // 
-            this.SearchName.Location = new System.Drawing.Point(142, 7);
-            this.SearchName.Name = "SearchName";
-            this.SearchName.Size = new System.Drawing.Size(228, 21);
-            this.SearchName.TabIndex = 4;
+            this.txtSearchKey.Location = new System.Drawing.Point(273, 7);
+            this.txtSearchKey.Name = "txtSearchKey";
+            this.txtSearchKey.Size = new System.Drawing.Size(228, 21);
+            this.txtSearchKey.TabIndex = 4;
             // 
-            // SearchGroup
+            // BtnSearch
             // 
-            this.SearchGroup.FormattingEnabled = true;
-            this.SearchGroup.Location = new System.Drawing.Point(380, 8);
-            this.SearchGroup.Name = "SearchGroup";
-            this.SearchGroup.Size = new System.Drawing.Size(121, 20);
-            this.SearchGroup.TabIndex = 6;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(510, 6);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "搜索(&Q)";
-            this.button1.UseVisualStyleBackColor = true;
+            this.BtnSearch.Location = new System.Drawing.Point(510, 6);
+            this.BtnSearch.Name = "BtnSearch";
+            this.BtnSearch.Size = new System.Drawing.Size(75, 23);
+            this.BtnSearch.TabIndex = 7;
+            this.BtnSearch.Text = "搜索(&Q)";
+            this.BtnSearch.UseVisualStyleBackColor = true;
+            this.BtnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
             // 
             // button2
             // 
@@ -141,9 +133,8 @@
             this.ClientSize = new System.Drawing.Size(785, 490);
             this.Controls.Add(this.pager1);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.SearchGroup);
-            this.Controls.Add(this.SearchName);
+            this.Controls.Add(this.BtnSearch);
+            this.Controls.Add(this.txtSearchKey);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.splitContainer1);
             this.MaximizeBox = false;
@@ -167,9 +158,8 @@
         private System.Windows.Forms.ListView ImageListView;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox SearchName;
-        private System.Windows.Forms.ComboBox SearchGroup;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox txtSearchKey;
+        private System.Windows.Forms.Button BtnSearch;
         private System.Windows.Forms.Button button2;
         private Pager pager1;
     }
