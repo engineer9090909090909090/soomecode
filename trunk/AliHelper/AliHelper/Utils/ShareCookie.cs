@@ -8,23 +8,14 @@ namespace AliHelper
 {
     class ShareCookie
     {
-        private static ShareCookie instance;
+        public static ShareCookie Instance = new ShareCookie();
+
         private ShareCookie() { }
-        public static ShareCookie Instance
-       {
-          get 
-          {
-             if (instance == null)
-             {
-                 instance = new ShareCookie();
-             }
-             return instance;
-          }
-       }
 
         public string LoginCookie { get; set; }
 
         public CookieContainer LoginCookieContainer { get; set; }
 
+        public List<Cookie> LoginCookies { get; set; }
     }
 }

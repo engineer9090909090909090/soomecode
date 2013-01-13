@@ -12,5 +12,8 @@ namespace AliHelper
 
         public static string YES = "1";
         public static string NO =  "0";
+
+        public static string UserAgent = "User-Agent:Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; BTRS129735; chromeframe/23.0.1271.97;)" + Environment.NewLine;
+        
     }
 }
