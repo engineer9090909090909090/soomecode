@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -72,6 +72,8 @@
             this.ModifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MaxInToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ChangeStatusTsmItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ReflashBtn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -214,6 +216,8 @@
             this.InquiryRunBtn,
             this.InquiryStopBtn,
             this.toolStripSeparator5,
+            this.ReflashBtn,
+            this.toolStripSeparator6,
             this.toolStripLabel1,
             this.RunTime,
             this.MessageLabel,
@@ -326,14 +330,14 @@
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
             this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("SimSun", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("SimSun", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeight = 30;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(3, 3);
@@ -405,7 +409,7 @@
             this.MaxInToolStripMenuItem,
             this.ChangeStatusTsmItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 158);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 136);
             // 
             // DeleteRowToolStripMenuItem
             // 
@@ -454,6 +458,20 @@
             this.ChangeStatusTsmItem.Size = new System.Drawing.Size(158, 22);
             this.ChangeStatusTsmItem.Text = "改变到询盘状态";
             this.ChangeStatusTsmItem.Click += new System.EventHandler(this.ChangeStatusTsmItem_Click);
+            // 
+            // ReflashBtn
+            // 
+            this.ReflashBtn.Image = global::AliRank.Properties.Resources.convert;
+            this.ReflashBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ReflashBtn.Name = "ReflashBtn";
+            this.ReflashBtn.Size = new System.Drawing.Size(51, 22);
+            this.ReflashBtn.Text = "刷新";
+            this.ReflashBtn.Click += new System.EventHandler(this.ReflashBtn_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
             // 
             // MainForm
             // 
@@ -530,6 +548,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem ChangeStatusTsmItem;
+        private System.Windows.Forms.ToolStripButton ReflashBtn;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
     }
 }
 

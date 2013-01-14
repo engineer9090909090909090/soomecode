@@ -249,6 +249,10 @@ namespace AliRank
             }
         }
 
+        private void ReflashBtn_Click(object sender, EventArgs e)
+        {
+            LoadDataview();
+        }
 
         private void dataGridView1_KeyUp(object sender, KeyEventArgs e)
         {
@@ -894,6 +898,8 @@ namespace AliRank
 
         }
         #endregion
+
+        
 
         
 
