@@ -67,9 +67,10 @@ namespace AliRank
 
         public List<ShowcaseRankInfo> GetProducts(string orderBy)
         {
-            string SelectSql = "SELECT productId, productName, mainKey, rankKeyword, companyUrl, productUrl, "
-                + "productImage, prevRank,rank, keyAdNum, keyP4Num, clicked, updateTime, maxInquiryQty,factInquiryQty "
-                + "FROM keywords where status = 1";
+            string SelectSql = "SELECT distinct k.productId, k.productName, k.mainKey, k.rankKeyword, k.companyUrl, k.productUrl, "
+                + "k.productImage, k.prevRank,k.rank, k.keyAdNum, k.keyP4Num, k.clicked, k.updateTime, k.maxInquiryQty,k.status, count(i.account) factInquiryQty "
+                + "from keywords k left join inquiryinfos i on k.productId = i.productId and k.status > 0 and i.inquiryDate =" + DateTime.Now.ToString("yyyyMMdd")
+                + " group by k.productId";
             if (!string.IsNullOrEmpty(orderBy))
             {
                 SelectSql = SelectSql + " order by " + orderBy;
@@ -95,6 +96,7 @@ namespace AliRank
                 kw.KeyP4Num = Convert.ToInt32(row["keyP4Num"]);
                 kw.Clicked = Convert.ToInt32(row["clicked"]);
                 kw.UpdateTime = Convert.ToDateTime(row["updateTime"]);
+                kw.Status = Convert.ToInt32(row["Status"]);
                 list.Add(kw);
             }
             return list;
@@ -104,7 +106,7 @@ namespace AliRank
         {
             DataTable dt = dbHelper.ExecuteDataTable(
                   "SELECT productId, productName, mainKey, rankKeyword, companyUrl, productUrl, "
-                + "productImage, prevRank,rank, keyAdNum, keyP4Num, clicked, updateTime , maxInquiryQty,factInquiryQty  "
+                + "productImage, prevRank,rank, keyAdNum, keyP4Num, clicked, updateTime , maxInquiryQty, factInquiryQty, status  "
                 + "FROM keywords where productId = " + ProductId, null);
 
             if (dt.Rows.Count > 0)
@@ -125,7 +127,7 @@ namespace AliRank
                 kw.KeyAdNum = Convert.ToInt32(row["keyAdNum"]);
                 kw.KeyP4Num = Convert.ToInt32(row["keyP4Num"]);
                 kw.Clicked = Convert.ToInt32(row["clicked"]);
-                kw.UpdateTime = Convert.ToDateTime(row["updateTime"]);
+                kw.Status = Convert.ToInt32(row["status"]);
                 return kw;
             }
             return null;
@@ -135,7 +137,7 @@ namespace AliRank
         {
             string today = DateTime.Now.ToString("yyyyMMdd");
             string sql = "select * from (select distinct k.*, count(i.account) inquiryQty from keywords k "
-                + " left join inquiryinfos i on k.productId = i.productId and i.inquiryDate =" + today
+                + " left join inquiryinfos i on k.productId = i.productId and k.status = 2 and i.inquiryDate =" + today
                 + " group by k.productId ) where inquiryQty < maxInquiryQty  order by inquiryQty asc limit 0,1";
             DataTable dt = dbHelper.ExecuteDataTable(sql, null);
             if (dt.Rows.Count > 0)
@@ -228,6 +230,17 @@ namespace AliRank
             dbHelper.ExecuteNonQuery("UPDATE keywords SET queryStatus = 0");
         }
 
+        public void UpadateProductStatus(int productId, int status)
+        {
+            string sql = @"UPDATE keywords SET status = @status where productId= @productId";
+            SQLiteParameter[] parameter = new SQLiteParameter[]
+            {
+                new SQLiteParameter("@status",status),
+                new SQLiteParameter("@productId",productId)
+            };
+            dbHelper.ExecuteNonQuery(sql, parameter);
+        }
+
         public ShowcaseRankInfo UpdateRank(ShowcaseRankInfo item)
         {
             Object prank = dbHelper.ExecuteScalar(@"select rank from keywords where productId = " + item.ProductId, null);
@@ -273,16 +286,6 @@ namespace AliRank
             {
                 new SQLiteParameter("@status", status),
                 new SQLiteParameter("@updateTime", DateTime.Now)
-            };
-            dbHelper.ExecuteNonQuery(sql, parameter);
-        }
-
-        public void AddProductFactInquiryQty(int productId)
-        {
-            string sql = @"UPDATE keywords SET factInquiryQty = factInquiryQty + 1 where productId= @productId";
-            SQLiteParameter[] parameter = new SQLiteParameter[]
-            {
-               new SQLiteParameter("@productId",productId)
             };
             dbHelper.ExecuteNonQuery(sql, parameter);
         }
