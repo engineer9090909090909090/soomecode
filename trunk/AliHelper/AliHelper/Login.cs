@@ -40,7 +40,7 @@ namespace AliHelper
             {
                 browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(loginPageLoadCompleted);
                 ShareCookie.Instance.LoginCookie = FullWebBrowserCookie.GetCookieInternal(browser.Url, false);
-                string manageHtml = IEHandleUtils.GetHtml(MainForm.ManageHtml);
+                string manageHtml = HttpClient.RemoteRequest(MainForm.ManageHtml, null);
                 ShareCookie.Instance.CsrfToken = HttpClient.GetCsrfToken(manageHtml);
                 ShareCookie.Instance.CheckCodeUrl = HttpClient.GetCheckCodeUrl(manageHtml);
                 this.DialogResult = DialogResult.OK;

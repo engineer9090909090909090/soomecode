@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\..\lib\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -52,6 +55,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bussness\ProductsManager.cs" />
+    <Compile Include="CheckCodeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CheckCodeForm.Designer.cs">
+      <DependentUpon>CheckCodeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="DAO\AliGroupDao.cs" />
     <Compile Include="DAO\AliProductDao.cs" />
@@ -102,6 +111,9 @@
     <Compile Include="Pager.Designer.cs">
       <DependentUpon>Pager.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="CheckCodeForm.resx">
+      <DependentUpon>CheckCodeForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EditCategory.resx">
       <DependentUpon>EditCategory.cs</DependentUpon>
     </EmbeddedResource>

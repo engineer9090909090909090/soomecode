@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Net;
 using System.Threading;
+using HtmlAgilityPack;
 
 namespace AliHelper
 {
@@ -17,12 +18,29 @@ namespace AliHelper
 
         public static string ProudctListRequest = "http://hz.productposting.alibaba.com/product/managementproducts/asyQueryProductList.do?status=approved&imageType=all&repositoryType=all&page={0}&size=50&changePageSize=Y&_csrf_token_={1}&groupId={2}&groupLevel={3}";
 
+        public static string RemoteRequest(string url, string postString)
+        {
+            string html = IEHandleUtils.GetHtml(url, postString);
+            if (html.IndexOf("isNeedImagePassword") > 0)
+            {
+                CheckCodeForm checkCodeForm = new CheckCodeForm();
+                if (checkCodeForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    string CheckCode = checkCodeForm.CheckCode;
+                    checkCodeForm.Close();
+                    url = url + "&imagePassword=" + CheckCode;
+                    return RemoteRequest(url, postString);
+                }
+            }
+            return html;
+
+        }
 
         public static List<AliProduct> GetProducts(Hashtable groupDic, int groupId, int groupLevel, string csrfToken)
         {
             List<AliProduct> produtList = new List<AliProduct>();
             string prodcutsReqUrl = string.Format(ProudctListRequest, 1, csrfToken, groupId, groupLevel);
-            string prodcutsJsonText = IEHandleUtils.GetHtml(prodcutsReqUrl);
+            string prodcutsJsonText = RemoteRequest(prodcutsReqUrl, null);
             AliProductInfo productsInfo = JsonConvert.FromJson<AliProductInfo>(prodcutsJsonText);
             foreach (AliProduct p in productsInfo.Products)
             {
@@ -42,7 +60,7 @@ namespace AliHelper
             for (int i = 2; i <= pageNumber; i++)
             {
                 prodcutsReqUrl = string.Format(ProudctListRequest, i, csrfToken, groupId, groupLevel);
-                prodcutsJsonText = IEHandleUtils.GetHtml(prodcutsReqUrl);
+                prodcutsJsonText = RemoteRequest(prodcutsReqUrl, null);
                 AliProductInfo obj = JsonConvert.FromJson<AliProductInfo>(prodcutsJsonText);
                 foreach (AliProduct p in obj.Products)
                 {
@@ -67,7 +85,7 @@ namespace AliHelper
         {
             List<AliGroup> groups = new List<AliGroup>();
             string groupReqUrl = string.Format(GroupListRequest, parentId, csrfToken);
-            string groupJsonText = IEHandleUtils.GetHtml(groupReqUrl);
+            string groupJsonText = RemoteRequest(groupReqUrl, null);
             AliGroupInfo groupInfo = JsonConvert.FromJson<AliGroupInfo>(groupJsonText);
             foreach (AliGroup g in groupInfo.Data)
             {
@@ -89,7 +107,7 @@ namespace AliHelper
         {
             string SearchUrl = @"http://hz.productposting.alibaba.com/product/recommend_post_category_ajax.htm?keyword={0}&language=en_us&_updateTime={1}";
             SearchUrl = string.Format(SearchUrl, key.Replace(" ", "+"), DateUtils.DateTimeToInt(DateTime.Now));
-            string html = IEHandleUtils.GetHtml(SearchUrl);
+            string html = RemoteRequest(SearchUrl, null);
             string json = RegexFetchJson.FetchJson("var categroyData =(.*?); return categroyData;", html);
             if (string.IsNullOrEmpty(json))
             {
@@ -111,7 +129,7 @@ namespace AliHelper
             postString = postString + "&event_submit_do_selected_category=anything";
             postString = postString + "&time=0.04443414613303159";
 
-            string html = IEHandleUtils.GetHtml(SearchUrl, postString);
+            string html = RemoteRequest(SearchUrl, postString);
             AttributeNodeJson attributeNodeJson = JsonConvert.FromJson<AttributeNodeJson>(html);
             if (attributeNodeJson == null)
             {
@@ -135,7 +153,7 @@ namespace AliHelper
             {
                 url = "http://sh.vip.alibaba.com/photobank/" + branch;
             }
-            string html = IEHandleUtils.GetHtml(url);
+            string html = RemoteRequest(url, null);
             List<ImageGroupNode> imageGroupNodes = JsonConvert.FromJson<List<ImageGroupNode>>(html);
             return imageGroupNodes;
         }
@@ -171,7 +189,7 @@ namespace AliHelper
         {
             string url = "http://sh.vip.alibaba.com/photobank/ajaxPhotobank.htm";
             string postString = string.Format("event=searchImage&location=allGroup&page={0}", page);
-            string html = IEHandleUtils.GetHtml(url, postString);
+            string html = RemoteRequest(url, postString);
             ImageInfoJson imageInfoJson = JsonConvert.FromJson<ImageInfoJson>(html);
             Dictionary<int, string> dic = imageInfoJson.UrlMap;
             foreach (ImageInfo imageInfo in imageInfoJson.ImageInfos)
@@ -185,7 +203,7 @@ namespace AliHelper
         {
             string url = "http://sh.vip.alibaba.com/photobank/ajaxPhotobank.htm";
             string postString = string.Format("event=searchImage&location=subGroup&groupId={0}&page={1}", groupId, page);
-            string html = IEHandleUtils.GetHtml(url, postString);
+            string html = RemoteRequest(url, postString);
             ImageInfoJson imageInfoJson = JsonConvert.FromJson<ImageInfoJson>(html);
             Dictionary<int,string> dic = imageInfoJson.UrlMap;
             WebClient webClient = new WebClient();
@@ -206,27 +224,16 @@ namespace AliHelper
             return imageInfoJson;
         }
 
-        public string RemoteRequest(string url, string postString)
-        {
-            string html = IEHandleUtils.GetHtml(url, postString);
-            //imagePassword
-            if (html.IndexOf("\"isNeedImagePassword\":\"Y\"") > 0)
-            {
-                
-            }
-            return html;
-
-        }
+        
 
         public static string GetCheckCodeUrl(string html)
-        { 
-            Regex r = new Regex("\"(http://checktoken2.alibaba.com/service/checkcode?sessionID=(.*?))\"");
-            GroupCollection gc = r.Match(html).Groups;
-            if (gc != null && gc.Count > 1)
-            {
-                return gc[1].Value.Trim();
-            }
-            return "";
+        {
+            HtmlDocument document = new HtmlDocument();
+            document.LoadHtml(html);
+            HtmlNode imagePasswordImg = document.GetElementbyId("imagePasswordImg");
+            string checkCodeUrl = imagePasswordImg.GetAttributeValue("src", null);
+            document = null;
+            return checkCodeUrl;
         }
 
         public static string GetCsrfToken(string html)
