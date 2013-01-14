@@ -10,6 +10,7 @@ using System.Security.Permissions;
 using System.ComponentModel;
 using System.IO;
 using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace AliHelper
 {
@@ -77,10 +78,21 @@ namespace AliHelper
 
         public static string GetHtml(string url)
         {
-            return GetHtml(url, null);
+            string html = HttpRequest(url, null);
+            
+            return html;
         }
 
+
+
         public static string GetHtml(string url, string postString)
+        {
+            string html = HttpRequest(url, null);
+            return html;
+        }
+
+
+        public static string HttpRequest(string url, string postString)
         {
             string html = string.Empty;
             bool IsPost = true;
