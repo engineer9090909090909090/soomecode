@@ -76,23 +76,8 @@ namespace AliHelper
             webBrowser1.Navigate(url, "", null, "Cookie: " + cookie_string + Environment.NewLine);
         }
 
-        public static string GetHtml(string url)
-        {
-            string html = HttpRequest(url, null);
-            
-            return html;
-        }
-
-
 
         public static string GetHtml(string url, string postString)
-        {
-            string html = HttpRequest(url, null);
-            return html;
-        }
-
-
-        public static string HttpRequest(string url, string postString)
         {
             string html = string.Empty;
             bool IsPost = true;
