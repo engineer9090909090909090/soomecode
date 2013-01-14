@@ -42,6 +42,7 @@ namespace AliHelper
                 ShareCookie.Instance.LoginCookie = FullWebBrowserCookie.GetCookieInternal(browser.Url, false);
                 string manageHtml = IEHandleUtils.GetHtml(MainForm.ManageHtml);
                 ShareCookie.Instance.CsrfToken = HttpClient.GetCsrfToken(manageHtml);
+                ShareCookie.Instance.CheckCodeUrl = HttpClient.GetCheckCodeUrl(manageHtml);
                 this.DialogResult = DialogResult.OK;
             }
             if (e.Url.ToString() != browser.Url.ToString())

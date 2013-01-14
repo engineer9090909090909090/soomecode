@@ -7,6 +7,7 @@ using System.Collections;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Net;
+using System.Threading;
 
 namespace AliHelper
 {
@@ -203,6 +204,29 @@ namespace AliHelper
             }
             webClient.Dispose();
             return imageInfoJson;
+        }
+
+        public string RemoteRequest(string url, string postString)
+        {
+            string html = IEHandleUtils.GetHtml(url, postString);
+            //imagePassword
+            if (html.IndexOf("\"isNeedImagePassword\":\"Y\"") > 0)
+            {
+                
+            }
+            return html;
+
+        }
+
+        public static string GetCheckCodeUrl(string html)
+        { 
+            Regex r = new Regex("\"(http://checktoken2.alibaba.com/service/checkcode?sessionID=(.*?))\"");
+            GroupCollection gc = r.Match(html).Groups;
+            if (gc != null && gc.Count > 1)
+            {
+                return gc[1].Value.Trim();
+            }
+            return "";
         }
 
         public static string GetCsrfToken(string html)
