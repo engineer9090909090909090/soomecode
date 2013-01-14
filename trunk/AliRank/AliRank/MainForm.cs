@@ -183,7 +183,7 @@ namespace AliRank
             dt.Columns.Add("clicked", typeof(string));
             dt.Columns.Add("factInquiryQty", typeof(string));
             dt.Columns.Add("maxInquiryQty", typeof(string));
-            dt.Columns.Add("updateTime", typeof(DateTime));
+            dt.Columns.Add("status", typeof(string));
             this.dataGridView1.DataSource = dt;
 
             DataGridViewColumn column0 = this.dataGridView1.Columns[0];
@@ -198,7 +198,7 @@ namespace AliRank
             column2.Width = 100;
             DataGridViewColumn column3 = this.dataGridView1.Columns[3];
             column3.HeaderText = "产品关键词";
-            column3.Width = 200;
+            column3.Width = 150;
             column3.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             DataGridViewColumn columnRankKey = this.dataGridView1.Columns[4];
             columnRankKey.HeaderText = "排名关键词";
@@ -206,23 +206,23 @@ namespace AliRank
             columnRankKey.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             DataGridViewColumn column4 = this.dataGridView1.Columns[5];
             column4.HeaderText = "排名状态";
-            column4.Width = 200;
+            column4.Width = 150;
             column4.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             DataGridViewColumn column5 = this.dataGridView1.Columns[6];
             column5.HeaderText = "点击";
             column5.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            column5.Width = 80;
+            column5.Width = 70;
             DataGridViewColumn column6 = this.dataGridView1.Columns[7];
-            column6.HeaderText = "排名询盘";
+            column6.HeaderText = "今日询盘";
             column6.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            column6.Width = 100;
+            column6.Width = 80;
             DataGridViewColumn column7 = this.dataGridView1.Columns[8];
             column7.HeaderText = "最大询盘";
             column7.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            column7.Width = 100;
+            column7.Width = 80;
             DataGridViewColumn column8 = this.dataGridView1.Columns[9];
-            column8.HeaderText = "更新时间";
-            column8.Width = 120;
+            column8.HeaderText = "询盘状态";
+            column8.Width = 80;
             List<ShowcaseRankInfo> productList = keywordDAO.GetKeywordList();
             if (productList.Count > 0)
             {
@@ -243,7 +243,7 @@ namespace AliRank
                     row["clicked"] = Convert.ToString(item.Clicked);
                     row["factInquiryQty"] = item.FactInquiryQty;
                     row["maxInquiryQty"] = item.MaxInquiryQty;
-                    row["updateTime"] = item.UpdateTime;
+                    row["status"] = item.Status == 2 ? "询盘":"不询盘";
                     dt.Rows.Add(row);                
                 }
             }
@@ -628,6 +628,8 @@ namespace AliRank
                     dataGridView1.Rows[e.RowIndex].Selected = true;
                     SelectedRowIndex = e.RowIndex;
                     RowSelectedProductId = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[2].Value);
+                    SelectRowObject = keywordDAO.GetShowcaseRankInfo(RowSelectedProductId);
+                    ChangeStatusTsmItem.Text = SelectRowObject.Status == 2 ? "取消询盘状态" : "改变到询盘状态";
                     contextMenuStrip1.Show(MousePosition.X, MousePosition.Y);
                 }
             }
@@ -635,10 +637,10 @@ namespace AliRank
 
         private int RowSelectedProductId = 0;
         private int SelectedRowIndex = 0;
+        private ShowcaseRankInfo SelectRowObject;
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowcaseRankInfo obj = keywordDAO.GetShowcaseRankInfo(RowSelectedProductId);
-            System.Diagnostics.Process.Start("iexplore.exe", obj.CompanyUrl + obj.ProductUrl);
+            System.Diagnostics.Process.Start("iexplore.exe", SelectRowObject.CompanyUrl + SelectRowObject.ProductUrl);
         }
 
         private void DeleteRowToolStripMenuItem_Click(object sender, EventArgs e)
@@ -654,6 +656,13 @@ namespace AliRank
             bgWorker.DoWork += new DoWorkEventHandler(bgWorker_DoWorkQueryRank);
             bgWorker.RunWorkerAsync();
             bgWorker.Dispose();
+        }
+
+        private void ChangeStatusTsmItem_Click(object sender, EventArgs e)
+        {
+            int status = SelectRowObject.Status == 2 ? 1 : 2;
+            keywordDAO.UpadateProductStatus(RowSelectedProductId, status);
+            dataGridView1.Rows[SelectedRowIndex].Cells[9].Value = (status == 2) ? "询盘" : "不询盘";
         }
 
         void bgWorker_DoWorkQueryRank(object sender, DoWorkEventArgs e)
@@ -734,7 +743,6 @@ namespace AliRank
                     DataGridViewCell cell = row.Cells[7];
                     cell.Value = (Convert.ToInt32(cell.Value) + 1).ToString();
                     toolStripStatusLabel1.Text = e.Msg;
-                    keywordDAO.AddProductFactInquiryQty(item.ProductId);
                     inquiryDao.InsertInquiryInfos(item);
                     inquiryDao.AddInqMessageSendNum(item.MsgId);
                 }
@@ -886,6 +894,8 @@ namespace AliRank
 
         }
         #endregion
+
+        
 
     }
 }
