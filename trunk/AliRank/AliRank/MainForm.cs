@@ -22,6 +22,7 @@ namespace AliRank
         private static bool IsStop;
         private bool AutoShutdown;
         private IpAddressSearchWebServiceSoapClient soapClient;
+        private readonly object padlock = new object();
 
         #region Form 事件
         public MainForm()
@@ -282,6 +283,7 @@ namespace AliRank
             AsToolStripMenuItem.Enabled = false;
             toolStripButton4.Enabled = false;
             clickRunBtn.Enabled = false;
+            InquiryRunBtn.Enabled = false;
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 DataGridViewCell cell = row.Cells[5];
@@ -321,6 +323,7 @@ namespace AliRank
             toolStripButton4.Enabled = true;
             AsToolStripMenuItem.Enabled = true;
             clickRunBtn.Enabled = true;
+            InquiryRunBtn.Enabled = true;
             MessageLabel.Text = "";
             Console.WriteLine("线程池结束！");
         }
@@ -437,6 +440,10 @@ namespace AliRank
             {
                 clicker.Stop();
             }
+            lock (padlock)
+            {
+                Monitor.Pulse(padlock);
+            }
         }
 
         public void theout(object source, System.Timers.ElapsedEventArgs e) 
@@ -532,17 +539,21 @@ namespace AliRank
                 }
                 for (int i = 0; i < productList.Count; i++)
                 {
-                    if (i > 0)
+                    if (i > 0 && !IsStop)
                     {
                         int randomNumber = new Random().Next(2000, iRandomMaxTime);
                         toolStripStatusLabel1.Text = "轮循到下一个产品，暂停" + randomNumber / 1000 + "秒.";
-                        if (!IsStop) Thread.Sleep(randomNumber);
+                        lock (padlock)
+                        {
+                            Monitor.Wait(padlock, TimeSpan.FromMilliseconds(randomNumber));
+                        }
                     }
                     
                     if (sNetwork == Constants.NETWORK_NONE)
                     {
                         ipAddress = HttpHelper.Ip138GetIp();
                     }
+                    if (IsStop) { break; }
 
                     //显示IP信息
                     toolStripStatusLabel1.Text = "读取IP信息数据.";
@@ -792,6 +803,8 @@ namespace AliRank
             clickTimer.AutoReset = true;
             InquiryRunBtn.Enabled = false;
             InquiryStopBtn.Enabled = true;
+            clickStopBtn.Enabled = false;
+            clickRunBtn.Enabled = false;
             clickTimer.Enabled = true;
         }
 
@@ -801,6 +814,10 @@ namespace AliRank
             clickTimer.Enabled = false;
             IsStop = true;
             bgClickWorker.CancelAsync();
+            lock (padlock)
+            {
+                Monitor.Pulse(padlock);
+            }
             if (clicker != null)
             {
                 clicker.Stop();
@@ -815,8 +832,8 @@ namespace AliRank
             string sMinInterval = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MIN_INTERVAL_TIME);
             string sMaxInterval = DAOFactory.Instance.GetProfileDAO().GetValue(Constants.MAX_INTERVAL_TIME);
             int iMaxQueryPage = Convert.ToInt32(sMaxQueryPage);
-            int iMinInterval = Convert.ToInt32(sMinInterval) * 1000 * 60;
-            int iMaxInterval = Convert.ToInt32(sMaxInterval) * 1000 * 60;
+            int iMinInterval = Convert.ToInt32(sMinInterval);
+            int iMaxInterval = Convert.ToInt32(sMaxInterval);
             InquiryMessages inquiryMessages = null;
             string ipAddress = string.Empty;
             while (!IsStop)
@@ -878,11 +895,14 @@ namespace AliRank
                 toolStripStatusLabel1.Text = "询盘操作结束。";
                 if (IsStop) { break; }
                 int puaseTime = new Random().Next(iMinInterval, iMaxInterval);
-                toolStripStatusLabel1.Text = "询盘操作替停" + (puaseTime / 1000 / 60) + "分钟。";
-                Thread.Sleep(puaseTime);
+                toolStripStatusLabel1.Text = "询盘操作暂停" + puaseTime + "分钟。";
+                lock (padlock)
+                {
+                    Monitor.Wait(padlock, TimeSpan.FromMinutes(puaseTime));
+                }
                 GC.Collect();
             }
-
+            
             if (CurrVpnEntity != null)
             {
                 toolStripStatusLabel1.Text = "断开VPN连接。";
@@ -895,13 +915,8 @@ namespace AliRank
             MessageLabel.Text = "";
             InquiryRunBtn.Enabled = true;
             InquiryStopBtn.Enabled = false;
-
+            clickRunBtn.Enabled = true;
         }
         #endregion
-
-        
-
-        
-
     }
 }
