@@ -137,8 +137,8 @@ namespace AliRank
         {
             string today = DateTime.Now.ToString("yyyyMMdd");
             string sql = "select * from (select distinct k.*, count(i.account) inquiryQty from keywords k "
-                + " left join inquiryinfos i on k.productId = i.productId and k.status = 2 and i.inquiryDate =" + today
-                + " group by k.productId ) where inquiryQty < maxInquiryQty  order by inquiryQty asc limit 0,1";
+                + " left join inquiryinfos i on k.productId = i.productId and i.inquiryDate =" + today
+                + " where k.status = 2 group by k.productId ) where inquiryQty < maxInquiryQty  order by inquiryQty asc limit 0,1";
             DataTable dt = dbHelper.ExecuteDataTable(sql, null);
             if (dt.Rows.Count > 0)
             {
