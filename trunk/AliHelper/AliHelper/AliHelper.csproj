@@ -52,6 +52,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="UtilityLibrary">
+      <HintPath>..\..\lib\UtilityLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bussness\ProductsManager.cs" />
@@ -73,6 +76,11 @@
     <Compile Include="EditCategory.Designer.cs">
       <DependentUpon>EditCategory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\IconImages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IconImages.resx</DependentUpon>
+    </Compile>
     <Compile Include="ImageForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +89,11 @@
     </Compile>
     <Compile Include="Passporter.cs" />
     <Compile Include="RegUtil.cs" />
+    <Compile Include="Properties\TreeViewImages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TreeViewImages.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utils\DateUtils.cs" />
     <Compile Include="Utils\FileUtils.cs" />
     <Compile Include="Utils\FullWebBrowserCookie.cs" />
@@ -117,6 +130,10 @@
     <EmbeddedResource Include="EditCategory.resx">
       <DependentUpon>EditCategory.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\IconImages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>IconImages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="ImageForm.resx">
       <DependentUpon>ImageForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -138,6 +155,10 @@
     </Compile>
     <EmbeddedResource Include="Pager.resx">
       <DependentUpon>Pager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\TreeViewImages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TreeViewImages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
