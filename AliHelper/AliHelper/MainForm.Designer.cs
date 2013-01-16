@@ -1,4 +1,5 @@
-﻿namespace AliHelper
+﻿using UtilityLibrary.WinControls;
+namespace AliHelper
 {
     partial class MainForm
     {
@@ -35,13 +36,14 @@
             this.主菜单ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.updateGroup = new System.Windows.Forms.ToolStripButton();
-            this.updateAllProduct = new System.Windows.Forms.ToolStripButton();
-            this.newProductBtn = new System.Windows.Forms.ToolStripButton();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.outlookBar1 = new UtilityLibrary.WinControls.OutlookBar();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.updateGroup = new System.Windows.Forms.ToolStripButton();
+            this.updateAllProduct = new System.Windows.Forms.ToolStripButton();
             this.updateAllImages = new System.Windows.Forms.ToolStripButton();
+            this.newProductBtn = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -103,6 +105,59 @@
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // treeView1
+            // 
+
+            outlookBar1.Bands.Add(new OutlookBarBand("阿里产品维护", treeView1));
+            this.treeView1.Location = new System.Drawing.Point(58, 79);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(86, 37);
+            this.treeView1.TabIndex = 4;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 49);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.outlookBar1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.dataGridView1);
+            this.splitContainer1.Size = new System.Drawing.Size(823, 447);
+            this.splitContainer1.SplitterDistance = 130;
+            this.splitContainer1.TabIndex = 5;
+            // 
+            // outlookBar1
+            // 
+            this.outlookBar1.AnimationSpeed = 20;
+            this.outlookBar1.BackColor = System.Drawing.SystemColors.Control;
+            this.outlookBar1.BackgroundBitmap = null;
+            this.outlookBar1.BorderType = UtilityLibrary.WinControls.BorderType.None;
+            this.outlookBar1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.outlookBar1.FlatArrowButtons = false;
+            this.outlookBar1.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.outlookBar1.LeftTopColor = System.Drawing.Color.Empty;
+            this.outlookBar1.Location = new System.Drawing.Point(0, 0);
+            this.outlookBar1.Name = "outlookBar1";
+            this.outlookBar1.RightBottomColor = System.Drawing.Color.Empty;
+            this.outlookBar1.Size = new System.Drawing.Size(130, 447);
+            this.outlookBar1.TabIndex = 5;
+            this.outlookBar1.Text = "outlookBar1";
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(689, 447);
+            this.dataGridView1.TabIndex = 0;
+            // 
             // updateGroup
             // 
             this.updateGroup.Image = ((System.Drawing.Image)(resources.GetObject("updateGroup.Image")));
@@ -121,50 +176,6 @@
             this.updateAllProduct.Text = "同步所有产品";
             this.updateAllProduct.Click += new System.EventHandler(this.updateAllProduct_Click);
             // 
-            // newProductBtn
-            // 
-            this.newProductBtn.Image = ((System.Drawing.Image)(resources.GetObject("newProductBtn.Image")));
-            this.newProductBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.newProductBtn.Name = "newProductBtn";
-            this.newProductBtn.Size = new System.Drawing.Size(75, 22);
-            this.newProductBtn.Text = "新增产品";
-            this.newProductBtn.Click += new System.EventHandler(this.newProductBtn_Click);
-            // 
-            // treeView1
-            // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.Location = new System.Drawing.Point(0, 0);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(164, 447);
-            this.treeView1.TabIndex = 4;
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 49);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.treeView1);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.dataGridView1);
-            this.splitContainer1.Size = new System.Drawing.Size(823, 447);
-            this.splitContainer1.SplitterDistance = 164;
-            this.splitContainer1.TabIndex = 5;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(655, 447);
-            this.dataGridView1.TabIndex = 0;
-            // 
             // updateAllImages
             // 
             this.updateAllImages.Image = ((System.Drawing.Image)(resources.GetObject("updateAllImages.Image")));
@@ -173,6 +184,15 @@
             this.updateAllImages.Size = new System.Drawing.Size(75, 22);
             this.updateAllImages.Text = "同步图片";
             this.updateAllImages.Click += new System.EventHandler(this.updateAllImages_Click);
+            // 
+            // newProductBtn
+            // 
+            this.newProductBtn.Image = ((System.Drawing.Image)(resources.GetObject("newProductBtn.Image")));
+            this.newProductBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.newProductBtn.Name = "newProductBtn";
+            this.newProductBtn.Size = new System.Drawing.Size(75, 22);
+            this.newProductBtn.Text = "新增产品";
+            this.newProductBtn.Click += new System.EventHandler(this.newProductBtn_Click);
             // 
             // MainForm
             // 
@@ -218,5 +238,6 @@
         private System.Windows.Forms.ToolStripButton newProductBtn;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ToolStripButton updateAllImages;
+        private UtilityLibrary.WinControls.OutlookBar outlookBar1;
     }
 }

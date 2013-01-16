@@ -11,6 +11,9 @@ using System.IO;
 using System.Text.RegularExpressions;
 using Soomes;
 using System.Collections;
+using UtilityLibrary.WinControls;
+using System.Resources;
+using System.Reflection;
 
 namespace AliHelper
 {
@@ -18,24 +21,68 @@ namespace AliHelper
     {
         //alibaba vip manage url
         public static string ManageHtml = "http://hz.productposting.alibaba.com/product/manage_products.htm#tab=approved";
-
         private ProductsManager productsManager;
-        
+
         public MainForm()
         {
             InitializeComponent();
             productsManager = new ProductsManager();
+
+            ListViewEx listView1 = new ListViewEx();
+            listView1.Dock = DockStyle.Fill;
+            outlookBar1.Bands.Add(new OutlookBarBand("重发计划", listView1));
+            listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            ColumnHeader nameColumnHeader = new System.Windows.Forms.ColumnHeader();
+            nameColumnHeader.Text = "计划";
+            nameColumnHeader.Width = 130;
+            listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { nameColumnHeader });
+            listView1.Name = "listView1";
+            listView1.TabIndex = 0;
+            listView1.CheckBoxes = true;
+            listView1.Dock = DockStyle.Fill;
+            listView1.SetColumnSortFormat(0, SortedListViewFormatType.String);
+
+            ImageList outlookLargeIcons = new ImageList();
+            outlookLargeIcons.ImageSize = new Size(32, 32);
+            Bitmap icons = (Bitmap)global::AliHelper.Properties.IconImages.OutlookLargeIcons;
+            icons.MakeTransparent(Color.FromArgb(255, 0, 255));
+            outlookLargeIcons.Images.AddStrip(icons);
+            OutlookBarBand outlookShortcutsBand = new OutlookBarBand("外贸邮");
+            outlookShortcutsBand.LargeImageList = outlookLargeIcons;
+            outlookShortcutsBand.Items.Add(new OutlookBarItem("收件箱", 1));
+            outlookShortcutsBand.Items.Add(new OutlookBarItem("已发送", 5));
+            outlookShortcutsBand.Items.Add(new OutlookBarItem("已删除", 6));
+            outlookBar1.Bands.Add(outlookShortcutsBand);
+            outlookBar1.PropertyChanged += new OutlookBarPropertyChangedHandler(outlookBar1_PropertyChanged);
+            outlookBar1.ItemClicked += new OutlookBarItemClickedHandler(OnOutlookBarItemClicked);
         }
+
+        void outlookBar1_PropertyChanged(OutlookBarBand band, OutlookBarProperty property)
+        {
+            if (property == OutlookBarProperty.CurrentBandChanged)
+            {
+                int index = outlookBar1.GetCurrentBand();
+                if (index == 0)
+                {
+
+                }
+                else if (index == 1)
+                { 
+
+                }
+                else if (index == 2)
+                {
+
+                }
+            }
+        }
+
 
         private void MainForm_Load(object sender, EventArgs e)
         {
             List<AliGroup> groups = productsManager.GetGroupList();
             UpdateGroupUI(groups);
-            
         }
-
-
-        
 
         public void UpdateGroupUI(List<AliGroup> groups)
         {
@@ -142,10 +189,14 @@ namespace AliHelper
             List<ImageInfo> imageList = HttpClient.GetAllImages();
             productsManager.UpdateImageInfos(imageList);
         }
-        
 
-        
 
+
+        void OnOutlookBarItemClicked(OutlookBarBand band, OutlookBarItem item)
+        {
+            string message = "Item : " + item.Text + " was clicked...";
+            MessageBox.Show(message);
+        }
         
 
     }
