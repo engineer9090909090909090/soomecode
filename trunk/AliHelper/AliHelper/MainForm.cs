@@ -23,10 +23,26 @@ namespace AliHelper
         public static string ManageHtml = "http://hz.productposting.alibaba.com/product/manage_products.htm#tab=approved";
         private ProductsManager productsManager;
 
+        #region 构造方法
         public MainForm()
         {
-            InitializeComponent();
             productsManager = new ProductsManager();
+            InitializeComponent();
+            LoadOutlookBar();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            CheckForIllegalCrossThreadCalls = false;
+            List<AliGroup> groups = productsManager.GetGroupList();
+            UpdateGroupUI(groups);
+        }
+        #endregion
+
+        #region OutlookBar 处理
+        void LoadOutlookBar()
+        {
+            outlookBar1.Bands.Add(new OutlookBarBand("产品维护", treeView1));
 
             ListViewEx listView1 = new ListViewEx();
             listView1.Dock = DockStyle.Fill;
@@ -55,6 +71,7 @@ namespace AliHelper
             outlookBar1.Bands.Add(outlookShortcutsBand);
             outlookBar1.PropertyChanged += new OutlookBarPropertyChangedHandler(outlookBar1_PropertyChanged);
             outlookBar1.ItemClicked += new OutlookBarItemClickedHandler(OnOutlookBarItemClicked);
+        
         }
 
         void outlookBar1_PropertyChanged(OutlookBarBand band, OutlookBarProperty property)
@@ -64,25 +81,85 @@ namespace AliHelper
                 int index = outlookBar1.GetCurrentBand();
                 if (index == 0)
                 {
-
+                    ProductsStrip.Show();
                 }
                 else if (index == 1)
-                { 
-
+                {
+                    ProductsStrip.Hide();
                 }
                 else if (index == 2)
                 {
-
+                    ProductsStrip.Hide();
                 }
             }
         }
 
-
-        private void MainForm_Load(object sender, EventArgs e)
+        void OnOutlookBarItemClicked(OutlookBarBand band, OutlookBarItem item)
         {
-            List<AliGroup> groups = productsManager.GetGroupList();
+            string message = "Item : " + item.Text + " was clicked...";
+            MessageBox.Show(message);
+        }
+        #endregion
+
+        #region 更新产品目录
+        private void updateGroup_Click(object sender, EventArgs e)
+        {
+            BackgroundWorker bgWorker = new BackgroundWorker();
+            bgWorker.DoWork += new DoWorkEventHandler(bgWorker_UpdateGroup);
+            bgWorker.RunWorkerAsync();
+            bgWorker.Dispose();
+        }
+
+        void bgWorker_UpdateGroup(object sender, DoWorkEventArgs e)
+        {
+            if (string.IsNullOrEmpty(ShareCookie.Instance.CsrfToken))
+            {
+                return;
+            }
+            List<AliGroup> groups = HttpClient.GetGroups(-1, 0, ShareCookie.Instance.CsrfToken);
+            productsManager.UpdateGroups(groups);
             UpdateGroupUI(groups);
         }
+        #endregion
+
+        #region 更新产品
+        private void updateAllProduct_Click(object sender, EventArgs e)
+        {
+            BackgroundWorker bgWorker = new BackgroundWorker();
+            bgWorker.DoWork += new DoWorkEventHandler(bgWorker_DoWork);
+            bgWorker.RunWorkerAsync();
+            bgWorker.Dispose();
+        }
+
+        void bgWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            if (string.IsNullOrEmpty(ShareCookie.Instance.CsrfToken))
+            {
+                return;
+            }
+            List<AliGroup> groups = HttpClient.GetGroups(-1, 0, ShareCookie.Instance.CsrfToken);
+            productsManager.UpdateGroups(groups);
+            UpdateGroupUI(groups);
+            GetGroupProduct(groups, ShareCookie.Instance.CsrfToken);
+        }
+        #endregion
+
+        #region 更新图片
+        private void updateAllImages_Click(object sender, EventArgs e)
+        {
+            BackgroundWorker bgWorker = new BackgroundWorker();
+            bgWorker.DoWork += new DoWorkEventHandler(bgWorker_UpdateImages);
+            bgWorker.RunWorkerAsync();
+            bgWorker.Dispose();
+        }
+
+        void bgWorker_UpdateImages(object sender, DoWorkEventArgs e)
+        {
+            List<ImageInfo> imageList = HttpClient.GetAllImages();
+            productsManager.UpdateImageInfos(imageList);
+        }
+        #endregion
+
 
         public void UpdateGroupUI(List<AliGroup> groups)
         {
@@ -109,33 +186,9 @@ namespace AliHelper
                         }
                     }
                 }
-                
+
             }
             treeView1.ExpandAll();
-        }
-
-
-        private void updateGroup_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(ShareCookie.Instance.CsrfToken))
-            {
-                return;
-            }
-            List<AliGroup> groups = HttpClient.GetGroups(-1, 0, ShareCookie.Instance.CsrfToken);
-            productsManager.UpdateGroups(groups);
-            UpdateGroupUI(groups);
-        }
-
-        private void updateAllProduct_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(ShareCookie.Instance.CsrfToken))
-            {
-                return;
-            }
-            List<AliGroup> groups = HttpClient.GetGroups(-1, 0, ShareCookie.Instance.CsrfToken);
-            productsManager.UpdateGroups(groups);
-            UpdateGroupUI(groups);
-            GetGroupProduct(groups, ShareCookie.Instance.CsrfToken);
         }
 
         public List<AliProduct> GetGroupProduct(List<AliGroup> groups, string csrfToken)
@@ -157,7 +210,7 @@ namespace AliHelper
             }
             return produtList;
         }
-
+        
         public List<AliProduct> GetGroupProduct(List<AliGroup> groups, AliGroup currGroup, string csrfToken)
         {
             List<AliProduct> produtList = new List<AliProduct>();
@@ -175,29 +228,16 @@ namespace AliHelper
 
         private void newProductBtn_Click(object sender, EventArgs e)
         {
-            //EditCategory f = new EditCategory();
-            //f.StartPosition = FormStartPosition.CenterParent;
-            //f.ShowDialog(this);
-
+            EditCategory f = new EditCategory();
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
+           /*
             ImageForm f = new ImageForm();
             f.StartPosition = FormStartPosition.CenterParent;
             f.ShowDialog(this);
+            */
         }
 
-        private void updateAllImages_Click(object sender, EventArgs e)
-        {
-            List<ImageInfo> imageList = HttpClient.GetAllImages();
-            productsManager.UpdateImageInfos(imageList);
-        }
-
-
-
-        void OnOutlookBarItemClicked(OutlookBarBand band, OutlookBarItem item)
-        {
-            string message = "Item : " + item.Text + " was clicked...";
-            MessageBox.Show(message);
-        }
         
-
     }
 }

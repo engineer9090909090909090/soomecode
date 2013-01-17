@@ -122,7 +122,7 @@
             this.Name = "EditCategory";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "EditProduct";
+            this.Text = "产品类目选择";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
