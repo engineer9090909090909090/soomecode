@@ -20,11 +20,13 @@ namespace AliHelper
         }
         private void CheckCodeForm_Load(object sender, EventArgs e)
         {
-            this.CheckImage.Image = GetWebCheckCodeImage();
+            Image checkImage = GetWebCheckCodeImage();
+            this.CheckImage.Image = checkImage;
         }
         private void CheckImage_Click(object sender, EventArgs e)
         {
-            this.CheckImage.Image = GetWebCheckCodeImage();
+            Image checkImage = GetWebCheckCodeImage();
+            this.CheckImage.Image = checkImage;
         }
 
         private Image GetWebCheckCodeImage()

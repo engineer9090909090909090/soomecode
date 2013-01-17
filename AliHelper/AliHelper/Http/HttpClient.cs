@@ -23,14 +23,15 @@ namespace AliHelper
             string html = IEHandleUtils.GetHtml(url, postString);
             if (html.IndexOf("isNeedImagePassword") > 0)
             {
+                string CheckCode = string.Empty;
                 CheckCodeForm checkCodeForm = new CheckCodeForm();
                 if (checkCodeForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    string CheckCode = checkCodeForm.CheckCode;
+                    CheckCode = checkCodeForm.CheckCode;
                     checkCodeForm.Close();
-                    url = url + "&imagePassword=" + CheckCode;
-                    return RemoteRequest(url, postString);
                 }
+                url = url + "&imagePassword=" + CheckCode;
+                return RemoteRequest(url, postString);
             }
             return html;
 
@@ -117,7 +118,7 @@ namespace AliHelper
             if (categroyData == null || categroyData.Category == null)
             {
                 return null;
-            } 
+            }
             return categroyData.Category;
         }
 
@@ -228,11 +229,22 @@ namespace AliHelper
 
         public static string GetCheckCodeUrl(string html)
         {
+            string checkCodeUrl = string.Empty;
             HtmlDocument document = new HtmlDocument();
-            document.LoadHtml(html);
-            HtmlNode imagePasswordImg = document.GetElementbyId("imagePasswordImg");
-            string checkCodeUrl = imagePasswordImg.GetAttributeValue("src", null);
-            document = null;
+            try
+            {
+                document.LoadHtml(html);
+                HtmlNode imagePasswordImg = document.GetElementbyId("imagePasswordImg");
+                checkCodeUrl = imagePasswordImg.GetAttributeValue("src", null);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Trace.WriteLine(e.Message);
+            }
+            finally 
+            {
+                document = null;
+            }
             return checkCodeUrl;
         }
 

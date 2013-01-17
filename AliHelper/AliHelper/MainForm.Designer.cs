@@ -35,18 +35,18 @@ namespace AliHelper
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.主菜单ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.treeView1 = new System.Windows.Forms.TreeView();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.outlookBar1 = new UtilityLibrary.WinControls.OutlookBar();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.ProductsStrip = new System.Windows.Forms.ToolStrip();
             this.updateGroup = new System.Windows.Forms.ToolStripButton();
             this.updateAllProduct = new System.Windows.Forms.ToolStripButton();
             this.updateAllImages = new System.Windows.Forms.ToolStripButton();
             this.newProductBtn = new System.Windows.Forms.ToolStripButton();
+            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.outlookBar1 = new UtilityLibrary.WinControls.OutlookBar();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
+            this.ProductsStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -92,26 +92,60 @@ namespace AliHelper
             this.设置ToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.设置ToolStripMenuItem.Text = "设置";
             // 
-            // toolStrip1
+            // ProductsStrip
             // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ProductsStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.updateGroup,
             this.updateAllProduct,
             this.updateAllImages,
             this.newProductBtn});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(823, 25);
-            this.toolStrip1.TabIndex = 2;
-            this.toolStrip1.Text = "toolStrip1";
+            this.ProductsStrip.Location = new System.Drawing.Point(0, 24);
+            this.ProductsStrip.Name = "ProductsStrip";
+            this.ProductsStrip.Size = new System.Drawing.Size(823, 25);
+            this.ProductsStrip.TabIndex = 2;
+            this.ProductsStrip.Text = "ProductsStrip";
+            // 
+            // updateGroup
+            // 
+            this.updateGroup.Image = ((System.Drawing.Image)(resources.GetObject("updateGroup.Image")));
+            this.updateGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.updateGroup.Name = "updateGroup";
+            this.updateGroup.Size = new System.Drawing.Size(75, 22);
+            this.updateGroup.Text = "同步分组";
+            this.updateGroup.Click += new System.EventHandler(this.updateGroup_Click);
+            // 
+            // updateAllProduct
+            // 
+            this.updateAllProduct.Image = ((System.Drawing.Image)(resources.GetObject("updateAllProduct.Image")));
+            this.updateAllProduct.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.updateAllProduct.Name = "updateAllProduct";
+            this.updateAllProduct.Size = new System.Drawing.Size(99, 22);
+            this.updateAllProduct.Text = "同步所有产品";
+            this.updateAllProduct.Click += new System.EventHandler(this.updateAllProduct_Click);
+            // 
+            // updateAllImages
+            // 
+            this.updateAllImages.Image = ((System.Drawing.Image)(resources.GetObject("updateAllImages.Image")));
+            this.updateAllImages.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.updateAllImages.Name = "updateAllImages";
+            this.updateAllImages.Size = new System.Drawing.Size(75, 22);
+            this.updateAllImages.Text = "同步图片";
+            this.updateAllImages.Click += new System.EventHandler(this.updateAllImages_Click);
+            // 
+            // newProductBtn
+            // 
+            this.newProductBtn.Image = ((System.Drawing.Image)(resources.GetObject("newProductBtn.Image")));
+            this.newProductBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.newProductBtn.Name = "newProductBtn";
+            this.newProductBtn.Size = new System.Drawing.Size(75, 22);
+            this.newProductBtn.Text = "新增产品";
+            this.newProductBtn.Click += new System.EventHandler(this.newProductBtn_Click);
             // 
             // treeView1
             // 
-
-            outlookBar1.Bands.Add(new OutlookBarBand("阿里产品维护", treeView1));
-            this.treeView1.Location = new System.Drawing.Point(58, 79);
+            this.treeView1.Location = new System.Drawing.Point(0, 23);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(86, 37);
+            this.treeView1.Size = new System.Drawing.Size(130, 423);
             this.treeView1.TabIndex = 4;
             // 
             // splitContainer1
@@ -158,62 +192,27 @@ namespace AliHelper
             this.dataGridView1.Size = new System.Drawing.Size(689, 447);
             this.dataGridView1.TabIndex = 0;
             // 
-            // updateGroup
-            // 
-            this.updateGroup.Image = ((System.Drawing.Image)(resources.GetObject("updateGroup.Image")));
-            this.updateGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.updateGroup.Name = "updateGroup";
-            this.updateGroup.Size = new System.Drawing.Size(75, 22);
-            this.updateGroup.Text = "同步分组";
-            this.updateGroup.Click += new System.EventHandler(this.updateGroup_Click);
-            // 
-            // updateAllProduct
-            // 
-            this.updateAllProduct.Image = ((System.Drawing.Image)(resources.GetObject("updateAllProduct.Image")));
-            this.updateAllProduct.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.updateAllProduct.Name = "updateAllProduct";
-            this.updateAllProduct.Size = new System.Drawing.Size(99, 22);
-            this.updateAllProduct.Text = "同步所有产品";
-            this.updateAllProduct.Click += new System.EventHandler(this.updateAllProduct_Click);
-            // 
-            // updateAllImages
-            // 
-            this.updateAllImages.Image = ((System.Drawing.Image)(resources.GetObject("updateAllImages.Image")));
-            this.updateAllImages.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.updateAllImages.Name = "updateAllImages";
-            this.updateAllImages.Size = new System.Drawing.Size(75, 22);
-            this.updateAllImages.Text = "同步图片";
-            this.updateAllImages.Click += new System.EventHandler(this.updateAllImages_Click);
-            // 
-            // newProductBtn
-            // 
-            this.newProductBtn.Image = ((System.Drawing.Image)(resources.GetObject("newProductBtn.Image")));
-            this.newProductBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.newProductBtn.Name = "newProductBtn";
-            this.newProductBtn.Size = new System.Drawing.Size(75, 22);
-            this.newProductBtn.Text = "新增产品";
-            this.newProductBtn.Click += new System.EventHandler(this.newProductBtn_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(823, 518);
             this.Controls.Add(this.splitContainer1);
-            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.ProductsStrip);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "阿里助手";
+            this.Text = "阿里外贸助手";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.ProductsStrip.ResumeLayout(false);
+            this.ProductsStrip.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
@@ -230,7 +229,7 @@ namespace AliHelper
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 主菜单ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 设置ToolStripMenuItem;
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStrip ProductsStrip;
         private System.Windows.Forms.ToolStripButton updateGroup;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.ToolStripButton updateAllProduct;
