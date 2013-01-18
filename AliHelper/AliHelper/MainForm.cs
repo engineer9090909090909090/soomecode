@@ -22,11 +22,12 @@ namespace AliHelper
         //alibaba vip manage url
         public static string ManageHtml = "http://hz.productposting.alibaba.com/product/manage_products.htm#tab=approved";
         private ProductsManager productsManager;
-
+        private ExtractProductDetails productDetails;
         #region 构造方法
         public MainForm()
         {
             productsManager = new ProductsManager();
+            productDetails = new ExtractProductDetails();
             InitializeComponent();
             LoadOutlookBar();
         }
@@ -228,14 +229,16 @@ namespace AliHelper
 
         private void newProductBtn_Click(object sender, EventArgs e)
         {
-            EditCategory f = new EditCategory();
-            f.StartPosition = FormStartPosition.CenterParent;
-            f.ShowDialog(this);
-           /*
-            ImageForm f = new ImageForm();
-            f.StartPosition = FormStartPosition.CenterParent;
-            f.ShowDialog(this);
-            */
+            productDetails.GetFormElements();
+            /*
+           EditCategory f = new EditCategory();
+           f.StartPosition = FormStartPosition.CenterParent;
+           f.ShowDialog(this);
+          
+           ImageForm f = new ImageForm();
+           f.StartPosition = FormStartPosition.CenterParent;
+           f.ShowDialog(this);
+           */
         }
 
         

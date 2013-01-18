@@ -67,7 +67,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bussness\ProductsManager.cs" />
+    <Compile Include="Bussness\ProductDetails.cs" />
+    <Compile Include="Bussness\ExtractProductsManager.cs" />
     <Compile Include="CheckCodeForm.cs">
       <SubType>Form</SubType>
     </Compile>
