@@ -35,8 +35,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.SearchButton = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.MyCategoryListBox = new System.Windows.Forms.ListBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // KeywordBox
@@ -49,14 +51,15 @@
             // 
             // CategoryListBox
             // 
-            this.CategoryListBox.Font = new System.Drawing.Font("SimSun", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.CategoryListBox.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.CategoryListBox.FormattingEnabled = true;
-            this.CategoryListBox.ItemHeight = 15;
+            this.CategoryListBox.ItemHeight = 12;
             this.CategoryListBox.Location = new System.Drawing.Point(19, 45);
             this.CategoryListBox.Name = "CategoryListBox";
             this.CategoryListBox.Size = new System.Drawing.Size(481, 304);
             this.CategoryListBox.TabIndex = 3;
             this.CategoryListBox.DoubleClick += new System.EventHandler(this.CategoryListBox_DoubleClick);
+            this.CategoryListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CategoryListBox_KeyDown);
             // 
             // tabControl1
             // 
@@ -67,6 +70,7 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(520, 401);
             this.tabControl1.TabIndex = 2;
+            this.tabControl1.Click += new System.EventHandler(this.tabControl1_Click);
             // 
             // tabPage1
             // 
@@ -103,6 +107,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.MyCategoryListBox);
             this.tabPage2.Location = new System.Drawing.Point(4, 21);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -110,6 +115,18 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "您经常使用的类目";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // MyCategoryListBox
+            // 
+            this.MyCategoryListBox.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.MyCategoryListBox.FormattingEnabled = true;
+            this.MyCategoryListBox.ItemHeight = 12;
+            this.MyCategoryListBox.Location = new System.Drawing.Point(16, 12);
+            this.MyCategoryListBox.Name = "MyCategoryListBox";
+            this.MyCategoryListBox.Size = new System.Drawing.Size(481, 328);
+            this.MyCategoryListBox.TabIndex = 4;
+            this.MyCategoryListBox.DoubleClick += new System.EventHandler(this.CategoryListBox_DoubleClick);
+            this.MyCategoryListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CategoryListBox_KeyDown);
             // 
             // EditCategory
             // 
@@ -126,6 +143,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -139,5 +157,6 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button SearchButton;
+        private System.Windows.Forms.ListBox MyCategoryListBox;
     }
 }
