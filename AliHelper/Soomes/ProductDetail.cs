@@ -13,7 +13,7 @@ namespace Soomes
         public FormElement event_submit_do_select_category { set; get; }
         public FormElement productFormInfoDTOStr { set; get; }
         public FormElement categoryIds { set; get; } //_fmp.pr._0.c
-        public FormElement fromType2 { set; get; }
+        public FormElement fromType2 { set; get; }////fromType2
         public FormElement keywords { set; get; }
         public FormElement categoryName { set; get; }//categoryName
         public FormElement catLang { set; get; }//categoryLang
@@ -43,7 +43,6 @@ namespace Soomes
         public FormElement keywords2 { set; get; }//_fmp.pr._0.p
         public FormElement keywords3 { set; get; }//_fmp.pr._0.pr
         public FormElement imageFiles { set; get; }//_fmp.pr._0.ima
-        public FormElement canChangeWaterMark { set; get; }//canChangeWaterMark
 
         public Dictionary<FormElement, FormElement> CustomAttr { set; get; }//_fmp.pr._0.u,pr._0.us
 
@@ -89,9 +88,7 @@ namespace Soomes
         public FormElement dynamicImageOriginFlag { set; get; }//dynamicImageOriginFlag
         public FormElement dynamicImageChangedFlag { set; get; }//dynamicImageChangedFlag
         public FormElement fromvirtualsite { set; get; }//fromvirtualsite
-        public FormElement categoryIdsPathStr { set; get; }//categoryIdsPathStr
         public FormElement userReviseCategory { set; get; }//userReviseCategory
         public FormElement backUrl { set; get; }//backUrl
-        public FormElement fromType2 { set; get; }//fromType2
     }
 }

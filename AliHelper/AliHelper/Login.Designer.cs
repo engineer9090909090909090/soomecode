@@ -32,6 +32,7 @@
             this.loginPanel = new System.Windows.Forms.Panel();
             this.LogPanel = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.loadingImage = new System.Windows.Forms.PictureBox();
             this.labErrorMsg = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
@@ -41,7 +42,6 @@
             this.changeModel = new System.Windows.Forms.Button();
             this.BtnLogin = new System.Windows.Forms.Button();
             this.BtnCancel = new System.Windows.Forms.Button();
-            this.loadingImage = new System.Windows.Forms.PictureBox();
             this.loginPanel.SuspendLayout();
             this.LogPanel.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -62,7 +62,6 @@
             this.webBrowser1.Url = new System.Uri("", System.UriKind.Relative);
             this.webBrowser1.Visible = false;
             this.webBrowser1.WebBrowserShortcutsEnabled = false;
-            
             // 
             // loginPanel
             // 
@@ -97,6 +96,16 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
+            // loadingImage
+            // 
+            this.loadingImage.Image = global::AliHelper.Properties.Resources.loading;
+            this.loadingImage.Location = new System.Drawing.Point(39, 109);
+            this.loadingImage.Name = "loadingImage";
+            this.loadingImage.Size = new System.Drawing.Size(38, 37);
+            this.loadingImage.TabIndex = 5;
+            this.loadingImage.TabStop = false;
+            this.loadingImage.Visible = false;
+            // 
             // labErrorMsg
             // 
             this.labErrorMsg.AutoSize = true;
@@ -124,6 +133,7 @@
             this.txtPassword.Size = new System.Drawing.Size(200, 21);
             this.txtPassword.TabIndex = 2;
             this.txtPassword.Text = "soomes2008";
+            this.txtPassword.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPassword_KeyDown);
             // 
             // label2
             // 
@@ -181,16 +191,6 @@
             this.BtnCancel.Text = "取消(&C)";
             this.BtnCancel.UseVisualStyleBackColor = true;
             this.BtnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
-            // 
-            // loadingImage
-            // 
-            this.loadingImage.Image = global::AliHelper.Properties.Resources.loading;
-            this.loadingImage.Location = new System.Drawing.Point(39, 109);
-            this.loadingImage.Name = "loadingImage";
-            this.loadingImage.Size = new System.Drawing.Size(38, 37);
-            this.loadingImage.TabIndex = 5;
-            this.loadingImage.TabStop = false;
-            this.loadingImage.Visible = false;
             // 
             // LoginForm
             // 
