@@ -50,6 +50,7 @@
     <Compile Include="Category.cs" />
     <Compile Include="AliProduct.cs" />
     <Compile Include="CategroyNode.cs" />
+    <Compile Include="Country.cs" />
     <Compile Include="FormElement.cs" />
     <Compile Include="ImageGroupNode.cs" />
     <Compile Include="ImageInfo.cs" />

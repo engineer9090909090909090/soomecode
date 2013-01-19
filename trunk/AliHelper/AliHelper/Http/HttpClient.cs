@@ -249,6 +249,30 @@ namespace AliHelper
             document = null;
             return cateNodeList;
         }
+
+        public static List<Soomes.Attribute> GetCountries()
+        {
+            string url = "http://hz.productposting.alibaba.com/product/post_cat_country_attr_ajax.htm";
+            string html = RemoteRequest(url, null);
+            Regex r = new Regex("=(.*?);");
+            string jsonstring = string.Empty;
+            List<Soomes.Attribute> countries = new List<Soomes.Attribute>();
+            GroupCollection gc = r.Match(html).Groups;
+            if (gc != null && gc.Count > 1)
+            {
+                jsonstring = gc[1].Value.Trim();
+            }
+            if (string.IsNullOrEmpty(jsonstring))
+            {
+                return countries;
+            }
+            List<AttributeNode> attributeNodes = JsonConvert.FromJson<List<AttributeNode>>(jsonstring);
+            foreach (AttributeNode node in attributeNodes)
+            {
+                countries.Add(node.Data);
+            }
+            return countries;
+        }
         
 
         public static string GetCheckCodeUrl(string html)
