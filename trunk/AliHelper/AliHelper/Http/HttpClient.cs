@@ -225,6 +225,30 @@ namespace AliHelper
             return imageInfoJson;
         }
 
+
+        public static List<CategroyNode> GetMyCategories()
+        {
+            List<CategroyNode> cateNodeList = new List<CategroyNode>();
+            string url = "http://hz.productposting.alibaba.com/product/commonPostCategoryIframe.htm?iframe_delete=true&set_domain=true&catLang=en_us&_time="
+                + DateUtils.DateTimeToInt(DateTime.Now);
+            string html = RemoteRequest(url, null);
+            HtmlDocument document = new HtmlDocument();
+            document.LoadHtml(html);
+            HtmlNode tableNode = document.GetElementbyId("categoryCommonTable");
+            HtmlNodeCollection nodes = tableNode.SelectNodes("//a");
+            foreach (HtmlNode node in nodes)
+            {
+                CategroyNode categroyNode = new CategroyNode();
+                string idstring = node.GetAttributeValue("id", "");
+                categroyNode.Id = Convert.ToInt32(idstring.Replace("item-", ""));
+                categroyNode.warnMessage = node.GetAttributeValue("warnMessage", "");
+                categroyNode.hasPrivilege = node.GetAttributeValue("hasPrivilege", "");
+                categroyNode.Name = HttpUtility.HtmlDecode(node.InnerHtml);
+                cateNodeList.Add(categroyNode);
+            }
+            document = null;
+            return cateNodeList;
+        }
         
 
         public static string GetCheckCodeUrl(string html)

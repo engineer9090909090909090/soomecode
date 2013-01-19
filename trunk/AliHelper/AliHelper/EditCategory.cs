@@ -41,13 +41,36 @@ namespace AliHelper
 
         private void CategoryListBox_DoubleClick(object sender, EventArgs e)
         {
-            string selectId =  this.CategoryListBox.SelectedValue.ToString();
+            ListBox listbox = (ListBox)sender;
+            string selectId = listbox.SelectedValue.ToString();
             List<AttributeNode> nodes = HttpClient.GetSelectCategoryAttributes(selectId);
             foreach (AttributeNode node in nodes)
             {
                 System.Diagnostics.Trace.WriteLine(node.Data.Id + " = " +node.Data.Value );
             }
             System.Diagnostics.Trace.WriteLine("=============");
+        }
+
+        private void tabControl1_Click(object sender, EventArgs e)
+        {
+           
+            this.MyCategoryListBox.DisplayMember = "Name";
+            this.MyCategoryListBox.ValueMember = "Id";
+            this.MyCategoryListBox.DataBindings.Clear();
+            List<CategroyNode> list = HttpClient.GetMyCategories();
+            if (list != null && list.Count > 0)
+            {
+                this.MyCategoryListBox.DataSource = list;
+            }
+        }
+
+        private void CategoryListBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                CategoryListBox_DoubleClick(sender, e);
+            }
+            
         }
     }
 }
