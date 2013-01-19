@@ -229,18 +229,18 @@ namespace AliHelper
 
         private void newProductBtn_Click(object sender, EventArgs e)
         {
-
-            
-           EditCategory f = new EditCategory();
-           f.StartPosition = FormStartPosition.CenterParent;
-           f.ShowDialog(this);
+            HttpClient.GetCountries();
             /*
-             ImageForm f = new ImageForm();
-             f.StartPosition = FormStartPosition.CenterParent;
-             f.ShowDialog(this);
+          EditCategory f = new EditCategory();
+          f.StartPosition = FormStartPosition.CenterParent;
+          f.ShowDialog(this);
            
-             productDetails.GetFormElements();
-             */
+            ImageForm f = new ImageForm();
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
+           
+            productDetails.GetFormElements();
+            */
         }
 
         
