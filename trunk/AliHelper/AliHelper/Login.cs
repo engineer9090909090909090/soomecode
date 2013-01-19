@@ -96,7 +96,14 @@ namespace AliHelper
                 this.changeModel.Location = new Point(9,169);
                 this.Location = new Point(this.Location.X, this.Location.Y + 100);
             }
-            
+        }
+
+        private void txtPassword_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                BtnLogin_Click(sender, e);
+            }
         }
 
         private void BtnLogin_Click(object sender, EventArgs e)
@@ -147,6 +154,5 @@ namespace AliHelper
             this.Close();
         }
 
-        
     }
 }
