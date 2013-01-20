@@ -37,6 +37,7 @@ namespace AliHelper
             CheckForIllegalCrossThreadCalls = false;
             List<AliGroup> groups = productsManager.GetGroupList();
             UpdateGroupUI(groups);
+            LoadProdutPanel();
         }
         #endregion
 
@@ -83,14 +84,17 @@ namespace AliHelper
                 if (index == 0)
                 {
                     ProductsStrip.Show();
+                    
                 }
                 else if (index == 1)
                 {
                     ProductsStrip.Hide();
+                    UnLoadProdutPanel();
                 }
                 else if (index == 2)
                 {
                     ProductsStrip.Hide();
+                    UnLoadProdutPanel();
                 }
             }
         }
@@ -243,6 +247,23 @@ namespace AliHelper
             */
         }
 
-        
+        private void UnLoadProdutPanel()
+        {
+            splitContainer1.Panel2.Controls.RemoveAt(0);
+        }
+
+        private void LoadProdutPanel()
+        {
+            ProductView productView1 = new AliHelper.ProductView();
+            this.splitContainer1.Panel2.SuspendLayout();
+            productView1.Location = new System.Drawing.Point(0, 0);
+            productView1.Name = "productView1";
+            productView1.AutoSize = true;
+            productView1.TabIndex = 0;
+            productView1.Size = new System.Drawing.Size(this.splitContainer1.Panel2.Width, this.splitContainer1.Panel2.Height);
+            productView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Panel2.Controls.Add(productView1);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+        }
     }
 }

@@ -43,14 +43,11 @@ namespace AliHelper
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.outlookBar1 = new UtilityLibrary.WinControls.OutlookBar();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.ProductsStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -143,6 +140,7 @@ namespace AliHelper
             // 
             // treeView1
             // 
+            this.treeView1.LineColor = System.Drawing.Color.Empty;
             this.treeView1.Location = new System.Drawing.Point(0, 23);
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(130, 423);
@@ -160,7 +158,7 @@ namespace AliHelper
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.dataGridView1);
+            this.splitContainer1.Panel2.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.splitContainer1.Size = new System.Drawing.Size(823, 447);
             this.splitContainer1.SplitterDistance = 130;
             this.splitContainer1.TabIndex = 5;
@@ -181,16 +179,6 @@ namespace AliHelper
             this.outlookBar1.Size = new System.Drawing.Size(130, 447);
             this.outlookBar1.TabIndex = 5;
             this.outlookBar1.Text = "outlookBar1";
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(689, 447);
-            this.dataGridView1.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -214,9 +202,7 @@ namespace AliHelper
             this.ProductsStrip.ResumeLayout(false);
             this.ProductsStrip.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -235,7 +221,6 @@ namespace AliHelper
         private System.Windows.Forms.ToolStripButton updateAllProduct;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripButton newProductBtn;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ToolStripButton updateAllImages;
         private UtilityLibrary.WinControls.OutlookBar outlookBar1;
     }

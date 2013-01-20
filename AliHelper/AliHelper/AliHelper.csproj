@@ -87,6 +87,12 @@
     <Compile Include="EditCategory.Designer.cs">
       <DependentUpon>EditCategory.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProductView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProductView.Designer.cs">
+      <DependentUpon>ProductView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\IconImages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -104,6 +110,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TreeViewImages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="TestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForm.Designer.cs">
+      <DependentUpon>TestForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\DateUtils.cs" />
     <Compile Include="Utils\FileUtils.cs" />
@@ -143,6 +155,9 @@
     <EmbeddedResource Include="EditCategory.resx">
       <DependentUpon>EditCategory.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ProductView.resx">
+      <DependentUpon>ProductView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\IconImages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>IconImages.Designer.cs</LastGenOutput>
@@ -172,6 +187,9 @@
     <EmbeddedResource Include="Properties\TreeViewImages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>TreeViewImages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForm.resx">
+      <DependentUpon>TestForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
