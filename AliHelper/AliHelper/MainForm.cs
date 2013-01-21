@@ -22,12 +22,13 @@ namespace AliHelper
         //alibaba vip manage url
         public static string ManageHtml = "http://hz.productposting.alibaba.com/product/manage_products.htm#tab=approved";
         private ProductsManager productsManager;
-        private ExtractProductDetails productDetails;
+        private ImpProductDetail impProductDetail;
+        ProductView productView1;
         #region 构造方法
         public MainForm()
         {
             productsManager = new ProductsManager();
-            productDetails = new ExtractProductDetails();
+            impProductDetail = new ImpProductDetail();
             InitializeComponent();
             LoadOutlookBar();
         }
@@ -233,37 +234,38 @@ namespace AliHelper
 
         private void newProductBtn_Click(object sender, EventArgs e)
         {
-            HttpClient.GetCountries();
-            /*
-          EditCategory f = new EditCategory();
-          f.StartPosition = FormStartPosition.CenterParent;
-          f.ShowDialog(this);
-           
-            ImageForm f = new ImageForm();
+            //HttpClient.GetCountries();
+            EditCategory f = new EditCategory();
             f.StartPosition = FormStartPosition.CenterParent;
             f.ShowDialog(this);
-           
-            productDetails.GetFormElements();
-            */
         }
 
         private void UnLoadProdutPanel()
         {
             splitContainer1.Panel2.Controls.RemoveAt(0);
+            this.productView1 = null;
         }
 
         private void LoadProdutPanel()
         {
-            ProductView productView1 = new AliHelper.ProductView();
+            this.productView1 = new AliHelper.ProductView();
             this.splitContainer1.Panel2.SuspendLayout();
-            productView1.Location = new System.Drawing.Point(0, 0);
-            productView1.Name = "productView1";
-            productView1.AutoSize = true;
-            productView1.TabIndex = 0;
-            productView1.Size = new System.Drawing.Size(this.splitContainer1.Panel2.Width, this.splitContainer1.Panel2.Height);
-            productView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.productView1.Location = new System.Drawing.Point(0, 0);
+            this.productView1.Name = "productView1";
+            this.productView1.AutoSize = true;
+            this.productView1.TabIndex = 0;
+            this.productView1.Size = new System.Drawing.Size(this.splitContainer1.Panel2.Width, this.splitContainer1.Panel2.Height);
+            this.productView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Panel2.Controls.Add(productView1);
             this.splitContainer1.Panel2.ResumeLayout(false);
+            this.SelectProductRow();
+        }
+
+        public void SelectProductRow()
+        {
+            ProductDetail detail = impProductDetail.GetFormElements();
+            this.productView1.AliProductDetail = detail;
+            this.productView1.LoadProductDetailValue();
         }
     }
 }
