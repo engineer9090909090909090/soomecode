@@ -83,6 +83,7 @@ namespace AliRank
 
         public void Click(ShowcaseRankInfo kw, int maxQueryPageNumber, AliAccounts account, bool canInquiry, InquiryMessages msg)
         {
+            eventX = new ManualResetEvent(false);
             this.item = kw;
             this.aliAccount = account;
             this.inquiryMessage = msg;
