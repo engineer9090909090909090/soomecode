@@ -31,15 +31,24 @@ namespace AliHelper
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.ProductInfoControl = new System.Windows.Forms.TabControl();
+            this.BaseInfoTab = new System.Windows.Forms.TabPage();
+            this.staticImageWaterMarkIdGroup = new System.Windows.Forms.GroupBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pr0static2 = new System.Windows.Forms.RadioButton();
+            this.pr0static1 = new System.Windows.Forms.RadioButton();
+            this.label20 = new System.Windows.Forms.Label();
+            this.pr0stati2 = new System.Windows.Forms.RadioButton();
+            this.pr0stati1 = new System.Windows.Forms.RadioButton();
+            this.label19 = new System.Windows.Forms.Label();
+            this.staticImageWaterMarkId = new System.Windows.Forms.CheckBox();
+            this.ImageBankLink = new System.Windows.Forms.LinkLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.ComputeLink = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
             this.productName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.productTeamInputBox = new System.Windows.Forms.ComboBox();
             this.productKeyword = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -50,7 +59,7 @@ namespace AliHelper
             this.summary = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.AttrTab = new System.Windows.Forms.TabPage();
             this.customAttrVal10 = new System.Windows.Forms.TextBox();
             this.customAttrKey10 = new System.Windows.Forms.TextBox();
             this.customAttrVal9 = new System.Windows.Forms.TextBox();
@@ -73,17 +82,17 @@ namespace AliHelper
             this.customAttrKey1 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.DescTab = new System.Windows.Forms.TabPage();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.TransTab = new System.Windows.Forms.TabPage();
             this.minOrderUnit = new System.Windows.Forms.ComboBox();
             this.paymentMethodOtherDesc = new System.Windows.Forms.TextBox();
             this.paymentMethodOther = new System.Windows.Forms.CheckBox();
-            this.paymentMethod5 = new System.Windows.Forms.CheckBox();
             this.paymentMethod6 = new System.Windows.Forms.CheckBox();
+            this.paymentMethod5 = new System.Windows.Forms.CheckBox();
+            this.paymentMethod4 = new System.Windows.Forms.CheckBox();
             this.paymentMethod3 = new System.Windows.Forms.CheckBox();
             this.paymentMethod2 = new System.Windows.Forms.CheckBox();
-            this.paymentMethod4 = new System.Windows.Forms.CheckBox();
             this.paymentMethod1 = new System.Windows.Forms.CheckBox();
             this.packagingDesc = new System.Windows.Forms.TextBox();
             this.consignmentTerm = new System.Windows.Forms.TextBox();
@@ -106,27 +115,18 @@ namespace AliHelper
             this.label11 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.staticImageWaterMarkId = new System.Windows.Forms.CheckBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label19 = new System.Windows.Forms.Label();
-            this.pr0stati1 = new System.Windows.Forms.RadioButton();
-            this.pr0stati2 = new System.Windows.Forms.RadioButton();
-            this.pr0static2 = new System.Windows.Forms.RadioButton();
-            this.pr0static1 = new System.Windows.Forms.RadioButton();
-            this.label20 = new System.Windows.Forms.Label();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.tabPage2.SuspendLayout();
-            this.tabPage3.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.ProductInfoControl.SuspendLayout();
+            this.BaseInfoTab.SuspendLayout();
+            this.staticImageWaterMarkIdGroup.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.AttrTab.SuspendLayout();
+            this.DescTab.SuspendLayout();
+            this.TransTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -142,7 +142,7 @@ namespace AliHelper
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
+            this.splitContainer1.Panel2.Controls.Add(this.ProductInfoControl);
             this.splitContainer1.Size = new System.Drawing.Size(1047, 721);
             this.splitContainer1.SplitterDistance = 350;
             this.splitContainer1.TabIndex = 0;
@@ -157,57 +157,155 @@ namespace AliHelper
             this.dataGridView1.Size = new System.Drawing.Size(1047, 350);
             this.dataGridView1.TabIndex = 0;
             // 
-            // tabControl1
+            // ProductInfoControl
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1047, 367);
-            this.tabControl1.TabIndex = 0;
+            this.ProductInfoControl.Controls.Add(this.BaseInfoTab);
+            this.ProductInfoControl.Controls.Add(this.AttrTab);
+            this.ProductInfoControl.Controls.Add(this.DescTab);
+            this.ProductInfoControl.Controls.Add(this.TransTab);
+            this.ProductInfoControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ProductInfoControl.Location = new System.Drawing.Point(0, 0);
+            this.ProductInfoControl.Name = "ProductInfoControl";
+            this.ProductInfoControl.SelectedIndex = 0;
+            this.ProductInfoControl.Size = new System.Drawing.Size(1047, 367);
+            this.ProductInfoControl.TabIndex = 0;
             // 
-            // tabPage1
+            // BaseInfoTab
             // 
-            this.tabPage1.Controls.Add(this.groupBox1);
-            this.tabPage1.Controls.Add(this.staticImageWaterMarkId);
-            this.tabPage1.Controls.Add(this.linkLabel2);
-            this.tabPage1.Controls.Add(this.pictureBox1);
-            this.tabPage1.Controls.Add(this.linkLabel1);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.productName);
-            this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.comboBox1);
-            this.tabPage1.Controls.Add(this.productKeyword);
-            this.tabPage1.Controls.Add(this.label7);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.keywords2);
-            this.tabPage1.Controls.Add(this.keywords3);
-            this.tabPage1.Controls.Add(this.summary);
-            this.tabPage1.Controls.Add(this.button2);
-            this.tabPage1.Controls.Add(this.button1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 21);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1039, 342);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "基本信息";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.BaseInfoTab.Controls.Add(this.staticImageWaterMarkIdGroup);
+            this.BaseInfoTab.Controls.Add(this.staticImageWaterMarkId);
+            this.BaseInfoTab.Controls.Add(this.ImageBankLink);
+            this.BaseInfoTab.Controls.Add(this.pictureBox1);
+            this.BaseInfoTab.Controls.Add(this.ComputeLink);
+            this.BaseInfoTab.Controls.Add(this.label1);
+            this.BaseInfoTab.Controls.Add(this.productName);
+            this.BaseInfoTab.Controls.Add(this.label2);
+            this.BaseInfoTab.Controls.Add(this.productTeamInputBox);
+            this.BaseInfoTab.Controls.Add(this.productKeyword);
+            this.BaseInfoTab.Controls.Add(this.label7);
+            this.BaseInfoTab.Controls.Add(this.label3);
+            this.BaseInfoTab.Controls.Add(this.label4);
+            this.BaseInfoTab.Controls.Add(this.label5);
+            this.BaseInfoTab.Controls.Add(this.keywords2);
+            this.BaseInfoTab.Controls.Add(this.keywords3);
+            this.BaseInfoTab.Controls.Add(this.summary);
+            this.BaseInfoTab.Controls.Add(this.button2);
+            this.BaseInfoTab.Controls.Add(this.button1);
+            this.BaseInfoTab.Location = new System.Drawing.Point(4, 21);
+            this.BaseInfoTab.Name = "BaseInfoTab";
+            this.BaseInfoTab.Padding = new System.Windows.Forms.Padding(3);
+            this.BaseInfoTab.Size = new System.Drawing.Size(1039, 342);
+            this.BaseInfoTab.TabIndex = 0;
+            this.BaseInfoTab.Text = "基本信息";
+            this.BaseInfoTab.UseVisualStyleBackColor = true;
             // 
-            // linkLabel2
+            // staticImageWaterMarkIdGroup
             // 
-            this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(150, 184);
-            this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(89, 12);
-            this.linkLabel2.TabIndex = 32;
-            this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "从图片银行选取";
+            this.staticImageWaterMarkIdGroup.Controls.Add(this.panel1);
+            this.staticImageWaterMarkIdGroup.Controls.Add(this.pr0stati2);
+            this.staticImageWaterMarkIdGroup.Controls.Add(this.pr0stati1);
+            this.staticImageWaterMarkIdGroup.Controls.Add(this.label19);
+            this.staticImageWaterMarkIdGroup.Location = new System.Drawing.Point(36, 230);
+            this.staticImageWaterMarkIdGroup.Name = "staticImageWaterMarkIdGroup";
+            this.staticImageWaterMarkIdGroup.Size = new System.Drawing.Size(231, 73);
+            this.staticImageWaterMarkIdGroup.TabIndex = 34;
+            this.staticImageWaterMarkIdGroup.TabStop = false;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.pr0static2);
+            this.panel1.Controls.Add(this.pr0static1);
+            this.panel1.Controls.Add(this.label20);
+            this.panel1.Location = new System.Drawing.Point(5, 43);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(222, 28);
+            this.panel1.TabIndex = 3;
+            // 
+            // pr0static2
+            // 
+            this.pr0static2.AutoSize = true;
+            this.pr0static2.Location = new System.Drawing.Point(143, 6);
+            this.pr0static2.Name = "pr0static2";
+            this.pr0static2.Size = new System.Drawing.Size(71, 16);
+            this.pr0static2.TabIndex = 5;
+            this.pr0static2.TabStop = true;
+            this.pr0static2.Text = "图片下部";
+            this.pr0static2.UseVisualStyleBackColor = true;
+            // 
+            // pr0static1
+            // 
+            this.pr0static1.AutoSize = true;
+            this.pr0static1.Checked = true;
+            this.pr0static1.Location = new System.Drawing.Point(56, 6);
+            this.pr0static1.Name = "pr0static1";
+            this.pr0static1.Size = new System.Drawing.Size(71, 16);
+            this.pr0static1.TabIndex = 4;
+            this.pr0static1.TabStop = true;
+            this.pr0static1.Text = "图片中心";
+            this.pr0static1.UseVisualStyleBackColor = true;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(-1, 7);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(53, 12);
+            this.label20.TabIndex = 3;
+            this.label20.Text = "水印位置";
+            // 
+            // pr0stati2
+            // 
+            this.pr0stati2.AutoSize = true;
+            this.pr0stati2.Checked = true;
+            this.pr0stati2.Location = new System.Drawing.Point(147, 23);
+            this.pr0stati2.Name = "pr0stati2";
+            this.pr0stati2.Size = new System.Drawing.Size(83, 16);
+            this.pr0stati2.TabIndex = 2;
+            this.pr0stati2.TabStop = true;
+            this.pr0stati2.Text = "无边框水印";
+            this.pr0stati2.UseVisualStyleBackColor = true;
+            // 
+            // pr0stati1
+            // 
+            this.pr0stati1.AutoSize = true;
+            this.pr0stati1.Location = new System.Drawing.Point(61, 23);
+            this.pr0stati1.Name = "pr0stati1";
+            this.pr0stati1.Size = new System.Drawing.Size(83, 16);
+            this.pr0stati1.TabIndex = 1;
+            this.pr0stati1.TabStop = true;
+            this.pr0stati1.Text = "带边框水印";
+            this.pr0stati1.UseVisualStyleBackColor = true;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(4, 24);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(53, 12);
+            this.label19.TabIndex = 0;
+            this.label19.Text = "水印样式";
+            // 
+            // staticImageWaterMarkId
+            // 
+            this.staticImageWaterMarkId.AutoSize = true;
+            this.staticImageWaterMarkId.Location = new System.Drawing.Point(37, 215);
+            this.staticImageWaterMarkId.Name = "staticImageWaterMarkId";
+            this.staticImageWaterMarkId.Size = new System.Drawing.Size(108, 16);
+            this.staticImageWaterMarkId.TabIndex = 33;
+            this.staticImageWaterMarkId.Text = "给图片添加水印";
+            this.staticImageWaterMarkId.UseVisualStyleBackColor = true;
+            this.staticImageWaterMarkId.CheckedChanged += new System.EventHandler(this.staticImageWaterMarkId_CheckedChanged);
+            // 
+            // ImageBankLink
+            // 
+            this.ImageBankLink.AutoSize = true;
+            this.ImageBankLink.Location = new System.Drawing.Point(150, 184);
+            this.ImageBankLink.Name = "ImageBankLink";
+            this.ImageBankLink.Size = new System.Drawing.Size(89, 12);
+            this.ImageBankLink.TabIndex = 32;
+            this.ImageBankLink.TabStop = true;
+            this.ImageBankLink.Text = "从图片银行选取";
+            this.ImageBankLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ImageBankLink_LinkClicked);
             // 
             // pictureBox1
             // 
@@ -218,15 +316,15 @@ namespace AliHelper
             this.pictureBox1.TabIndex = 28;
             this.pictureBox1.TabStop = false;
             // 
-            // linkLabel1
+            // ComputeLink
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(54, 185);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(89, 12);
-            this.linkLabel1.TabIndex = 31;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "从我的电脑选取";
+            this.ComputeLink.AutoSize = true;
+            this.ComputeLink.Location = new System.Drawing.Point(54, 185);
+            this.ComputeLink.Name = "ComputeLink";
+            this.ComputeLink.Size = new System.Drawing.Size(89, 12);
+            this.ComputeLink.TabIndex = 31;
+            this.ComputeLink.TabStop = true;
+            this.ComputeLink.Text = "从我的电脑选取";
             // 
             // label1
             // 
@@ -253,13 +351,13 @@ namespace AliHelper
             this.label2.TabIndex = 20;
             this.label2.Text = "产品关键词";
             // 
-            // comboBox1
+            // productTeamInputBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(387, 272);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(472, 20);
-            this.comboBox1.TabIndex = 30;
+            this.productTeamInputBox.FormattingEnabled = true;
+            this.productTeamInputBox.Location = new System.Drawing.Point(387, 272);
+            this.productTeamInputBox.Name = "productTeamInputBox";
+            this.productTeamInputBox.Size = new System.Drawing.Size(472, 20);
+            this.productTeamInputBox.TabIndex = 30;
             // 
             // productKeyword
             // 
@@ -344,37 +442,37 @@ namespace AliHelper
             this.button1.Text = "保存(&S)";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // AttrTab
             // 
-            this.tabPage2.Controls.Add(this.customAttrVal10);
-            this.tabPage2.Controls.Add(this.customAttrKey10);
-            this.tabPage2.Controls.Add(this.customAttrVal9);
-            this.tabPage2.Controls.Add(this.customAttrKey9);
-            this.tabPage2.Controls.Add(this.customAttrVal8);
-            this.tabPage2.Controls.Add(this.customAttrKey8);
-            this.tabPage2.Controls.Add(this.customAttrVal7);
-            this.tabPage2.Controls.Add(this.customAttrKey7);
-            this.tabPage2.Controls.Add(this.customAttrVal6);
-            this.tabPage2.Controls.Add(this.customAttrKey6);
-            this.tabPage2.Controls.Add(this.customAttrVal5);
-            this.tabPage2.Controls.Add(this.customAttrKey5);
-            this.tabPage2.Controls.Add(this.customAttrVal4);
-            this.tabPage2.Controls.Add(this.customAttrKey4);
-            this.tabPage2.Controls.Add(this.customAttrVal3);
-            this.tabPage2.Controls.Add(this.customAttrKey3);
-            this.tabPage2.Controls.Add(this.customAttrVal2);
-            this.tabPage2.Controls.Add(this.customAttrKey2);
-            this.tabPage2.Controls.Add(this.customAttrVal1);
-            this.tabPage2.Controls.Add(this.customAttrKey1);
-            this.tabPage2.Controls.Add(this.label12);
-            this.tabPage2.Controls.Add(this.label6);
-            this.tabPage2.Location = new System.Drawing.Point(4, 21);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1039, 342);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "产品属性";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.AttrTab.Controls.Add(this.customAttrVal10);
+            this.AttrTab.Controls.Add(this.customAttrKey10);
+            this.AttrTab.Controls.Add(this.customAttrVal9);
+            this.AttrTab.Controls.Add(this.customAttrKey9);
+            this.AttrTab.Controls.Add(this.customAttrVal8);
+            this.AttrTab.Controls.Add(this.customAttrKey8);
+            this.AttrTab.Controls.Add(this.customAttrVal7);
+            this.AttrTab.Controls.Add(this.customAttrKey7);
+            this.AttrTab.Controls.Add(this.customAttrVal6);
+            this.AttrTab.Controls.Add(this.customAttrKey6);
+            this.AttrTab.Controls.Add(this.customAttrVal5);
+            this.AttrTab.Controls.Add(this.customAttrKey5);
+            this.AttrTab.Controls.Add(this.customAttrVal4);
+            this.AttrTab.Controls.Add(this.customAttrKey4);
+            this.AttrTab.Controls.Add(this.customAttrVal3);
+            this.AttrTab.Controls.Add(this.customAttrKey3);
+            this.AttrTab.Controls.Add(this.customAttrVal2);
+            this.AttrTab.Controls.Add(this.customAttrKey2);
+            this.AttrTab.Controls.Add(this.customAttrVal1);
+            this.AttrTab.Controls.Add(this.customAttrKey1);
+            this.AttrTab.Controls.Add(this.label12);
+            this.AttrTab.Controls.Add(this.label6);
+            this.AttrTab.Location = new System.Drawing.Point(4, 21);
+            this.AttrTab.Name = "AttrTab";
+            this.AttrTab.Padding = new System.Windows.Forms.Padding(3);
+            this.AttrTab.Size = new System.Drawing.Size(1039, 342);
+            this.AttrTab.TabIndex = 1;
+            this.AttrTab.Text = "产品属性";
+            this.AttrTab.UseVisualStyleBackColor = true;
             // 
             // customAttrVal10
             // 
@@ -535,16 +633,16 @@ namespace AliHelper
             this.label6.TabIndex = 28;
             this.label6.Text = "自定义属性";
             // 
-            // tabPage3
+            // DescTab
             // 
-            this.tabPage3.Controls.Add(this.webBrowser1);
-            this.tabPage3.Location = new System.Drawing.Point(4, 21);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1039, 342);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "产品详情";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.DescTab.Controls.Add(this.webBrowser1);
+            this.DescTab.Location = new System.Drawing.Point(4, 21);
+            this.DescTab.Name = "DescTab";
+            this.DescTab.Padding = new System.Windows.Forms.Padding(3);
+            this.DescTab.Size = new System.Drawing.Size(1039, 342);
+            this.DescTab.TabIndex = 2;
+            this.DescTab.Text = "产品详情";
+            this.DescTab.UseVisualStyleBackColor = true;
             // 
             // webBrowser1
             // 
@@ -557,45 +655,45 @@ namespace AliHelper
             this.webBrowser1.TabIndex = 0;
             this.webBrowser1.Url = new System.Uri("", System.UriKind.Relative);
             // 
-            // tabPage4
+            // TransTab
             // 
-            this.tabPage4.Controls.Add(this.minOrderUnit);
-            this.tabPage4.Controls.Add(this.paymentMethodOtherDesc);
-            this.tabPage4.Controls.Add(this.paymentMethodOther);
-            this.tabPage4.Controls.Add(this.paymentMethod5);
-            this.tabPage4.Controls.Add(this.paymentMethod6);
-            this.tabPage4.Controls.Add(this.paymentMethod3);
-            this.tabPage4.Controls.Add(this.paymentMethod2);
-            this.tabPage4.Controls.Add(this.paymentMethod4);
-            this.tabPage4.Controls.Add(this.paymentMethod1);
-            this.tabPage4.Controls.Add(this.packagingDesc);
-            this.tabPage4.Controls.Add(this.consignmentTerm);
-            this.tabPage4.Controls.Add(this.label18);
-            this.tabPage4.Controls.Add(this.supplyPeriod);
-            this.tabPage4.Controls.Add(this.supplyUnit);
-            this.tabPage4.Controls.Add(this.supplyQuantity);
-            this.tabPage4.Controls.Add(this.port);
-            this.tabPage4.Controls.Add(this.label17);
-            this.tabPage4.Controls.Add(this.priceUnit);
-            this.tabPage4.Controls.Add(this.label16);
-            this.tabPage4.Controls.Add(this.priceRangeMax);
-            this.tabPage4.Controls.Add(this.moneyType);
-            this.tabPage4.Controls.Add(this.priceRangeMin);
-            this.tabPage4.Controls.Add(this.minOrderQuantity);
-            this.tabPage4.Controls.Add(this.label13);
-            this.tabPage4.Controls.Add(this.label14);
-            this.tabPage4.Controls.Add(this.label15);
-            this.tabPage4.Controls.Add(this.label10);
-            this.tabPage4.Controls.Add(this.label11);
-            this.tabPage4.Controls.Add(this.label9);
-            this.tabPage4.Controls.Add(this.label8);
-            this.tabPage4.Location = new System.Drawing.Point(4, 21);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(1039, 342);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "交易信息";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            this.TransTab.Controls.Add(this.minOrderUnit);
+            this.TransTab.Controls.Add(this.paymentMethodOtherDesc);
+            this.TransTab.Controls.Add(this.paymentMethodOther);
+            this.TransTab.Controls.Add(this.paymentMethod6);
+            this.TransTab.Controls.Add(this.paymentMethod5);
+            this.TransTab.Controls.Add(this.paymentMethod4);
+            this.TransTab.Controls.Add(this.paymentMethod3);
+            this.TransTab.Controls.Add(this.paymentMethod2);
+            this.TransTab.Controls.Add(this.paymentMethod1);
+            this.TransTab.Controls.Add(this.packagingDesc);
+            this.TransTab.Controls.Add(this.consignmentTerm);
+            this.TransTab.Controls.Add(this.label18);
+            this.TransTab.Controls.Add(this.supplyPeriod);
+            this.TransTab.Controls.Add(this.supplyUnit);
+            this.TransTab.Controls.Add(this.supplyQuantity);
+            this.TransTab.Controls.Add(this.port);
+            this.TransTab.Controls.Add(this.label17);
+            this.TransTab.Controls.Add(this.priceUnit);
+            this.TransTab.Controls.Add(this.label16);
+            this.TransTab.Controls.Add(this.priceRangeMax);
+            this.TransTab.Controls.Add(this.moneyType);
+            this.TransTab.Controls.Add(this.priceRangeMin);
+            this.TransTab.Controls.Add(this.minOrderQuantity);
+            this.TransTab.Controls.Add(this.label13);
+            this.TransTab.Controls.Add(this.label14);
+            this.TransTab.Controls.Add(this.label15);
+            this.TransTab.Controls.Add(this.label10);
+            this.TransTab.Controls.Add(this.label11);
+            this.TransTab.Controls.Add(this.label9);
+            this.TransTab.Controls.Add(this.label8);
+            this.TransTab.Location = new System.Drawing.Point(4, 21);
+            this.TransTab.Name = "TransTab";
+            this.TransTab.Padding = new System.Windows.Forms.Padding(3);
+            this.TransTab.Size = new System.Drawing.Size(1039, 342);
+            this.TransTab.TabIndex = 3;
+            this.TransTab.Text = "交易信息";
+            this.TransTab.UseVisualStyleBackColor = true;
             // 
             // minOrderUnit
             // 
@@ -615,62 +713,62 @@ namespace AliHelper
             // paymentMethodOther
             // 
             this.paymentMethodOther.AutoSize = true;
-            this.paymentMethodOther.Location = new System.Drawing.Point(515, 125);
+            this.paymentMethodOther.Location = new System.Drawing.Point(514, 125);
             this.paymentMethodOther.Name = "paymentMethodOther";
             this.paymentMethodOther.Size = new System.Drawing.Size(60, 16);
             this.paymentMethodOther.TabIndex = 29;
             this.paymentMethodOther.Text = "Other ";
             this.paymentMethodOther.UseVisualStyleBackColor = true;
             // 
-            // paymentMethod5
-            // 
-            this.paymentMethod5.AutoSize = true;
-            this.paymentMethod5.Location = new System.Drawing.Point(330, 125);
-            this.paymentMethod5.Name = "paymentMethod5";
-            this.paymentMethod5.Size = new System.Drawing.Size(78, 16);
-            this.paymentMethod5.TabIndex = 28;
-            this.paymentMethod5.Text = "MoneyGram";
-            this.paymentMethod5.UseVisualStyleBackColor = true;
-            // 
             // paymentMethod6
             // 
             this.paymentMethod6.AutoSize = true;
-            this.paymentMethod6.Location = new System.Drawing.Point(414, 125);
+            this.paymentMethod6.Location = new System.Drawing.Point(428, 126);
             this.paymentMethod6.Name = "paymentMethod6";
-            this.paymentMethod6.Size = new System.Drawing.Size(102, 16);
-            this.paymentMethod6.TabIndex = 27;
-            this.paymentMethod6.Text = "Western Union";
+            this.paymentMethod6.Size = new System.Drawing.Size(78, 16);
+            this.paymentMethod6.TabIndex = 28;
+            this.paymentMethod6.Text = "MoneyGram";
             this.paymentMethod6.UseVisualStyleBackColor = true;
+            // 
+            // paymentMethod5
+            // 
+            this.paymentMethod5.AutoSize = true;
+            this.paymentMethod5.Location = new System.Drawing.Point(323, 125);
+            this.paymentMethod5.Name = "paymentMethod5";
+            this.paymentMethod5.Size = new System.Drawing.Size(102, 16);
+            this.paymentMethod5.TabIndex = 27;
+            this.paymentMethod5.Text = "Western Union";
+            this.paymentMethod5.UseVisualStyleBackColor = true;
+            // 
+            // paymentMethod4
+            // 
+            this.paymentMethod4.AutoSize = true;
+            this.paymentMethod4.Location = new System.Drawing.Point(275, 125);
+            this.paymentMethod4.Name = "paymentMethod4";
+            this.paymentMethod4.Size = new System.Drawing.Size(42, 16);
+            this.paymentMethod4.TabIndex = 26;
+            this.paymentMethod4.Text = "T/T";
+            this.paymentMethod4.UseVisualStyleBackColor = true;
             // 
             // paymentMethod3
             // 
             this.paymentMethod3.AutoSize = true;
-            this.paymentMethod3.Location = new System.Drawing.Point(228, 125);
+            this.paymentMethod3.Location = new System.Drawing.Point(225, 125);
             this.paymentMethod3.Name = "paymentMethod3";
             this.paymentMethod3.Size = new System.Drawing.Size(42, 16);
-            this.paymentMethod3.TabIndex = 26;
-            this.paymentMethod3.Text = "T/T";
+            this.paymentMethod3.TabIndex = 25;
+            this.paymentMethod3.Text = "D/P";
             this.paymentMethod3.UseVisualStyleBackColor = true;
             // 
             // paymentMethod2
             // 
             this.paymentMethod2.AutoSize = true;
-            this.paymentMethod2.Location = new System.Drawing.Point(175, 125);
+            this.paymentMethod2.Location = new System.Drawing.Point(174, 125);
             this.paymentMethod2.Name = "paymentMethod2";
-            this.paymentMethod2.Size = new System.Drawing.Size(42, 16);
-            this.paymentMethod2.TabIndex = 25;
-            this.paymentMethod2.Text = "D/P";
+            this.paymentMethod2.Size = new System.Drawing.Size(48, 16);
+            this.paymentMethod2.TabIndex = 24;
+            this.paymentMethod2.Text = " D/A";
             this.paymentMethod2.UseVisualStyleBackColor = true;
-            // 
-            // paymentMethod4
-            // 
-            this.paymentMethod4.AutoSize = true;
-            this.paymentMethod4.Location = new System.Drawing.Point(276, 125);
-            this.paymentMethod4.Name = "paymentMethod4";
-            this.paymentMethod4.Size = new System.Drawing.Size(48, 16);
-            this.paymentMethod4.TabIndex = 24;
-            this.paymentMethod4.Text = " D/A";
-            this.paymentMethod4.UseVisualStyleBackColor = true;
             // 
             // paymentMethod1
             // 
@@ -854,100 +952,6 @@ namespace AliHelper
             this.label8.TabIndex = 0;
             this.label8.Text = "最小起订量";
             // 
-            // staticImageWaterMarkId
-            // 
-            this.staticImageWaterMarkId.AutoSize = true;
-            this.staticImageWaterMarkId.Location = new System.Drawing.Point(37, 215);
-            this.staticImageWaterMarkId.Name = "staticImageWaterMarkId";
-            this.staticImageWaterMarkId.Size = new System.Drawing.Size(108, 16);
-            this.staticImageWaterMarkId.TabIndex = 33;
-            this.staticImageWaterMarkId.Text = "给图片添加水印";
-            this.staticImageWaterMarkId.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.panel1);
-            this.groupBox1.Controls.Add(this.pr0stati2);
-            this.groupBox1.Controls.Add(this.pr0stati1);
-            this.groupBox1.Controls.Add(this.label19);
-            this.groupBox1.Location = new System.Drawing.Point(36, 230);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(231, 73);
-            this.groupBox1.TabIndex = 34;
-            this.groupBox1.TabStop = false;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.pr0static2);
-            this.panel1.Controls.Add(this.pr0static1);
-            this.panel1.Controls.Add(this.label20);
-            this.panel1.Location = new System.Drawing.Point(5, 43);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(222, 28);
-            this.panel1.TabIndex = 3;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(4, 24);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(53, 12);
-            this.label19.TabIndex = 0;
-            this.label19.Text = "水印样式";
-            // 
-            // pr0stati1
-            // 
-            this.pr0stati1.AutoSize = true;
-            this.pr0stati1.Location = new System.Drawing.Point(61, 23);
-            this.pr0stati1.Name = "pr0stati1";
-            this.pr0stati1.Size = new System.Drawing.Size(83, 16);
-            this.pr0stati1.TabIndex = 1;
-            this.pr0stati1.TabStop = true;
-            this.pr0stati1.Text = "带边框水印";
-            this.pr0stati1.UseVisualStyleBackColor = true;
-            // 
-            // pr0stati2
-            // 
-            this.pr0stati2.AutoSize = true;
-            this.pr0stati2.Location = new System.Drawing.Point(147, 23);
-            this.pr0stati2.Name = "pr0stati2";
-            this.pr0stati2.Size = new System.Drawing.Size(83, 16);
-            this.pr0stati2.TabIndex = 2;
-            this.pr0stati2.TabStop = true;
-            this.pr0stati2.Text = "无边框水印";
-            this.pr0stati2.UseVisualStyleBackColor = true;
-            // 
-            // pr0static2
-            // 
-            this.pr0static2.AutoSize = true;
-            this.pr0static2.Location = new System.Drawing.Point(143, 6);
-            this.pr0static2.Name = "pr0static2";
-            this.pr0static2.Size = new System.Drawing.Size(71, 16);
-            this.pr0static2.TabIndex = 5;
-            this.pr0static2.TabStop = true;
-            this.pr0static2.Text = "图片下部";
-            this.pr0static2.UseVisualStyleBackColor = true;
-            // 
-            // pr0static1
-            // 
-            this.pr0static1.AutoSize = true;
-            this.pr0static1.Location = new System.Drawing.Point(56, 6);
-            this.pr0static1.Name = "pr0static1";
-            this.pr0static1.Size = new System.Drawing.Size(71, 16);
-            this.pr0static1.TabIndex = 4;
-            this.pr0static1.TabStop = true;
-            this.pr0static1.Text = "图片中心";
-            this.pr0static1.UseVisualStyleBackColor = true;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(-1, 7);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(53, 12);
-            this.label20.TabIndex = 3;
-            this.label20.Text = "水印位置";
-            // 
             // ProductView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -956,23 +960,24 @@ namespace AliHelper
             this.Controls.Add(this.splitContainer1);
             this.Name = "ProductView";
             this.Size = new System.Drawing.Size(1047, 721);
+            this.Load += new System.EventHandler(this.ProductView_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage4.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.ProductInfoControl.ResumeLayout(false);
+            this.BaseInfoTab.ResumeLayout(false);
+            this.BaseInfoTab.PerformLayout();
+            this.staticImageWaterMarkIdGroup.ResumeLayout(false);
+            this.staticImageWaterMarkIdGroup.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.AttrTab.ResumeLayout(false);
+            this.AttrTab.PerformLayout();
+            this.DescTab.ResumeLayout(false);
+            this.TransTab.ResumeLayout(false);
+            this.TransTab.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -981,11 +986,11 @@ namespace AliHelper
 
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TabControl ProductInfoControl;
+        private System.Windows.Forms.TabPage BaseInfoTab;
+        private System.Windows.Forms.TabPage AttrTab;
+        private System.Windows.Forms.TabPage DescTab;
+        private System.Windows.Forms.TabPage TransTab;
         private System.Windows.Forms.WebBrowser webBrowser1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
@@ -1012,20 +1017,20 @@ namespace AliHelper
         private System.Windows.Forms.TextBox packagingDesc;
         private System.Windows.Forms.CheckBox paymentMethod1;
         private System.Windows.Forms.CheckBox paymentMethodOther;
-        private System.Windows.Forms.CheckBox paymentMethod5;
         private System.Windows.Forms.CheckBox paymentMethod6;
+        private System.Windows.Forms.CheckBox paymentMethod5;
+        private System.Windows.Forms.CheckBox paymentMethod4;
         private System.Windows.Forms.CheckBox paymentMethod3;
         private System.Windows.Forms.CheckBox paymentMethod2;
-        private System.Windows.Forms.CheckBox paymentMethod4;
         private System.Windows.Forms.TextBox paymentMethodOtherDesc;
         private System.Windows.Forms.ComboBox minOrderUnit;
-        private LinkLabel linkLabel2;
+        private LinkLabel ImageBankLink;
         private PictureBox pictureBox1;
-        private LinkLabel linkLabel1;
+        private LinkLabel ComputeLink;
         private Label label1;
         private TextBox productName;
         private Label label2;
-        private ComboBox comboBox1;
+        private ComboBox productTeamInputBox;
         private TextBox productKeyword;
         private Label label7;
         private Label label3;
@@ -1057,7 +1062,7 @@ namespace AliHelper
         private TextBox customAttrVal9;
         private TextBox customAttrKey9;
         private CheckBox staticImageWaterMarkId;
-        private GroupBox groupBox1;
+        private GroupBox staticImageWaterMarkIdGroup;
         private Panel panel1;
         private RadioButton pr0static2;
         private RadioButton pr0static1;
