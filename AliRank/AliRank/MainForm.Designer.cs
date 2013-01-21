@@ -56,6 +56,8 @@
             this.InquiryRunBtn = new System.Windows.Forms.ToolStripButton();
             this.InquiryStopBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.ReflashBtn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.RunTime = new System.Windows.Forms.ToolStripLabel();
             this.MessageLabel = new System.Windows.Forms.ToolStripLabel();
@@ -72,8 +74,6 @@
             this.ModifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MaxInToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ChangeStatusTsmItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ReflashBtn = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -299,6 +299,20 @@
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
+            // ReflashBtn
+            // 
+            this.ReflashBtn.Image = global::AliRank.Properties.Resources.convert;
+            this.ReflashBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ReflashBtn.Name = "ReflashBtn";
+            this.ReflashBtn.Size = new System.Drawing.Size(51, 22);
+            this.ReflashBtn.Text = "刷新";
+            this.ReflashBtn.Click += new System.EventHandler(this.ReflashBtn_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
+            // 
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
@@ -459,20 +473,6 @@
             this.ChangeStatusTsmItem.Text = "改变到询盘状态";
             this.ChangeStatusTsmItem.Click += new System.EventHandler(this.ChangeStatusTsmItem_Click);
             // 
-            // ReflashBtn
-            // 
-            this.ReflashBtn.Image = global::AliRank.Properties.Resources.convert;
-            this.ReflashBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ReflashBtn.Name = "ReflashBtn";
-            this.ReflashBtn.Size = new System.Drawing.Size(51, 22);
-            this.ReflashBtn.Text = "刷新";
-            this.ReflashBtn.Click += new System.EventHandler(this.ReflashBtn_Click);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -486,7 +486,7 @@
             this.IsMdiContainer = true;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "阿里排名1.0";
+            this.Text = "外贸助手—阿里询盘排名软件1.0";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.statusStrip1.ResumeLayout(false);
