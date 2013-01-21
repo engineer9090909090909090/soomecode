@@ -882,33 +882,23 @@ namespace AliRank
                 if (IsStop) { break; }
 
                 IEHandleUtils.ClearIECookie();
+                clicker = new ProductClicker(webBrowser);
+                clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
+                clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
+                clicker.OnInquiryEndEvent += new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
+
+
                 toolStripStatusLabel1.Text = "做一个产品辅助点击。";
                 productList = keywordDAO.GetClickProducts();
                 if (productList != null && productList.Count > 0)
                 {
-                    clicker = new ProductClicker(webBrowser);
-                    clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
-                    clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
-                    clicker.OnInquiryEndEvent += new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
                     clicker.Click(productList[0], iMaxQueryPage, null, false, null);
-                    clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
-                    clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
-                    clicker.OnInquiryEndEvent -= new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
-                    clicker = null;
                 }
 
                 if (productItem != null)
                 {
                     toolStripStatusLabel1.Text = "开始自动询盘操作。";
-                    clicker = new ProductClicker(webBrowser);
-                    clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
-                    clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
-                    clicker.OnInquiryEndEvent += new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
                     clicker.Click(productItem, iMaxQueryPage, InquiryUser, true, inquiryMessages);
-                    clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
-                    clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
-                    clicker.OnInquiryEndEvent -= new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
-                    clicker = null;
                     toolStripStatusLabel1.Text = "询盘操作结束。";
                     if (IsStop) { break; }
                     GC.Collect();
@@ -922,18 +912,13 @@ namespace AliRank
                 productList = keywordDAO.GetClickProducts();
                 if (productList != null && productList.Count > 0)
                 {
-                    clicker = new ProductClicker(webBrowser);
-                    clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
-                    clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
-                    clicker.OnInquiryEndEvent += new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
                     clicker.Click(productList[0], iMaxQueryPage, null, false, null);
-                    clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
-                    clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
-                    clicker.OnInquiryEndEvent -= new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
-                    clicker = null;
                 }
 
-                
+                clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
+                clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
+                clicker.OnInquiryEndEvent -= new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
+                clicker = null;
                 productList = null;
                 if (CurrVpnEntity != null)
                 {
@@ -945,7 +930,7 @@ namespace AliRank
                 }
 
                 int puaseTime = new Random().Next(iMinInterval, iMaxInterval);
-                toolStripStatusLabel1.Text = "询盘操作暂停" + puaseTime + "分钟。";
+                toolStripStatusLabel1.Text = "操作暂停" + puaseTime + "分钟。";
                 lock (padlock)
                 {
                     Monitor.Wait(padlock, TimeSpan.FromMinutes(puaseTime));
