@@ -55,13 +55,13 @@ namespace Soomes
         public FormElement priceRangeMax { set; get; }//_fmp.pr._0.pric
         public FormElement port { set; get; }//_fmp.pr._0.po
 
-
         public FormElement static_and_dyn0 { set; get; }//_fmp.pr._0.im
         public FormElement static_and_dyn1 { set; get; }//_fmp.pr._0.im
         public FormElement staticImageWaterMarkId { set; get; }//_fmp.pr._0.stat
         public FormElement staticImageToBankId { set; get; }//_fmp.pr._0.statici
         public List<FormElement> pr0stati { set; get; }//_fmp.pr._0.stati
         public List<FormElement> pr0static { set; get; }//_fmp.pr._0.stati
+
         public FormElement dynamicImageWaterMarkId { set; get; }//_fmp.pr._0.dy
         public FormElement dynamicImageToBankId { set; get; }//_fmp.pr._0.dynam
         public List<FormElement> pr0dyn { set; get; }//_fmp.pr._0.dyn
