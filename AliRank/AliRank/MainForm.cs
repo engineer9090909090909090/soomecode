@@ -887,24 +887,29 @@ namespace AliRank
                 clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
                 clicker.OnInquiryEndEvent += new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
 
-
                 toolStripStatusLabel1.Text = "做一个产品辅助点击。";
                 productList = keywordDAO.GetClickProducts();
                 if (productList != null && productList.Count > 0)
                 {
+                    if (IsStop) { break; }
                     clicker.Click(productList[0], iMaxQueryPage, null, false, null);
+                    GC.Collect();
+                    lock (padlock)
+                    {
+                        Monitor.Wait(padlock, TimeSpan.FromSeconds(3));
+                    }
                 }
 
                 if (productItem != null)
                 {
+                    if (IsStop) { break; }
                     toolStripStatusLabel1.Text = "开始自动询盘操作。";
                     clicker.Click(productItem, iMaxQueryPage, InquiryUser, true, inquiryMessages);
                     toolStripStatusLabel1.Text = "询盘操作结束。";
-                    if (IsStop) { break; }
                     GC.Collect();
                     lock (padlock)
                     {
-                        Monitor.Wait(padlock, TimeSpan.FromSeconds(5));
+                        Monitor.Wait(padlock, TimeSpan.FromSeconds(3));
                     }
                 }
 
@@ -912,9 +917,14 @@ namespace AliRank
                 productList = keywordDAO.GetClickProducts();
                 if (productList != null && productList.Count > 0)
                 {
+                    if (IsStop) { break; }
                     clicker.Click(productList[0], iMaxQueryPage, null, false, null);
+                    GC.Collect();
+                    lock (padlock)
+                    {
+                        Monitor.Wait(padlock, TimeSpan.FromSeconds(3));
+                    }
                 }
-
                 clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
                 clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
                 clicker.OnInquiryEndEvent -= new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
@@ -929,6 +939,7 @@ namespace AliRank
                     CurrVpnEntity = null;
                 }
 
+                if (IsStop) { break; }
                 int puaseTime = new Random().Next(iMinInterval, iMaxInterval);
                 toolStripStatusLabel1.Text = "操作暂停" + puaseTime + "分钟。";
                 lock (padlock)
