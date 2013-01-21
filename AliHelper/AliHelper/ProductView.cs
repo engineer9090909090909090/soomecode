@@ -14,6 +14,8 @@ namespace AliHelper
         public ProductView()
         {
             InitializeComponent();
+            this.webBrowser1.Navigate(Application.StartupPath + "\\KindEditor\\Editor.htm");
         }
+
     }
 }
