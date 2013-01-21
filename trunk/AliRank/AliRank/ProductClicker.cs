@@ -19,7 +19,7 @@ namespace AliRank
         public event RankClickingEvent OnRankClickingEvent;
         public event RankInquiryEndEvent OnInquiryEndEvent;
         private WebBrowser browser;
-        ManualResetEvent eventX = new ManualResetEvent(false);
+        private ManualResetEvent eventX = new ManualResetEvent(false);
 
         private string SEARCH_URL1 = @"http://www.alibaba.com/trade/search?fsb=y&IndexArea=product_en&CatId=&SearchText={0}";
         private string SEARCH_URL2 = @"http://www.alibaba.com/products/F0/{0}/{1}.html";
@@ -33,8 +33,8 @@ namespace AliRank
         private string INQUIRY_SUCCESS = "msgsend/memberInquirySuccess.htm";
         private string additionalHeaders = Constants.UserAgent;
 
-        int currentPage = 1;
-        int maxQueryPage = 10;
+        private int currentPage = 1;
+        private int maxQueryPage = 10;
         private ShowcaseRankInfo item;
         private AliAccounts aliAccount;
         private InquiryMessages inquiryMessage;
@@ -83,17 +83,17 @@ namespace AliRank
 
         public void Click(ShowcaseRankInfo kw, int maxQueryPageNumber, AliAccounts account, bool canInquiry, InquiryMessages msg)
         {
-            eventX = new ManualResetEvent(false);
             this.item = kw;
+            this.currentPage = 1;
             this.aliAccount = account;
             this.inquiryMessage = msg;
             this.canInquiry = canInquiry;
+            this.maxQueryPage = maxQueryPageNumber;
+            this.eventX = new ManualResetEvent(false);
             if (this.aliAccount == null)
             {
                 this.canInquiry = false;
             }
-
-            this.maxQueryPage = maxQueryPageNumber;
             this.clickKey = item.RankKeyword;
             currentRequestUrl = string.Format(SEARCH_URL1, clickKey.Replace(" ", "+"));
             ClickingEvent(item, @"Clicking " + currentRequestUrl);
