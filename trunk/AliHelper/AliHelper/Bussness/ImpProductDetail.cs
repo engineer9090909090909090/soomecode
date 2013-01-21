@@ -4,24 +4,51 @@ using System.Linq;
 using System.Text;
 using HtmlAgilityPack;
 using Soomes;
+using System.Reflection;
 
 namespace AliHelper
 {
-    class ExtractProductDetails
+    class ImpProductDetail
     {
-        public ExtractProductDetails()
+        public ImpProductDetail()
         { 
 
         }
-        
-        public void GetFormElements()
+
+        public ProductDetail GetFormElements()
         {
             string url = "http://hz.productposting.alibaba.com/product/editing.htm?id=627992386";
             string html = HttpClient.RemoteRequest(url, null);
             HtmlDocument document = new HtmlDocument();
             document.LoadHtml(html);
             HtmlNode productFormEl = document.GetElementbyId("productForm");
-            PrintElementsValue(productFormEl);
+            List<FormElement> elments = PrintElementsValue(productFormEl);
+            ProductDetail detail = new ProductDetail();
+            Type typeOfClass = detail.GetType();
+            foreach (FormElement el in elments)
+            {
+                string propertyName = el.Id;
+                if (string.IsNullOrEmpty(propertyName))
+                {
+                    propertyName = el.Name.Replace("_", "").Replace(".", "");
+                }
+                if (string.IsNullOrEmpty(propertyName))
+                {
+                    continue;
+                }
+                PropertyInfo pInfo = typeOfClass.GetProperty(propertyName);
+                if (pInfo != null)
+                {
+                    if (pInfo.PropertyType.Name == "FormElement")
+                    {
+                        pInfo.SetValue(detail, el, null);
+                    }
+                    else {
+                        System.Diagnostics.Trace.WriteLine(pInfo.PropertyType.Name);
+                    }
+                }
+            }
+            return detail;
         }
 
         public List<FormElement> PrintElementsValue(HtmlNode htmlNode)
