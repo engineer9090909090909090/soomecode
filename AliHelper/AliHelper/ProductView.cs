@@ -82,10 +82,10 @@ namespace AliHelper
                 this.productTeamInputBox.Tag = AliProductDetail.productTeamInputBox.Name;
                 this.productTeamInputBox.Text = AliProductDetail.productTeamInputBox.Val;
             }
-            if (AliProductDetail.productDescription != null)
+            if (AliProductDetail.productDescriptionTemp != null)
             {
-                this.webBrowser1.Tag = AliProductDetail.productDescription.Name;
-                string val = AliProductDetail.productDescription.Val;
+                this.webBrowser1.Tag = AliProductDetail.productDescriptionTemp.Name;
+                string val = AliProductDetail.productDescriptionTemp.Val;
                 this.webBrowser1.Document.InvokeScript("SetData", new object[] { val });
             }
 
@@ -145,17 +145,41 @@ namespace AliHelper
                 this.port.Tag = AliProductDetail.port.Name;
                 this.port.Text = AliProductDetail.port.Val;
             }
-            if (AliProductDetail.paymentMethod != null)
+
+            if (AliProductDetail.paymentMethod1 != null)
             {
-                foreach (FormElement el in AliProductDetail.paymentMethod)
-                {
-                    Control CheckBoxControl = Controls.Find(el.Id, true)[0];
-                    if (CheckBoxControl != null)
-                    {
-                        ((CheckBox)CheckBoxControl).Tag = el.Name;
-                        ((CheckBox)CheckBoxControl).Checked = el.Checked;
-                    }
-                }
+                this.paymentMethod1.Tag = AliProductDetail.paymentMethod1.Name;
+                this.paymentMethod1.Checked = AliProductDetail.paymentMethod1.Checked;
+            }
+            if (AliProductDetail.paymentMethod2 != null)
+            {
+                this.paymentMethod2.Tag = AliProductDetail.paymentMethod2.Name;
+                this.paymentMethod2.Checked = AliProductDetail.paymentMethod2.Checked;
+            }
+            if (AliProductDetail.paymentMethod3 != null)
+            {
+                this.paymentMethod3.Tag = AliProductDetail.paymentMethod3.Name;
+                this.paymentMethod3.Checked = AliProductDetail.paymentMethod3.Checked;
+            }
+            if (AliProductDetail.paymentMethod4 != null)
+            {
+                this.paymentMethod4.Tag = AliProductDetail.paymentMethod4.Name;
+                this.paymentMethod4.Checked = AliProductDetail.paymentMethod4.Checked;
+            }
+            if (AliProductDetail.paymentMethod5 != null)
+            {
+                this.paymentMethod5.Tag = AliProductDetail.paymentMethod5.Name;
+                this.paymentMethod5.Checked = AliProductDetail.paymentMethod5.Checked;
+            }
+            if (AliProductDetail.paymentMethod6 != null)
+            {
+                this.paymentMethod6.Tag = AliProductDetail.paymentMethod6.Name;
+                this.paymentMethod6.Checked = AliProductDetail.paymentMethod6.Checked;
+            }
+            if (AliProductDetail.paymentMethodOther != null)
+            {
+                this.paymentMethodOther.Tag = AliProductDetail.paymentMethodOther.Name;
+                this.paymentMethodOther.Checked = AliProductDetail.paymentMethodOther.Checked;
             }
             if (AliProductDetail.paymentMethodOtherDesc != null)
             {

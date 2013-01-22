@@ -22,38 +22,25 @@ namespace AliHelper
             HtmlDocument document = new HtmlDocument();
             document.LoadHtml(html);
             HtmlNode productFormEl = document.GetElementbyId("productForm");
-            List<FormElement> elments = PrintElementsValue(productFormEl);
-            ProductDetail detail = new ProductDetail();
-            Type typeOfClass = detail.GetType();
-            foreach (FormElement el in elments)
-            {
-                string propertyName = el.Id;
-                if (string.IsNullOrEmpty(propertyName))
-                {
-                    propertyName = el.Name.Replace("_", "").Replace(".", "");
-                }
-                if (string.IsNullOrEmpty(propertyName))
-                {
-                    continue;
-                }
-                PropertyInfo pInfo = typeOfClass.GetProperty(propertyName);
-                if (pInfo != null)
-                {
-                    if (pInfo.PropertyType.Name == "FormElement")
-                    {
-                        pInfo.SetValue(detail, el, null);
-                    }
-                    else {
-                        System.Diagnostics.Trace.WriteLine(pInfo.PropertyType.Name);
-                    }
-                }
-            }
-            return detail;
+            return PrintElementsValue(productFormEl);
+            
         }
 
-        public List<FormElement> PrintElementsValue(HtmlNode htmlNode)
+        private string GetPropertyName(string elId, string elName)
         {
-            List<FormElement> elements = new List<FormElement>();
+            string propertyName = elId;
+            if (string.IsNullOrEmpty(propertyName))
+            {
+                propertyName = elName.Replace("_", "").Replace(".", "");
+            }
+            return propertyName;
+        }
+
+
+        public ProductDetail PrintElementsValue(HtmlNode htmlNode)
+        {
+            ProductDetail detail = new ProductDetail();
+            Type typeOfClass = detail.GetType();
             HtmlNodeCollection nodeTags = htmlNode.SelectNodes(@"//input[@type='hidden'] | //input[@type='text']");
             if (nodeTags != null)
             {
@@ -70,10 +57,50 @@ namespace AliHelper
                     el.Type = type;
                     el.Name = name;
                     el.Val = value;
-                    elements.Add(el);
+
+                    string propertyName = GetPropertyName(id, name);
+                    PropertyInfo pInfo = typeOfClass.GetProperty(propertyName);
+                    if (!string.IsNullOrEmpty(value) && pInfo != null && pInfo.PropertyType.Name == "FormElement")
+                    {
+                        pInfo.SetValue(detail, el, null);
+                    }
                 }
             }
-            nodeTags = htmlNode.SelectNodes(@"//input[@type='checkbox'] | //input[@type='radio']");
+            detail.CustomAttr = new Dictionary<FormElement, FormElement>();
+            HtmlNodeCollection customNameTags = htmlNode.SelectNodes(@"//tr[@class='custom-attr-item']/td/input[@name='_fmp.pr._0.u']");
+            HtmlNodeCollection customValueTags = htmlNode.SelectNodes(@"//tr[@class='custom-attr-item']/td/input[@name='_fmp.pr._0.us']");
+            if (customNameTags != null)
+            {
+                for (int i = 0; i < customNameTags.Count; i ++ )
+                {
+                    HtmlNode nameNode = customNameTags[i];
+                    string id = nameNode.GetAttributeValue("id", "");
+                    string type = nameNode.GetAttributeValue("type", "");
+                    string name = nameNode.GetAttributeValue("name", "");
+                    string value = nameNode.GetAttributeValue("value", "");
+                    System.Diagnostics.Trace.WriteLine("Id:" + id + "  type:" + type + "  name:" + name + "  value:" + value);
+                    FormElement nameEl = new FormElement();
+                    nameEl.Id = id;
+                    nameEl.Type = type;
+                    nameEl.Name = name;
+                    nameEl.Val = value;
+
+                    HtmlNode valueNode = customValueTags[i];
+                    string vid = valueNode.GetAttributeValue("id", "");
+                    string vtype = valueNode.GetAttributeValue("type", "");
+                    string vname = valueNode.GetAttributeValue("name", "");
+                    string vvalue = valueNode.GetAttributeValue("value", "");
+                    System.Diagnostics.Trace.WriteLine("Id:" + id + "  type:" + type + "  name:" + name + "  value:" + value);
+                    FormElement valueEl = new FormElement();
+                    valueEl.Id = vid;
+                    valueEl.Type = vtype;
+                    valueEl.Name = vname;
+                    valueEl.Val = vvalue;
+                    detail.CustomAttr.Add(nameEl, valueEl);
+                }
+            }
+            
+            nodeTags = htmlNode.SelectNodes(@"//input[@type='radio']");
             if (nodeTags != null)
             {
                 foreach (HtmlNode node in nodeTags)
@@ -90,7 +117,31 @@ namespace AliHelper
                     el.Name = name;
                     el.Val = value;
                     el.Checked = chk;
-                    elements.Add(el);
+                }
+            }
+            nodeTags = htmlNode.SelectNodes(@"//input[@type='checkbox']");
+            if (nodeTags != null)
+            {
+                foreach (HtmlNode node in nodeTags)
+                {
+                    string id = node.GetAttributeValue("id", "");
+                    string type = node.GetAttributeValue("type", "");
+                    string name = node.GetAttributeValue("name", "");
+                    string value = node.GetAttributeValue("value", "");
+                    bool chk = node.Attributes["checked"] != null;
+                    System.Diagnostics.Trace.WriteLine("Id:" + id + "  type:" + type + "  name:" + name + "  checked:" + chk + "  value:" + value);
+                    FormElement el = new FormElement();
+                    el.Id = id;
+                    el.Type = type;
+                    el.Name = name;
+                    el.Val = value;
+                    el.Checked = chk;
+                    string propertyName = GetPropertyName(id, name);
+                    PropertyInfo pInfo = typeOfClass.GetProperty(propertyName);
+                    if (!string.IsNullOrEmpty(value) && pInfo != null && pInfo.PropertyType.Name == "FormElement")
+                    {
+                        pInfo.SetValue(detail, el, null);
+                    }
                 }
             }
             nodeTags = htmlNode.SelectNodes(@"//textarea");
@@ -108,10 +159,16 @@ namespace AliHelper
                     el.Type = "textarea";
                     el.Name = name;
                     el.Val = value;
-                    elements.Add(el);
+
+                    string propertyName = GetPropertyName(id, name);
+                    PropertyInfo pInfo = typeOfClass.GetProperty(propertyName);
+                    if (!string.IsNullOrEmpty(value) && pInfo != null && pInfo.PropertyType.Name == "FormElement")
+                    {
+                        pInfo.SetValue(detail, el, null);
+                    }
                 }
             }
-            return elements;
+            return detail;
         }
     }
 }

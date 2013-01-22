@@ -46,7 +46,13 @@ namespace Soomes
 
         public Dictionary<FormElement, FormElement> CustomAttr { set; get; }//_fmp.pr._0.u,pr._0.us
 
-        public List<FormElement> paymentMethod { set; get; }//_fmp.pr._0.pa
+        public FormElement paymentMethod1 { set; get; }//_fmp.pr._0.pa
+        public FormElement paymentMethod2 { set; get; }//_fmp.pr._0.pa
+        public FormElement paymentMethod3 { set; get; }//_fmp.pr._0.pa
+        public FormElement paymentMethod4 { set; get; }//_fmp.pr._0.pa
+        public FormElement paymentMethod5 { set; get; }//_fmp.pr._0.pa
+        public FormElement paymentMethod6 { set; get; }//_fmp.pr._0.pa
+        public FormElement paymentMethodOther { set; get; }//_fmp.pr._0.pa
         public FormElement paymentMethodOtherDesc { set; get; }//_fmp.pr._0.paym
 
         public FormElement minOrderQuantity { set; get; }//_fmp.pr._0.mi
@@ -82,7 +88,7 @@ namespace Soomes
 
 
         public FormElement summary { set; get; }//_fmp.pr._0.su
-        public FormElement productDescription { set; get; }//_fmp.pr._0.de
+        public FormElement productDescriptionTemp { set; get; }//_fmp.pr._0.de
         public FormElement packagingDesc { set; get; }//_fmp.pr._0.pac
 
 
