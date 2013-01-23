@@ -21,7 +21,9 @@ namespace Soomes
 
         public string Label { set; get; }
 
-        public string Oreder { set; get; }
+        public string Order { set; get; }
+
+        public List<FormElement> Options { set; get; }
 
     }
 }

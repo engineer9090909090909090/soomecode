@@ -85,8 +85,8 @@ namespace AliHelper
             if (AliProductDetail.productDescriptionTemp != null)
             {
                 this.webBrowser1.Tag = AliProductDetail.productDescriptionTemp.Name;
-                string val = AliProductDetail.productDescriptionTemp.Val;
-                this.webBrowser1.Document.InvokeScript("SetData", new object[] { val });
+                string content = AliProductDetail.productDescriptionTemp.Val;
+                this.webBrowser1.Document.InvokeScript("SetData", new object[] { content });
             }
 
             if (AliProductDetail.CustomAttr != null)
@@ -221,6 +221,68 @@ namespace AliHelper
                 this.packagingDesc.Tag = AliProductDetail.packagingDesc.Name;
                 this.packagingDesc.Text = AliProductDetail.packagingDesc.Val;
             }
+
+            if (AliProductDetail.categoryLanguage != null)
+            {
+            }
+
+            if (AliProductDetail.minOrderUnit != null)
+            {
+                this.minOrderUnit.Tag = AliProductDetail.minOrderUnit.Name;
+                this.minOrderUnit.DisplayMember = "Label";
+                this.minOrderUnit.ValueMember = "Val";
+                string selectVal = "0";
+                foreach (FormElement e in AliProductDetail.minOrderUnit.Options)
+                {
+                    this.minOrderUnit.Items.Add(e);
+                    if (e.Checked) selectVal = e.Val;
+                }
+            }
+            if (AliProductDetail.moneyType != null)
+            {
+                this.moneyType.Tag = AliProductDetail.moneyType.Name;
+                this.moneyType.DisplayMember = "Label";
+                this.moneyType.ValueMember = "Val";
+                foreach (FormElement e in AliProductDetail.moneyType.Options)
+                {
+                    this.moneyType.Items.Add(e);
+                    if (e.Checked) this.moneyType.SelectedItem = e;
+                }
+            }
+            if (AliProductDetail.priceUnit != null)
+            {
+                this.priceUnit.Tag = AliProductDetail.priceUnit.Name;
+                this.priceUnit.DisplayMember = "Label";
+                this.priceUnit.ValueMember = "Val";
+                foreach (FormElement e in AliProductDetail.priceUnit.Options)
+                {
+                    this.priceUnit.Items.Add(e);
+                    if (e.Checked) this.priceUnit.SelectedItem = e;
+                }
+            }
+            if (AliProductDetail.supplyUnit != null)
+            {
+                this.supplyUnit.Tag = AliProductDetail.supplyUnit.Name;
+                this.supplyUnit.DisplayMember = "Label";
+                this.supplyUnit.ValueMember = "Val";
+                foreach (FormElement e in AliProductDetail.supplyUnit.Options)
+                {
+                    this.supplyUnit.Items.Add(e);
+                    if (e.Checked) this.supplyUnit.SelectedItem = e;
+                }
+            }
+            if (AliProductDetail.supplyPeriod != null)
+            {
+                this.supplyPeriod.Tag = AliProductDetail.supplyPeriod.Name;
+                this.supplyPeriod.DisplayMember = "Label";
+                this.supplyPeriod.ValueMember = "Val";
+                foreach (FormElement e in AliProductDetail.supplyPeriod.Options)
+                {
+                    this.supplyPeriod.Items.Add(e);
+                    if (e.Checked) this.supplyPeriod.SelectedItem = e;
+                }
+            }
+
 
         }
 
