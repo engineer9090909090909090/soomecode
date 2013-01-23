@@ -115,6 +115,9 @@ namespace AliHelper
             this.label11 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -127,6 +130,7 @@ namespace AliHelper
             this.AttrTab.SuspendLayout();
             this.DescTab.SuspendLayout();
             this.TransTab.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -172,6 +176,7 @@ namespace AliHelper
             // 
             // BaseInfoTab
             // 
+            this.BaseInfoTab.Controls.Add(this.panel2);
             this.BaseInfoTab.Controls.Add(this.staticImageWaterMarkIdGroup);
             this.BaseInfoTab.Controls.Add(this.staticImageWaterMarkId);
             this.BaseInfoTab.Controls.Add(this.ImageBankLink);
@@ -299,7 +304,7 @@ namespace AliHelper
             // ImageBankLink
             // 
             this.ImageBankLink.AutoSize = true;
-            this.ImageBankLink.Location = new System.Drawing.Point(150, 184);
+            this.ImageBankLink.Location = new System.Drawing.Point(150, 189);
             this.ImageBankLink.Name = "ImageBankLink";
             this.ImageBankLink.Size = new System.Drawing.Size(89, 12);
             this.ImageBankLink.TabIndex = 32;
@@ -310,16 +315,16 @@ namespace AliHelper
             // pictureBox1
             // 
             this.pictureBox1.Image = global::AliHelper.Properties.Resources.no_image;
-            this.pictureBox1.Location = new System.Drawing.Point(103, 48);
+            this.pictureBox1.Location = new System.Drawing.Point(36, 75);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(134, 128);
+            this.pictureBox1.Size = new System.Drawing.Size(107, 102);
             this.pictureBox1.TabIndex = 28;
             this.pictureBox1.TabStop = false;
             // 
             // ComputeLink
             // 
             this.ComputeLink.AutoSize = true;
-            this.ComputeLink.Location = new System.Drawing.Point(54, 185);
+            this.ComputeLink.Location = new System.Drawing.Point(54, 189);
             this.ComputeLink.Name = "ComputeLink";
             this.ComputeLink.Size = new System.Drawing.Size(89, 12);
             this.ComputeLink.TabIndex = 31;
@@ -353,6 +358,7 @@ namespace AliHelper
             // 
             // productTeamInputBox
             // 
+            this.productTeamInputBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.productTeamInputBox.FormattingEnabled = true;
             this.productTeamInputBox.Location = new System.Drawing.Point(387, 272);
             this.productTeamInputBox.Name = "productTeamInputBox";
@@ -478,7 +484,7 @@ namespace AliHelper
             // 
             this.customAttrVal10.Location = new System.Drawing.Point(646, 287);
             this.customAttrVal10.Name = "customAttrVal10";
-            this.customAttrVal10.Size = new System.Drawing.Size(173, 21);
+            this.customAttrVal10.Size = new System.Drawing.Size(233, 21);
             this.customAttrVal10.TabIndex = 49;
             // 
             // customAttrKey10
@@ -492,7 +498,7 @@ namespace AliHelper
             // 
             this.customAttrVal9.Location = new System.Drawing.Point(646, 260);
             this.customAttrVal9.Name = "customAttrVal9";
-            this.customAttrVal9.Size = new System.Drawing.Size(173, 21);
+            this.customAttrVal9.Size = new System.Drawing.Size(233, 21);
             this.customAttrVal9.TabIndex = 47;
             // 
             // customAttrKey9
@@ -506,7 +512,7 @@ namespace AliHelper
             // 
             this.customAttrVal8.Location = new System.Drawing.Point(646, 233);
             this.customAttrVal8.Name = "customAttrVal8";
-            this.customAttrVal8.Size = new System.Drawing.Size(173, 21);
+            this.customAttrVal8.Size = new System.Drawing.Size(233, 21);
             this.customAttrVal8.TabIndex = 45;
             // 
             // customAttrKey8
@@ -520,7 +526,7 @@ namespace AliHelper
             // 
             this.customAttrVal7.Location = new System.Drawing.Point(646, 204);
             this.customAttrVal7.Name = "customAttrVal7";
-            this.customAttrVal7.Size = new System.Drawing.Size(173, 21);
+            this.customAttrVal7.Size = new System.Drawing.Size(233, 21);
             this.customAttrVal7.TabIndex = 43;
             // 
             // customAttrKey7
@@ -534,7 +540,7 @@ namespace AliHelper
             // 
             this.customAttrVal6.Location = new System.Drawing.Point(646, 176);
             this.customAttrVal6.Name = "customAttrVal6";
-            this.customAttrVal6.Size = new System.Drawing.Size(173, 21);
+            this.customAttrVal6.Size = new System.Drawing.Size(233, 21);
             this.customAttrVal6.TabIndex = 41;
             // 
             // customAttrKey6
@@ -548,7 +554,7 @@ namespace AliHelper
             // 
             this.customAttrVal5.Location = new System.Drawing.Point(646, 148);
             this.customAttrVal5.Name = "customAttrVal5";
-            this.customAttrVal5.Size = new System.Drawing.Size(173, 21);
+            this.customAttrVal5.Size = new System.Drawing.Size(233, 21);
             this.customAttrVal5.TabIndex = 39;
             // 
             // customAttrKey5
@@ -562,7 +568,7 @@ namespace AliHelper
             // 
             this.customAttrVal4.Location = new System.Drawing.Point(646, 120);
             this.customAttrVal4.Name = "customAttrVal4";
-            this.customAttrVal4.Size = new System.Drawing.Size(173, 21);
+            this.customAttrVal4.Size = new System.Drawing.Size(233, 21);
             this.customAttrVal4.TabIndex = 37;
             // 
             // customAttrKey4
@@ -576,7 +582,7 @@ namespace AliHelper
             // 
             this.customAttrVal3.Location = new System.Drawing.Point(646, 92);
             this.customAttrVal3.Name = "customAttrVal3";
-            this.customAttrVal3.Size = new System.Drawing.Size(173, 21);
+            this.customAttrVal3.Size = new System.Drawing.Size(233, 21);
             this.customAttrVal3.TabIndex = 35;
             // 
             // customAttrKey3
@@ -590,7 +596,7 @@ namespace AliHelper
             // 
             this.customAttrVal2.Location = new System.Drawing.Point(646, 63);
             this.customAttrVal2.Name = "customAttrVal2";
-            this.customAttrVal2.Size = new System.Drawing.Size(173, 21);
+            this.customAttrVal2.Size = new System.Drawing.Size(233, 21);
             this.customAttrVal2.TabIndex = 33;
             // 
             // customAttrKey2
@@ -604,7 +610,7 @@ namespace AliHelper
             // 
             this.customAttrVal1.Location = new System.Drawing.Point(646, 35);
             this.customAttrVal1.Name = "customAttrVal1";
-            this.customAttrVal1.Size = new System.Drawing.Size(173, 21);
+            this.customAttrVal1.Size = new System.Drawing.Size(233, 21);
             this.customAttrVal1.TabIndex = 31;
             // 
             // customAttrKey1
@@ -697,6 +703,7 @@ namespace AliHelper
             // 
             // minOrderUnit
             // 
+            this.minOrderUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.minOrderUnit.FormattingEnabled = true;
             this.minOrderUnit.Location = new System.Drawing.Point(242, 17);
             this.minOrderUnit.Name = "minOrderUnit";
@@ -806,6 +813,7 @@ namespace AliHelper
             // 
             // supplyPeriod
             // 
+            this.supplyPeriod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.supplyPeriod.FormattingEnabled = true;
             this.supplyPeriod.Location = new System.Drawing.Point(539, 164);
             this.supplyPeriod.Name = "supplyPeriod";
@@ -814,6 +822,7 @@ namespace AliHelper
             // 
             // supplyUnit
             // 
+            this.supplyUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.supplyUnit.FormattingEnabled = true;
             this.supplyUnit.Location = new System.Drawing.Point(242, 163);
             this.supplyUnit.Name = "supplyUnit";
@@ -845,6 +854,7 @@ namespace AliHelper
             // 
             // priceUnit
             // 
+            this.priceUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.priceUnit.FormattingEnabled = true;
             this.priceUnit.Location = new System.Drawing.Point(515, 55);
             this.priceUnit.Name = "priceUnit";
@@ -869,6 +879,7 @@ namespace AliHelper
             // 
             // moneyType
             // 
+            this.moneyType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.moneyType.FormattingEnabled = true;
             this.moneyType.Location = new System.Drawing.Point(125, 54);
             this.moneyType.Name = "moneyType";
@@ -952,6 +963,38 @@ namespace AliHelper
             this.label8.TabIndex = 0;
             this.label8.Text = "最小起订量";
             // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.radioButton1);
+            this.panel2.Controls.Add(this.radioButton2);
+            this.panel2.Location = new System.Drawing.Point(110, 40);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(129, 28);
+            this.panel2.TabIndex = 35;
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(67, 6);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(47, 16);
+            this.radioButton1.TabIndex = 5;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "多图";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Checked = true;
+            this.radioButton2.Location = new System.Drawing.Point(5, 6);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(47, 16);
+            this.radioButton2.TabIndex = 4;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "单图";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
             // ProductView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -978,6 +1021,8 @@ namespace AliHelper
             this.DescTab.ResumeLayout(false);
             this.TransTab.ResumeLayout(false);
             this.TransTab.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1070,5 +1115,8 @@ namespace AliHelper
         private RadioButton pr0stati2;
         private RadioButton pr0stati1;
         private Label label19;
+        private Panel panel2;
+        private RadioButton radioButton1;
+        private RadioButton radioButton2;
     }
 }
