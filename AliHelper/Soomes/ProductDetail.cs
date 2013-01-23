@@ -8,7 +8,7 @@ namespace Soomes
     public class ProductDetail
     {
         public FormElement _csrf_token_ { set; get; }
-
+        public FormElement categoryLanguage { set; get; }
         public FormElement keyword { set; get; }
         public FormElement event_submit_do_select_category { set; get; }
         public FormElement productFormInfoDTOStr { set; get; }
@@ -101,5 +101,9 @@ namespace Soomes
         public FormElement fromvirtualsite { set; get; }//fromvirtualsite
         public FormElement userReviseCategory { set; get; }//userReviseCategory
         public FormElement backUrl { set; get; }//backUrl
+
+
+        public List<AttributeNode> SysAttr { set; get; }
+        public List<AttributeNode> FixAttr { set; get; }
     }
 }
