@@ -248,8 +248,8 @@ namespace AliHelper
                     string type = "option";
                     string name = node.GetAttributeValue("name", "");
                     string value = node.GetAttributeValue("value", "");
-                    bool chk = node.Attributes["checked"] != null;
-                    System.Diagnostics.Trace.WriteLine("Id:" + id + "  type:" + type + "  name:" + name + "  value:" + value);
+                    bool chk = node.Attributes["selected"] != null;
+                    System.Diagnostics.Trace.WriteLine("Id:" + id + "  type:" + type + "  name:" + name + "  checked:" + chk + "  value:" + value); 
                     FormElement el = new FormElement();
                     el.Id = id;
                     el.Type = type;

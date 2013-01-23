@@ -231,56 +231,65 @@ namespace AliHelper
                 this.minOrderUnit.Tag = AliProductDetail.minOrderUnit.Name;
                 this.minOrderUnit.DisplayMember = "Label";
                 this.minOrderUnit.ValueMember = "Val";
-                string selectVal = "0";
+                FormElement selected = AliProductDetail.minOrderUnit.Options[0];
                 foreach (FormElement e in AliProductDetail.minOrderUnit.Options)
                 {
                     this.minOrderUnit.Items.Add(e);
-                    if (e.Checked) selectVal = e.Val;
+                    if (e.Checked) selected = e;
                 }
+                this.minOrderUnit.SelectedItem = selected;
             }
             if (AliProductDetail.moneyType != null)
             {
                 this.moneyType.Tag = AliProductDetail.moneyType.Name;
                 this.moneyType.DisplayMember = "Label";
                 this.moneyType.ValueMember = "Val";
+                FormElement selected = AliProductDetail.moneyType.Options[0];
                 foreach (FormElement e in AliProductDetail.moneyType.Options)
                 {
                     this.moneyType.Items.Add(e);
-                    if (e.Checked) this.moneyType.SelectedItem = e;
+                    if (e.Checked) selected = e;
                 }
+                this.moneyType.SelectedItem = selected;
             }
             if (AliProductDetail.priceUnit != null)
             {
                 this.priceUnit.Tag = AliProductDetail.priceUnit.Name;
                 this.priceUnit.DisplayMember = "Label";
                 this.priceUnit.ValueMember = "Val";
+                FormElement selected = AliProductDetail.priceUnit.Options[0];
                 foreach (FormElement e in AliProductDetail.priceUnit.Options)
                 {
                     this.priceUnit.Items.Add(e);
-                    if (e.Checked) this.priceUnit.SelectedItem = e;
+                    if (e.Checked) selected = e;
                 }
+                this.priceUnit.SelectedItem = selected;
             }
             if (AliProductDetail.supplyUnit != null)
             {
                 this.supplyUnit.Tag = AliProductDetail.supplyUnit.Name;
                 this.supplyUnit.DisplayMember = "Label";
                 this.supplyUnit.ValueMember = "Val";
+                FormElement selected = AliProductDetail.supplyUnit.Options[0];
                 foreach (FormElement e in AliProductDetail.supplyUnit.Options)
                 {
                     this.supplyUnit.Items.Add(e);
-                    if (e.Checked) this.supplyUnit.SelectedItem = e;
+                    if (e.Checked) selected = e;
                 }
+                this.supplyUnit.SelectedItem = selected;
             }
             if (AliProductDetail.supplyPeriod != null)
             {
                 this.supplyPeriod.Tag = AliProductDetail.supplyPeriod.Name;
                 this.supplyPeriod.DisplayMember = "Label";
                 this.supplyPeriod.ValueMember = "Val";
+                FormElement selected = AliProductDetail.supplyPeriod.Options[0];
                 foreach (FormElement e in AliProductDetail.supplyPeriod.Options)
                 {
                     this.supplyPeriod.Items.Add(e);
-                    if (e.Checked) this.supplyPeriod.SelectedItem = e;
+                    if (e.Checked) selected = e;
                 }
+                this.supplyPeriod.SelectedItem = selected;
             }
 
 
