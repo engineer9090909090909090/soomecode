@@ -33,6 +33,9 @@ namespace AliHelper
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.ProductInfoControl = new System.Windows.Forms.TabControl();
             this.BaseInfoTab = new System.Windows.Forms.TabPage();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.static_and_dyn1 = new System.Windows.Forms.RadioButton();
+            this.static_and_dyn0 = new System.Windows.Forms.RadioButton();
             this.staticImageWaterMarkIdGroup = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pr0static2 = new System.Windows.Forms.RadioButton();
@@ -115,22 +118,19 @@ namespace AliHelper
             this.label11 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.ProductInfoControl.SuspendLayout();
             this.BaseInfoTab.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.staticImageWaterMarkIdGroup.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.AttrTab.SuspendLayout();
             this.DescTab.SuspendLayout();
             this.TransTab.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -203,6 +203,38 @@ namespace AliHelper
             this.BaseInfoTab.TabIndex = 0;
             this.BaseInfoTab.Text = "基本信息";
             this.BaseInfoTab.UseVisualStyleBackColor = true;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.static_and_dyn1);
+            this.panel2.Controls.Add(this.static_and_dyn0);
+            this.panel2.Location = new System.Drawing.Point(110, 40);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(129, 28);
+            this.panel2.TabIndex = 35;
+            // 
+            // static_and_dyn1
+            // 
+            this.static_and_dyn1.AutoSize = true;
+            this.static_and_dyn1.Location = new System.Drawing.Point(67, 6);
+            this.static_and_dyn1.Name = "static_and_dyn1";
+            this.static_and_dyn1.Size = new System.Drawing.Size(47, 16);
+            this.static_and_dyn1.TabIndex = 5;
+            this.static_and_dyn1.TabStop = true;
+            this.static_and_dyn1.Text = "多图";
+            this.static_and_dyn1.UseVisualStyleBackColor = true;
+            // 
+            // static_and_dyn0
+            // 
+            this.static_and_dyn0.AutoSize = true;
+            this.static_and_dyn0.Checked = true;
+            this.static_and_dyn0.Location = new System.Drawing.Point(5, 6);
+            this.static_and_dyn0.Name = "static_and_dyn0";
+            this.static_and_dyn0.Size = new System.Drawing.Size(47, 16);
+            this.static_and_dyn0.TabIndex = 4;
+            this.static_and_dyn0.TabStop = true;
+            this.static_and_dyn0.Text = "单图";
+            this.static_and_dyn0.UseVisualStyleBackColor = true;
             // 
             // staticImageWaterMarkIdGroup
             // 
@@ -963,38 +995,6 @@ namespace AliHelper
             this.label8.TabIndex = 0;
             this.label8.Text = "最小起订量";
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.radioButton1);
-            this.panel2.Controls.Add(this.radioButton2);
-            this.panel2.Location = new System.Drawing.Point(110, 40);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(129, 28);
-            this.panel2.TabIndex = 35;
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(67, 6);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(47, 16);
-            this.radioButton1.TabIndex = 5;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "多图";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Checked = true;
-            this.radioButton2.Location = new System.Drawing.Point(5, 6);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(47, 16);
-            this.radioButton2.TabIndex = 4;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "单图";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            // 
             // ProductView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1011,6 +1011,8 @@ namespace AliHelper
             this.ProductInfoControl.ResumeLayout(false);
             this.BaseInfoTab.ResumeLayout(false);
             this.BaseInfoTab.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.staticImageWaterMarkIdGroup.ResumeLayout(false);
             this.staticImageWaterMarkIdGroup.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -1021,8 +1023,6 @@ namespace AliHelper
             this.DescTab.ResumeLayout(false);
             this.TransTab.ResumeLayout(false);
             this.TransTab.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1116,7 +1116,7 @@ namespace AliHelper
         private RadioButton pr0stati1;
         private Label label19;
         private Panel panel2;
-        private RadioButton radioButton1;
-        private RadioButton radioButton2;
+        private RadioButton static_and_dyn1;
+        private RadioButton static_and_dyn0;
     }
 }

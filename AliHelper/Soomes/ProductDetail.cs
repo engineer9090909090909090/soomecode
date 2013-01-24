@@ -13,7 +13,7 @@ namespace Soomes
         public FormElement event_submit_do_select_category { set; get; }
         public FormElement productFormInfoDTOStr { set; get; }
         public FormElement categoryIds { set; get; } //_fmp.pr._0.c
-        public FormElement fromType2 { set; get; }////fromType2
+        public FormElement fromType2 { set; get; }//fromType2
         public FormElement keywords { set; get; }
         public FormElement categoryName { set; get; }//categoryName
         public FormElement catLang { set; get; }//categoryLang
@@ -105,5 +105,6 @@ namespace Soomes
 
         public List<AttributeNode> SysAttr { set; get; }
         public List<AttributeNode> FixAttr { set; get; }
+        public List<ImageJson> ImageObjects { set; get; }
     }
 }

@@ -44,6 +44,7 @@ namespace Soomes
         public const string ListBox = "list_box";
         public const string InputString = "input_string";
         public const string CheckBox = "check_box";
+        public const string Province = "province";
         public const string Country = "country";
         public const string FixValue = "fix_value";
         public const string Other = "other";
