@@ -28,7 +28,7 @@ namespace Soomes
         public string ShowType { set; get; }
         public List<string> Rules { set; get; }
         public string Value { set; get; }
-        public string Selected { set; get; }
+        public bool Selected { set; get; }
         public string ErrorMessage { set; get; }
 
     }
