@@ -222,10 +222,6 @@ namespace AliHelper
                 this.packagingDesc.Text = AliProductDetail.packagingDesc.Val;
             }
 
-            if (AliProductDetail.categoryLanguage != null)
-            {
-            }
-
             if (AliProductDetail.minOrderUnit != null)
             {
                 this.minOrderUnit.Tag = AliProductDetail.minOrderUnit.Name;
@@ -291,7 +287,69 @@ namespace AliHelper
                 }
                 this.supplyPeriod.SelectedItem = selected;
             }
+            int height = 20;
+            int tabIndex = 1;
+            foreach (AttributeNode attr in AliProductDetail.SysAttr)
+            {
+                LoadSystemAttributes(attr, height, tabIndex);
+                height = height + 30;
+                tabIndex = tabIndex + 1;
+            }
 
+        }
+
+        private void LoadSystemAttributes(AttributeNode attrNode, int height, int tabIndex)
+        {
+            Label label = new System.Windows.Forms.Label();
+            label.AutoSize = true;
+            label.Location = new System.Drawing.Point(20, height);
+            label.Name = attrNode.Data.Id+"-label";
+            label.Size = new System.Drawing.Size(65, 12);
+            label.TabIndex = 22;
+            label.Text = attrNode.Data.Value;
+            this.AttrTab.Controls.Add(label);
+            if (attrNode.Data.ShowType == ShowType.InputString)
+            {
+                TextBox textBox = new TextBox();
+                textBox.Location = new System.Drawing.Point(100, height-5);
+                textBox.Name = attrNode.Data.Id;
+                textBox.Size = new System.Drawing.Size(200, 20);
+                textBox.Tag = attrNode.Data.Id;
+                textBox.TabIndex = tabIndex;
+                if (attrNode.Nodes.Count > 0)
+                {
+                    textBox.Text = attrNode.Nodes[0].Data.Value;
+                }
+                this.AttrTab.Controls.Add(textBox);
+            }
+            else if (attrNode.Data.ShowType == ShowType.ListBox)
+            {
+                ComboBox comboBox = new ComboBox();
+                comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+                comboBox.FormattingEnabled = true;
+                comboBox.Location = new System.Drawing.Point(100, height-5);
+                comboBox.Name = attrNode.Data.Id;
+                comboBox.Tag = attrNode.Data.Id;
+                comboBox.Size = new System.Drawing.Size(250, 22);
+                comboBox.TabIndex = tabIndex;
+                this.AttrTab.Controls.Add(comboBox);
+                comboBox.DisplayMember = "Value";
+                comboBox.ValueMember = "Id";
+                Soomes.Attribute selNode = null;
+                foreach (AttributeNode attr in attrNode.Nodes)
+                {
+                    comboBox.Items.Add(attr.Data);
+                    if (attr.Data.Selected)
+                    {
+                        selNode = attr.Data;
+                    }
+                }
+                comboBox.SelectedItem = selNode;
+            }
+            else if (attrNode.Data.ShowType == ShowType.CheckBox)
+            {
+
+            }
 
         }
 

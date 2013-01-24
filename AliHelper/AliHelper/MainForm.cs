@@ -145,8 +145,8 @@ namespace AliHelper
             }
             List<AliGroup> groups = HttpClient.GetGroups(-1, 0, ShareCookie.Instance.CsrfToken);
             productsManager.UpdateGroups(groups);
-            UpdateGroupUI(groups);
             GetGroupProduct(groups, ShareCookie.Instance.CsrfToken);
+            UpdateGroupUI(groups);
         }
         #endregion
 
@@ -261,7 +261,7 @@ namespace AliHelper
             this.productView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Panel2.Controls.Add(productView1);
             this.splitContainer1.Panel2.ResumeLayout(false);
-            this.SelectProductRow();
+            SelectProductRow();
         }
 
         public void SelectProductRow()
