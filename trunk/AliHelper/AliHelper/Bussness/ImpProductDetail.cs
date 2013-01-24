@@ -22,10 +22,12 @@ namespace AliHelper
             string html = HttpClient.RemoteRequest(url, null);
             HtmlDocument document = new HtmlDocument();
             document.LoadHtml(html);
+            System.Diagnostics.Trace.WriteLine(html);
             HtmlNode productFormEl = document.GetElementbyId("productForm");
             ProductDetail detail = PrintElementsValue(productFormEl);
             detail.SysAttr = GetSysAttr(html);
             detail.FixAttr = GetFixAttr(html);
+            detail.ImageObjects = GetImageObjects(html);
             return detail;
         }
 
@@ -51,6 +53,19 @@ namespace AliHelper
             List<AttributeNode> sysAttrList = JsonConvert.FromJson<List<AttributeNode>>(json);
             return sysAttrList;
         }
+        private List<ImageJson> GetImageObjects(string html)
+        {
+            Regex r = new Regex("POSTDATAMAP.uploader.imageObjects = (.*?);");
+            GroupCollection gc = r.Match(html).Groups;
+            if (gc == null || gc.Count == 0)
+            {
+                return new List<ImageJson>();
+            }
+            string json = gc[1].Value.Trim();
+            List<ImageJson> images = JsonConvert.FromJson<List<ImageJson>>(json);
+            return images;
+        }
+       
 
         private List<AttributeNode> GetFixAttr(string html)
         {
