@@ -136,6 +136,18 @@ namespace AliHelper.DAO
             }
         }
 
+        public int GetItemCount(string sql, SQLiteParameter[] parameters)
+        {
+            object count = ExecuteScalar("select count(1) from (" + sql + ")", parameters);
+            if (Convert.IsDBNull(count))
+            {
+                return 0;
+            }
+            else {
+                return Convert.ToInt32(count);
+            }
+        }
+
         /// <summary> 
         /// 执行一个查询语句，返回查询结果的第一行第一列 
         /// </summary> 
