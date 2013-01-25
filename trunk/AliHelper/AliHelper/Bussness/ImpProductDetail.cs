@@ -105,7 +105,7 @@ namespace AliHelper
 
                     string propertyName = GetPropertyName(id, name);
                     PropertyInfo pInfo = typeOfClass.GetProperty(propertyName);
-                    if (!string.IsNullOrEmpty(value) && pInfo != null && pInfo.PropertyType.Name == "FormElement")
+                    if (pInfo != null && pInfo.PropertyType.Name == "FormElement")
                     {
                         pInfo.SetValue(detail, el, null);
                     }
@@ -186,7 +186,7 @@ namespace AliHelper
                     el.Checked = chk;
                     string propertyName = GetPropertyName(id, name);
                     PropertyInfo pInfo = typeOfClass.GetProperty(propertyName);
-                    if (!string.IsNullOrEmpty(value) && pInfo != null && pInfo.PropertyType.Name == "FormElement")
+                    if (pInfo != null && pInfo.PropertyType.Name == "FormElement")
                     {
                         pInfo.SetValue(detail, el, null);
                     }
@@ -239,7 +239,7 @@ namespace AliHelper
 
                     string propertyName = GetPropertyName(id, name);
                     PropertyInfo pInfo = typeOfClass.GetProperty(propertyName);
-                    if (!string.IsNullOrEmpty(value) && pInfo != null && pInfo.PropertyType.Name == "FormElement")
+                    if (pInfo != null && pInfo.PropertyType.Name == "FormElement")
                     {
                         pInfo.SetValue(detail, el, null);
                     }

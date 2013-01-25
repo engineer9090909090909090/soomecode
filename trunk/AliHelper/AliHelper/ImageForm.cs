@@ -112,6 +112,7 @@ namespace AliHelper
                 ImageGroupNode node = (ImageGroupNode)currentNode.Tag;
                 CurrentGroupId = node.Node.Value;
             }
+            this.SearchName = this.txtSearchKey.Text.Trim();
             BindDataWithPage(1);
         }
 
