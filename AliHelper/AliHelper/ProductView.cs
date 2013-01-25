@@ -99,6 +99,9 @@ namespace AliHelper
                 this.static_and_dyn1.Tag = AliProductDetail.static_and_dyn1;
                 this.static_and_dyn1.Checked = AliProductDetail.static_and_dyn1.Checked;
             }
+
+            ChangeImagePanel();
+
             this.staticImageWaterMarkIdGroup.Visible = false;
             if (AliProductDetail.staticImageWaterMarkId != null)
             {
@@ -500,6 +503,31 @@ namespace AliHelper
         private void ImageBankLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
 
+
+
+        }
+        private void ChangeImagePanel()
+        {
+            if (this.BaseInfoTab.Controls.Contains(this.dnImagePanel))
+            {
+                this.BaseInfoTab.Controls.Remove(this.dnImagePanel);
+            }
+            if (this.BaseInfoTab.Controls.Contains(this.staticImagePanel))
+            {
+                this.BaseInfoTab.Controls.Remove(this.staticImagePanel);
+            }
+            if (static_and_dyn0.Checked)
+            {
+                this.BaseInfoTab.Controls.Add(this.staticImagePanel);
+            }
+            else
+            {
+                this.BaseInfoTab.Controls.Add(this.dnImagePanel);
+            }
+        }
+        private void static_and_dyn0_CheckedChanged(object sender, EventArgs e)
+        {
+            ChangeImagePanel();
         }
 
     }

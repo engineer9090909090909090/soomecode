@@ -33,6 +33,15 @@ namespace AliHelper
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.ProductInfoControl = new System.Windows.Forms.TabControl();
             this.BaseInfoTab = new System.Windows.Forms.TabPage();
+            this.staticImagePanel = new System.Windows.Forms.Panel();
+            this.staticImage = new System.Windows.Forms.PictureBox();
+            this.dnImagePanel = new System.Windows.Forms.Panel();
+            this.dnImage6 = new System.Windows.Forms.PictureBox();
+            this.dnImage5 = new System.Windows.Forms.PictureBox();
+            this.dnImage4 = new System.Windows.Forms.PictureBox();
+            this.dnImage3 = new System.Windows.Forms.PictureBox();
+            this.dnImage2 = new System.Windows.Forms.PictureBox();
+            this.dnImage1 = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.static_and_dyn1 = new System.Windows.Forms.RadioButton();
             this.static_and_dyn0 = new System.Windows.Forms.RadioButton();
@@ -46,7 +55,6 @@ namespace AliHelper
             this.label19 = new System.Windows.Forms.Label();
             this.staticImageWaterMarkId = new System.Windows.Forms.CheckBox();
             this.ImageBankLink = new System.Windows.Forms.LinkLabel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.ComputeLink = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
             this.productName = new System.Windows.Forms.TextBox();
@@ -119,31 +127,27 @@ namespace AliHelper
             this.label11 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.ProductInfoControl.SuspendLayout();
             this.BaseInfoTab.SuspendLayout();
+            this.staticImagePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.staticImage)).BeginInit();
+            this.dnImagePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dnImage6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dnImage5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dnImage4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dnImage3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dnImage2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dnImage1)).BeginInit();
             this.panel2.SuspendLayout();
             this.staticImageWaterMarkIdGroup.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.AttrTab.SuspendLayout();
             this.DescTab.SuspendLayout();
             this.TransTab.SuspendLayout();
-            this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -166,11 +170,17 @@ namespace AliHelper
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToResizeColumns = false;
+            this.dataGridView1.AllowUserToResizeRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.ShowEditingIcon = false;
+            this.dataGridView1.ShowRowErrors = false;
             this.dataGridView1.Size = new System.Drawing.Size(1047, 350);
             this.dataGridView1.TabIndex = 0;
             // 
@@ -189,7 +199,8 @@ namespace AliHelper
             // 
             // BaseInfoTab
             // 
-            this.BaseInfoTab.Controls.Add(this.panel3);
+            this.BaseInfoTab.Controls.Add(this.staticImagePanel);
+            this.BaseInfoTab.Controls.Add(this.dnImagePanel);
             this.BaseInfoTab.Controls.Add(this.panel2);
             this.BaseInfoTab.Controls.Add(this.staticImageWaterMarkIdGroup);
             this.BaseInfoTab.Controls.Add(this.staticImageWaterMarkId);
@@ -216,6 +227,90 @@ namespace AliHelper
             this.BaseInfoTab.TabIndex = 0;
             this.BaseInfoTab.Text = "基本信息";
             this.BaseInfoTab.UseVisualStyleBackColor = true;
+            // 
+            // staticImagePanel
+            // 
+            this.staticImagePanel.Controls.Add(this.staticImage);
+            this.staticImagePanel.Location = new System.Drawing.Point(34, 71);
+            this.staticImagePanel.Name = "staticImagePanel";
+            this.staticImagePanel.Size = new System.Drawing.Size(240, 155);
+            this.staticImagePanel.TabIndex = 37;
+            // 
+            // staticImage
+            // 
+            this.staticImage.Image = global::AliHelper.Properties.Resources.no_image;
+            this.staticImage.Location = new System.Drawing.Point(3, 0);
+            this.staticImage.Name = "staticImage";
+            this.staticImage.Size = new System.Drawing.Size(150, 147);
+            this.staticImage.TabIndex = 28;
+            this.staticImage.TabStop = false;
+            // 
+            // dnImagePanel
+            // 
+            this.dnImagePanel.Controls.Add(this.dnImage6);
+            this.dnImagePanel.Controls.Add(this.dnImage5);
+            this.dnImagePanel.Controls.Add(this.dnImage4);
+            this.dnImagePanel.Controls.Add(this.dnImage3);
+            this.dnImagePanel.Controls.Add(this.dnImage2);
+            this.dnImagePanel.Controls.Add(this.dnImage1);
+            this.dnImagePanel.Location = new System.Drawing.Point(34, 72);
+            this.dnImagePanel.Name = "dnImagePanel";
+            this.dnImagePanel.Size = new System.Drawing.Size(240, 155);
+            this.dnImagePanel.TabIndex = 36;
+            // 
+            // dnImage6
+            // 
+            this.dnImage6.Image = global::AliHelper.Properties.Resources.no_image;
+            this.dnImage6.Location = new System.Drawing.Point(159, 80);
+            this.dnImage6.Name = "dnImage6";
+            this.dnImage6.Size = new System.Drawing.Size(72, 72);
+            this.dnImage6.TabIndex = 34;
+            this.dnImage6.TabStop = false;
+            // 
+            // dnImage5
+            // 
+            this.dnImage5.Image = global::AliHelper.Properties.Resources.no_image;
+            this.dnImage5.Location = new System.Drawing.Point(82, 80);
+            this.dnImage5.Name = "dnImage5";
+            this.dnImage5.Size = new System.Drawing.Size(72, 72);
+            this.dnImage5.TabIndex = 33;
+            this.dnImage5.TabStop = false;
+            // 
+            // dnImage4
+            // 
+            this.dnImage4.Image = global::AliHelper.Properties.Resources.no_image;
+            this.dnImage4.Location = new System.Drawing.Point(3, 80);
+            this.dnImage4.Name = "dnImage4";
+            this.dnImage4.Size = new System.Drawing.Size(72, 72);
+            this.dnImage4.TabIndex = 32;
+            this.dnImage4.TabStop = false;
+            // 
+            // dnImage3
+            // 
+            this.dnImage3.Image = global::AliHelper.Properties.Resources.no_image;
+            this.dnImage3.Location = new System.Drawing.Point(161, 0);
+            this.dnImage3.Name = "dnImage3";
+            this.dnImage3.Size = new System.Drawing.Size(72, 72);
+            this.dnImage3.TabIndex = 30;
+            this.dnImage3.TabStop = false;
+            // 
+            // dnImage2
+            // 
+            this.dnImage2.Image = global::AliHelper.Properties.Resources.no_image;
+            this.dnImage2.Location = new System.Drawing.Point(82, 0);
+            this.dnImage2.Name = "dnImage2";
+            this.dnImage2.Size = new System.Drawing.Size(72, 72);
+            this.dnImage2.TabIndex = 29;
+            this.dnImage2.TabStop = false;
+            // 
+            // dnImage1
+            // 
+            this.dnImage1.Image = global::AliHelper.Properties.Resources.no_image;
+            this.dnImage1.Location = new System.Drawing.Point(3, 0);
+            this.dnImage1.Name = "dnImage1";
+            this.dnImage1.Size = new System.Drawing.Size(72, 72);
+            this.dnImage1.TabIndex = 28;
+            this.dnImage1.TabStop = false;
             // 
             // panel2
             // 
@@ -248,6 +343,7 @@ namespace AliHelper
             this.static_and_dyn0.TabStop = true;
             this.static_and_dyn0.Text = "单图";
             this.static_and_dyn0.UseVisualStyleBackColor = true;
+            this.static_and_dyn0.CheckedChanged += new System.EventHandler(this.static_and_dyn0_CheckedChanged);
             // 
             // staticImageWaterMarkIdGroup
             // 
@@ -255,9 +351,9 @@ namespace AliHelper
             this.staticImageWaterMarkIdGroup.Controls.Add(this.pr0stati2);
             this.staticImageWaterMarkIdGroup.Controls.Add(this.pr0stati1);
             this.staticImageWaterMarkIdGroup.Controls.Add(this.label19);
-            this.staticImageWaterMarkIdGroup.Location = new System.Drawing.Point(34, 256);
+            this.staticImageWaterMarkIdGroup.Location = new System.Drawing.Point(36, 248);
             this.staticImageWaterMarkIdGroup.Name = "staticImageWaterMarkIdGroup";
-            this.staticImageWaterMarkIdGroup.Size = new System.Drawing.Size(231, 73);
+            this.staticImageWaterMarkIdGroup.Size = new System.Drawing.Size(231, 68);
             this.staticImageWaterMarkIdGroup.TabIndex = 34;
             this.staticImageWaterMarkIdGroup.TabStop = false;
             // 
@@ -266,7 +362,7 @@ namespace AliHelper
             this.panel1.Controls.Add(this.pr0static2);
             this.panel1.Controls.Add(this.pr0static1);
             this.panel1.Controls.Add(this.label20);
-            this.panel1.Location = new System.Drawing.Point(5, 43);
+            this.panel1.Location = new System.Drawing.Point(5, 33);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(222, 28);
             this.panel1.TabIndex = 3;
@@ -307,7 +403,7 @@ namespace AliHelper
             // 
             this.pr0stati2.AutoSize = true;
             this.pr0stati2.Checked = true;
-            this.pr0stati2.Location = new System.Drawing.Point(147, 23);
+            this.pr0stati2.Location = new System.Drawing.Point(147, 13);
             this.pr0stati2.Name = "pr0stati2";
             this.pr0stati2.Size = new System.Drawing.Size(83, 16);
             this.pr0stati2.TabIndex = 2;
@@ -318,7 +414,7 @@ namespace AliHelper
             // pr0stati1
             // 
             this.pr0stati1.AutoSize = true;
-            this.pr0stati1.Location = new System.Drawing.Point(61, 23);
+            this.pr0stati1.Location = new System.Drawing.Point(61, 13);
             this.pr0stati1.Name = "pr0stati1";
             this.pr0stati1.Size = new System.Drawing.Size(83, 16);
             this.pr0stati1.TabIndex = 1;
@@ -329,7 +425,7 @@ namespace AliHelper
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(4, 24);
+            this.label19.Location = new System.Drawing.Point(4, 14);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(53, 12);
             this.label19.TabIndex = 0;
@@ -338,7 +434,7 @@ namespace AliHelper
             // staticImageWaterMarkId
             // 
             this.staticImageWaterMarkId.AutoSize = true;
-            this.staticImageWaterMarkId.Location = new System.Drawing.Point(35, 242);
+            this.staticImageWaterMarkId.Location = new System.Drawing.Point(34, 230);
             this.staticImageWaterMarkId.Name = "staticImageWaterMarkId";
             this.staticImageWaterMarkId.Size = new System.Drawing.Size(108, 16);
             this.staticImageWaterMarkId.TabIndex = 33;
@@ -356,15 +452,6 @@ namespace AliHelper
             this.ImageBankLink.TabStop = true;
             this.ImageBankLink.Text = "从图片银行选取";
             this.ImageBankLink.Click += new System.EventHandler(this.ImageBankLink_LinkClicked);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::AliHelper.Properties.Resources.no_image;
-            this.pictureBox1.Location = new System.Drawing.Point(3, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(72, 72);
-            this.pictureBox1.TabIndex = 28;
-            this.pictureBox1.TabStop = false;
             // 
             // ComputeLink
             // 
@@ -1016,64 +1103,6 @@ namespace AliHelper
             this.label8.TabIndex = 0;
             this.label8.Text = "最小起订量";
             // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.pictureBox5);
-            this.panel3.Controls.Add(this.pictureBox6);
-            this.panel3.Controls.Add(this.pictureBox7);
-            this.panel3.Controls.Add(this.pictureBox3);
-            this.panel3.Controls.Add(this.pictureBox2);
-            this.panel3.Controls.Add(this.pictureBox1);
-            this.panel3.Location = new System.Drawing.Point(32, 75);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(240, 155);
-            this.panel3.TabIndex = 36;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::AliHelper.Properties.Resources.no_image;
-            this.pictureBox2.Location = new System.Drawing.Point(82, 0);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(72, 72);
-            this.pictureBox2.TabIndex = 29;
-            this.pictureBox2.TabStop = false;
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = global::AliHelper.Properties.Resources.no_image;
-            this.pictureBox3.Location = new System.Drawing.Point(161, 0);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(72, 72);
-            this.pictureBox3.TabIndex = 30;
-            this.pictureBox3.TabStop = false;
-            // 
-            // pictureBox5
-            // 
-            this.pictureBox5.Image = global::AliHelper.Properties.Resources.no_image;
-            this.pictureBox5.Location = new System.Drawing.Point(159, 80);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(72, 72);
-            this.pictureBox5.TabIndex = 34;
-            this.pictureBox5.TabStop = false;
-            // 
-            // pictureBox6
-            // 
-            this.pictureBox6.Image = global::AliHelper.Properties.Resources.no_image;
-            this.pictureBox6.Location = new System.Drawing.Point(82, 80);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(72, 72);
-            this.pictureBox6.TabIndex = 33;
-            this.pictureBox6.TabStop = false;
-            // 
-            // pictureBox7
-            // 
-            this.pictureBox7.Image = global::AliHelper.Properties.Resources.no_image;
-            this.pictureBox7.Location = new System.Drawing.Point(3, 80);
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(72, 72);
-            this.pictureBox7.TabIndex = 32;
-            this.pictureBox7.TabStop = false;
-            // 
             // ProductView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1090,24 +1119,26 @@ namespace AliHelper
             this.ProductInfoControl.ResumeLayout(false);
             this.BaseInfoTab.ResumeLayout(false);
             this.BaseInfoTab.PerformLayout();
+            this.staticImagePanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.staticImage)).EndInit();
+            this.dnImagePanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dnImage6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dnImage5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dnImage4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dnImage3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dnImage2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dnImage1)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.staticImageWaterMarkIdGroup.ResumeLayout(false);
             this.staticImageWaterMarkIdGroup.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.AttrTab.ResumeLayout(false);
             this.AttrTab.PerformLayout();
             this.DescTab.ResumeLayout(false);
             this.TransTab.ResumeLayout(false);
             this.TransTab.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1155,7 +1186,7 @@ namespace AliHelper
         private System.Windows.Forms.TextBox paymentMethodOtherDesc;
         private System.Windows.Forms.ComboBox minOrderUnit;
         private LinkLabel ImageBankLink;
-        private PictureBox pictureBox1;
+        private PictureBox dnImage1;
         private LinkLabel ComputeLink;
         private Label label1;
         private TextBox productName;
@@ -1204,11 +1235,13 @@ namespace AliHelper
         private RadioButton static_and_dyn1;
         private RadioButton static_and_dyn0;
         private Panel SysAttrPanel;
-        private Panel panel3;
-        private PictureBox pictureBox5;
-        private PictureBox pictureBox6;
-        private PictureBox pictureBox7;
-        private PictureBox pictureBox3;
-        private PictureBox pictureBox2;
+        private Panel dnImagePanel;
+        private PictureBox dnImage6;
+        private PictureBox dnImage5;
+        private PictureBox dnImage4;
+        private PictureBox dnImage3;
+        private PictureBox dnImage2;
+        private Panel staticImagePanel;
+        private PictureBox staticImage;
     }
 }
