@@ -63,6 +63,7 @@ namespace AliHelper
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.AttrTab = new System.Windows.Forms.TabPage();
+            this.SysAttrPanel = new System.Windows.Forms.Panel();
             this.customAttrVal10 = new System.Windows.Forms.TextBox();
             this.customAttrKey10 = new System.Windows.Forms.TextBox();
             this.customAttrVal9 = new System.Windows.Forms.TextBox();
@@ -118,6 +119,12 @@ namespace AliHelper
             this.label11 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -131,6 +138,12 @@ namespace AliHelper
             this.AttrTab.SuspendLayout();
             this.DescTab.SuspendLayout();
             this.TransTab.SuspendLayout();
+            this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -176,11 +189,11 @@ namespace AliHelper
             // 
             // BaseInfoTab
             // 
+            this.BaseInfoTab.Controls.Add(this.panel3);
             this.BaseInfoTab.Controls.Add(this.panel2);
             this.BaseInfoTab.Controls.Add(this.staticImageWaterMarkIdGroup);
             this.BaseInfoTab.Controls.Add(this.staticImageWaterMarkId);
             this.BaseInfoTab.Controls.Add(this.ImageBankLink);
-            this.BaseInfoTab.Controls.Add(this.pictureBox1);
             this.BaseInfoTab.Controls.Add(this.ComputeLink);
             this.BaseInfoTab.Controls.Add(this.label1);
             this.BaseInfoTab.Controls.Add(this.productName);
@@ -208,15 +221,15 @@ namespace AliHelper
             // 
             this.panel2.Controls.Add(this.static_and_dyn1);
             this.panel2.Controls.Add(this.static_and_dyn0);
-            this.panel2.Location = new System.Drawing.Point(110, 40);
+            this.panel2.Location = new System.Drawing.Point(87, 38);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(129, 28);
+            this.panel2.Size = new System.Drawing.Size(115, 28);
             this.panel2.TabIndex = 35;
             // 
             // static_and_dyn1
             // 
             this.static_and_dyn1.AutoSize = true;
-            this.static_and_dyn1.Location = new System.Drawing.Point(67, 6);
+            this.static_and_dyn1.Location = new System.Drawing.Point(59, 6);
             this.static_and_dyn1.Name = "static_and_dyn1";
             this.static_and_dyn1.Size = new System.Drawing.Size(47, 16);
             this.static_and_dyn1.TabIndex = 5;
@@ -242,7 +255,7 @@ namespace AliHelper
             this.staticImageWaterMarkIdGroup.Controls.Add(this.pr0stati2);
             this.staticImageWaterMarkIdGroup.Controls.Add(this.pr0stati1);
             this.staticImageWaterMarkIdGroup.Controls.Add(this.label19);
-            this.staticImageWaterMarkIdGroup.Location = new System.Drawing.Point(36, 230);
+            this.staticImageWaterMarkIdGroup.Location = new System.Drawing.Point(34, 256);
             this.staticImageWaterMarkIdGroup.Name = "staticImageWaterMarkIdGroup";
             this.staticImageWaterMarkIdGroup.Size = new System.Drawing.Size(231, 73);
             this.staticImageWaterMarkIdGroup.TabIndex = 34;
@@ -325,7 +338,7 @@ namespace AliHelper
             // staticImageWaterMarkId
             // 
             this.staticImageWaterMarkId.AutoSize = true;
-            this.staticImageWaterMarkId.Location = new System.Drawing.Point(37, 215);
+            this.staticImageWaterMarkId.Location = new System.Drawing.Point(35, 242);
             this.staticImageWaterMarkId.Name = "staticImageWaterMarkId";
             this.staticImageWaterMarkId.Size = new System.Drawing.Size(108, 16);
             this.staticImageWaterMarkId.TabIndex = 33;
@@ -336,27 +349,27 @@ namespace AliHelper
             // ImageBankLink
             // 
             this.ImageBankLink.AutoSize = true;
-            this.ImageBankLink.Location = new System.Drawing.Point(150, 189);
+            this.ImageBankLink.Location = new System.Drawing.Point(221, 57);
             this.ImageBankLink.Name = "ImageBankLink";
             this.ImageBankLink.Size = new System.Drawing.Size(89, 12);
             this.ImageBankLink.TabIndex = 32;
             this.ImageBankLink.TabStop = true;
             this.ImageBankLink.Text = "从图片银行选取";
-            this.ImageBankLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ImageBankLink_LinkClicked);
+            this.ImageBankLink.Click += new System.EventHandler(this.ImageBankLink_LinkClicked);
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = global::AliHelper.Properties.Resources.no_image;
-            this.pictureBox1.Location = new System.Drawing.Point(36, 75);
+            this.pictureBox1.Location = new System.Drawing.Point(3, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(107, 102);
+            this.pictureBox1.Size = new System.Drawing.Size(72, 72);
             this.pictureBox1.TabIndex = 28;
             this.pictureBox1.TabStop = false;
             // 
             // ComputeLink
             // 
             this.ComputeLink.AutoSize = true;
-            this.ComputeLink.Location = new System.Drawing.Point(54, 189);
+            this.ComputeLink.Location = new System.Drawing.Point(220, 38);
             this.ComputeLink.Name = "ComputeLink";
             this.ComputeLink.Size = new System.Drawing.Size(89, 12);
             this.ComputeLink.TabIndex = 31;
@@ -366,7 +379,7 @@ namespace AliHelper
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(320, 50);
+            this.label1.Location = new System.Drawing.Point(371, 48);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 12);
             this.label1.TabIndex = 18;
@@ -374,15 +387,15 @@ namespace AliHelper
             // 
             // productName
             // 
-            this.productName.Location = new System.Drawing.Point(385, 45);
+            this.productName.Location = new System.Drawing.Point(432, 45);
             this.productName.Name = "productName";
-            this.productName.Size = new System.Drawing.Size(472, 21);
+            this.productName.Size = new System.Drawing.Size(425, 21);
             this.productName.TabIndex = 19;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(310, 92);
+            this.label2.Location = new System.Drawing.Point(361, 90);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 12);
             this.label2.TabIndex = 20;
@@ -392,22 +405,22 @@ namespace AliHelper
             // 
             this.productTeamInputBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.productTeamInputBox.FormattingEnabled = true;
-            this.productTeamInputBox.Location = new System.Drawing.Point(387, 272);
+            this.productTeamInputBox.Location = new System.Drawing.Point(432, 272);
             this.productTeamInputBox.Name = "productTeamInputBox";
-            this.productTeamInputBox.Size = new System.Drawing.Size(472, 20);
+            this.productTeamInputBox.Size = new System.Drawing.Size(427, 20);
             this.productTeamInputBox.TabIndex = 30;
             // 
             // productKeyword
             // 
-            this.productKeyword.Location = new System.Drawing.Point(385, 84);
+            this.productKeyword.Location = new System.Drawing.Point(432, 84);
             this.productKeyword.Name = "productKeyword";
-            this.productKeyword.Size = new System.Drawing.Size(210, 21);
+            this.productKeyword.Size = new System.Drawing.Size(183, 21);
             this.productKeyword.TabIndex = 21;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(333, 274);
+            this.label7.Location = new System.Drawing.Point(384, 272);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(41, 12);
             this.label7.TabIndex = 29;
@@ -416,7 +429,7 @@ namespace AliHelper
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(310, 128);
+            this.label3.Location = new System.Drawing.Point(361, 126);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(65, 12);
             this.label3.TabIndex = 22;
@@ -425,7 +438,7 @@ namespace AliHelper
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(300, 164);
+            this.label4.Location = new System.Drawing.Point(351, 162);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(77, 12);
             this.label4.TabIndex = 23;
@@ -434,7 +447,7 @@ namespace AliHelper
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(31, 48);
+            this.label5.Location = new System.Drawing.Point(32, 47);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 12);
             this.label5.TabIndex = 27;
@@ -442,24 +455,24 @@ namespace AliHelper
             // 
             // keywords2
             // 
-            this.keywords2.Location = new System.Drawing.Point(385, 123);
+            this.keywords2.Location = new System.Drawing.Point(432, 123);
             this.keywords2.Name = "keywords2";
-            this.keywords2.Size = new System.Drawing.Size(210, 21);
+            this.keywords2.Size = new System.Drawing.Size(183, 21);
             this.keywords2.TabIndex = 24;
             // 
             // keywords3
             // 
-            this.keywords3.Location = new System.Drawing.Point(611, 123);
+            this.keywords3.Location = new System.Drawing.Point(630, 123);
             this.keywords3.Name = "keywords3";
-            this.keywords3.Size = new System.Drawing.Size(246, 21);
+            this.keywords3.Size = new System.Drawing.Size(227, 21);
             this.keywords3.TabIndex = 26;
             // 
             // summary
             // 
-            this.summary.Location = new System.Drawing.Point(385, 162);
+            this.summary.Location = new System.Drawing.Point(432, 162);
             this.summary.Multiline = true;
             this.summary.Name = "summary";
-            this.summary.Size = new System.Drawing.Size(472, 88);
+            this.summary.Size = new System.Drawing.Size(425, 88);
             this.summary.TabIndex = 25;
             // 
             // button2
@@ -482,6 +495,7 @@ namespace AliHelper
             // 
             // AttrTab
             // 
+            this.AttrTab.Controls.Add(this.SysAttrPanel);
             this.AttrTab.Controls.Add(this.customAttrVal10);
             this.AttrTab.Controls.Add(this.customAttrKey10);
             this.AttrTab.Controls.Add(this.customAttrVal9);
@@ -512,142 +526,149 @@ namespace AliHelper
             this.AttrTab.Text = "产品属性";
             this.AttrTab.UseVisualStyleBackColor = true;
             // 
+            // SysAttrPanel
+            // 
+            this.SysAttrPanel.Location = new System.Drawing.Point(0, 0);
+            this.SysAttrPanel.Name = "SysAttrPanel";
+            this.SysAttrPanel.Size = new System.Drawing.Size(550, 342);
+            this.SysAttrPanel.TabIndex = 50;
+            // 
             // customAttrVal10
             // 
-            this.customAttrVal10.Location = new System.Drawing.Point(646, 287);
+            this.customAttrVal10.Location = new System.Drawing.Point(692, 287);
             this.customAttrVal10.Name = "customAttrVal10";
             this.customAttrVal10.Size = new System.Drawing.Size(233, 21);
             this.customAttrVal10.TabIndex = 49;
             // 
             // customAttrKey10
             // 
-            this.customAttrKey10.Location = new System.Drawing.Point(513, 287);
+            this.customAttrKey10.Location = new System.Drawing.Point(559, 287);
             this.customAttrKey10.Name = "customAttrKey10";
             this.customAttrKey10.Size = new System.Drawing.Size(100, 21);
             this.customAttrKey10.TabIndex = 48;
             // 
             // customAttrVal9
             // 
-            this.customAttrVal9.Location = new System.Drawing.Point(646, 260);
+            this.customAttrVal9.Location = new System.Drawing.Point(692, 260);
             this.customAttrVal9.Name = "customAttrVal9";
             this.customAttrVal9.Size = new System.Drawing.Size(233, 21);
             this.customAttrVal9.TabIndex = 47;
             // 
             // customAttrKey9
             // 
-            this.customAttrKey9.Location = new System.Drawing.Point(513, 260);
+            this.customAttrKey9.Location = new System.Drawing.Point(559, 260);
             this.customAttrKey9.Name = "customAttrKey9";
             this.customAttrKey9.Size = new System.Drawing.Size(100, 21);
             this.customAttrKey9.TabIndex = 46;
             // 
             // customAttrVal8
             // 
-            this.customAttrVal8.Location = new System.Drawing.Point(646, 233);
+            this.customAttrVal8.Location = new System.Drawing.Point(692, 233);
             this.customAttrVal8.Name = "customAttrVal8";
             this.customAttrVal8.Size = new System.Drawing.Size(233, 21);
             this.customAttrVal8.TabIndex = 45;
             // 
             // customAttrKey8
             // 
-            this.customAttrKey8.Location = new System.Drawing.Point(513, 233);
+            this.customAttrKey8.Location = new System.Drawing.Point(559, 233);
             this.customAttrKey8.Name = "customAttrKey8";
             this.customAttrKey8.Size = new System.Drawing.Size(100, 21);
             this.customAttrKey8.TabIndex = 44;
             // 
             // customAttrVal7
             // 
-            this.customAttrVal7.Location = new System.Drawing.Point(646, 204);
+            this.customAttrVal7.Location = new System.Drawing.Point(692, 204);
             this.customAttrVal7.Name = "customAttrVal7";
             this.customAttrVal7.Size = new System.Drawing.Size(233, 21);
             this.customAttrVal7.TabIndex = 43;
             // 
             // customAttrKey7
             // 
-            this.customAttrKey7.Location = new System.Drawing.Point(513, 205);
+            this.customAttrKey7.Location = new System.Drawing.Point(559, 205);
             this.customAttrKey7.Name = "customAttrKey7";
             this.customAttrKey7.Size = new System.Drawing.Size(100, 21);
             this.customAttrKey7.TabIndex = 42;
             // 
             // customAttrVal6
             // 
-            this.customAttrVal6.Location = new System.Drawing.Point(646, 176);
+            this.customAttrVal6.Location = new System.Drawing.Point(692, 176);
             this.customAttrVal6.Name = "customAttrVal6";
             this.customAttrVal6.Size = new System.Drawing.Size(233, 21);
             this.customAttrVal6.TabIndex = 41;
             // 
             // customAttrKey6
             // 
-            this.customAttrKey6.Location = new System.Drawing.Point(513, 176);
+            this.customAttrKey6.Location = new System.Drawing.Point(559, 176);
             this.customAttrKey6.Name = "customAttrKey6";
             this.customAttrKey6.Size = new System.Drawing.Size(100, 21);
             this.customAttrKey6.TabIndex = 40;
             // 
             // customAttrVal5
             // 
-            this.customAttrVal5.Location = new System.Drawing.Point(646, 148);
+            this.customAttrVal5.Location = new System.Drawing.Point(692, 148);
             this.customAttrVal5.Name = "customAttrVal5";
             this.customAttrVal5.Size = new System.Drawing.Size(233, 21);
             this.customAttrVal5.TabIndex = 39;
             // 
             // customAttrKey5
             // 
-            this.customAttrKey5.Location = new System.Drawing.Point(513, 148);
+            this.customAttrKey5.Location = new System.Drawing.Point(559, 148);
             this.customAttrKey5.Name = "customAttrKey5";
             this.customAttrKey5.Size = new System.Drawing.Size(100, 21);
             this.customAttrKey5.TabIndex = 38;
             // 
             // customAttrVal4
             // 
-            this.customAttrVal4.Location = new System.Drawing.Point(646, 120);
+            this.customAttrVal4.Location = new System.Drawing.Point(692, 120);
             this.customAttrVal4.Name = "customAttrVal4";
             this.customAttrVal4.Size = new System.Drawing.Size(233, 21);
             this.customAttrVal4.TabIndex = 37;
             // 
             // customAttrKey4
             // 
-            this.customAttrKey4.Location = new System.Drawing.Point(513, 119);
+            this.customAttrKey4.Location = new System.Drawing.Point(559, 119);
             this.customAttrKey4.Name = "customAttrKey4";
             this.customAttrKey4.Size = new System.Drawing.Size(100, 21);
             this.customAttrKey4.TabIndex = 36;
             // 
             // customAttrVal3
             // 
-            this.customAttrVal3.Location = new System.Drawing.Point(646, 92);
+            this.customAttrVal3.Location = new System.Drawing.Point(692, 92);
             this.customAttrVal3.Name = "customAttrVal3";
             this.customAttrVal3.Size = new System.Drawing.Size(233, 21);
             this.customAttrVal3.TabIndex = 35;
             // 
             // customAttrKey3
             // 
-            this.customAttrKey3.Location = new System.Drawing.Point(513, 91);
+            this.customAttrKey3.Location = new System.Drawing.Point(559, 91);
             this.customAttrKey3.Name = "customAttrKey3";
             this.customAttrKey3.Size = new System.Drawing.Size(100, 21);
             this.customAttrKey3.TabIndex = 34;
             // 
             // customAttrVal2
             // 
-            this.customAttrVal2.Location = new System.Drawing.Point(646, 63);
+            this.customAttrVal2.Location = new System.Drawing.Point(692, 63);
             this.customAttrVal2.Name = "customAttrVal2";
             this.customAttrVal2.Size = new System.Drawing.Size(233, 21);
             this.customAttrVal2.TabIndex = 33;
             // 
             // customAttrKey2
             // 
-            this.customAttrKey2.Location = new System.Drawing.Point(513, 63);
+            this.customAttrKey2.Location = new System.Drawing.Point(559, 63);
             this.customAttrKey2.Name = "customAttrKey2";
             this.customAttrKey2.Size = new System.Drawing.Size(100, 21);
             this.customAttrKey2.TabIndex = 32;
             // 
             // customAttrVal1
             // 
-            this.customAttrVal1.Location = new System.Drawing.Point(646, 35);
+            this.customAttrVal1.Location = new System.Drawing.Point(692, 35);
             this.customAttrVal1.Name = "customAttrVal1";
             this.customAttrVal1.Size = new System.Drawing.Size(233, 21);
             this.customAttrVal1.TabIndex = 31;
             // 
             // customAttrKey1
             // 
-            this.customAttrKey1.Location = new System.Drawing.Point(513, 35);
+            this.customAttrKey1.Location = new System.Drawing.Point(559, 35);
             this.customAttrKey1.Name = "customAttrKey1";
             this.customAttrKey1.Size = new System.Drawing.Size(100, 21);
             this.customAttrKey1.TabIndex = 30;
@@ -656,7 +677,7 @@ namespace AliHelper
             // 
             this.label12.AutoSize = true;
             this.label12.ForeColor = System.Drawing.SystemColors.ButtonShadow;
-            this.label12.Location = new System.Drawing.Point(527, 16);
+            this.label12.Location = new System.Drawing.Point(622, 16);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(173, 12);
             this.label12.TabIndex = 29;
@@ -665,7 +686,7 @@ namespace AliHelper
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(438, 16);
+            this.label6.Location = new System.Drawing.Point(556, 16);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(65, 12);
             this.label6.TabIndex = 28;
@@ -740,14 +761,14 @@ namespace AliHelper
             this.minOrderUnit.Location = new System.Drawing.Point(242, 17);
             this.minOrderUnit.Name = "minOrderUnit";
             this.minOrderUnit.Size = new System.Drawing.Size(220, 20);
-            this.minOrderUnit.TabIndex = 31;
+            this.minOrderUnit.TabIndex = 2;
             // 
             // paymentMethodOtherDesc
             // 
             this.paymentMethodOtherDesc.Location = new System.Drawing.Point(569, 122);
             this.paymentMethodOtherDesc.Name = "paymentMethodOtherDesc";
             this.paymentMethodOtherDesc.Size = new System.Drawing.Size(118, 21);
-            this.paymentMethodOtherDesc.TabIndex = 30;
+            this.paymentMethodOtherDesc.TabIndex = 15;
             // 
             // paymentMethodOther
             // 
@@ -755,7 +776,7 @@ namespace AliHelper
             this.paymentMethodOther.Location = new System.Drawing.Point(514, 125);
             this.paymentMethodOther.Name = "paymentMethodOther";
             this.paymentMethodOther.Size = new System.Drawing.Size(60, 16);
-            this.paymentMethodOther.TabIndex = 29;
+            this.paymentMethodOther.TabIndex = 14;
             this.paymentMethodOther.Text = "Other ";
             this.paymentMethodOther.UseVisualStyleBackColor = true;
             // 
@@ -765,7 +786,7 @@ namespace AliHelper
             this.paymentMethod6.Location = new System.Drawing.Point(428, 126);
             this.paymentMethod6.Name = "paymentMethod6";
             this.paymentMethod6.Size = new System.Drawing.Size(78, 16);
-            this.paymentMethod6.TabIndex = 28;
+            this.paymentMethod6.TabIndex = 13;
             this.paymentMethod6.Text = "MoneyGram";
             this.paymentMethod6.UseVisualStyleBackColor = true;
             // 
@@ -775,7 +796,7 @@ namespace AliHelper
             this.paymentMethod5.Location = new System.Drawing.Point(323, 125);
             this.paymentMethod5.Name = "paymentMethod5";
             this.paymentMethod5.Size = new System.Drawing.Size(102, 16);
-            this.paymentMethod5.TabIndex = 27;
+            this.paymentMethod5.TabIndex = 12;
             this.paymentMethod5.Text = "Western Union";
             this.paymentMethod5.UseVisualStyleBackColor = true;
             // 
@@ -785,7 +806,7 @@ namespace AliHelper
             this.paymentMethod4.Location = new System.Drawing.Point(275, 125);
             this.paymentMethod4.Name = "paymentMethod4";
             this.paymentMethod4.Size = new System.Drawing.Size(42, 16);
-            this.paymentMethod4.TabIndex = 26;
+            this.paymentMethod4.TabIndex = 11;
             this.paymentMethod4.Text = "T/T";
             this.paymentMethod4.UseVisualStyleBackColor = true;
             // 
@@ -795,7 +816,7 @@ namespace AliHelper
             this.paymentMethod3.Location = new System.Drawing.Point(225, 125);
             this.paymentMethod3.Name = "paymentMethod3";
             this.paymentMethod3.Size = new System.Drawing.Size(42, 16);
-            this.paymentMethod3.TabIndex = 25;
+            this.paymentMethod3.TabIndex = 10;
             this.paymentMethod3.Text = "D/P";
             this.paymentMethod3.UseVisualStyleBackColor = true;
             // 
@@ -805,7 +826,7 @@ namespace AliHelper
             this.paymentMethod2.Location = new System.Drawing.Point(174, 125);
             this.paymentMethod2.Name = "paymentMethod2";
             this.paymentMethod2.Size = new System.Drawing.Size(48, 16);
-            this.paymentMethod2.TabIndex = 24;
+            this.paymentMethod2.TabIndex = 9;
             this.paymentMethod2.Text = " D/A";
             this.paymentMethod2.UseVisualStyleBackColor = true;
             // 
@@ -815,7 +836,7 @@ namespace AliHelper
             this.paymentMethod1.Location = new System.Drawing.Point(129, 125);
             this.paymentMethod1.Name = "paymentMethod1";
             this.paymentMethod1.Size = new System.Drawing.Size(42, 16);
-            this.paymentMethod1.TabIndex = 23;
+            this.paymentMethod1.TabIndex = 8;
             this.paymentMethod1.Text = "L/C";
             this.paymentMethod1.UseVisualStyleBackColor = true;
             // 
@@ -825,14 +846,14 @@ namespace AliHelper
             this.packagingDesc.Multiline = true;
             this.packagingDesc.Name = "packagingDesc";
             this.packagingDesc.Size = new System.Drawing.Size(563, 52);
-            this.packagingDesc.TabIndex = 22;
+            this.packagingDesc.TabIndex = 20;
             // 
             // consignmentTerm
             // 
             this.consignmentTerm.Location = new System.Drawing.Point(124, 204);
             this.consignmentTerm.Name = "consignmentTerm";
             this.consignmentTerm.Size = new System.Drawing.Size(563, 21);
-            this.consignmentTerm.TabIndex = 21;
+            this.consignmentTerm.TabIndex = 19;
             // 
             // label18
             // 
@@ -850,7 +871,7 @@ namespace AliHelper
             this.supplyPeriod.Location = new System.Drawing.Point(539, 164);
             this.supplyPeriod.Name = "supplyPeriod";
             this.supplyPeriod.Size = new System.Drawing.Size(148, 20);
-            this.supplyPeriod.TabIndex = 19;
+            this.supplyPeriod.TabIndex = 18;
             // 
             // supplyUnit
             // 
@@ -873,7 +894,7 @@ namespace AliHelper
             this.port.Location = new System.Drawing.Point(125, 90);
             this.port.Name = "port";
             this.port.Size = new System.Drawing.Size(217, 21);
-            this.port.TabIndex = 15;
+            this.port.TabIndex = 7;
             // 
             // label17
             // 
@@ -891,7 +912,7 @@ namespace AliHelper
             this.priceUnit.Location = new System.Drawing.Point(515, 55);
             this.priceUnit.Name = "priceUnit";
             this.priceUnit.Size = new System.Drawing.Size(172, 20);
-            this.priceUnit.TabIndex = 13;
+            this.priceUnit.TabIndex = 6;
             // 
             // label16
             // 
@@ -907,7 +928,7 @@ namespace AliHelper
             this.priceRangeMax.Location = new System.Drawing.Point(362, 54);
             this.priceRangeMax.Name = "priceRangeMax";
             this.priceRangeMax.Size = new System.Drawing.Size(100, 21);
-            this.priceRangeMax.TabIndex = 11;
+            this.priceRangeMax.TabIndex = 5;
             // 
             // moneyType
             // 
@@ -916,21 +937,21 @@ namespace AliHelper
             this.moneyType.Location = new System.Drawing.Point(125, 54);
             this.moneyType.Name = "moneyType";
             this.moneyType.Size = new System.Drawing.Size(101, 20);
-            this.moneyType.TabIndex = 10;
+            this.moneyType.TabIndex = 3;
             // 
             // priceRangeMin
             // 
             this.priceRangeMin.Location = new System.Drawing.Point(242, 54);
             this.priceRangeMin.Name = "priceRangeMin";
             this.priceRangeMin.Size = new System.Drawing.Size(100, 21);
-            this.priceRangeMin.TabIndex = 9;
+            this.priceRangeMin.TabIndex = 4;
             // 
             // minOrderQuantity
             // 
             this.minOrderQuantity.Location = new System.Drawing.Point(125, 17);
             this.minOrderQuantity.Name = "minOrderQuantity";
             this.minOrderQuantity.Size = new System.Drawing.Size(100, 21);
-            this.minOrderQuantity.TabIndex = 8;
+            this.minOrderQuantity.TabIndex = 1;
             // 
             // label13
             // 
@@ -995,6 +1016,64 @@ namespace AliHelper
             this.label8.TabIndex = 0;
             this.label8.Text = "最小起订量";
             // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.pictureBox5);
+            this.panel3.Controls.Add(this.pictureBox6);
+            this.panel3.Controls.Add(this.pictureBox7);
+            this.panel3.Controls.Add(this.pictureBox3);
+            this.panel3.Controls.Add(this.pictureBox2);
+            this.panel3.Controls.Add(this.pictureBox1);
+            this.panel3.Location = new System.Drawing.Point(32, 75);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(240, 155);
+            this.panel3.TabIndex = 36;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::AliHelper.Properties.Resources.no_image;
+            this.pictureBox2.Location = new System.Drawing.Point(82, 0);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(72, 72);
+            this.pictureBox2.TabIndex = 29;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = global::AliHelper.Properties.Resources.no_image;
+            this.pictureBox3.Location = new System.Drawing.Point(161, 0);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(72, 72);
+            this.pictureBox3.TabIndex = 30;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Image = global::AliHelper.Properties.Resources.no_image;
+            this.pictureBox5.Location = new System.Drawing.Point(159, 80);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(72, 72);
+            this.pictureBox5.TabIndex = 34;
+            this.pictureBox5.TabStop = false;
+            // 
+            // pictureBox6
+            // 
+            this.pictureBox6.Image = global::AliHelper.Properties.Resources.no_image;
+            this.pictureBox6.Location = new System.Drawing.Point(82, 80);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(72, 72);
+            this.pictureBox6.TabIndex = 33;
+            this.pictureBox6.TabStop = false;
+            // 
+            // pictureBox7
+            // 
+            this.pictureBox7.Image = global::AliHelper.Properties.Resources.no_image;
+            this.pictureBox7.Location = new System.Drawing.Point(3, 80);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(72, 72);
+            this.pictureBox7.TabIndex = 32;
+            this.pictureBox7.TabStop = false;
+            // 
             // ProductView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1023,6 +1102,12 @@ namespace AliHelper
             this.DescTab.ResumeLayout(false);
             this.TransTab.ResumeLayout(false);
             this.TransTab.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1118,5 +1203,12 @@ namespace AliHelper
         private Panel panel2;
         private RadioButton static_and_dyn1;
         private RadioButton static_and_dyn0;
+        private Panel SysAttrPanel;
+        private Panel panel3;
+        private PictureBox pictureBox5;
+        private PictureBox pictureBox6;
+        private PictureBox pictureBox7;
+        private PictureBox pictureBox3;
+        private PictureBox pictureBox2;
     }
 }

@@ -18,11 +18,12 @@ namespace AliHelper
 
         public ProductDetail GetFormElements()
         {
-            string url = "http://hz.productposting.alibaba.com/product/editing.htm?id=627992386";
+            string url = "http://hz.productposting.alibaba.com/product/editing.htm?id=617808450";
             string html = HttpClient.RemoteRequest(url, null);
+            html = html.Replace("\r","").Replace("\n","").Replace("\t","");
+            HtmlNode.ElementsFlags.Remove("form");
             HtmlDocument document = new HtmlDocument();
             document.LoadHtml(html);
-            System.Diagnostics.Trace.WriteLine(html);
             HtmlNode productFormEl = document.GetElementbyId("productForm");
             ProductDetail detail = PrintElementsValue(productFormEl);
             detail.SysAttr = GetSysAttr(html);
@@ -55,7 +56,7 @@ namespace AliHelper
         }
         private List<ImageJson> GetImageObjects(string html)
         {
-            Regex r = new Regex("POSTDATAMAP.uploader.imageObjects = (.*?);");
+            Regex r = new Regex("POSTDATAMAP.uploader.imageObjects =(.*?);");
             GroupCollection gc = r.Match(html).Groups;
             if (gc == null || gc.Count == 0)
             {
@@ -85,10 +86,7 @@ namespace AliHelper
         {
             ProductDetail detail = new ProductDetail();
             Type typeOfClass = detail.GetType();
-
-
-
-            HtmlNodeCollection nodeTags = htmlNode.SelectNodes(@"//input[@type='hidden'] | //input[@type='text']");
+            IEnumerable<HtmlNode> nodeTags = htmlNode.SelectNodes(@".//input[@type='hidden'] | .//input[@type='text']");
             if (nodeTags != null)
             {
                 foreach (HtmlNode node in nodeTags)
@@ -114,8 +112,8 @@ namespace AliHelper
                 }
             }
             detail.CustomAttr = new Dictionary<FormElement, FormElement>();
-            HtmlNodeCollection customNameTags = htmlNode.SelectNodes(@"//tr[@class='custom-attr-item']/td/input[@name='_fmp.pr._0.u']");
-            HtmlNodeCollection customValueTags = htmlNode.SelectNodes(@"//tr[@class='custom-attr-item']/td/input[@name='_fmp.pr._0.us']");
+            HtmlNodeCollection customNameTags = htmlNode.SelectNodes(@".//tr[@class='custom-attr-item']/td/input[@name='_fmp.pr._0.u']");
+            HtmlNodeCollection customValueTags = htmlNode.SelectNodes(@".//tr[@class='custom-attr-item']/td/input[@name='_fmp.pr._0.us']");
             if (customNameTags != null)
             {
                 for (int i = 0; i < customNameTags.Count; i ++ )
@@ -147,7 +145,7 @@ namespace AliHelper
                 }
             }
             
-            nodeTags = htmlNode.SelectNodes(@"//input[@type='radio']");
+            nodeTags = htmlNode.SelectNodes(@".//input[@type='radio']");
             System.Diagnostics.Trace.WriteLine("radiobox===========================");
             if (nodeTags != null)
             {
@@ -169,7 +167,7 @@ namespace AliHelper
             }
             System.Diagnostics.Trace.WriteLine("radiobox===========================");
 
-            nodeTags = htmlNode.SelectNodes(@"//input[@type='checkbox']");
+            nodeTags = htmlNode.SelectNodes(@".//input[@type='checkbox']");
             if (nodeTags != null)
             {
                 foreach (HtmlNode node in nodeTags)
@@ -196,7 +194,7 @@ namespace AliHelper
             }
 
             System.Diagnostics.Trace.WriteLine("select===========================");
-            nodeTags = htmlNode.SelectNodes(@"//select");
+            nodeTags = htmlNode.SelectNodes(@".//select");
             if (nodeTags != null)
             {
                 foreach (HtmlNode node in nodeTags)
@@ -223,7 +221,7 @@ namespace AliHelper
             }
             System.Diagnostics.Trace.WriteLine("select===========================");
 
-            nodeTags = htmlNode.SelectNodes(@"//textarea");
+            nodeTags = htmlNode.SelectNodes(@".//textarea");
             if (nodeTags != null)
             {
                 foreach (HtmlNode node in nodeTags)
@@ -254,7 +252,7 @@ namespace AliHelper
         public List<FormElement> GetOptions(HtmlNode htmlNode)
         {
             List<FormElement> options = new List<FormElement>();
-            HtmlNodeCollection nodeTags = htmlNode.SelectNodes(@"./option");
+            HtmlNodeCollection nodeTags = htmlNode.SelectNodes(@".//option");
             if (nodeTags != null)
             {
                 foreach (HtmlNode node in nodeTags)
@@ -264,7 +262,6 @@ namespace AliHelper
                     string name = node.GetAttributeValue("name", "");
                     string value = node.GetAttributeValue("value", "");
                     bool chk = node.Attributes["selected"] != null;
-                    System.Diagnostics.Trace.WriteLine("Id:" + id + "  type:" + type + "  name:" + name + "  checked:" + chk + "  value:" + value); 
                     FormElement el = new FormElement();
                     el.Id = id;
                     el.Type = type;
