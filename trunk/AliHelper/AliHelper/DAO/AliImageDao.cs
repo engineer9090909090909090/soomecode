@@ -66,6 +66,9 @@ namespace AliHelper.DAO
                     sql = sql + "and DisplayNameUtf8 like '%" + query.Condition.DisplayNameUtf8 + "%' ";
                 }
             }
+
+            query.RecordCount = dbHelper.GetItemCount(sql, null);
+
             sql = sql + "limit " + query.Page + ", " + query.PageSize;
             DataTable dt = dbHelper.ExecuteDataTable(sql, null);
             List<ImageInfo> list = new List<ImageInfo>();
