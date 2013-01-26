@@ -33,9 +33,19 @@ namespace Soomes
         public string AbsSummImageUrl { set; get; }
 
         public bool IsWindowProduct { set; get; }
-        
-        public DateTime GmtModified { set; get; }
+        ///====
+        public string GmtModified { set; get; }
 
+        public string Type { set; get; }
+
+        public string IsDisplay { set; get; }
+
+        public string OwnerMemberId { set; get; }
+
+        public string OwnerMemberName { set; get; }
+
+        public bool IsLowScore { set; get; }
+        ///=====
         public string GroupId { set; get; }
     }
 }
