@@ -12,6 +12,9 @@ namespace AliHelper
 {
     public partial class ProductView : UserControl
     {
+        private ProductsManager productsManager;
+        private ImpProductDetail impProductDetail;
+        private DataTable dataTable;
         private ProductDetail _productDetail;
         [DefaultValue(1), Category("自定义属性"), Description("产品详情")]
         public ProductDetail AliProductDetail
@@ -25,13 +28,94 @@ namespace AliHelper
                 this._productDetail = value;
             }
         }
-
         
         public ProductView()
         {
             InitializeComponent();
+            productsManager = new ProductsManager();
+            impProductDetail = new ImpProductDetail();
             this.webBrowser1.Navigate(Application.StartupPath + "\\KindEditor\\Editor.htm");
+            InitDataGridview();
         }
+
+        #region Load DataGridView
+
+        public void InitDataGridview()
+        {
+            this.dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            dataTable = new DataTable();
+            dataTable.Columns.Add("Id", typeof(Int32));
+            dataTable.Columns.Add("Check", typeof(Boolean));
+            dataTable.Columns.Add("Image", typeof(Image));
+            dataTable.Columns.Add("Subject", typeof(string));
+            dataTable.Columns.Add("RedModel", typeof(string));
+            dataTable.Columns.Add("IsWindowProduct", typeof(string));
+            dataTable.Columns.Add("Status", typeof(string));
+            dataTable.Columns.Add("OwnerMemberName", typeof(string));
+            dataTable.Columns.Add("GmtModified", typeof(string));
+            
+            this.dataGridView1.DataSource = dataTable;
+            DataGridViewColumn column7 = this.dataGridView1.Columns[0];
+            column7.HeaderText = "Id";
+            column7.Width = 10;
+            column7.Visible = false;
+            DataGridViewColumn column0 = this.dataGridView1.Columns[1];
+            column0.HeaderText = "选中";
+            column0.Width = 80;
+            DataGridViewColumn column = this.dataGridView1.Columns[2];
+            column.HeaderText = "产品图片";
+            column.Width = 120;
+
+            DataGridViewColumn column1 = this.dataGridView1.Columns[3];
+            column1.HeaderText = "产品名称";
+            column1.Width = 360;
+
+            DataGridViewColumn column11 = this.dataGridView1.Columns[4];
+            column11.HeaderText = "型号";
+            column11.Width = 120;
+
+            DataGridViewColumn column2 = this.dataGridView1.Columns[5];
+            column2.HeaderText = "橱窗产品";
+            column2.Width = 80;
+
+            DataGridViewColumn column3 = this.dataGridView1.Columns[6];
+            column3.HeaderText = "产品状态";
+            column3.Width = 80;
+
+            DataGridViewColumn column4 = this.dataGridView1.Columns[7];
+            column4.HeaderText = "所属成员";
+            column4.Width = 100;
+
+            DataGridViewColumn column6 = this.dataGridView1.Columns[7];
+            column6.HeaderText = "更新时间";
+            column6.Width = 100;
+
+            
+        }
+
+        public void LoadDataGridView(int GroupId)
+        {
+            this.dataTable.Clear();
+            List<AliProduct> productList = productsManager.GetProductList(GroupId);
+            if (productList.Count > 0)
+            {
+                foreach (AliProduct item in productList)
+                {
+                    DataRow row = this.dataTable.NewRow();
+                    row["Id"] = item.Id;
+                    row["Check"] = false;
+                    row["Image"] = global::AliHelper.Properties.Resources.no_image;
+                    row["Subject"] = item.Subject;
+                    row["RedModel"] = item.RedModel;
+                    row["IsWindowProduct"] = item.IsWindowProduct?"是":"";
+                    row["Status"] = item.Status;
+                    row["OwnerMemberName"] = item.OwnerMemberName;
+                    row["GmtModified"] = item.GmtModified;
+                    this.dataTable.Rows.Add(row);
+                }
+            }
+        }
+        #endregion
 
         private void staticImageWaterMarkId_CheckedChanged(object sender, EventArgs e)
         {
@@ -503,9 +587,8 @@ namespace AliHelper
         private void ImageBankLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
 
-
-
         }
+
         private void ChangeImagePanel()
         {
             if (this.BaseInfoTab.Controls.Contains(this.dnImagePanel))
@@ -528,6 +611,17 @@ namespace AliHelper
         private void static_and_dyn0_CheckedChanged(object sender, EventArgs e)
         {
             ChangeImagePanel();
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                int id = Convert.ToInt32(this.dataGridView1.Rows[e.RowIndex].Cells[0].Value);
+                ProductDetail detail = impProductDetail.GetFormElements();
+                this.AliProductDetail = detail;
+                this.LoadProductDetailValue();
+            }
         }
 
     }

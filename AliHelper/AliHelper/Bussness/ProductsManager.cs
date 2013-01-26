@@ -58,6 +58,10 @@ namespace AliHelper
             return groupDao.GetAliGroupList();
         }
 
+        public List<AliProduct> GetProductList(int GroupId)
+        {
+            return productDao.GetAliProductList(GroupId);
+        }
 
         public void UpdateImageInfos(List<ImageInfo> images)
         {
