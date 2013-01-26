@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data.SQLite;
 using Soomes;
+using System.Data;
 
 namespace AliHelper.DAO
 {
@@ -42,7 +43,7 @@ namespace AliHelper.DAO
             + "IsDisplay varchar(50),"
             + "OwnerMemberId varchar(50),"
             + "OwnerMemberName varchar(50),"
-            + "IsLowScore varchar(50)"
+            + "IsLowScore BOOLEAN(50)"
             + ")");
 
             dbHelper.ExecuteNonQuery("Create Index  IF NOT EXISTS Index_key on AliProducts(GroupId);");
@@ -101,6 +102,45 @@ namespace AliHelper.DAO
             {
                 dbHelper.ExecuteNonQuery(InsSql, InsertParameters);
             }
+        }
+
+
+        public List<AliProduct> GetAliProductList(int GroupId)
+        {
+            string sql = "SELECT Id,Keywords, IsKeywords, Status, GroupId,"
+                + " GroupName1,GroupName2,GroupName3, Subject, RedModel, DetailUrl,AbsImageUrl,AbsSummImageUrl,IsWindowProduct,  "
+                + "GmtModified, Type, IsDisplay, OwnerMemberId, OwnerMemberName, IsLowScore from AliProducts where 1 = 1";
+            if (GroupId > 0)
+            {
+                sql = sql + " and GroupId like '%"+ GroupId.ToString() +"%'";
+            }
+            DataTable dt = dbHelper.ExecuteDataTable(sql , null);
+            List<AliProduct> list = new List<AliProduct>();
+            foreach (DataRow row in dt.Rows)
+            {
+                AliProduct kw = new AliProduct();
+                kw.Id = Convert.ToInt32(row["Id"]);
+                kw.Keywords = (string)row["Keywords"];
+                kw.IsKeywords = Convert.ToBoolean(row["IsKeywords"]);
+                kw.Status = (string)row["Status"];
+                kw.GroupName1 = (string)row["GroupName1"];
+                kw.GroupName2 = (string)row["GroupName2"];
+                kw.GroupName3 = (string)row["GroupName3"];
+                kw.Subject = (string)row["Subject"];
+                kw.RedModel = (string)row["RedModel"];
+                kw.DetailUrl = (string)row["DetailUrl"];
+                kw.AbsImageUrl = (string)row["AbsImageUrl"];
+                kw.AbsSummImageUrl = (string)row["AbsSummImageUrl"];
+                kw.IsWindowProduct = Convert.ToBoolean(row["IsWindowProduct"]);
+                kw.GmtModified = (string)row["GmtModified"];
+                kw.Type = (string)row["Type"];
+                kw.IsDisplay = (string)row["IsDisplay"];
+                kw.OwnerMemberId = (string)row["OwnerMemberId"];
+                kw.OwnerMemberName = (string)row["OwnerMemberName"];
+                kw.IsLowScore = (string)row["IsLowScore"];
+                list.Add(kw);
+            }
+            return list;
         }
     }
 }

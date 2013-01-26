@@ -22,13 +22,12 @@ namespace AliHelper
         //alibaba vip manage url
         public static string ManageHtml = "http://hz.productposting.alibaba.com/product/manage_products.htm#tab=approved";
         private ProductsManager productsManager;
-        private ImpProductDetail impProductDetail;
+        
         ProductView productView1;
         #region 构造方法
         public MainForm()
         {
             productsManager = new ProductsManager();
-            impProductDetail = new ImpProductDetail();
             InitializeComponent();
             LoadOutlookBar();
         }
@@ -41,6 +40,22 @@ namespace AliHelper
             LoadProdutPanel();
         }
         #endregion
+
+        void treeView1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+
+        }
+
+        void treeView1_NodeMouseDoubleClick(object sender, System.Windows.Forms.TreeNodeMouseClickEventArgs e)
+        {
+        }
+
+        void treeView1_NodeMouseClick(object sender, System.Windows.Forms.TreeNodeMouseClickEventArgs e)
+        {
+            TreeNode currentNode = e.Node;
+            int GroupId = Convert.ToInt32(currentNode.Tag);
+            this.productView1.LoadDataGridView(GroupId);
+        }
 
         #region OutlookBar 处理
         void LoadOutlookBar()
@@ -90,12 +105,12 @@ namespace AliHelper
                 else if (index == 1)
                 {
                     ProductsStrip.Hide();
-                    UnLoadProdutPanel();
+                    UnLoadProdcutPanel();
                 }
                 else if (index == 2)
                 {
                     ProductsStrip.Hide();
-                    UnLoadProdutPanel();
+                    UnLoadProdcutPanel();
                 }
             }
         }
@@ -171,6 +186,7 @@ namespace AliHelper
         {
             treeView1.Nodes.Clear();
             TreeNode t = new TreeNode("产品分组");//作为根节点
+            t.Tag = -1;
             treeView1.Nodes.Add(t);
             foreach (AliGroup p in groups)
             {
@@ -240,7 +256,7 @@ namespace AliHelper
             f.ShowDialog(this);
         }
 
-        private void UnLoadProdutPanel()
+        private void UnLoadProdcutPanel()
         {
             if (splitContainer1.Panel2.Controls.Count > 0)
             {
@@ -261,14 +277,7 @@ namespace AliHelper
             this.productView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Panel2.Controls.Add(productView1);
             this.splitContainer1.Panel2.ResumeLayout(false);
-            SelectProductRow();
         }
 
-        public void SelectProductRow()
-        {
-            ProductDetail detail = impProductDetail.GetFormElements();
-            this.productView1.AliProductDetail = detail;
-            this.productView1.LoadProductDetailValue();
-        }
     }
 }

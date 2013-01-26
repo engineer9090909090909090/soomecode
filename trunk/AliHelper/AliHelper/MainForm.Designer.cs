@@ -145,6 +145,9 @@ namespace AliHelper
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(130, 423);
             this.treeView1.TabIndex = 4;
+            this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(treeView1_NodeMouseClick);
+            this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(treeView1_NodeMouseDoubleClick);
+            this.treeView1.KeyDown += new System.Windows.Forms.KeyEventHandler(treeView1_KeyDown);
             // 
             // splitContainer1
             // 

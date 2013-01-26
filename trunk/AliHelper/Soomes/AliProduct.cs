@@ -44,7 +44,7 @@ namespace Soomes
 
         public string OwnerMemberName { set; get; }
 
-        public bool IsLowScore { set; get; }
+        public string IsLowScore { set; get; }
         ///=====
         public string GroupId { set; get; }
     }
