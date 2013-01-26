@@ -13,8 +13,7 @@ namespace AliHelper
     {
         public static string GetAppDataFolder()
         {
-            string AppDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
-                + Path.DirectorySeparatorChar + Application.ProductName;
+            string AppDataFolder = Environment.CurrentDirectory;
             if (!Directory.Exists(AppDataFolder))
             {
                 Directory.CreateDirectory(AppDataFolder);

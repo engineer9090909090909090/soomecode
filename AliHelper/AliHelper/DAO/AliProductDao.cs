@@ -37,7 +37,13 @@ namespace AliHelper.DAO
             + "AbsImageUrl varchar(500),"
             + "AbsSummImageUrl varchar(500),"
             + "IsWindowProduct BOOLEAN,"
-            + "GmtModified datetime)");
+            + "GmtModified varchar(50),"
+            + "Type varchar(50),"
+            + "IsDisplay varchar(50),"
+            + "OwnerMemberId varchar(50),"
+            + "OwnerMemberName varchar(50),"
+            + "IsLowScore varchar(50)"
+            + ")");
 
             dbHelper.ExecuteNonQuery("Create Index  IF NOT EXISTS Index_key on AliProducts(GroupId);");
         }
@@ -54,8 +60,12 @@ namespace AliHelper.DAO
 
         public void Insert(List<AliProduct> list)
         {
-            string InsSql = @"INSERT INTO AliProducts(Id,Keywords, IsKeywords, Status, GroupId, GroupName1,GroupName2,GroupName3, Subject, RedModel, DetailUrl,AbsImageUrl, AbsSummImageUrl,IsWindowProduct, GmtModified)"
-                            + "values(@Id,@Keywords, @IsKeywords, @Status, @GroupId, @GroupName1,@GroupName2,@GroupName3, @Subject, @RedModel, @DetailUrl,@AbsImageUrl, @AbsSummImageUrl,@IsWindowProduct, @GmtModified)";
+            string InsSql = @"INSERT INTO AliProducts(Id,Keywords, IsKeywords, Status, GroupId,"
+                + " GroupName1,GroupName2,GroupName3, Subject, RedModel, DetailUrl,AbsImageUrl,AbsSummImageUrl,IsWindowProduct,  "
+                +"GmtModified, Type, IsDisplay, OwnerMemberId, OwnerMemberName, IsLowScore)"
+                + "values(@Id,@Keywords, @IsKeywords, @Status, @GroupId, @GroupName1,@GroupName2,"
+                + "@GroupName3, @Subject, @RedModel, @DetailUrl,@AbsImageUrl, @AbsSummImageUrl,@IsWindowProduct,"
+                + " @GmtModified, @Type, @IsDisplay, @OwnerMemberId, @OwnerMemberName, @IsLowScore)";
 
             List<SQLiteParameter[]> InsertParameters = new List<SQLiteParameter[]>();
             List<SQLiteParameter[]> UpdateParameters = new List<SQLiteParameter[]>();
@@ -78,7 +88,12 @@ namespace AliHelper.DAO
                     new SQLiteParameter("@AbsImageUrl",item.AbsImageUrl), 
                     new SQLiteParameter("@AbsSummImageUrl",item.AbsSummImageUrl),
                     new SQLiteParameter("@IsWindowProduct",item.IsWindowProduct),
-                    new SQLiteParameter("@GmtModified",item.GmtModified)
+                    new SQLiteParameter("@GmtModified",item.GmtModified),
+                    new SQLiteParameter("@Type",item.@Type),
+                    new SQLiteParameter("@IsDisplay",item.@IsDisplay),
+                    new SQLiteParameter("@OwnerMemberId",item.@OwnerMemberId),
+                    new SQLiteParameter("@OwnerMemberName",item.@OwnerMemberName),
+                    new SQLiteParameter("@IsLowScore",item.@IsLowScore)
                 };
                 InsertParameters.Add(parameter);
             }
