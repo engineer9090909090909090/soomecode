@@ -7,15 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Soomes;
+using System.Web;
 
 namespace AliHelper
 {
+    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
     public partial class ProductView : UserControl
     {
         private ProductsManager productsManager;
         private ImpProductDetail impProductDetail;
         private DataTable dataTable;
         private ProductDetail _productDetail;
+        private int PrevSelectedId = 0;
         [DefaultValue(1), Category("自定义属性"), Description("产品详情")]
         public ProductDetail AliProductDetail
         {
@@ -34,6 +37,7 @@ namespace AliHelper
             InitializeComponent();
             productsManager = new ProductsManager();
             impProductDetail = new ImpProductDetail();
+            this.webBrowser1.ObjectForScripting = this;
             this.webBrowser1.Navigate(Application.StartupPath + "\\KindEditor\\Editor.htm");
             InitDataGridview();
         }
@@ -131,7 +135,61 @@ namespace AliHelper
 
         private void ProductView_Load(object sender, EventArgs e)
         {
-
+            if (DataCache.Instance.MinOrderUnitOptions != null)
+            {
+                this.minOrderUnit.DisplayMember = "Name";
+                this.minOrderUnit.ValueMember = "Value";
+                FormElement selected = DataCache.Instance.MinOrderUnitOptions[0];
+                foreach (FormElement el in DataCache.Instance.MinOrderUnitOptions)
+                {
+                    this.minOrderUnit.Items.Add(el);
+                }
+                this.minOrderUnit.SelectedItem = selected;
+            }
+            if (DataCache.Instance.MoneyTypeOptions != null)
+            {
+                this.moneyType.DisplayMember = "Name";
+                this.moneyType.ValueMember = "Value";
+                FormElement selected = DataCache.Instance.MoneyTypeOptions[0];
+                foreach (FormElement el in DataCache.Instance.MoneyTypeOptions)
+                {
+                    this.moneyType.Items.Add(el);
+                }
+                this.moneyType.SelectedItem = selected;
+            }
+            if (DataCache.Instance.PriceUnitOptions != null)
+            {
+                this.priceUnit.DisplayMember = "Name";
+                this.priceUnit.ValueMember = "Value";
+                FormElement selected = DataCache.Instance.PriceUnitOptions[0];
+                foreach (FormElement el in DataCache.Instance.PriceUnitOptions)
+                {
+                    this.priceUnit.Items.Add(el);
+                }
+                this.priceUnit.SelectedItem = selected;
+            }
+            if (DataCache.Instance.SupplyUnitOptions != null)
+            {
+                this.supplyUnit.DisplayMember = "Name";
+                this.supplyUnit.ValueMember = "Value";
+                FormElement selected = DataCache.Instance.SupplyUnitOptions[0];
+                foreach (FormElement el in DataCache.Instance.SupplyUnitOptions)
+                {
+                    this.supplyUnit.Items.Add(el);
+                }
+                this.supplyUnit.SelectedItem = selected;
+            }
+            if (DataCache.Instance.SupplyPeriodOptions != null)
+            {
+                this.supplyPeriod.DisplayMember = "Name";
+                this.supplyPeriod.ValueMember = "Value";
+                FormElement selected = DataCache.Instance.SupplyPeriodOptions[0];
+                foreach (FormElement el in DataCache.Instance.SupplyPeriodOptions)
+                {
+                    this.supplyPeriod.Items.Add(el);
+                }
+                this.supplyPeriod.SelectedItem = selected;
+            }
         }
 
         public void LoadProductDetailValue()
@@ -139,38 +197,38 @@ namespace AliHelper
             if (AliProductDetail.productName != null)
             {
                 this.productName.Tag = AliProductDetail.productName;
-                this.productName.Text = AliProductDetail.productName.Val;
+                this.productName.Text = AliProductDetail.productName.Value;
             }
             if (AliProductDetail.productKeyword != null)
             {
                 this.productKeyword.Tag = AliProductDetail.productKeyword;
-                this.productKeyword.Text = AliProductDetail.productKeyword.Val;
+                this.productKeyword.Text = AliProductDetail.productKeyword.Value;
             }
             if (AliProductDetail.keywords2 != null)
             {
                 this.keywords2.Tag = AliProductDetail.keywords2;
-                this.keywords2.Text = AliProductDetail.keywords2.Val;
+                this.keywords2.Text = AliProductDetail.keywords2.Value;
             }
             if (AliProductDetail.keywords3 != null)
             {
                 this.keywords3.Tag = AliProductDetail.keywords3;
-                this.keywords3.Text = AliProductDetail.keywords3.Val;
+                this.keywords3.Text = AliProductDetail.keywords3.Value;
             }
             if (AliProductDetail.summary != null)
             {
                 this.summary.Tag = AliProductDetail.summary;
-                this.summary.Text = AliProductDetail.summary.Val;
+                this.summary.Text = AliProductDetail.summary.Value;
             }
             if (AliProductDetail.productTeamInputBox != null)
             {
                 this.productTeamInputBox.Tag = AliProductDetail.productTeamInputBox;
-                this.productTeamInputBox.Text = AliProductDetail.productTeamInputBox.Val;
+                this.productTeamInputBox.Text = AliProductDetail.productTeamInputBox.Value;
             }
             if (AliProductDetail.productDescriptionTemp != null)
             {
                 this.webBrowser1.Tag = AliProductDetail.productDescriptionTemp;
-                string content = AliProductDetail.productDescriptionTemp.Val;
-                this.webBrowser1.Document.InvokeScript("SetData", new object[] { content });
+                string content = AliProductDetail.productDescriptionTemp.Value;
+                this.webBrowser1.Document.InvokeScript("SetData", new object[] { HttpUtility.HtmlDecode(content) });
             }
 
             if (AliProductDetail.static_and_dyn0 != null)
@@ -206,13 +264,13 @@ namespace AliHelper
                     if (attrKey != null)
                     {
                         attrKey.Tag = el;
-                        attrKey.Text = el.Val;
+                        attrKey.Text = el.Value;
                     }
                     Control attrVal = Controls.Find("customAttrVal" + i, true)[0];
                     if (attrVal != null)
                     {
                         attrVal.Tag = AliProductDetail.CustomAttr[el];
-                        attrVal.Text = AliProductDetail.CustomAttr[el].Val;
+                        attrVal.Text = AliProductDetail.CustomAttr[el].Value;
                     }
                 }
             }
@@ -220,39 +278,25 @@ namespace AliHelper
             if (AliProductDetail.minOrderQuantity != null)
             {
                 this.minOrderQuantity.Tag = AliProductDetail.minOrderQuantity;
-                this.minOrderQuantity.Text = AliProductDetail.minOrderQuantity.Val;
+                this.minOrderQuantity.Text = AliProductDetail.minOrderQuantity.Value;
             }
-            if (AliProductDetail.minOrderUnit != null)
-            {
-                this.minOrderUnit.Tag = AliProductDetail.minOrderUnit;
-                this.minOrderUnit.Text = AliProductDetail.minOrderUnit.Val;
-            }
-            if (AliProductDetail.moneyType != null)
-            {
-                this.moneyType.Tag = AliProductDetail.moneyType;
-                this.moneyType.Text = AliProductDetail.moneyType.Val;
-            }
+            
             if (AliProductDetail.priceRangeMin != null)
             {
                 this.priceRangeMin.Tag = AliProductDetail.priceRangeMin;
-                this.priceRangeMin.Text = AliProductDetail.priceRangeMin.Val;
+                this.priceRangeMin.Text = AliProductDetail.priceRangeMin.Value;
             }
             if (AliProductDetail.priceRangeMax != null)
             {
                 this.priceRangeMax.Tag = AliProductDetail.priceRangeMax;
-                this.priceRangeMax.Text = AliProductDetail.priceRangeMax.Val;
+                this.priceRangeMax.Text = AliProductDetail.priceRangeMax.Value;
             }
-            if (AliProductDetail.priceUnit != null)
-            {
-                this.priceUnit.Tag = AliProductDetail.priceUnit;
-                this.priceUnit.Text = AliProductDetail.priceUnit.Val;
-            }
+            
             if (AliProductDetail.port != null)
             {
                 this.port.Tag = AliProductDetail.port;
-                this.port.Text = AliProductDetail.port.Val;
+                this.port.Text = AliProductDetail.port.Value;
             }
-
             if (AliProductDetail.paymentMethod1 != null)
             {
                 this.paymentMethod1.Tag = AliProductDetail.paymentMethod1;
@@ -291,42 +335,32 @@ namespace AliHelper
             if (AliProductDetail.paymentMethodOtherDesc != null)
             {
                 this.paymentMethodOtherDesc.Tag = AliProductDetail.paymentMethodOtherDesc;
-                this.paymentMethodOtherDesc.Text = AliProductDetail.paymentMethodOtherDesc.Val;
+                this.paymentMethodOtherDesc.Text = AliProductDetail.paymentMethodOtherDesc.Value;
             }
             if (AliProductDetail.supplyQuantity != null)
             {
                 this.supplyQuantity.Tag = AliProductDetail.supplyQuantity;
-                this.supplyQuantity.Text = AliProductDetail.supplyQuantity.Val;
-            }
-            if (AliProductDetail.supplyUnit != null)
-            {
-                this.supplyUnit.Tag = AliProductDetail.supplyUnit;
-                this.supplyUnit.Text = AliProductDetail.supplyUnit.Val;
-            }
-            if (AliProductDetail.supplyPeriod != null)
-            {
-                this.supplyPeriod.Tag = AliProductDetail.supplyPeriod;
-                this.supplyPeriod.Text = AliProductDetail.supplyPeriod.Val;
+                this.supplyQuantity.Text = AliProductDetail.supplyQuantity.Value;
             }
             if (AliProductDetail.minOrderQuantity != null)
             {
                 this.minOrderQuantity.Tag = AliProductDetail.minOrderQuantity;
-                this.minOrderQuantity.Text = AliProductDetail.minOrderQuantity.Val;
+                this.minOrderQuantity.Text = AliProductDetail.minOrderQuantity.Value;
             }
             if (AliProductDetail.minOrderQuantity != null)
             {
                 this.minOrderQuantity.Tag = AliProductDetail.minOrderQuantity;
-                this.minOrderQuantity.Text = AliProductDetail.minOrderQuantity.Val;
+                this.minOrderQuantity.Text = AliProductDetail.minOrderQuantity.Value;
             }
             if (AliProductDetail.consignmentTerm != null)
             {
                 this.consignmentTerm.Tag = AliProductDetail.consignmentTerm;
-                this.consignmentTerm.Text = AliProductDetail.consignmentTerm.Val;
+                this.consignmentTerm.Text = AliProductDetail.consignmentTerm.Value;
             }
             if (AliProductDetail.packagingDesc != null)
             {
                 this.packagingDesc.Tag = AliProductDetail.packagingDesc;
-                this.packagingDesc.Text = AliProductDetail.packagingDesc.Val;
+                this.packagingDesc.Text = AliProductDetail.packagingDesc.Value;
             }
             if (AliProductDetail.static_and_dyn0 != null)
             {
@@ -338,72 +372,77 @@ namespace AliHelper
                 this.static_and_dyn1.Tag = AliProductDetail.static_and_dyn1;
                 this.static_and_dyn1.Checked = AliProductDetail.static_and_dyn1.Checked;
             }
-
             if (AliProductDetail.minOrderUnit != null)
             {
                 this.minOrderUnit.Tag = AliProductDetail.minOrderUnit;
-                this.minOrderUnit.DisplayMember = "Label";
-                this.minOrderUnit.ValueMember = "Val";
-                FormElement selected = AliProductDetail.minOrderUnit.Options[0];
-                foreach (FormElement e in AliProductDetail.minOrderUnit.Options)
+                FormElement selected = DataCache.Instance.MinOrderUnitOptions[0];
+                foreach (FormElement el in this.minOrderUnit.Items)
                 {
-                    this.minOrderUnit.Items.Add(e);
-                    if (e.Checked) selected = e;
+                    if (el.Value == AliProductDetail.minOrderUnit.Value)
+                    {
+                        selected = el;
+                        break;
+                    }
                 }
                 this.minOrderUnit.SelectedItem = selected;
             }
             if (AliProductDetail.moneyType != null)
             {
                 this.moneyType.Tag = AliProductDetail.moneyType;
-                this.moneyType.DisplayMember = "Label";
-                this.moneyType.ValueMember = "Val";
-                FormElement selected = AliProductDetail.moneyType.Options[0];
-                foreach (FormElement e in AliProductDetail.moneyType.Options)
+                FormElement selected = DataCache.Instance.MoneyTypeOptions[0];
+                foreach (FormElement el in DataCache.Instance.MoneyTypeOptions)
                 {
-                    this.moneyType.Items.Add(e);
-                    if (e.Checked) selected = e;
+                    if (el.Value == AliProductDetail.moneyType.Value)
+                    {
+                        selected = el;
+                        break;
+                    }
                 }
                 this.moneyType.SelectedItem = selected;
             }
             if (AliProductDetail.priceUnit != null)
             {
                 this.priceUnit.Tag = AliProductDetail.priceUnit;
-                this.priceUnit.DisplayMember = "Label";
-                this.priceUnit.ValueMember = "Val";
-                FormElement selected = AliProductDetail.priceUnit.Options[0];
-                foreach (FormElement e in AliProductDetail.priceUnit.Options)
+                FormElement selected = DataCache.Instance.PriceUnitOptions[0];
+                foreach (FormElement el in this.priceUnit.Items)
                 {
-                    this.priceUnit.Items.Add(e);
-                    if (e.Checked) selected = e;
+                    if (el.Value == AliProductDetail.priceUnit.Value)
+                    {
+                        selected = el;
+                        break;
+                    }
                 }
                 this.priceUnit.SelectedItem = selected;
             }
             if (AliProductDetail.supplyUnit != null)
             {
                 this.supplyUnit.Tag = AliProductDetail.supplyUnit;
-                this.supplyUnit.DisplayMember = "Label";
-                this.supplyUnit.ValueMember = "Val";
-                FormElement selected = AliProductDetail.supplyUnit.Options[0];
-                foreach (FormElement e in AliProductDetail.supplyUnit.Options)
+                FormElement selected = DataCache.Instance.SupplyUnitOptions[0];
+                foreach (FormElement el in this.supplyUnit.Items)
                 {
-                    this.supplyUnit.Items.Add(e);
-                    if (e.Checked) selected = e;
+                    if (el.Value == AliProductDetail.supplyUnit.Value)
+                    {
+                        selected = el;
+                        break;
+                    }
                 }
                 this.supplyUnit.SelectedItem = selected;
             }
             if (AliProductDetail.supplyPeriod != null)
             {
-                this.supplyPeriod.Tag = AliProductDetail.supplyPeriod.Name;
-                this.supplyPeriod.DisplayMember = "Label";
-                this.supplyPeriod.ValueMember = "Val";
-                FormElement selected = AliProductDetail.supplyPeriod.Options[0];
-                foreach (FormElement e in AliProductDetail.supplyPeriod.Options)
+                this.supplyPeriod.Tag = AliProductDetail.supplyPeriod;
+                FormElement selected = DataCache.Instance.SupplyPeriodOptions[0];
+                foreach (FormElement el in this.supplyPeriod.Items)
                 {
-                    this.supplyPeriod.Items.Add(e);
-                    if (e.Checked) selected = e;
+                    if (el.Value == AliProductDetail.supplyPeriod.Value)
+                    {
+                        selected = el;
+                        break;
+                    }
                 }
                 this.supplyPeriod.SelectedItem = selected;
             }
+            
             int height = 20;
             int tabIndex = 1;
             if (this.SysAttrPanel.Controls.Count>0)
@@ -539,38 +578,40 @@ namespace AliHelper
                 comboBox.DisplayMember = "Value";
                 comboBox.ValueMember = "Id";
                 Soomes.Attribute selNode = null;
-               
-                foreach (AttributeNode attr in attrNode.Nodes)
+                if (attrNode.Nodes != null)
                 {
-                    comboBox.Items.Add(attr.Data);
-                    if (attr.Data.Selected)
+                    foreach (AttributeNode attr in attrNode.Nodes)
                     {
-                        selNode = attr.Data;
-                    }
-                    if (attr.Nodes[0].Nodes != null && attr.Nodes[0].Nodes.Count > 0)
-                    {
-                        ComboBox subComboBox = new ComboBox();
-                        subComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-                        subComboBox.FormattingEnabled = true;
-                        subComboBox.Location = new System.Drawing.Point(loc, height - 5);
-                        subComboBox.Name = attr.Nodes[0].Data.Id;
-                        subComboBox.Size = new System.Drawing.Size(150, 20);
-                        loc = loc + 150 + 10;
-                        subComboBox.Tag = attr.Nodes[0].Data;
-                        subComboBox.TabIndex = tabIndex;
-                        this.SysAttrPanel.Controls.Add(subComboBox);
-                        subComboBox.DisplayMember = "Value";
-                        subComboBox.ValueMember = "Id";
-                        Soomes.Attribute subSelNode = null;
-                        foreach (AttributeNode subAttr in attr.Nodes[0].Nodes)
+                        comboBox.Items.Add(attr.Data);
+                        if (attr.Data.Selected)
                         {
-                            subComboBox.Items.Add(subAttr.Data);
-                            if (subAttr.Data.Selected)
-                            {
-                                subSelNode = subAttr.Data;
-                            }
+                            selNode = attr.Data;
                         }
-                        subComboBox.SelectedItem = subSelNode;
+                        if (attr.Nodes[0].Nodes != null && attr.Nodes[0].Nodes.Count > 0)
+                        {
+                            ComboBox subComboBox = new ComboBox();
+                            subComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+                            subComboBox.FormattingEnabled = true;
+                            subComboBox.Location = new System.Drawing.Point(loc, height - 5);
+                            subComboBox.Name = attr.Nodes[0].Data.Id;
+                            subComboBox.Size = new System.Drawing.Size(150, 20);
+                            loc = loc + 150 + 10;
+                            subComboBox.Tag = attr.Nodes[0].Data;
+                            subComboBox.TabIndex = tabIndex;
+                            this.SysAttrPanel.Controls.Add(subComboBox);
+                            subComboBox.DisplayMember = "Value";
+                            subComboBox.ValueMember = "Id";
+                            Soomes.Attribute subSelNode = null;
+                            foreach (AttributeNode subAttr in attr.Nodes[0].Nodes)
+                            {
+                                subComboBox.Items.Add(subAttr.Data);
+                                if (subAttr.Data.Selected)
+                                {
+                                    subSelNode = subAttr.Data;
+                                }
+                            }
+                            subComboBox.SelectedItem = subSelNode;
+                        }
                     }
                 }
                 comboBox.SelectedItem = selNode;
@@ -608,6 +649,7 @@ namespace AliHelper
                 this.BaseInfoTab.Controls.Add(this.dnImagePanel);
             }
         }
+
         private void static_and_dyn0_CheckedChanged(object sender, EventArgs e)
         {
             ChangeImagePanel();
@@ -618,11 +660,22 @@ namespace AliHelper
             if (e.RowIndex >= 0)
             {
                 int id = Convert.ToInt32(this.dataGridView1.Rows[e.RowIndex].Cells[0].Value);
-                ProductDetail detail = impProductDetail.GetFormElements();
-                this.AliProductDetail = detail;
-                this.LoadProductDetailValue();
+                if (id != PrevSelectedId)
+                {
+                    PrevSelectedId = id;
+                    ProductDetail detail = impProductDetail.GetEditFormElements(id);
+                    this.AliProductDetail = detail;
+                    this.LoadProductDetailValue();
+                }
             }
         }
 
+        public void ShowPhotobank()
+        {
+            ImageForm f = new ImageForm();
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
+        }
+        
     }
 }

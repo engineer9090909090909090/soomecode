@@ -22,12 +22,13 @@ namespace AliHelper
         //alibaba vip manage url
         public static string ManageHtml = "http://hz.productposting.alibaba.com/product/manage_products.htm#tab=approved";
         private ProductsManager productsManager;
-        
+        private ImpProductDetail impProductDetail;
         ProductView productView1;
         #region 构造方法
         public MainForm()
         {
             productsManager = new ProductsManager();
+            impProductDetail = new ImpProductDetail();
             InitializeComponent();
             LoadOutlookBar();
         }
@@ -35,6 +36,7 @@ namespace AliHelper
         private void MainForm_Load(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false;
+            impProductDetail.InitDataCacheFormOptions();
             List<AliGroup> groups = productsManager.GetGroupList();
             UpdateGroupUI(groups);
             LoadProdutPanel();
@@ -133,11 +135,11 @@ namespace AliHelper
 
         void bgWorker_UpdateGroup(object sender, DoWorkEventArgs e)
         {
-            if (string.IsNullOrEmpty(ShareCookie.Instance.CsrfToken))
+            if (string.IsNullOrEmpty(DataCache.Instance.CsrfToken))
             {
                 return;
             }
-            List<AliGroup> groups = HttpClient.GetGroups(-1, 0, ShareCookie.Instance.CsrfToken);
+            List<AliGroup> groups = HttpClient.GetGroups(-1, 0, DataCache.Instance.CsrfToken);
             productsManager.UpdateGroups(groups);
             UpdateGroupUI(groups);
         }
@@ -154,13 +156,13 @@ namespace AliHelper
 
         void bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            if (string.IsNullOrEmpty(ShareCookie.Instance.CsrfToken))
+            if (string.IsNullOrEmpty(DataCache.Instance.CsrfToken))
             {
                 return;
             }
-            List<AliGroup> groups = HttpClient.GetGroups(-1, 0, ShareCookie.Instance.CsrfToken);
+            List<AliGroup> groups = HttpClient.GetGroups(-1, 0, DataCache.Instance.CsrfToken);
             productsManager.UpdateGroups(groups);
-            GetGroupProduct(groups, ShareCookie.Instance.CsrfToken);
+            GetGroupProduct(groups, DataCache.Instance.CsrfToken);
             UpdateGroupUI(groups);
         }
         #endregion

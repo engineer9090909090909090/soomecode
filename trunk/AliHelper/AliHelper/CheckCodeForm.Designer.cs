@@ -74,7 +74,7 @@
             this.Name = "CheckCodeForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "验证码";
             this.Load += new System.EventHandler(this.CheckCodeForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.CheckImage)).EndInit();

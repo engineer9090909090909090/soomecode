@@ -117,6 +117,7 @@
     <Compile Include="TestForm.Designer.cs">
       <DependentUpon>TestForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Bussness\DataCache.cs" />
     <Compile Include="Utils\DateUtils.cs" />
     <Compile Include="Utils\FileUtils.cs" />
     <Compile Include="Utils\FullWebBrowserCookie.cs" />

@@ -41,8 +41,8 @@ namespace AliHelper
                 browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(loginPageLoadCompleted);
                 ShareCookie.Instance.LoginCookie = FullWebBrowserCookie.GetCookieInternal(browser.Url, false);
                 string manageHtml = HttpClient.RemoteRequest(MainForm.ManageHtml, null);
-                ShareCookie.Instance.CsrfToken = HttpClient.GetCsrfToken(manageHtml);
-                ShareCookie.Instance.CheckCodeUrl = HttpClient.GetCheckCodeUrl(manageHtml);
+                DataCache.Instance.CsrfToken = HttpClient.GetCsrfToken(manageHtml);
+                DataCache.Instance.CheckCodeUrl = HttpClient.GetCheckCodeUrl(manageHtml);
                 this.DialogResult = DialogResult.OK;
             }
             if (e.Url.ToString() != browser.Url.ToString())
