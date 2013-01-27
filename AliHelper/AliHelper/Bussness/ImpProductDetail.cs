@@ -15,10 +15,26 @@ namespace AliHelper
         { 
 
         }
-
-        public ProductDetail GetFormElements()
+        public void InitDataCacheFormOptions()
         {
-            string url = "http://hz.productposting.alibaba.com/product/editing.htm?id=617808450";
+            string url = "http://hz.productposting.alibaba.com/product/posting.htm";
+            string html = HttpClient.RemoteRequest(url, null);
+            html = html.Replace("\r","").Replace("\n","").Replace("\t","");
+            HtmlNode.ElementsFlags.Remove("form");
+            HtmlDocument document = new HtmlDocument();
+            document.LoadHtml(html);
+            HtmlNode productFormEl = document.GetElementbyId("productForm");
+            DataCache.Instance.MinOrderUnitOptions = GetProductDetailOptions(productFormEl, "minOrderUnit");
+            DataCache.Instance.MoneyTypeOptions = GetProductDetailOptions(productFormEl, "moneyType");
+            DataCache.Instance.PriceUnitOptions = GetProductDetailOptions(productFormEl, "priceUnit");
+            DataCache.Instance.SupplyUnitOptions = GetProductDetailOptions(productFormEl, "supplyUnit");
+            DataCache.Instance.SupplyPeriodOptions = GetProductDetailOptions(productFormEl, "supplyPeriod");
+        }
+
+
+        public ProductDetail GetEditFormElements(int productId)
+        {
+            string url = "http://hz.productposting.alibaba.com/product/editing.htm?id=" + productId;
             string html = HttpClient.RemoteRequest(url, null);
             html = html.Replace("\r","").Replace("\n","").Replace("\t","");
             HtmlNode.ElementsFlags.Remove("form");
@@ -95,13 +111,17 @@ namespace AliHelper
                     string type = node.GetAttributeValue("type", "");
                     string name = node.GetAttributeValue("name", "");
                     string value = node.GetAttributeValue("value", "");
+                    if ("_fmp.pr._0.u" == name || "_fmp.pr._0.us" == name)
+                    {
+                        continue;
+                    }
                     System.Diagnostics.Trace.WriteLine("Id:" + id + "  type:" + type + "  name:" + name + "  value:" + value);
 
                     FormElement el = new FormElement();
                     el.Id = id;
                     el.Type = type;
                     el.Name = name;
-                    el.Val = value;
+                    el.Value = value;
 
                     string propertyName = GetPropertyName(id, name);
                     PropertyInfo pInfo = typeOfClass.GetProperty(propertyName);
@@ -128,19 +148,19 @@ namespace AliHelper
                     nameEl.Id = id;
                     nameEl.Type = type;
                     nameEl.Name = name;
-                    nameEl.Val = value;
+                    nameEl.Value = value;
 
                     HtmlNode valueNode = customValueTags[i];
                     string vid = valueNode.GetAttributeValue("id", "");
                     string vtype = valueNode.GetAttributeValue("type", "");
                     string vname = valueNode.GetAttributeValue("name", "");
                     string vvalue = valueNode.GetAttributeValue("value", "");
-                    System.Diagnostics.Trace.WriteLine("Id:" + id + "  type:" + type + "  name:" + name + "  value:" + value);
+                    System.Diagnostics.Trace.WriteLine("Id:" + vid + "  type:" + vtype + "  name:" + vname + "  value:" + vvalue);
                     FormElement valueEl = new FormElement();
                     valueEl.Id = vid;
                     valueEl.Type = vtype;
                     valueEl.Name = vname;
-                    valueEl.Val = vvalue;
+                    valueEl.Value = vvalue;
                     detail.CustomAttr.Add(nameEl, valueEl);
                 }
             }
@@ -161,7 +181,7 @@ namespace AliHelper
                     el.Id = id;
                     el.Type = type;
                     el.Name = name;
-                    el.Val = value;
+                    el.Value = value;
                     el.Checked = chk;
                 }
             }
@@ -182,7 +202,7 @@ namespace AliHelper
                     el.Id = id;
                     el.Type = type;
                     el.Name = name;
-                    el.Val = value;
+                    el.Value = value;
                     el.Checked = chk;
                     string propertyName = GetPropertyName(id, name);
                     PropertyInfo pInfo = typeOfClass.GetProperty(propertyName);
@@ -202,14 +222,13 @@ namespace AliHelper
                     string id = node.GetAttributeValue("id", "");
                     string type = "select";
                     string name = node.GetAttributeValue("name", "");
-                    string value = node.GetAttributeValue("value", "");
+                    string value = GetSelectValue(node);
                     System.Diagnostics.Trace.WriteLine("Id:" + id + "  type:" + type + "  name:" + name + "  value:" + value);
                     FormElement el = new FormElement();
                     el.Id = id;
                     el.Type = type;
                     el.Name = name;
-                    el.Val = value;
-                    el.Options = GetOptions(node);
+                    el.Value = value;
                     string propertyName = GetPropertyName(id, name);
                     PropertyInfo pInfo = typeOfClass.GetProperty(propertyName);
                     if (pInfo != null && pInfo.PropertyType.Name == "FormElement")
@@ -235,7 +254,7 @@ namespace AliHelper
                     el.Id = id;
                     el.Type = "textarea";
                     el.Name = name;
-                    el.Val = value;
+                    el.Value = value;
 
                     string propertyName = GetPropertyName(id, name);
                     PropertyInfo pInfo = typeOfClass.GetProperty(propertyName);
@@ -248,6 +267,23 @@ namespace AliHelper
             return detail;
         }
 
+        public string GetSelectValue(HtmlNode htmlNode)
+        {
+            HtmlNodeCollection nodeTags = htmlNode.SelectNodes(@".//option");
+            if (nodeTags != null)
+            {
+                foreach (HtmlNode node in nodeTags)
+                {
+                    string value = node.GetAttributeValue("value", "");
+                    bool chk = (value != "0" && node.Attributes["selected"] != null);
+                    if (chk)
+                    {
+                        return value;
+                    }
+                }
+            }
+            return string.Empty;
+        }
 
         public List<FormElement> GetOptions(HtmlNode htmlNode)
         {
@@ -265,11 +301,34 @@ namespace AliHelper
                     FormElement el = new FormElement();
                     el.Id = id;
                     el.Type = type;
-                    el.Name = name;
-                    el.Val = value;
+                    el.Name = node.NextSibling.InnerText;
+                    el.Value = value;
                     el.Type = type;
-                    el.Label = node.NextSibling.InnerText;
                     el.Checked = chk;
+                    options.Add(el);
+                }
+            }
+            return options;
+        }
+
+        public List<FormElement> GetProductDetailOptions(HtmlNode htmlNode, string tagId)
+        {
+            List<FormElement> options = new List<FormElement>();
+            HtmlNodeCollection nodeTags = htmlNode.SelectNodes(@".//select[@id='" + tagId + "']/option");
+            if (nodeTags != null)
+            {
+                foreach (HtmlNode node in nodeTags)
+                {
+                    string id = node.GetAttributeValue("id", "");
+                    string type = "option";
+                    string name = node.GetAttributeValue("name", "");
+                    string value = node.GetAttributeValue("value", "");
+                    FormElement el = new FormElement();
+                    el.Id = id;
+                    el.Type = type;
+                    el.Name = node.NextSibling.InnerText;
+                    el.Value = value;
+                    el.Type = type;
                     options.Add(el);
                 }
             }

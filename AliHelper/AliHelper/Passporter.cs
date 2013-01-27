@@ -117,8 +117,8 @@ namespace AliHelper
                 HttpHelper.GetHtml(urlstring, cookieContainer);
             }
             string manageHtml = HttpHelper.GetHtml(MainForm.ManageHtml, cookieContainer);
-            ShareCookie.Instance.CsrfToken = HttpClient.GetCsrfToken(manageHtml);
-            ShareCookie.Instance.CheckCodeUrl = HttpClient.GetCheckCodeUrl(manageHtml);
+            DataCache.Instance.CsrfToken = HttpClient.GetCsrfToken(manageHtml);
+            DataCache.Instance.CheckCodeUrl = HttpClient.GetCheckCodeUrl(manageHtml);
             ShareCookie.Instance.LoginCookieContainer = cookieContainer;
             return true;
         }

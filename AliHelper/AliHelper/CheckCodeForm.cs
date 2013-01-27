@@ -31,7 +31,7 @@ namespace AliHelper
 
         private Image GetWebCheckCodeImage()
         {
-            string url = ShareCookie.Instance.CheckCodeUrl + "&t=" + DateUtils.DateTimeToInt(DateTime.Now);
+            string url = DataCache.Instance.CheckCodeUrl + "&t=" + DateUtils.DateTimeToInt(DateTime.Now);
             Uri uri = new Uri(url);
             WebRequest myReq = WebRequest.Create(uri);
             WebResponse result = myReq.GetResponse();
