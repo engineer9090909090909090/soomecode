@@ -43,7 +43,7 @@ namespace AliHelper.DAO
             + "IsDisplay varchar(50),"
             + "OwnerMemberId varchar(50),"
             + "OwnerMemberName varchar(50),"
-            + "IsLowScore BOOLEAN(50)"
+            + "IsLowScore varchar(50)"
             + ")");
 
             dbHelper.ExecuteNonQuery("Create Index  IF NOT EXISTS Index_key on AliProducts(GroupId);");
