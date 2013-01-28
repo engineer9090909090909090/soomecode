@@ -90,7 +90,7 @@ namespace AliHelper
             column4.HeaderText = "所属成员";
             column4.Width = 100;
 
-            DataGridViewColumn column6 = this.dataGridView1.Columns[7];
+            DataGridViewColumn column6 = this.dataGridView1.Columns[8];
             column6.HeaderText = "更新时间";
             column6.Width = 100;
 

@@ -30,7 +30,14 @@ namespace AliHelper
                     CheckCode = checkCodeForm.CheckCode;
                     checkCodeForm.Close();
                 }
-                url = url + "&imagePassword=" + CheckCode;
+                int index = url.IndexOf("&imagePassword=");
+                if (index > 0)
+                {
+                    url = url.Substring(0, index) + "&imagePassword=" + CheckCode;
+                }
+                else {
+                    url = url + "&imagePassword=" + CheckCode;
+                }
                 return RemoteRequest(url, postString);
             }
             return html;

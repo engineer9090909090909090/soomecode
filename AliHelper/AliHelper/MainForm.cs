@@ -43,6 +43,7 @@ namespace AliHelper
         }
         #endregion
 
+        #region TreeView NodeMouse Event
         void treeView1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
 
@@ -58,6 +59,7 @@ namespace AliHelper
             int GroupId = Convert.ToInt32(currentNode.Tag);
             this.productView1.LoadDataGridView(GroupId);
         }
+        #endregion
 
         #region OutlookBar 处理
         void LoadOutlookBar()
@@ -69,25 +71,34 @@ namespace AliHelper
             outlookBar1.Bands.Add(new OutlookBarBand("重发计划", listView1));
             listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             ColumnHeader nameColumnHeader = new System.Windows.Forms.ColumnHeader();
-            nameColumnHeader.Text = "计划";
-            nameColumnHeader.Width = 130;
-            listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { nameColumnHeader });
+            nameColumnHeader.Text = "名称";
+            nameColumnHeader.Width = 80;
+            ColumnHeader timeColumnHeader = new System.Windows.Forms.ColumnHeader();
+            timeColumnHeader.Text = "重发时间";
+            timeColumnHeader.Width = 130;
+            listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { nameColumnHeader, timeColumnHeader });
             listView1.Name = "listView1";
             listView1.TabIndex = 0;
             listView1.CheckBoxes = true;
             listView1.Dock = DockStyle.Fill;
-            listView1.SetColumnSortFormat(0, SortedListViewFormatType.String);
+            listView1.ContextMenuStrip = this.CfContextMenuStrip;
 
             ImageList outlookLargeIcons = new ImageList();
             outlookLargeIcons.ImageSize = new Size(32, 32);
             Bitmap icons = (Bitmap)global::AliHelper.Properties.IconImages.OutlookLargeIcons;
             icons.MakeTransparent(Color.FromArgb(255, 0, 255));
             outlookLargeIcons.Images.AddStrip(icons);
+            ImageList outlookSmallIcons = new ImageList();
+            outlookSmallIcons.ImageSize = new Size(16, 16);
+            Bitmap smallIcons = (Bitmap)global::AliHelper.Properties.IconImages.OutlookSmallIcons;
+            icons.MakeTransparent(Color.FromArgb(255, 0, 255));
+            outlookSmallIcons.Images.AddStrip(smallIcons);
             OutlookBarBand outlookShortcutsBand = new OutlookBarBand("外贸邮");
             outlookShortcutsBand.LargeImageList = outlookLargeIcons;
+            outlookShortcutsBand.SmallImageList = outlookSmallIcons;
             outlookShortcutsBand.Items.Add(new OutlookBarItem("收件箱", 1));
             outlookShortcutsBand.Items.Add(new OutlookBarItem("已发送", 5));
-            outlookShortcutsBand.Items.Add(new OutlookBarItem("已删除", 6));
+            outlookShortcutsBand.Items.Add(new OutlookBarItem("垃圾邮件", 6));
             outlookBar1.Bands.Add(outlookShortcutsBand);
             outlookBar1.PropertyChanged += new OutlookBarPropertyChangedHandler(outlookBar1_PropertyChanged);
             outlookBar1.ItemClicked += new OutlookBarItemClickedHandler(OnOutlookBarItemClicked);
@@ -101,17 +112,14 @@ namespace AliHelper
                 int index = outlookBar1.GetCurrentBand();
                 if (index == 0)
                 {
-                    ProductsStrip.Show();
-                    
+                    LoadProdutPanel();
                 }
                 else if (index == 1)
                 {
-                    ProductsStrip.Hide();
                     UnLoadProdcutPanel();
                 }
                 else if (index == 2)
                 {
-                    ProductsStrip.Hide();
                     UnLoadProdcutPanel();
                 }
             }
@@ -141,7 +149,10 @@ namespace AliHelper
             }
             List<AliGroup> groups = HttpClient.GetGroups(-1, 0, DataCache.Instance.CsrfToken);
             productsManager.UpdateGroups(groups);
-            UpdateGroupUI(groups);
+            this.BeginInvoke(new Action(() =>
+            {
+                UpdateGroupUI(groups);
+            }));
         }
         #endregion
 
@@ -163,7 +174,11 @@ namespace AliHelper
             List<AliGroup> groups = HttpClient.GetGroups(-1, 0, DataCache.Instance.CsrfToken);
             productsManager.UpdateGroups(groups);
             GetGroupProduct(groups, DataCache.Instance.CsrfToken);
-            UpdateGroupUI(groups);
+            this.BeginInvoke(new Action(() =>
+            {
+                UpdateGroupUI(groups);
+            }));
+            
         }
         #endregion
 
@@ -182,7 +197,6 @@ namespace AliHelper
             productsManager.UpdateImageInfos(imageList);
         }
         #endregion
-
 
         public void UpdateGroupUI(List<AliGroup> groups)
         {
@@ -265,10 +279,15 @@ namespace AliHelper
                 splitContainer1.Panel2.Controls.RemoveAt(0);
             }
             this.productView1 = null;
+            GC.Collect();
         }
 
         private void LoadProdutPanel()
         {
+            if (this.productView1 != null)
+            {
+                return;
+            }
             this.productView1 = new AliHelper.ProductView();
             this.splitContainer1.Panel2.SuspendLayout();
             this.productView1.Location = new System.Drawing.Point(0, 0);
@@ -279,6 +298,22 @@ namespace AliHelper
             this.productView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Panel2.Controls.Add(productView1);
             this.splitContainer1.Panel2.ResumeLayout(false);
+        }
+
+        private void NewPlanMenuItem_Click(object sender, EventArgs e)
+        {
+            NewPlanForm f = new NewPlanForm();
+            f.Text = "新建重发计划";
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
+        }
+
+        private void ModifyPlanMenuItem_Click(object sender, EventArgs e)
+        {
+            NewPlanForm f = new NewPlanForm();
+            f.Text = "编辑重发计划";
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
         }
 
     }
