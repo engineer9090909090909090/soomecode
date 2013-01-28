@@ -13,17 +13,11 @@ namespace Soomes
 
         public string Type { set; get; }
 
-        public string Val { set; get; }
-
         public bool Checked { set; get; }
 
         public string Value { set; get; }
 
-        public string Label { set; get; }
-
         public string Order { set; get; }
-
-        public List<FormElement> Options { set; get; }
 
     }
 }

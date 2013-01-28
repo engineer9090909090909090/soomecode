@@ -21,5 +21,6 @@ namespace AliHelper
         public List<FormElement> PriceUnitOptions { set; get; }
         public List<FormElement> SupplyUnitOptions { set; get; }
         public List<FormElement> SupplyPeriodOptions { set; get; }
+        public List<FormElement> GroupListOptions { set; get; }
     }
 }

@@ -190,6 +190,17 @@ namespace AliHelper
                 }
                 this.supplyPeriod.SelectedItem = selected;
             }
+            if (DataCache.Instance.GroupListOptions != null)
+            {
+                this.productTeamInputBox.DisplayMember = "Name";
+                this.productTeamInputBox.ValueMember = "Value";
+                FormElement selected = DataCache.Instance.GroupListOptions[0];
+                foreach (FormElement el in DataCache.Instance.GroupListOptions)
+                {
+                    this.productTeamInputBox.Items.Add(el);
+                }
+                this.productTeamInputBox.SelectedItem = selected;
+            }
         }
 
         public void LoadProductDetailValue()
@@ -222,7 +233,18 @@ namespace AliHelper
             if (AliProductDetail.productTeamInputBox != null)
             {
                 this.productTeamInputBox.Tag = AliProductDetail.productTeamInputBox;
-                this.productTeamInputBox.Text = AliProductDetail.productTeamInputBox.Value;
+                string groupIds = AliProductDetail.productGroupId1.Value + "_"
+                    + AliProductDetail.productGroupId2.Value + "_" + AliProductDetail.productGroupId3.Value;
+                FormElement selected = DataCache.Instance.GroupListOptions[0];
+                foreach (FormElement el in DataCache.Instance.GroupListOptions)
+                {
+                    if (el.Value == groupIds)
+                    {
+                        selected = el;
+                        break;
+                    }
+                }
+                this.productTeamInputBox.SelectedItem = selected;
             }
             if (AliProductDetail.productDescriptionTemp != null)
             {

@@ -6,6 +6,7 @@ using HtmlAgilityPack;
 using Soomes;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Web;
 
 namespace AliHelper
 {
@@ -15,6 +16,7 @@ namespace AliHelper
         { 
 
         }
+
         public void InitDataCacheFormOptions()
         {
             string url = "http://hz.productposting.alibaba.com/product/posting.htm";
@@ -31,7 +33,6 @@ namespace AliHelper
             DataCache.Instance.SupplyPeriodOptions = GetProductDetailOptions(productFormEl, "supplyPeriod");
         }
 
-
         public ProductDetail GetEditFormElements(int productId)
         {
             string url = "http://hz.productposting.alibaba.com/product/editing.htm?id=" + productId;
@@ -44,7 +45,7 @@ namespace AliHelper
             ProductDetail detail = PrintElementsValue(productFormEl);
             detail.SysAttr = GetSysAttr(html);
             detail.FixAttr = GetFixAttr(html);
-            detail.ImageObjects = GetImageObjects(html);
+            detail.imageFiles.Value = GetImageFilesJsonString(html);
             return detail;
         }
 
@@ -70,20 +71,18 @@ namespace AliHelper
             List<AttributeNode> sysAttrList = JsonConvert.FromJson<List<AttributeNode>>(json);
             return sysAttrList;
         }
-        private List<ImageJson> GetImageObjects(string html)
+
+        private static string GetImageFilesJsonString(string html)
         {
             Regex r = new Regex("POSTDATAMAP.uploader.imageObjects =(.*?);");
             GroupCollection gc = r.Match(html).Groups;
             if (gc == null || gc.Count == 0)
             {
-                return new List<ImageJson>();
+                return string.Empty;
             }
-            string json = gc[1].Value.Trim();
-            List<ImageJson> images = JsonConvert.FromJson<List<ImageJson>>(json);
-            return images;
+            return gc[1].Value.Trim();
         }
        
-
         private List<AttributeNode> GetFixAttr(string html)
         {
             Regex r = new Regex("POSTDATAMAP.attrData.fixAttr =(.*?);");
@@ -97,12 +96,11 @@ namespace AliHelper
             return sysAttrList;
         }
 
-
         public ProductDetail PrintElementsValue(HtmlNode htmlNode)
         {
             ProductDetail detail = new ProductDetail();
             Type typeOfClass = detail.GetType();
-            IEnumerable<HtmlNode> nodeTags = htmlNode.SelectNodes(@".//input[@type='hidden'] | .//input[@type='text']");
+            IEnumerable<HtmlNode> nodeTags = htmlNode.SelectNodes(@"//input[@type='hidden'] | .//input[@type='text']");
             if (nodeTags != null)
             {
                 foreach (HtmlNode node in nodeTags)
@@ -167,6 +165,7 @@ namespace AliHelper
             
             nodeTags = htmlNode.SelectNodes(@".//input[@type='radio']");
             System.Diagnostics.Trace.WriteLine("radiobox===========================");
+            
             if (nodeTags != null)
             {
                 foreach (HtmlNode node in nodeTags)
@@ -176,13 +175,32 @@ namespace AliHelper
                     string name = node.GetAttributeValue("name", "");
                     string value = node.GetAttributeValue("value", "");
                     bool chk = node.Attributes["checked"] != null;
-                    System.Diagnostics.Trace.WriteLine("Id:" + id + "  type:" + type + "  name:" + name + "  checked:" + chk + "  value:" + value);
                     FormElement el = new FormElement();
                     el.Id = id;
                     el.Type = type;
                     el.Name = name;
                     el.Value = value;
                     el.Checked = chk;
+                    string propertyName = GetPropertyName(id, name);
+                    PropertyInfo pInfo = typeOfClass.GetProperty(propertyName);
+                    List<FormElement>  newList = new List<FormElement>();
+                    if (pInfo != null && pInfo.PropertyType.Name == "FormElement")
+                    {
+                        pInfo.SetValue(detail, el, null);
+                    }
+                    else if (pInfo != null && pInfo.PropertyType == newList.GetType())
+                    {
+                        List<FormElement> existList = (List<FormElement>)pInfo.GetValue(detail, null);
+                        if (existList == null)
+                        {
+                            newList.Add(el);
+                            pInfo.SetValue(detail, newList, null);
+                        }
+                        else {
+                            existList.Add(el);
+                            pInfo.SetValue(detail, existList, null);
+                        }
+                    }
                 }
             }
             System.Diagnostics.Trace.WriteLine("radiobox===========================");
