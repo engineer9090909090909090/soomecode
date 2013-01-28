@@ -7,29 +7,20 @@ namespace Soomes
 {
     public class ProductDetail
     {
-        public FormElement _csrf_token_ { set; get; }
-        public FormElement categoryLanguage { set; get; }
-        public FormElement keyword { set; get; }
-        public FormElement event_submit_do_select_category { set; get; }
-        public FormElement productFormInfoDTOStr { set; get; }
-        public FormElement categoryIds { set; get; } //_fmp.pr._0.c
         public FormElement fromType2 { set; get; }//fromType2
-        public FormElement keywords { set; get; }
-        public FormElement categoryName { set; get; }//categoryName
-        public FormElement catLang { set; get; }//categoryLang
+        public FormElement commonCategoryName { set; get; }//_fmp.pr._0.ca
+        public FormElement commonCategoryIds { set; get; }//_fmp.pr._0.c
         public FormElement canChangeWaterMark { set; get; } //canChangeWaterMark
         public FormElement versionId { set; get; } //versionId
         public FormElement categoryIdsPathStr { set; get; }//categoryIdsPathStr
-        public FormElement categoryDisappeared { set; get; }
+        public FormElement categoryDisappeared { set; get; }//categoryDisappeared
         public FormElement trashDOId { set; get; }//trashDOId
-        public FormElement isFromTrash { set; get; }
-        public FormElement trashXmlPath { set; get; }
+        public FormElement isFromTrash { set; get; }//isFromTrash
+        public FormElement trashXmlPath { set; get; }//trashXmlPath
         public FormElement event_submit_do_change_category { set; get; }//event_submit_do_change_category
-        public FormElement productQueryURL { set; get; }
+        public FormElement productQueryURL { set; get; }//productQueryURL
         public FormElement productSketchId { set; get; }//productSketchId
-        public FormElement commonCategoryName { set; get; }//_fmp.pr._0.ca
-        public FormElement commonCategoryIds { set; get; }//_fmp.pr._0.c
-        public FormElement hiddenCatPath { set; get; }
+        public FormElement hiddenCatPath { set; get; }//hiddenCatPath
 
         public FormElement groupId { set; get; }//_fmp.pr._0.i
         public FormElement groupStatusId { set; get; }//_fmp.pr._0.st
@@ -64,17 +55,21 @@ namespace Soomes
         public FormElement priceUnit { set; get; }//_fmp.pr._0.price
         public FormElement port { set; get; }//_fmp.pr._0.po
 
+
+        /// <summary>
+        /// 图片与水印
+        /// </summary>
         public FormElement static_and_dyn0 { set; get; }//_fmp.pr._0.im
         public FormElement static_and_dyn1 { set; get; }//_fmp.pr._0.im
         public FormElement staticImageWaterMarkId { set; get; }//_fmp.pr._0.stat
         public FormElement staticImageToBankId { set; get; }//_fmp.pr._0.statici
         public List<FormElement> fmppr0stati { set; get; }//_fmp.pr._0.stati
         public List<FormElement> fmppr0static { set; get; }//_fmp.pr._0.static
-
         public FormElement dynamicImageWaterMarkId { set; get; }//_fmp.pr._0.dy
         public FormElement dynamicImageToBankId { set; get; }//_fmp.pr._0.dynam
         public List<FormElement> fmppr0dyn { set; get; }//_fmp.pr._0.dyn
         public List<FormElement> fmppr0dyna { set; get; }//_fmp.pr._0.dyna
+
 
         public FormElement supplyQuantity { set; get; }//_fmp.pr._0.sup
         public FormElement supplyPeriod { set; get; }//_fmp.pr._0.supply
@@ -102,9 +97,7 @@ namespace Soomes
         public FormElement userReviseCategory { set; get; }//userReviseCategory
         public FormElement backUrl { set; get; }//backUrl
 
-
         public List<AttributeNode> SysAttr { set; get; }
         public List<AttributeNode> FixAttr { set; get; }
-        public List<ImageJson> ImageObjects { set; get; }
     }
 }

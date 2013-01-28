@@ -37,6 +37,7 @@ namespace AliHelper
         {
             CheckForIllegalCrossThreadCalls = false;
             impProductDetail.InitDataCacheFormOptions();
+            productsManager.InitGroupOptions();
             List<AliGroup> groups = productsManager.GetGroupList();
             UpdateGroupUI(groups);
             LoadProdutPanel();
@@ -302,18 +303,22 @@ namespace AliHelper
 
         private void NewPlanMenuItem_Click(object sender, EventArgs e)
         {
+            /*
             NewPlanForm f = new NewPlanForm();
             f.Text = "新建重发计划";
             f.StartPosition = FormStartPosition.CenterParent;
             f.ShowDialog(this);
+            */
         }
 
         private void ModifyPlanMenuItem_Click(object sender, EventArgs e)
         {
+            /*
             NewPlanForm f = new NewPlanForm();
             f.Text = "编辑重发计划";
             f.StartPosition = FormStartPosition.CenterParent;
             f.ShowDialog(this);
+            */
         }
 
     }

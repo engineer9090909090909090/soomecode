@@ -74,5 +74,49 @@ namespace AliHelper
             return aliImageDao.GetAliImageList(query);
         }
 
+        public void InitGroupOptions()
+        {
+            List<FormElement> elList = new List<FormElement>();
+            List<AliGroup> groups = this.GetGroupList();
+            foreach (AliGroup a in groups)
+            {
+                if (a.Level == 1)
+                {
+                    FormElement el = new FormElement();
+                    el.Name = a.Name;
+                    el.Value = a.Id.ToString() + "_-1_-1";
+                    elList.Add(el);
+                    if (a.HasChildren)
+                    {
+                        foreach (AliGroup b in groups)
+                        {
+                            if (b.ParentId == a.Id && b.Level == a.Level + 1)
+                            {
+                                FormElement e2 = new FormElement();
+                                e2.Name = a.Name + ">" + b.Name;
+                                e2.Value = a.Id.ToString() + "_" + b.Id.ToString() + "_-1";
+                                elList.Add(e2);
+                                if (b.HasChildren)
+                                {
+                                    foreach (AliGroup c in groups)
+                                    {
+                                        if (b.ParentId == c.Id && b.Level == c.Level + 1)
+                                        {
+                                            FormElement e3 = new FormElement();
+                                            e3.Name = a.Name + ">" + b.Name + ">" + c.Name;
+                                            e3.Value = a.Id.ToString() + "_" + b.Id.ToString() + "_" + c.Id.ToString();
+                                            elList.Add(e3);
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+            DataCache.Instance.GroupListOptions = elList;
+        }
+
     }
 }
