@@ -54,6 +54,8 @@
     <Compile Include="ImageGroupNode.cs" />
     <Compile Include="ImageInfo.cs" />
     <Compile Include="ImageJson.cs" />
+    <Compile Include="MailQuery.cs" />
+    <Compile Include="MailResult.cs" />
     <Compile Include="ProductDetail.cs" />
     <Compile Include="ProductStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
