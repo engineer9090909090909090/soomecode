@@ -313,6 +313,59 @@ namespace AliHelper
             }
             return "";
         }
+
+
+        #region 外贸邮
+        public static List<MailItem> GetMailList()
+        {
+            string url = "http://cn.message.alibaba.com/feedback/index.htm?cmd="
+                + MailQueryCmdType.GetList + "&__t=" + DateUtils.DateTimeToInt(DateTime.Now);
+            
+            MailQuery param = new MailQuery();
+            param.listType = MailQueryListType.Inbox;
+            param.orderBy = "gmtCreate";
+            //param.feedbackType = string.Empty;
+            //param.filter = string.Empty;
+            //param.folderName = string.Empty; //"ungroup";
+            //param.owner = string.Empty;
+            param.startRow = 1;
+            param.limit = 100;
+            param.orderType = 1;
+            string postString = "_csrf_token_=" + DataCache.Instance.CsrfToken;
+            postString = postString + "&json={\"cmd\":\"" + MailQueryCmdType.GetList  
+                + "\",\"params\":" + JsonConvert.ToJson(param) + "}";
+            string json = HttpClient.RemoteRequest(url, postString);
+            MailResult result = JsonConvert.FromJson<MailResult>(json);
+            if (result != null && result.Data != null && result.Data.List != null)
+            {
+                return result.Data.List;
+            }
+            return new List<MailItem>();
+        }
+
+        public static int GetMailTotalNum()
+        {
+            string url = "http://cn.message.alibaba.com/feedback/index.htm?cmd="
+                + MailQueryCmdType.GetTotalNum + "&__t=" + DateUtils.DateTimeToInt(DateTime.Now);
+
+            MailQuery param = new MailQuery();
+            param.listType = MailQueryListType.Inbox;
+            param.orderBy = "gmtCreate";
+            param.startRow = 1;
+            param.limit = 100;
+            param.orderType = 1;
+            string postString = "_csrf_token_=" + DataCache.Instance.CsrfToken;
+            postString = postString + "&json={\"cmd\":\"" + MailQueryCmdType.GetTotalNum
+                + "\",\"params\":" + JsonConvert.ToJson(param) + "}";
+            string json = HttpClient.RemoteRequest(url, postString);
+            MailResult result = JsonConvert.FromJson<MailResult>(json);
+            if (result != null && result.Data != null)
+            {
+                return result.Data.TotalNum;
+            }
+            return 0;
+        }
+        #endregion
     }
 }
 

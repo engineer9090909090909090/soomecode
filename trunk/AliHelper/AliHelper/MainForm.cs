@@ -35,6 +35,7 @@ namespace AliHelper
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            HttpClient.GetMailList();
             CheckForIllegalCrossThreadCalls = false;
             impProductDetail.InitDataCacheFormOptions();
             productsManager.InitGroupOptions();
