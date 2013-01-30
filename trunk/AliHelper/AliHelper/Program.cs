@@ -42,6 +42,7 @@ namespace AliHelper
              if (login.ShowDialog() == DialogResult.OK)
              {
                  login.Close();
+                 login.Dispose();
                  Application.Run(new MainForm());
              }
              

@@ -199,7 +199,7 @@ namespace AliHelper
             this.staticImagePanel.Visible = true;
             this.dynamicImagePanel.Visible = false;
         }
-
+        
         public void LoadProductDetailValue()
         {
             if (AliProductDetail.productName != null)
@@ -683,6 +683,21 @@ namespace AliHelper
             }
         }
 
+        void ComputeLink_Click(object sender, System.EventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+            open.Title = "请选择要上传的图片";
+            open.Filter = "图片文件(*.jpg,*.bmp,*.png,*.gif)|*.jpg;*.bmp;*.png;*.gif";
+            open.Multiselect = true;
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                foreach (string file in open.FileNames)
+                {
+                    //lboxPicPath.Items.Add(file);
+                }
+            }
+        }
+
         private void ImageBankLink_LinkClicked(object sender, EventArgs e)
         {
             ImageForm f = new ImageForm();
@@ -692,7 +707,6 @@ namespace AliHelper
 
         private void ImageBankLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)

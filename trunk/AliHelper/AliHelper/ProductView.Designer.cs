@@ -588,6 +588,7 @@ namespace AliHelper
             this.ComputeLink.TabIndex = 31;
             this.ComputeLink.TabStop = true;
             this.ComputeLink.Text = "从我的电脑选取";
+            this.ComputeLink.Click += new System.EventHandler(ComputeLink_Click);
             // 
             // label1
             // 
@@ -1277,6 +1278,7 @@ namespace AliHelper
 
         }
 
+        
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
