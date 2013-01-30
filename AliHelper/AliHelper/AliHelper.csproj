@@ -79,6 +79,7 @@
     <Compile Include="DAO\AliGroupDao.cs" />
     <Compile Include="DAO\AliProductDao.cs" />
     <Compile Include="DAO\AliImageDao.cs" />
+    <Compile Include="DAO\AliProductDetailDao.cs" />
     <Compile Include="DAO\DAOFactory.cs" />
     <Compile Include="DAO\SQLiteDBHelper.cs" />
     <Compile Include="EditCategory.cs">

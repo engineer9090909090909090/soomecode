@@ -231,9 +231,8 @@ namespace AliHelper
             treeView1.ExpandAll();
         }
 
-        public List<AliProduct> GetGroupProduct(List<AliGroup> groups, string csrfToken)
+        public void GetGroupProduct(List<AliGroup> groups, string csrfToken)
         {
-            List<AliProduct> produtList = new List<AliProduct>();
             Hashtable groupDic = new Hashtable();
             foreach (AliGroup group in groups)
             {
@@ -245,15 +244,17 @@ namespace AliHelper
                 {
                     List<AliProduct> products = HttpClient.GetProducts(groupDic, group.Id, group.Level, csrfToken);
                     productsManager.UpdateGroupProdcuts(group.Id, products);
-                    produtList.AddRange(products);
+                    foreach (AliProduct item in products)
+                    {
+                        ProductDetail detail = impProductDetail.GetEditFormElements(item.Id);
+                        productsManager.InsertOrUpdateProdcutDetail(detail);
+                    }
                 }
             }
-            return produtList;
         }
         
-        public List<AliProduct> GetGroupProduct(List<AliGroup> groups, AliGroup currGroup, string csrfToken)
+        public void GetGroupProduct(List<AliGroup> groups, AliGroup currGroup, string csrfToken)
         {
-            List<AliProduct> produtList = new List<AliProduct>();
             Hashtable groupDic = new Hashtable();
             foreach (AliGroup group in groups)
             {
@@ -261,9 +262,6 @@ namespace AliHelper
             }
             List<AliProduct> products = HttpClient.GetProducts(groupDic, currGroup.Id, currGroup.Level, csrfToken);
             productsManager.UpdateGroupProdcuts(currGroup.Id, products);
-            produtList.AddRange(products);
-
-            return produtList;
         }
 
         private void newProductBtn_Click(object sender, EventArgs e)

@@ -7,6 +7,7 @@ namespace Soomes
 {
     public class ProductDetail
     {
+        public int pid { set; get; }
         public FormElement fromType2 { set; get; }//fromType2
         public FormElement commonCategoryName { set; get; }//_fmp.pr._0.ca
         public FormElement commonCategoryIds { set; get; }//_fmp.pr._0.c
@@ -63,12 +64,16 @@ namespace Soomes
         public FormElement static_and_dyn1 { set; get; }//_fmp.pr._0.im
         public FormElement staticImageWaterMarkId { set; get; }//_fmp.pr._0.stat
         public FormElement staticImageToBankId { set; get; }//_fmp.pr._0.statici
-        public List<FormElement> fmppr0stati { set; get; }//_fmp.pr._0.stati
-        public List<FormElement> fmppr0static { set; get; }//_fmp.pr._0.static
+        public FormElement fmppr0stati_y { set; get; }//_fmp.pr._0.stati
+        public FormElement fmppr0stati_n { set; get; }//_fmp.pr._0.stati
+        public FormElement fmppr0static_center { set; get; }//_fmp.pr._0.static
+        public FormElement fmppr0static_down { set; get; }//_fmp.pr._0.static
         public FormElement dynamicImageWaterMarkId { set; get; }//_fmp.pr._0.dy
         public FormElement dynamicImageToBankId { set; get; }//_fmp.pr._0.dynam
-        public List<FormElement> fmppr0dyn { set; get; }//_fmp.pr._0.dyn
-        public List<FormElement> fmppr0dyna { set; get; }//_fmp.pr._0.dyna
+        public FormElement fmppr0dyn_y { set; get; }//_fmp.pr._0.dyn
+        public FormElement fmppr0dyn_n { set; get; }//_fmp.pr._0.dyn
+        public FormElement fmppr0dyna_center { set; get; }//_fmp.pr._0.dyna
+        public FormElement fmppr0dyna_down { set; get; }//_fmp.pr._0.dyna
 
 
         public FormElement supplyQuantity { set; get; }//_fmp.pr._0.sup

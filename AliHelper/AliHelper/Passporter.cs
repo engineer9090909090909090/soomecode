@@ -13,13 +13,13 @@ namespace AliHelper
     class Passporter
     {
         private string loginUrl = "https://login.alibaba.com/";
-        string homeUrl = "http://www.alibaba.com/";
+        //string homeUrl = "http://www.alibaba.com/";
 
         private WebBrowser browser;
         ManualResetEvent eventX = new ManualResetEvent(false);
         private string UserName;
         private string Password;
-        private bool LoginSuccess = true;
+        //private bool LoginSuccess = true;
         public Passporter(WebBrowser b) 
         {
             browser = b;

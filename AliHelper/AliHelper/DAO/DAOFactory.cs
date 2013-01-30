@@ -39,6 +39,11 @@ namespace AliHelper.DAO
         {
             return new AliImageDao(dbHelper);
         }
+
+        public AliProductDetailDao GetAliProductDetailDao()
+        {
+            return new AliProductDetailDao(dbHelper);
+        }
         
 
     }

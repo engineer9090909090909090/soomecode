@@ -36,7 +36,25 @@ namespace AliHelper
             this.BaseInfoTab = new System.Windows.Forms.TabPage();
             this.staticImagePanel = new System.Windows.Forms.Panel();
             this.staticImage = new System.Windows.Forms.PictureBox();
-            this.dnImagePanel = new System.Windows.Forms.Panel();
+            this.staticImageWaterMarkIdGroup = new System.Windows.Forms.GroupBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.fmppr0static_down = new System.Windows.Forms.RadioButton();
+            this.fmppr0static_center = new System.Windows.Forms.RadioButton();
+            this.label20 = new System.Windows.Forms.Label();
+            this.fmppr0stati_n = new System.Windows.Forms.RadioButton();
+            this.fmppr0stati_y = new System.Windows.Forms.RadioButton();
+            this.label19 = new System.Windows.Forms.Label();
+            this.staticImageWaterMarkId = new System.Windows.Forms.CheckBox();
+            this.dynamicImagePanel = new System.Windows.Forms.Panel();
+            this.dynamicImageWaterMarkIdGroup = new System.Windows.Forms.GroupBox();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.fmppr0dyna_down = new System.Windows.Forms.RadioButton();
+            this.fmppr0dyna_center = new System.Windows.Forms.RadioButton();
+            this.label21 = new System.Windows.Forms.Label();
+            this.fmppr0dyn_n = new System.Windows.Forms.RadioButton();
+            this.fmppr0dyn_y = new System.Windows.Forms.RadioButton();
+            this.label22 = new System.Windows.Forms.Label();
+            this.dynamicImageWaterMarkId = new System.Windows.Forms.CheckBox();
             this.dnImage6 = new System.Windows.Forms.PictureBox();
             this.dnImage5 = new System.Windows.Forms.PictureBox();
             this.dnImage4 = new System.Windows.Forms.PictureBox();
@@ -46,15 +64,6 @@ namespace AliHelper
             this.panel2 = new System.Windows.Forms.Panel();
             this.static_and_dyn1 = new System.Windows.Forms.RadioButton();
             this.static_and_dyn0 = new System.Windows.Forms.RadioButton();
-            this.staticImageWaterMarkIdGroup = new System.Windows.Forms.GroupBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.pr0static2 = new System.Windows.Forms.RadioButton();
-            this.pr0static1 = new System.Windows.Forms.RadioButton();
-            this.label20 = new System.Windows.Forms.Label();
-            this.pr0stati2 = new System.Windows.Forms.RadioButton();
-            this.pr0stati1 = new System.Windows.Forms.RadioButton();
-            this.label19 = new System.Windows.Forms.Label();
-            this.staticImageWaterMarkId = new System.Windows.Forms.CheckBox();
             this.ImageBankLink = new System.Windows.Forms.LinkLabel();
             this.ComputeLink = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
@@ -136,7 +145,11 @@ namespace AliHelper
             this.BaseInfoTab.SuspendLayout();
             this.staticImagePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.staticImage)).BeginInit();
-            this.dnImagePanel.SuspendLayout();
+            this.staticImageWaterMarkIdGroup.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.dynamicImagePanel.SuspendLayout();
+            this.dynamicImageWaterMarkIdGroup.SuspendLayout();
+            this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dnImage6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dnImage5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dnImage4)).BeginInit();
@@ -144,8 +157,6 @@ namespace AliHelper
             ((System.ComponentModel.ISupportInitialize)(this.dnImage2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dnImage1)).BeginInit();
             this.panel2.SuspendLayout();
-            this.staticImageWaterMarkIdGroup.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.AttrTab.SuspendLayout();
             this.DescTab.SuspendLayout();
             this.TransTab.SuspendLayout();
@@ -215,10 +226,8 @@ namespace AliHelper
             // BaseInfoTab
             // 
             this.BaseInfoTab.Controls.Add(this.staticImagePanel);
-            this.BaseInfoTab.Controls.Add(this.dnImagePanel);
+            this.BaseInfoTab.Controls.Add(this.dynamicImagePanel);
             this.BaseInfoTab.Controls.Add(this.panel2);
-            this.BaseInfoTab.Controls.Add(this.staticImageWaterMarkIdGroup);
-            this.BaseInfoTab.Controls.Add(this.staticImageWaterMarkId);
             this.BaseInfoTab.Controls.Add(this.ImageBankLink);
             this.BaseInfoTab.Controls.Add(this.ComputeLink);
             this.BaseInfoTab.Controls.Add(this.label1);
@@ -246,10 +255,13 @@ namespace AliHelper
             // staticImagePanel
             // 
             this.staticImagePanel.Controls.Add(this.staticImage);
-            this.staticImagePanel.Location = new System.Drawing.Point(34, 71);
+            this.staticImagePanel.Controls.Add(this.staticImageWaterMarkIdGroup);
+            this.staticImagePanel.Controls.Add(this.staticImageWaterMarkId);
+            this.staticImagePanel.Location = new System.Drawing.Point(28, 72);
             this.staticImagePanel.Name = "staticImagePanel";
-            this.staticImagePanel.Size = new System.Drawing.Size(240, 155);
+            this.staticImagePanel.Size = new System.Drawing.Size(286, 248);
             this.staticImagePanel.TabIndex = 37;
+            this.staticImagePanel.Visible = false;
             // 
             // staticImage
             // 
@@ -260,18 +272,214 @@ namespace AliHelper
             this.staticImage.TabIndex = 28;
             this.staticImage.TabStop = false;
             // 
-            // dnImagePanel
+            // staticImageWaterMarkIdGroup
             // 
-            this.dnImagePanel.Controls.Add(this.dnImage6);
-            this.dnImagePanel.Controls.Add(this.dnImage5);
-            this.dnImagePanel.Controls.Add(this.dnImage4);
-            this.dnImagePanel.Controls.Add(this.dnImage3);
-            this.dnImagePanel.Controls.Add(this.dnImage2);
-            this.dnImagePanel.Controls.Add(this.dnImage1);
-            this.dnImagePanel.Location = new System.Drawing.Point(34, 72);
-            this.dnImagePanel.Name = "dnImagePanel";
-            this.dnImagePanel.Size = new System.Drawing.Size(240, 155);
-            this.dnImagePanel.TabIndex = 36;
+            this.staticImageWaterMarkIdGroup.Controls.Add(this.panel1);
+            this.staticImageWaterMarkIdGroup.Controls.Add(this.fmppr0stati_n);
+            this.staticImageWaterMarkIdGroup.Controls.Add(this.fmppr0stati_y);
+            this.staticImageWaterMarkIdGroup.Controls.Add(this.label19);
+            this.staticImageWaterMarkIdGroup.Location = new System.Drawing.Point(6, 167);
+            this.staticImageWaterMarkIdGroup.Name = "staticImageWaterMarkIdGroup";
+            this.staticImageWaterMarkIdGroup.Size = new System.Drawing.Size(231, 68);
+            this.staticImageWaterMarkIdGroup.TabIndex = 34;
+            this.staticImageWaterMarkIdGroup.TabStop = false;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.fmppr0static_down);
+            this.panel1.Controls.Add(this.fmppr0static_center);
+            this.panel1.Controls.Add(this.label20);
+            this.panel1.Location = new System.Drawing.Point(5, 33);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(222, 28);
+            this.panel1.TabIndex = 3;
+            // 
+            // fmppr0static_down
+            // 
+            this.fmppr0static_down.AutoSize = true;
+            this.fmppr0static_down.Location = new System.Drawing.Point(143, 6);
+            this.fmppr0static_down.Name = "fmppr0static_down";
+            this.fmppr0static_down.Size = new System.Drawing.Size(71, 16);
+            this.fmppr0static_down.TabIndex = 5;
+            this.fmppr0static_down.TabStop = true;
+            this.fmppr0static_down.Text = "图片下部";
+            this.fmppr0static_down.UseVisualStyleBackColor = true;
+            // 
+            // fmppr0static_center
+            // 
+            this.fmppr0static_center.AutoSize = true;
+            this.fmppr0static_center.Checked = true;
+            this.fmppr0static_center.Location = new System.Drawing.Point(56, 6);
+            this.fmppr0static_center.Name = "fmppr0static_center";
+            this.fmppr0static_center.Size = new System.Drawing.Size(71, 16);
+            this.fmppr0static_center.TabIndex = 4;
+            this.fmppr0static_center.TabStop = true;
+            this.fmppr0static_center.Text = "图片中心";
+            this.fmppr0static_center.UseVisualStyleBackColor = true;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(-1, 7);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(53, 12);
+            this.label20.TabIndex = 3;
+            this.label20.Text = "水印位置";
+            // 
+            // fmppr0stati_n
+            // 
+            this.fmppr0stati_n.AutoSize = true;
+            this.fmppr0stati_n.Checked = true;
+            this.fmppr0stati_n.Location = new System.Drawing.Point(147, 13);
+            this.fmppr0stati_n.Name = "fmppr0stati_n";
+            this.fmppr0stati_n.Size = new System.Drawing.Size(83, 16);
+            this.fmppr0stati_n.TabIndex = 2;
+            this.fmppr0stati_n.TabStop = true;
+            this.fmppr0stati_n.Text = "无边框水印";
+            this.fmppr0stati_n.UseVisualStyleBackColor = true;
+            // 
+            // fmppr0stati_y
+            // 
+            this.fmppr0stati_y.AutoSize = true;
+            this.fmppr0stati_y.Location = new System.Drawing.Point(61, 13);
+            this.fmppr0stati_y.Name = "fmppr0stati_y";
+            this.fmppr0stati_y.Size = new System.Drawing.Size(83, 16);
+            this.fmppr0stati_y.TabIndex = 1;
+            this.fmppr0stati_y.TabStop = true;
+            this.fmppr0stati_y.Text = "带边框水印";
+            this.fmppr0stati_y.UseVisualStyleBackColor = true;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(4, 14);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(53, 12);
+            this.label19.TabIndex = 0;
+            this.label19.Text = "水印样式";
+            // 
+            // staticImageWaterMarkId
+            // 
+            this.staticImageWaterMarkId.AutoSize = true;
+            this.staticImageWaterMarkId.Location = new System.Drawing.Point(9, 153);
+            this.staticImageWaterMarkId.Name = "staticImageWaterMarkId";
+            this.staticImageWaterMarkId.Size = new System.Drawing.Size(108, 16);
+            this.staticImageWaterMarkId.TabIndex = 33;
+            this.staticImageWaterMarkId.Text = "给图片添加水印";
+            this.staticImageWaterMarkId.UseVisualStyleBackColor = true;
+            this.staticImageWaterMarkId.CheckedChanged += new System.EventHandler(this.staticImageWaterMarkId_CheckedChanged);
+            // 
+            // dynamicImagePanel
+            // 
+            this.dynamicImagePanel.Controls.Add(this.dynamicImageWaterMarkIdGroup);
+            this.dynamicImagePanel.Controls.Add(this.dynamicImageWaterMarkId);
+            this.dynamicImagePanel.Controls.Add(this.dnImage6);
+            this.dynamicImagePanel.Controls.Add(this.dnImage5);
+            this.dynamicImagePanel.Controls.Add(this.dnImage4);
+            this.dynamicImagePanel.Controls.Add(this.dnImage3);
+            this.dynamicImagePanel.Controls.Add(this.dnImage2);
+            this.dynamicImagePanel.Controls.Add(this.dnImage1);
+            this.dynamicImagePanel.Location = new System.Drawing.Point(31, 73);
+            this.dynamicImagePanel.Name = "dynamicImagePanel";
+            this.dynamicImagePanel.Size = new System.Drawing.Size(285, 249);
+            this.dynamicImagePanel.TabIndex = 36;
+            // 
+            // dynamicImageWaterMarkIdGroup
+            // 
+            this.dynamicImageWaterMarkIdGroup.Controls.Add(this.panel3);
+            this.dynamicImageWaterMarkIdGroup.Controls.Add(this.fmppr0dyn_n);
+            this.dynamicImageWaterMarkIdGroup.Controls.Add(this.fmppr0dyn_y);
+            this.dynamicImageWaterMarkIdGroup.Controls.Add(this.label22);
+            this.dynamicImageWaterMarkIdGroup.Location = new System.Drawing.Point(6, 174);
+            this.dynamicImageWaterMarkIdGroup.Name = "dynamicImageWaterMarkIdGroup";
+            this.dynamicImageWaterMarkIdGroup.Size = new System.Drawing.Size(231, 68);
+            this.dynamicImageWaterMarkIdGroup.TabIndex = 36;
+            this.dynamicImageWaterMarkIdGroup.TabStop = false;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.fmppr0dyna_down);
+            this.panel3.Controls.Add(this.fmppr0dyna_center);
+            this.panel3.Controls.Add(this.label21);
+            this.panel3.Location = new System.Drawing.Point(5, 33);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(222, 28);
+            this.panel3.TabIndex = 3;
+            // 
+            // fmppr0dyna_down
+            // 
+            this.fmppr0dyna_down.AutoSize = true;
+            this.fmppr0dyna_down.Location = new System.Drawing.Point(143, 6);
+            this.fmppr0dyna_down.Name = "fmppr0dyna_down";
+            this.fmppr0dyna_down.Size = new System.Drawing.Size(71, 16);
+            this.fmppr0dyna_down.TabIndex = 5;
+            this.fmppr0dyna_down.TabStop = true;
+            this.fmppr0dyna_down.Text = "图片下部";
+            this.fmppr0dyna_down.UseVisualStyleBackColor = true;
+            // 
+            // fmppr0dyna_center
+            // 
+            this.fmppr0dyna_center.AutoSize = true;
+            this.fmppr0dyna_center.Checked = true;
+            this.fmppr0dyna_center.Location = new System.Drawing.Point(56, 6);
+            this.fmppr0dyna_center.Name = "fmppr0dyna_center";
+            this.fmppr0dyna_center.Size = new System.Drawing.Size(71, 16);
+            this.fmppr0dyna_center.TabIndex = 4;
+            this.fmppr0dyna_center.TabStop = true;
+            this.fmppr0dyna_center.Text = "图片中心";
+            this.fmppr0dyna_center.UseVisualStyleBackColor = true;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(-1, 7);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(53, 12);
+            this.label21.TabIndex = 3;
+            this.label21.Text = "水印位置";
+            // 
+            // fmppr0dyn_n
+            // 
+            this.fmppr0dyn_n.AutoSize = true;
+            this.fmppr0dyn_n.Checked = true;
+            this.fmppr0dyn_n.Location = new System.Drawing.Point(147, 13);
+            this.fmppr0dyn_n.Name = "fmppr0dyn_n";
+            this.fmppr0dyn_n.Size = new System.Drawing.Size(83, 16);
+            this.fmppr0dyn_n.TabIndex = 2;
+            this.fmppr0dyn_n.TabStop = true;
+            this.fmppr0dyn_n.Text = "无边框水印";
+            this.fmppr0dyn_n.UseVisualStyleBackColor = true;
+            // 
+            // fmppr0dyn_y
+            // 
+            this.fmppr0dyn_y.AutoSize = true;
+            this.fmppr0dyn_y.Location = new System.Drawing.Point(61, 13);
+            this.fmppr0dyn_y.Name = "fmppr0dyn_y";
+            this.fmppr0dyn_y.Size = new System.Drawing.Size(83, 16);
+            this.fmppr0dyn_y.TabIndex = 1;
+            this.fmppr0dyn_y.TabStop = true;
+            this.fmppr0dyn_y.Text = "带边框水印";
+            this.fmppr0dyn_y.UseVisualStyleBackColor = true;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(4, 14);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(53, 12);
+            this.label22.TabIndex = 0;
+            this.label22.Text = "水印样式";
+            // 
+            // dynamicImageWaterMarkId
+            // 
+            this.dynamicImageWaterMarkId.AutoSize = true;
+            this.dynamicImageWaterMarkId.Location = new System.Drawing.Point(9, 158);
+            this.dynamicImageWaterMarkId.Name = "dynamicImageWaterMarkId";
+            this.dynamicImageWaterMarkId.Size = new System.Drawing.Size(108, 16);
+            this.dynamicImageWaterMarkId.TabIndex = 35;
+            this.dynamicImageWaterMarkId.Text = "给图片添加水印";
+            this.dynamicImageWaterMarkId.UseVisualStyleBackColor = true;
+            this.dynamicImageWaterMarkId.CheckedChanged += new System.EventHandler(this.dynamicImageWaterMarkId_CheckedChanged);
             // 
             // dnImage6
             // 
@@ -359,103 +567,6 @@ namespace AliHelper
             this.static_and_dyn0.Text = "单图";
             this.static_and_dyn0.UseVisualStyleBackColor = true;
             this.static_and_dyn0.CheckedChanged += new System.EventHandler(this.static_and_dyn0_CheckedChanged);
-            // 
-            // staticImageWaterMarkIdGroup
-            // 
-            this.staticImageWaterMarkIdGroup.Controls.Add(this.panel1);
-            this.staticImageWaterMarkIdGroup.Controls.Add(this.pr0stati2);
-            this.staticImageWaterMarkIdGroup.Controls.Add(this.pr0stati1);
-            this.staticImageWaterMarkIdGroup.Controls.Add(this.label19);
-            this.staticImageWaterMarkIdGroup.Location = new System.Drawing.Point(36, 248);
-            this.staticImageWaterMarkIdGroup.Name = "staticImageWaterMarkIdGroup";
-            this.staticImageWaterMarkIdGroup.Size = new System.Drawing.Size(231, 68);
-            this.staticImageWaterMarkIdGroup.TabIndex = 34;
-            this.staticImageWaterMarkIdGroup.TabStop = false;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.pr0static2);
-            this.panel1.Controls.Add(this.pr0static1);
-            this.panel1.Controls.Add(this.label20);
-            this.panel1.Location = new System.Drawing.Point(5, 33);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(222, 28);
-            this.panel1.TabIndex = 3;
-            // 
-            // pr0static2
-            // 
-            this.pr0static2.AutoSize = true;
-            this.pr0static2.Location = new System.Drawing.Point(143, 6);
-            this.pr0static2.Name = "pr0static2";
-            this.pr0static2.Size = new System.Drawing.Size(71, 16);
-            this.pr0static2.TabIndex = 5;
-            this.pr0static2.TabStop = true;
-            this.pr0static2.Text = "图片下部";
-            this.pr0static2.UseVisualStyleBackColor = true;
-            // 
-            // pr0static1
-            // 
-            this.pr0static1.AutoSize = true;
-            this.pr0static1.Checked = true;
-            this.pr0static1.Location = new System.Drawing.Point(56, 6);
-            this.pr0static1.Name = "pr0static1";
-            this.pr0static1.Size = new System.Drawing.Size(71, 16);
-            this.pr0static1.TabIndex = 4;
-            this.pr0static1.TabStop = true;
-            this.pr0static1.Text = "图片中心";
-            this.pr0static1.UseVisualStyleBackColor = true;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(-1, 7);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(53, 12);
-            this.label20.TabIndex = 3;
-            this.label20.Text = "水印位置";
-            // 
-            // pr0stati2
-            // 
-            this.pr0stati2.AutoSize = true;
-            this.pr0stati2.Checked = true;
-            this.pr0stati2.Location = new System.Drawing.Point(147, 13);
-            this.pr0stati2.Name = "pr0stati2";
-            this.pr0stati2.Size = new System.Drawing.Size(83, 16);
-            this.pr0stati2.TabIndex = 2;
-            this.pr0stati2.TabStop = true;
-            this.pr0stati2.Text = "无边框水印";
-            this.pr0stati2.UseVisualStyleBackColor = true;
-            // 
-            // pr0stati1
-            // 
-            this.pr0stati1.AutoSize = true;
-            this.pr0stati1.Location = new System.Drawing.Point(61, 13);
-            this.pr0stati1.Name = "pr0stati1";
-            this.pr0stati1.Size = new System.Drawing.Size(83, 16);
-            this.pr0stati1.TabIndex = 1;
-            this.pr0stati1.TabStop = true;
-            this.pr0stati1.Text = "带边框水印";
-            this.pr0stati1.UseVisualStyleBackColor = true;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(4, 14);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(53, 12);
-            this.label19.TabIndex = 0;
-            this.label19.Text = "水印样式";
-            // 
-            // staticImageWaterMarkId
-            // 
-            this.staticImageWaterMarkId.AutoSize = true;
-            this.staticImageWaterMarkId.Location = new System.Drawing.Point(34, 230);
-            this.staticImageWaterMarkId.Name = "staticImageWaterMarkId";
-            this.staticImageWaterMarkId.Size = new System.Drawing.Size(108, 16);
-            this.staticImageWaterMarkId.TabIndex = 33;
-            this.staticImageWaterMarkId.Text = "给图片添加水印";
-            this.staticImageWaterMarkId.UseVisualStyleBackColor = true;
-            this.staticImageWaterMarkId.CheckedChanged += new System.EventHandler(this.staticImageWaterMarkId_CheckedChanged);
             // 
             // ImageBankLink
             // 
@@ -594,6 +705,7 @@ namespace AliHelper
             this.button1.TabIndex = 14;
             this.button1.Text = "保存(&S)";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // AttrTab
             // 
@@ -1136,8 +1248,18 @@ namespace AliHelper
             this.BaseInfoTab.ResumeLayout(false);
             this.BaseInfoTab.PerformLayout();
             this.staticImagePanel.ResumeLayout(false);
+            this.staticImagePanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.staticImage)).EndInit();
-            this.dnImagePanel.ResumeLayout(false);
+            this.staticImageWaterMarkIdGroup.ResumeLayout(false);
+            this.staticImageWaterMarkIdGroup.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.dynamicImagePanel.ResumeLayout(false);
+            this.dynamicImagePanel.PerformLayout();
+            this.dynamicImageWaterMarkIdGroup.ResumeLayout(false);
+            this.dynamicImageWaterMarkIdGroup.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dnImage6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dnImage5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dnImage4)).EndInit();
@@ -1146,10 +1268,6 @@ namespace AliHelper
             ((System.ComponentModel.ISupportInitialize)(this.dnImage1)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.staticImageWaterMarkIdGroup.ResumeLayout(false);
-            this.staticImageWaterMarkIdGroup.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.AttrTab.ResumeLayout(false);
             this.AttrTab.PerformLayout();
             this.DescTab.ResumeLayout(false);
@@ -1241,17 +1359,17 @@ namespace AliHelper
         private CheckBox staticImageWaterMarkId;
         private GroupBox staticImageWaterMarkIdGroup;
         private Panel panel1;
-        private RadioButton pr0static2;
-        private RadioButton pr0static1;
+        private RadioButton fmppr0static_down;
+        private RadioButton fmppr0static_center;
         private Label label20;
-        private RadioButton pr0stati2;
-        private RadioButton pr0stati1;
+        private RadioButton fmppr0stati_n;
+        private RadioButton fmppr0stati_y;
         private Label label19;
         private Panel panel2;
         private RadioButton static_and_dyn1;
         private RadioButton static_and_dyn0;
         private Panel SysAttrPanel;
-        private Panel dnImagePanel;
+        private Panel dynamicImagePanel;
         private PictureBox dnImage6;
         private PictureBox dnImage5;
         private PictureBox dnImage4;
@@ -1259,5 +1377,14 @@ namespace AliHelper
         private PictureBox dnImage2;
         private Panel staticImagePanel;
         private PictureBox staticImage;
+        private GroupBox dynamicImageWaterMarkIdGroup;
+        private Panel panel3;
+        private RadioButton fmppr0dyna_down;
+        private RadioButton fmppr0dyna_center;
+        private Label label21;
+        private RadioButton fmppr0dyn_n;
+        private RadioButton fmppr0dyn_y;
+        private Label label22;
+        private CheckBox dynamicImageWaterMarkId;
     }
 }

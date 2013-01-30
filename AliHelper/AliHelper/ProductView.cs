@@ -17,20 +17,9 @@ namespace AliHelper
         private ProductsManager productsManager;
         private ImpProductDetail impProductDetail;
         private DataTable dataTable;
-        private ProductDetail _productDetail;
         private int PrevSelectedId = 0;
         [DefaultValue(1), Category("自定义属性"), Description("产品详情")]
-        public ProductDetail AliProductDetail
-        {
-            get
-            {
-                return this._productDetail;
-            }
-            set
-            {
-                this._productDetail = value;
-            }
-        }
+        public ProductDetail AliProductDetail { set; get; }
         
         public ProductView()
         {
@@ -93,8 +82,7 @@ namespace AliHelper
             DataGridViewColumn column6 = this.dataGridView1.Columns[8];
             column6.HeaderText = "更新时间";
             column6.Width = 100;
-
-            
+           
         }
 
         public void LoadDataGridView(int GroupId)
@@ -121,17 +109,24 @@ namespace AliHelper
         }
         #endregion
 
+        #region RadioBox ChangeEvent
         private void staticImageWaterMarkId_CheckedChanged(object sender, EventArgs e)
         {
-            if (this.staticImageWaterMarkId.Checked)
-            {
-                staticImageWaterMarkIdGroup.Visible = true;
-            }
-            else 
-            {
-                staticImageWaterMarkIdGroup.Visible = false;
-            }
+            this.staticImageWaterMarkIdGroup.Visible = 
+                this.staticImageWaterMarkId.Enabled && this.staticImageWaterMarkId.Checked;
         }
+
+        private void dynamicImageWaterMarkId_CheckedChanged(object sender, EventArgs e)
+        {
+            this.dynamicImageWaterMarkIdGroup.Visible = 
+                this.dynamicImageWaterMarkId.Enabled && this.dynamicImageWaterMarkId.Checked;
+        }
+        private void static_and_dyn0_CheckedChanged(object sender, EventArgs e)
+        {
+            this.staticImagePanel.Visible = static_and_dyn0.Checked;
+            this.dynamicImagePanel.Visible = !static_and_dyn0.Checked;
+        }
+        #endregion
 
         private void ProductView_Load(object sender, EventArgs e)
         {
@@ -201,6 +196,8 @@ namespace AliHelper
                 }
                 this.productTeamInputBox.SelectedItem = selected;
             }
+            this.staticImagePanel.Visible = true;
+            this.dynamicImagePanel.Visible = false;
         }
 
         public void LoadProductDetailValue()
@@ -263,19 +260,74 @@ namespace AliHelper
                 this.static_and_dyn1.Tag = AliProductDetail.static_and_dyn1;
                 this.static_and_dyn1.Checked = AliProductDetail.static_and_dyn1.Checked;
             }
+            static_and_dyn0_CheckedChanged(null, null);
 
-            ChangeImagePanel();
-
-            this.staticImageWaterMarkIdGroup.Visible = false;
+            //static image
             if (AliProductDetail.staticImageWaterMarkId != null)
             {
                 this.staticImageWaterMarkId.Tag = AliProductDetail.staticImageWaterMarkId;
                 this.staticImageWaterMarkId.Checked = AliProductDetail.staticImageWaterMarkId.Checked;
-                if (this.staticImageWaterMarkId.Checked)
-                {
-                    this.staticImageWaterMarkIdGroup.Visible = true;
-                }
             }
+            this.staticImageWaterMarkId.Enabled = true;
+            if (AliProductDetail.pageType != null && AliProductDetail.pageType.Value == Constants.PageType_Edit)
+            {
+                this.staticImageWaterMarkId.Enabled = false;
+            }
+            this.staticImageWaterMarkId_CheckedChanged(null, null);
+            if (AliProductDetail.fmppr0stati_y != null)
+            {
+                this.fmppr0stati_y.Tag = AliProductDetail.fmppr0stati_y;
+                this.fmppr0stati_y.Checked = AliProductDetail.fmppr0stati_y.Checked;
+            }
+            if (AliProductDetail.fmppr0stati_n != null)
+            {
+                this.fmppr0stati_n.Tag = AliProductDetail.fmppr0stati_n;
+                this.fmppr0stati_n.Checked = AliProductDetail.fmppr0stati_n.Checked;
+            }
+            if (AliProductDetail.fmppr0static_center != null)
+            {
+                this.fmppr0static_center.Tag = AliProductDetail.fmppr0static_center;
+                this.fmppr0static_center.Checked = AliProductDetail.fmppr0static_center.Checked;
+            }
+            if (AliProductDetail.fmppr0static_down != null)
+            {
+                this.fmppr0static_down.Tag = AliProductDetail.fmppr0static_down;
+                this.fmppr0static_down.Checked = AliProductDetail.fmppr0static_down.Checked;
+            }
+
+            //dynamic images
+            if (AliProductDetail.dynamicImageWaterMarkId != null)
+            {
+                this.dynamicImageWaterMarkId.Tag = AliProductDetail.dynamicImageWaterMarkId;
+                this.dynamicImageWaterMarkId.Checked = AliProductDetail.dynamicImageWaterMarkId.Checked;
+            }
+            this.dynamicImageWaterMarkId.Enabled = true;
+            if (AliProductDetail.pageType != null && AliProductDetail.pageType.Value == Constants.PageType_Edit)
+            {
+                this.dynamicImageWaterMarkId.Enabled = false;
+            }
+            this.dynamicImageWaterMarkId_CheckedChanged(null, null);
+            if (AliProductDetail.fmppr0dyn_y != null)
+            {
+                this.fmppr0dyn_y.Tag = AliProductDetail.fmppr0dyn_y;
+                this.fmppr0dyn_y.Checked = AliProductDetail.fmppr0dyn_y.Checked;
+            }
+            if (AliProductDetail.fmppr0dyn_n != null)
+            {
+                this.fmppr0dyn_n.Tag = AliProductDetail.fmppr0dyn_n;
+                this.fmppr0dyn_n.Checked = AliProductDetail.fmppr0dyn_n.Checked;
+            }
+            if (AliProductDetail.fmppr0dyna_center != null)
+            {
+                this.fmppr0dyna_center.Tag = AliProductDetail.fmppr0dyna_center;
+                this.fmppr0dyna_center.Checked = AliProductDetail.fmppr0dyna_center.Checked;
+            }
+            if (AliProductDetail.fmppr0dyna_down != null)
+            {
+                this.fmppr0dyna_down.Tag = AliProductDetail.fmppr0dyna_down;
+                this.fmppr0dyna_down.Checked = AliProductDetail.fmppr0dyna_down.Checked;
+            }
+
             if (AliProductDetail.CustomAttr != null)
             {
                 int i = 0;
@@ -384,16 +436,7 @@ namespace AliHelper
                 this.packagingDesc.Tag = AliProductDetail.packagingDesc;
                 this.packagingDesc.Text = AliProductDetail.packagingDesc.Value;
             }
-            if (AliProductDetail.static_and_dyn0 != null)
-            {
-                this.static_and_dyn0.Tag = AliProductDetail.static_and_dyn0;
-                this.static_and_dyn0.Checked = AliProductDetail.static_and_dyn0.Checked;
-            }
-            if (AliProductDetail.static_and_dyn1 != null)
-            {
-                this.static_and_dyn1.Tag = AliProductDetail.static_and_dyn1;
-                this.static_and_dyn1.Checked = AliProductDetail.static_and_dyn1.Checked;
-            }
+
             if (AliProductDetail.minOrderUnit != null)
             {
                 this.minOrderUnit.Tag = AliProductDetail.minOrderUnit;
@@ -652,31 +695,6 @@ namespace AliHelper
 
         }
 
-        private void ChangeImagePanel()
-        {
-            if (this.BaseInfoTab.Controls.Contains(this.dnImagePanel))
-            {
-                this.BaseInfoTab.Controls.Remove(this.dnImagePanel);
-            }
-            if (this.BaseInfoTab.Controls.Contains(this.staticImagePanel))
-            {
-                this.BaseInfoTab.Controls.Remove(this.staticImagePanel);
-            }
-            if (static_and_dyn0.Checked)
-            {
-                this.BaseInfoTab.Controls.Add(this.staticImagePanel);
-            }
-            else
-            {
-                this.BaseInfoTab.Controls.Add(this.dnImagePanel);
-            }
-        }
-
-        private void static_and_dyn0_CheckedChanged(object sender, EventArgs e)
-        {
-            ChangeImagePanel();
-        }
-
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -697,6 +715,60 @@ namespace AliHelper
             ImageForm f = new ImageForm();
             f.StartPosition = FormStartPosition.CenterParent;
             f.ShowDialog(this);
+        }
+
+        public void GetAllControlValue(Control control)
+        {
+            ControlCollection controls = control.Controls;
+            foreach (Control c in controls)
+            {
+                if (c.Controls.Count > 0)
+                {
+                    GetAllControlValue(c);
+                }
+                if (c.Tag == null)
+                {
+                    continue;
+                }
+                string controlName = c.Name;
+                string controlValue = c.Text;
+                bool controlCheck = false;
+                string controlType = c.GetType().Name;
+                if (controlType == "RadioButton")
+                {
+                    controlCheck = ((RadioButton)c).Checked;
+                }
+                else if (controlType == "CheckBox")
+                {
+                    controlCheck = ((CheckBox)c).Checked;
+                }
+                else if (controlType == "ComboBox")
+                {
+                    controlValue = (string)((ComboBox)c).SelectedValue;
+                }
+                else if (controlType == "WebBrowser")
+                {
+                    controlValue = (string)((WebBrowser)c).Document.InvokeScript("GetData", null);
+                }
+                else if (controlType == "TextBox")
+                {
+                    controlValue = c.Text;
+                }
+                if (c.Tag.GetType().Name == "FormElement")
+                {
+                    FormElement el = (FormElement)c.Tag;
+                }
+                else if (c.Tag.GetType().Name == "AttributeNode")
+                {
+                    AttributeNode el = (AttributeNode)c.Tag;
+                }
+                System.Diagnostics.Trace.WriteLine("controlType: " + controlType + "  controlName: " + controlName + "  value: " + controlValue);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            GetAllControlValue(this.splitContainer1.Panel2);
         }
         
     }

@@ -24,7 +24,7 @@ namespace AliHelper.DAO
 
             dbHelper.ExecuteNonQuery(
               "CREATE TABLE IF NOT EXISTS AliProducts("
-            + "Id integer NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
+            + "Id integer NOT NULL PRIMARY KEY UNIQUE,"
             + "Keywords varchar(300) NOT NULL,"
             + "IsKeywords BOOLEAN,"
             + "Status varchar(30),"
@@ -59,20 +59,27 @@ namespace AliHelper.DAO
             dbHelper.ExecuteNonQuery("delete from AliProducts where GroupId like '%" + groupId.ToString() + "%'");
         }
 
-        public void Insert(List<AliProduct> list)
+        public void InsertOrUpdate(List<AliProduct> list)
         {
-            string InsSql = @"INSERT INTO AliProducts(Id,Keywords, IsKeywords, Status, GroupId,"
+            string InsSql = @"INSERT INTO AliProducts(Id, Keywords, IsKeywords, Status, GroupId,"
                 + " GroupName1,GroupName2,GroupName3, Subject, RedModel, DetailUrl,AbsImageUrl,AbsSummImageUrl,IsWindowProduct,  "
                 +"GmtModified, Type, IsDisplay, OwnerMemberId, OwnerMemberName, IsLowScore)"
                 + "values(@Id,@Keywords, @IsKeywords, @Status, @GroupId, @GroupName1,@GroupName2,"
                 + "@GroupName3, @Subject, @RedModel, @DetailUrl,@AbsImageUrl, @AbsSummImageUrl,@IsWindowProduct,"
                 + " @GmtModified, @Type, @IsDisplay, @OwnerMemberId, @OwnerMemberName, @IsLowScore)";
 
+            string UpdSql = @"Update AliProducts SET Keywords = @Keywords, IsKeywords=@IsKeywords, Status = @Status, GroupId=@GroupId,"
+                + " GroupName1=@GroupName1,GroupName2=@GroupName2,GroupName3=@GroupName3, Subject=@Subject, RedModel=@RedModel,"
+                + " DetailUrl=@DetailUrl,AbsImageUrl=@AbsImageUrl,AbsSummImageUrl=@AbsSummImageUrl,IsWindowProduct=@IsWindowProduct,  "
+                + "GmtModified=@GmtModified, Type=@Type, IsDisplay=@IsDisplay, OwnerMemberId = @OwnerMemberId,"
+                + "OwnerMemberName = @OwnerMemberName, IsLowScore = @IsLowScore WHERE Id = @Id";
+
+            string ExistRecordSql = "SELECT count(1) FROM AliProducts WHERE productId = ";
+
             List<SQLiteParameter[]> InsertParameters = new List<SQLiteParameter[]>();
             List<SQLiteParameter[]> UpdateParameters = new List<SQLiteParameter[]>();
-            for (int i = 0; i < list.Count; i++)
+            foreach (AliProduct item in list)
             {
-                AliProduct item = list[i];
                 SQLiteParameter[] parameter = new SQLiteParameter[]
                 {
                     new SQLiteParameter("@Id",item.Id),
@@ -96,11 +103,24 @@ namespace AliHelper.DAO
                     new SQLiteParameter("@OwnerMemberName",item.@OwnerMemberName),
                     new SQLiteParameter("@IsLowScore",item.@IsLowScore)
                 };
-                InsertParameters.Add(parameter);
+
+                int record = Convert.ToInt32(dbHelper.ExecuteScalar(ExistRecordSql + item.Id, null));
+                if (record == 0)
+                {
+                    InsertParameters.Add(parameter);
+                }
+                else {
+
+                    UpdateParameters.Add(parameter);
+                }
             }
             if (InsertParameters.Count > 0)
             {
                 dbHelper.ExecuteNonQuery(InsSql, InsertParameters);
+            }
+            if (UpdateParameters.Count > 0)
+            {
+                dbHelper.ExecuteNonQuery(UpdSql, UpdateParameters);
             }
         }
 
