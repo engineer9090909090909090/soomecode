@@ -104,18 +104,22 @@ namespace AliHelper.DAO
 
             dbHelper.ExecuteNonQuery(
               "CREATE TABLE IF NOT EXISTS Detail_CustomAttr("
-            + "pid integer NOT NULL PRIMARY KEY UNIQUE,"
+            + "id integer NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
+            + "pid integer NOT NULL,"
             + "custAttrName varchar(1000),"
             + "custAttrValue varchar(1000)"
             + ")");
+            dbHelper.ExecuteNonQuery("Create Index IF NOT EXISTS Index_key on Detail_CustomAttr(pid);");
 
             dbHelper.ExecuteNonQuery(
               "CREATE TABLE IF NOT EXISTS Detail_SystemAttr("
-            + "pid integer NOT NULL PRIMARY KEY UNIQUE,"
+            + "id integer NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
+            + "pid integer NOT NULL,"
             + "type integer NOT NULL,"
             + "data varchar(1000),"
             + "nodes varchar(5000)"
             + ")");
+            dbHelper.ExecuteNonQuery("Create Index IF NOT EXISTS Index_key on Detail_SystemAttr(pid, type);");
         }
 
         
@@ -145,11 +149,11 @@ namespace AliHelper.DAO
         {
             Type typeOfClass = detail.GetType();
             PropertyInfo[] pInfo = typeOfClass.GetProperties();
-            string sqlCondi = "INSERT INTO AliProductDetail(pid,";
-            string sqlValue = ")values(@pid,";
+            string sqlCondi = "INSERT INTO AliProductDetail(pid";
+            string sqlValue = ")values(@pid";
             string sqlEnd = ");";
             List<SQLiteParameter> parameter = new List<SQLiteParameter>();
-            parameter.Add(new SQLiteParameter("@Id",detail.pid));
+            parameter.Add(new SQLiteParameter("@pid", detail.pid));
             foreach (PropertyInfo info in pInfo)
             {
                 if (info.PropertyType.Name == "FormElement")
@@ -258,7 +262,7 @@ namespace AliHelper.DAO
             detail.CustomAttr = GetCustomAttr(pid);
             detail.SysAttr = GetSystemAttr(pid, Constants.AttrType_SysAttr);
             detail.FixAttr = GetSystemAttr(pid, Constants.AttrType_FixAttr);
-            return null;
+            return detail;
         }
 
         public Dictionary<FormElement, FormElement> GetCustomAttr(int pid)

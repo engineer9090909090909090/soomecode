@@ -703,9 +703,17 @@ namespace AliHelper
                 if (id != PrevSelectedId)
                 {
                     PrevSelectedId = id;
-                    ProductDetail detail = impProductDetail.GetEditFormElements(id);
+                    ProductDetail detail = productsManager.GetProductDetail(id);
+                    if (detail == null)
+                    {
+                        detail = impProductDetail.GetEditFormElements(id);
+                        productsManager.InsertOrUpdateProdcutDetail(detail);
+                    }
                     this.AliProductDetail = detail;
-                    this.LoadProductDetailValue();
+                    if (detail != null)
+                    {
+                        this.LoadProductDetailValue();
+                    }
                 }
             }
         }
