@@ -37,15 +37,17 @@ namespace AliHelper
         {
             string url = "http://hz.productposting.alibaba.com/product/editing.htm?id=" + productId;
             string html = HttpClient.RemoteRequest(url, null);
-            html = html.Replace("\r","").Replace("\n","").Replace("\t","");
             HtmlNode.ElementsFlags.Remove("form");
             HtmlDocument document = new HtmlDocument();
             document.LoadHtml(html);
             HtmlNode productFormEl = document.GetElementbyId("productForm");
             ProductDetail detail = PrintElementsValue(productFormEl);
+            detail.pid = productId;
+            html = html.Replace("\r", "").Replace("\n", "").Replace("\t", "");
             detail.SysAttr = GetSysAttr(html);
             detail.FixAttr = GetFixAttr(html);
             detail.imageFiles.Value = GetImageFilesJsonString(html);
+            html = null;
             return detail;
         }
 
@@ -270,7 +272,6 @@ namespace AliHelper
                     el.Type = "textarea";
                     el.Name = name;
                     el.Value = value;
-
                     string propertyName = GetPropertyName(id, name);
                     PropertyInfo pInfo = typeOfClass.GetProperty(propertyName);
                     if (pInfo != null && pInfo.PropertyType.Name == "FormElement")

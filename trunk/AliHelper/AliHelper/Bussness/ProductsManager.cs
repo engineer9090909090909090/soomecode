@@ -125,5 +125,10 @@ namespace AliHelper
             DataCache.Instance.GroupListOptions = elList;
         }
 
+        public ProductDetail GetProductDetail(int id)
+        {
+            return detailDao.GetProductDetail(id);
+        }
+
     }
 }
