@@ -124,6 +124,7 @@ namespace AliHelper
                 {
                     UnLoadProdcutPanel();
                 }
+                GC.Collect();
             }
         }
 
@@ -277,6 +278,7 @@ namespace AliHelper
             if (splitContainer1.Panel2.Controls.Count > 0)
             {
                 splitContainer1.Panel2.Controls.RemoveAt(0);
+                this.productView1.Dispose();
             }
             this.productView1 = null;
             GC.Collect();
