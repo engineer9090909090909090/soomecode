@@ -74,7 +74,7 @@ namespace AliHelper.DAO
                 + "GmtModified=@GmtModified, Type=@Type, IsDisplay=@IsDisplay, OwnerMemberId = @OwnerMemberId,"
                 + "OwnerMemberName = @OwnerMemberName, IsLowScore = @IsLowScore WHERE Id = @Id";
 
-            string ExistRecordSql = "SELECT count(1) FROM AliProducts WHERE productId = ";
+            string ExistRecordSql = "SELECT count(1) FROM AliProducts WHERE Id = ";
 
             List<SQLiteParameter[]> InsertParameters = new List<SQLiteParameter[]>();
             List<SQLiteParameter[]> UpdateParameters = new List<SQLiteParameter[]>();
