@@ -17,6 +17,7 @@ namespace AliHelper
         /// <returns></returns>
         public static string ToJson(this object value)
         {
+            if (value == null) return string.Empty;
             Type type = value.GetType();
             Newtonsoft.Json.JsonSerializer json = new Newtonsoft.Json.JsonSerializer();
             json.NullValueHandling = NullValueHandling.Ignore;
@@ -41,6 +42,7 @@ namespace AliHelper
         /// <returns></returns>
         public static T FromJson<T>(this string jsonText)
         {
+            if (string.IsNullOrEmpty(jsonText)) return default(T);
             Newtonsoft.Json.JsonSerializer json = new Newtonsoft.Json.JsonSerializer();
             json.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
             json.ObjectCreationHandling = Newtonsoft.Json.ObjectCreationHandling.Replace;
