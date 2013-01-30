@@ -13,7 +13,7 @@ namespace AliHelper
     class ImpProductDetail
     {
         public ImpProductDetail()
-        { 
+        {
 
         }
 
@@ -59,6 +59,16 @@ namespace AliHelper
             return propertyName;
         }
 
+        private string GetRadioBoxPropertyName(string elId, string elName,string value)
+        {
+            string propertyName = elId;
+            if (string.IsNullOrEmpty(propertyName))
+            {
+                propertyName = elName.Replace("_", "").Replace(".", "") + "_" + value.ToLower();
+            }
+            return propertyName;
+        }
+
         private List<AttributeNode> GetSysAttr(string html)
         {
             Regex r = new Regex("POSTDATAMAP.attrData.systemAttr =(.*?);");
@@ -100,7 +110,7 @@ namespace AliHelper
         {
             ProductDetail detail = new ProductDetail();
             Type typeOfClass = detail.GetType();
-            IEnumerable<HtmlNode> nodeTags = htmlNode.SelectNodes(@"//input[@type='hidden'] | .//input[@type='text']");
+            IEnumerable<HtmlNode> nodeTags = htmlNode.SelectNodes(@".//input[@type='hidden'] | .//input[@type='text']");
             if (nodeTags != null)
             {
                 foreach (HtmlNode node in nodeTags)
@@ -181,25 +191,12 @@ namespace AliHelper
                     el.Name = name;
                     el.Value = value;
                     el.Checked = chk;
-                    string propertyName = GetPropertyName(id, name);
+                    System.Diagnostics.Trace.WriteLine("Id:" + id + "  type:" + type + "  name:" + name + "  checked:" + chk + "  value:" + value);
+                    string propertyName = GetRadioBoxPropertyName(id, name, value);
                     PropertyInfo pInfo = typeOfClass.GetProperty(propertyName);
-                    List<FormElement>  newList = new List<FormElement>();
                     if (pInfo != null && pInfo.PropertyType.Name == "FormElement")
                     {
                         pInfo.SetValue(detail, el, null);
-                    }
-                    else if (pInfo != null && pInfo.PropertyType == newList.GetType())
-                    {
-                        List<FormElement> existList = (List<FormElement>)pInfo.GetValue(detail, null);
-                        if (existList == null)
-                        {
-                            newList.Add(el);
-                            pInfo.SetValue(detail, newList, null);
-                        }
-                        else {
-                            existList.Add(el);
-                            pInfo.SetValue(detail, existList, null);
-                        }
                     }
                 }
             }

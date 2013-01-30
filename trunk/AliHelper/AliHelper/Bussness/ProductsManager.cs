@@ -13,17 +13,24 @@ namespace AliHelper
         public AliGroupDao groupDao;
         public AliProductDao productDao;
         public AliImageDao aliImageDao;
+        public AliProductDetailDao detailDao;
         public ProductsManager()
         {
             groupDao = DAOFactory.Instance.GetAliGroupDao();
             productDao = DAOFactory.Instance.GetAliProductDao();
             aliImageDao = DAOFactory.Instance.GetAliImageDao();
+            detailDao = DAOFactory.Instance.GetAliProductDetailDao();
         }
 
         public void UpdateGroupProdcuts(int GroupId, List<AliProduct> products)
         {
-            productDao.DeleteProduct4GroupId(GroupId);
-            productDao.Insert(products);
+            //productDao.DeleteProduct4GroupId(GroupId);
+            productDao.InsertOrUpdate(products);
+        }
+
+        public void InsertOrUpdateProdcutDetail(ProductDetail detail)
+        {
+            detailDao.InsertOrUpdate(detail);
         }
 
         public void UpdateGroups(List<AliGroup> groups)
