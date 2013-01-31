@@ -8,6 +8,7 @@ namespace Soomes
     public class ProductDetail
     {
         public int pid { set; get; }
+        public string gmtModified { set; get; }
         public FormElement fromType2 { set; get; }//fromType2
         public FormElement commonCategoryName { set; get; }//_fmp.pr._0.ca
         public FormElement commonCategoryIds { set; get; }//_fmp.pr._0.c

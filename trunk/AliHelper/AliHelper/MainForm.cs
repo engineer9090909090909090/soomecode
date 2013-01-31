@@ -11,7 +11,6 @@ using System.IO;
 using System.Text.RegularExpressions;
 using Soomes;
 using System.Collections;
-using UtilityLibrary.WinControls;
 using System.Resources;
 using System.Reflection;
 
@@ -30,7 +29,6 @@ namespace AliHelper
             productsManager = new ProductsManager();
             impProductDetail = new ImpProductDetail();
             InitializeComponent();
-            LoadOutlookBar();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -40,6 +38,7 @@ namespace AliHelper
             impProductDetail.InitDataCacheFormOptions();
             productsManager.InitGroupOptions();
             List<AliGroup> groups = productsManager.GetGroupList();
+            LoadNavigatorBar();
             UpdateGroupUI(groups);
             LoadProdutPanel();
         }
@@ -63,14 +62,23 @@ namespace AliHelper
         }
         #endregion
 
-        #region OutlookBar 处理
-        void LoadOutlookBar()
-        {
-            outlookBar1.Bands.Add(new OutlookBarBand("产品维护", treeView1));
+        #region NavigatorBar 处理
 
-            ListViewEx listView1 = new ListViewEx();
-            listView1.Dock = DockStyle.Fill;
-            outlookBar1.Bands.Add(new OutlookBarBand("重发计划", listView1));
+        protected void LoadNavigatorBar()
+        {
+            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.treeView1.LineColor = System.Drawing.Color.Empty;
+            this.treeView1.Location = new System.Drawing.Point(0, 23);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Dock = DockStyle.Fill;
+            this.treeView1.Size = new System.Drawing.Size(130, 423);
+            this.treeView1.TabIndex = 4;
+            this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
+            this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
+            this.treeView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
+            ProductBand.ClientArea.Controls.Add(treeView1);
+
+            ListView listView1 = new ListView();
             listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             ColumnHeader nameColumnHeader = new System.Windows.Forms.ColumnHeader();
             nameColumnHeader.Text = "名称";
@@ -80,59 +88,95 @@ namespace AliHelper
             timeColumnHeader.Width = 130;
             listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { nameColumnHeader, timeColumnHeader });
             listView1.Name = "listView1";
-            listView1.TabIndex = 0;
+            listView1.AllowDrop = false;
+            listView1.HideSelection = false;
+            listView1.Location = new System.Drawing.Point(0, 23);
+            listView1.Size = new System.Drawing.Size(130, 423);
             listView1.CheckBoxes = true;
             listView1.Dock = DockStyle.Fill;
+            listView1.UseCompatibleStateImageBehavior = false;
+            listView1.View = System.Windows.Forms.View.Details;
             listView1.ContextMenuStrip = this.CfContextMenuStrip;
+            UpdateBand.ClientArea.Controls.Add(listView1);
 
             ImageList outlookLargeIcons = new ImageList();
             outlookLargeIcons.ImageSize = new Size(32, 32);
             Bitmap icons = (Bitmap)global::AliHelper.Properties.IconImages.OutlookLargeIcons;
             icons.MakeTransparent(Color.FromArgb(255, 0, 255));
             outlookLargeIcons.Images.AddStrip(icons);
-            ImageList outlookSmallIcons = new ImageList();
-            outlookSmallIcons.ImageSize = new Size(16, 16);
-            Bitmap smallIcons = (Bitmap)global::AliHelper.Properties.IconImages.OutlookSmallIcons;
-            icons.MakeTransparent(Color.FromArgb(255, 0, 255));
-            outlookSmallIcons.Images.AddStrip(smallIcons);
-            OutlookBarBand outlookShortcutsBand = new OutlookBarBand("外贸邮");
-            outlookShortcutsBand.LargeImageList = outlookLargeIcons;
-            outlookShortcutsBand.SmallImageList = outlookSmallIcons;
-            outlookShortcutsBand.Items.Add(new OutlookBarItem("收件箱", 1));
-            outlookShortcutsBand.Items.Add(new OutlookBarItem("已发送", 5));
-            outlookShortcutsBand.Items.Add(new OutlookBarItem("垃圾邮件", 6));
-            outlookBar1.Bands.Add(outlookShortcutsBand);
-            outlookBar1.PropertyChanged += new OutlookBarPropertyChangedHandler(outlookBar1_PropertyChanged);
-            outlookBar1.ItemClicked += new OutlookBarItemClickedHandler(OnOutlookBarItemClicked);
-        
+            ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("收件箱");
+            listViewItem1.ImageIndex = 1;
+            ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("已发送");
+            listViewItem2.ImageIndex = 3;
+            ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("垃圾箱");
+            listViewItem3.ImageIndex = 5;
+            ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("已删除");
+            listViewItem4.ImageIndex = 6;
+            ListView MailListView = new System.Windows.Forms.ListView();
+            MailListView.Name = "MailListView";
+            MailListView.BorderStyle = BorderStyle.None;
+            MailListView.Location = new System.Drawing.Point(0, 0);
+            MailListView.Size = new System.Drawing.Size(130, 500);
+            InquiryBand.ClientArea.Margin = new Padding(30);
+            MailListView.Dock = DockStyle.Fill;
+
+            /*
+            int height = InquiryBand.ClientArea.Height;
+            int width = InquiryBand.ClientArea.Width;
+            MailListView.Location = new System.Drawing.Point(width/4, 20);
+            MailListView.Size = new System.Drawing.Size(width / 2, height - 40);
+             */
+            MailListView.LargeImageList = outlookLargeIcons;
+            MailListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,listViewItem2,listViewItem3,listViewItem4});
+            MailListView.UseCompatibleStateImageBehavior = false;
+            MailListView.View = System.Windows.Forms.View.LargeIcon;
+            InquiryBand.ClientArea.SizeChanged += new EventHandler(InquiryBand_ClientArea_SizeChanged);
+            InquiryBand.ClientArea.Controls.Add(MailListView);
         }
 
-        void outlookBar1_PropertyChanged(OutlookBarBand band, OutlookBarProperty property)
+        void InquiryBand_ClientArea_SizeChanged(object sender, EventArgs e)
         {
-            if (property == OutlookBarProperty.CurrentBandChanged)
+            /*
+            int height = InquiryBand.ClientArea.Height;
+            int width = InquiryBand.ClientArea.Width;
+            if (height < 300) height = 300;
+            ListView MailListView = (ListView)InquiryBand.ClientArea.Controls["MailListView"];
+            MailListView.Location = new System.Drawing.Point(width <100 ? 0 :width / 4, 20);
+            MailListView.Size = new System.Drawing.Size(width <100 ? width: width / 2, height - 40);
+             */
+        }
+
+        private void NavigatorBar_ActiveBandChanged(object sender, EventArgs e)
+        {
+            string bandName = NavigatorBar.ActiveBand.Name;
+            if (bandName == "ProductBand")
             {
-                int index = outlookBar1.GetCurrentBand();
-                if (index == 0)
-                {
-                    LoadProdutPanel();
-                }
-                else if (index == 1)
-                {
-                    UnLoadProdcutPanel();
-                }
-                else if (index == 2)
-                {
-                    UnLoadProdcutPanel();
-                }
-                GC.Collect();
+                LoadProdutPanel();
             }
+            else if (bandName == "UpdateBand")
+            {
+                UnLoadProdcutPanel();
+            }
+            else if (bandName == "ProductBand")
+            {
+                UnLoadProdcutPanel();
+            }
+            else if (bandName == "InquiryBand")
+            {
+                UnLoadProdcutPanel();
+            }
+            else if (bandName == "ClientBand")
+            {
+                UnLoadProdcutPanel();
+            }
+            else if (bandName == "OrderBand")
+            {
+                UnLoadProdcutPanel();
+            }
+            GC.Collect();
         }
 
-        void OnOutlookBarItemClicked(OutlookBarBand band, OutlookBarItem item)
-        {
-            string message = "Item : " + item.Text + " was clicked...";
-            MessageBox.Show(message);
-        }
         #endregion
 
         #region 更新产品目录
@@ -247,8 +291,11 @@ namespace AliHelper
                     productsManager.UpdateGroupProdcuts(group.Id, products);
                     foreach (AliProduct item in products)
                     {
-                        ProductDetail detail = impProductDetail.GetEditFormElements(item.Id);
-                        productsManager.InsertOrUpdateProdcutDetail(detail);
+                        if (productsManager.IsNeedUpdateDetail(item.Id))
+                        {
+                            ProductDetail detail = impProductDetail.GetEditFormElements(item);
+                            productsManager.InsertOrUpdateProdcutDetail(detail);
+                        }
                     }
                 }
             }
@@ -321,6 +368,7 @@ namespace AliHelper
             f.ShowDialog(this);
             */
         }
+
 
     }
 }
