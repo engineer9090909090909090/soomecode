@@ -12,7 +12,10 @@ namespace AliHelper.DAO
         public static DAOFactory Instance =  new DAOFactory();
 
         private SQLiteDBHelper dbHelper;
-
+        private AliProductDao aliProductDao;
+        private AliGroupDao aliGroupDao;
+        private AliImageDao aliImageDao;
+        private AliProductDetailDao aliProductDetailDao;
         private DAOFactory()
         {
             string DataBasePath = FileUtils.GetAppDataFolder() + Path.DirectorySeparatorChar + Constants.DB_FILE;
@@ -26,23 +29,39 @@ namespace AliHelper.DAO
 
         public AliProductDao GetAliProductDao()
         {
-            return new AliProductDao(dbHelper);
+            if (aliProductDao == null)
+            {
+                this.aliProductDao = new AliProductDao(dbHelper);
+            }
+            return aliProductDao;
         }
 
         public AliGroupDao GetAliGroupDao()
         {
-            return new AliGroupDao(dbHelper);
+            if (aliGroupDao == null)
+            {
+                aliGroupDao = new AliGroupDao(dbHelper);
+            }
+            return aliGroupDao;
         }
 
 
         public AliImageDao GetAliImageDao()
         {
-            return new AliImageDao(dbHelper);
+            if (aliImageDao == null)
+            {
+                aliImageDao = new AliImageDao(dbHelper);
+            }
+            return aliImageDao;
         }
 
         public AliProductDetailDao GetAliProductDetailDao()
         {
-            return new AliProductDetailDao(dbHelper);
+            if (aliProductDetailDao == null)
+            {
+                aliProductDetailDao = new AliProductDetailDao(dbHelper);
+            }
+            return aliProductDetailDao;
         }
         
 

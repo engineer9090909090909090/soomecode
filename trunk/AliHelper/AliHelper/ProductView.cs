@@ -507,16 +507,31 @@ namespace AliHelper
                 }
                 this.supplyPeriod.SelectedItem = selected;
             }
-            
+
+            // 
+            // SysAttrPanel
+            // 
+            if (this.SysAttrPanel != null)
+            {
+                if (this.SysAttrPanel.Controls.Count > 0)
+                {
+                    foreach (Control c in this.SysAttrPanel.Controls)
+                    {
+                        this.SysAttrPanel.Controls.Remove(c);
+                    }
+                }
+                this.AttrTab.Controls.Remove(this.SysAttrPanel);
+                this.SysAttrPanel.Dispose();
+                this.SysAttrPanel = null;
+            }
+            this.SysAttrPanel = new System.Windows.Forms.Panel();
+            this.SysAttrPanel.Location = new System.Drawing.Point(0, 0);
+            this.SysAttrPanel.Name = "SysAttrPanel";
+            this.SysAttrPanel.Size = new System.Drawing.Size(550, 342);
+            this.AttrTab.Controls.Add(this.SysAttrPanel);
+
             int height = 20;
             int tabIndex = 1;
-            if (this.SysAttrPanel.Controls.Count>0)
-            {
-                foreach (Control c in this.SysAttrPanel.Controls)
-                {
-                    this.SysAttrPanel.Controls.Remove(c);
-                }
-            }
             foreach (AttributeNode attr in AliProductDetail.SysAttr)
             {
                 LoadSystemAttributes(attr, ref height, ref tabIndex);
