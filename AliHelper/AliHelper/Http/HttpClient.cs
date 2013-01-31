@@ -85,6 +85,8 @@ namespace AliHelper
                     produtList.Add(p);
                 }
             }
+            prodcutsJsonText = null;
+            productsInfo = null;
             return produtList;
         }
 
@@ -108,6 +110,8 @@ namespace AliHelper
                     groups.AddRange(GetGroups(g.Id, g.Level, csrfToken));
                 }
             }
+            groupJsonText = null;
+            groupInfo = null;
             return groups;
         }
 
@@ -117,16 +121,17 @@ namespace AliHelper
             SearchUrl = string.Format(SearchUrl, key.Replace(" ", "+"), DateUtils.DateTimeToInt(DateTime.Now));
             string html = RemoteRequest(SearchUrl, null);
             string json = RegexFetchJson.FetchJson("var categroyData =(.*?); return categroyData;", html);
-            if (string.IsNullOrEmpty(json))
-            {
-                return null;
-            }
+            List<CategroyNode> categoryList = null;
             CategroyDataJson categroyData = JsonConvert.FromJson<CategroyDataJson>(json);
-            if (categroyData == null || categroyData.Category == null)
+            if (categroyData != null)
             {
-                return null;
+                categoryList = categroyData.Category;
             }
-            return categroyData.Category;
+            categroyData = null;
+            json = null;
+            html = null;
+            SearchUrl = null;
+            return categoryList;
         }
 
         public static List<AttributeNode> GetSelectCategoryAttributes(string categoryId)
@@ -163,6 +168,8 @@ namespace AliHelper
             }
             string html = RemoteRequest(url, null);
             List<ImageGroupNode> imageGroupNodes = JsonConvert.FromJson<List<ImageGroupNode>>(html);
+            html = null;
+            url = null;
             return imageGroupNodes;
         }
 
