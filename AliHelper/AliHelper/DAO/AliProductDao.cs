@@ -162,5 +162,47 @@ namespace AliHelper.DAO
             }
             return list;
         }
+
+
+        public AliProduct GetAliProduct(int Id)
+        {
+            string sql = "SELECT Id,Keywords, IsKeywords, Status, GroupId,"
+                + " GroupName1,GroupName2,GroupName3, Subject, RedModel, DetailUrl,AbsImageUrl,AbsSummImageUrl,IsWindowProduct,  "
+                + "GmtModified, Type, IsDisplay, OwnerMemberId, OwnerMemberName, IsLowScore from AliProducts where id = " + Id;
+            DataTable dt = dbHelper.ExecuteDataTable(sql, null);
+            if(dt != null && dt.Rows.Count > 0)
+            {
+                DataRow row = dt.Rows[0];
+                AliProduct kw = new AliProduct();
+                kw.Id = Convert.ToInt32(row["Id"]);
+                kw.Keywords = (string)row["Keywords"];
+                kw.IsKeywords = Convert.ToBoolean(row["IsKeywords"]);
+                kw.Status = (string)row["Status"];
+                kw.GroupName1 = (string)row["GroupName1"];
+                kw.GroupName2 = (string)row["GroupName2"];
+                kw.GroupName3 = (string)row["GroupName3"];
+                kw.Subject = (string)row["Subject"];
+                kw.RedModel = (string)row["RedModel"];
+                kw.DetailUrl = (string)row["DetailUrl"];
+                kw.AbsImageUrl = (string)row["AbsImageUrl"];
+                kw.AbsSummImageUrl = (string)row["AbsSummImageUrl"];
+                kw.IsWindowProduct = Convert.ToBoolean(row["IsWindowProduct"]);
+                kw.GmtModified = (string)row["GmtModified"];
+                kw.Type = (string)row["Type"];
+                kw.IsDisplay = (string)row["IsDisplay"];
+                kw.OwnerMemberId = (string)row["OwnerMemberId"];
+                kw.OwnerMemberName = (string)row["OwnerMemberName"];
+                kw.IsLowScore = (string)row["IsLowScore"];
+                return kw;
+            }
+            return null;
+        }
+
+        public bool IsNeedUpdateDetail(int id)
+        {
+            string sql = "SELECT p.id FROM AliProducts p left join AliProductDetail d on p.id = d.pid  "
+                         + "where p.id = " + id + "  and ( p.GmtModified >  d.gmtModified or d.pid is null ) ";
+            return Convert.IsDBNull(dbHelper.ExecuteScalar(sql, null));
+        }
     }
 }

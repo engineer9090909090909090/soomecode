@@ -33,16 +33,17 @@ namespace AliHelper
             DataCache.Instance.SupplyPeriodOptions = GetProductDetailOptions(productFormEl, "supplyPeriod");
         }
 
-        public ProductDetail GetEditFormElements(int productId)
+        public ProductDetail GetEditFormElements(AliProduct product)
         {
-            string url = "http://hz.productposting.alibaba.com/product/editing.htm?id=" + productId;
+            string url = "http://hz.productposting.alibaba.com/product/editing.htm?id=" + product.Id;
             string html = HttpClient.RemoteRequest(url, null);
             HtmlNode.ElementsFlags.Remove("form");
             HtmlDocument document = new HtmlDocument();
             document.LoadHtml(html);
             HtmlNode productFormEl = document.GetElementbyId("productForm");
             ProductDetail detail = PrintElementsValue(productFormEl);
-            detail.pid = productId;
+            detail.pid = product.Id;
+            detail.gmtModified = product.GmtModified;
             html = html.Replace("\r", "").Replace("\n", "").Replace("\t", "");
             detail.SysAttr = GetSysAttr(html);
             detail.FixAttr = GetFixAttr(html);

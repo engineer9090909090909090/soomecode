@@ -735,7 +735,8 @@ namespace AliHelper
                     ProductDetail detail = productsManager.GetProductDetail(id);
                     if (detail == null)
                     {
-                        detail = impProductDetail.GetEditFormElements(id);
+                        AliProduct product = productsManager.GetAliProduct(id);
+                        detail = impProductDetail.GetEditFormElements(product);
                         productsManager.InsertOrUpdateProdcutDetail(detail);
                     }
                     this.AliProductDetail = detail;

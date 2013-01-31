@@ -25,6 +25,7 @@ namespace AliHelper.DAO
             dbHelper.ExecuteNonQuery(
               "CREATE TABLE IF NOT EXISTS AliProductDetail("
             + "pid integer NOT NULL PRIMARY KEY UNIQUE,"
+            + "gmtModified varchar(50) NOT NULL,"
             + "id varchar(1000),"
             + "fromType2 varchar(1000),"
             + "commonCategoryName varchar(1000),"
@@ -149,11 +150,12 @@ namespace AliHelper.DAO
         {
             Type typeOfClass = detail.GetType();
             PropertyInfo[] pInfo = typeOfClass.GetProperties();
-            string sqlCondi = "INSERT INTO AliProductDetail(pid";
-            string sqlValue = ")values(@pid";
+            string sqlCondi = "INSERT INTO AliProductDetail(pid,gmtModified";
+            string sqlValue = ")values(@pid, @gmtModified";
             string sqlEnd = ");";
             List<SQLiteParameter> parameter = new List<SQLiteParameter>();
             parameter.Add(new SQLiteParameter("@pid", detail.pid));
+            parameter.Add(new SQLiteParameter("@gmtModified", detail.gmtModified));
             foreach (PropertyInfo info in pInfo)
             {
                 if (info.PropertyType.Name == "FormElement")
@@ -173,20 +175,22 @@ namespace AliHelper.DAO
         {
             Type typeOfClass = detail.GetType();
             PropertyInfo[] pInfo = typeOfClass.GetProperties();
-            string sqlCondi = "Update AliProductDetail SET ";
-            string sqlEnd = " where pid =" + detail.pid;
+            string sqlCondi = "Update AliProductDetail SET gmtModified=@gmtModified";
+            string sqlEnd = " where pid = @pid";
             List<SQLiteParameter> parameter = new List<SQLiteParameter>();
+            parameter.Add(new SQLiteParameter("@gmtModified", detail.gmtModified));
             foreach (PropertyInfo info in pInfo)
             {
                 if (info.PropertyType.Name == "FormElement")
                 {
-                    sqlCondi = sqlCondi + info.Name + " = @" + info.Name + ",";
+                    sqlCondi = sqlCondi + "," + info.Name + " = @" + info.Name;
                     object val = info.GetValue(detail, null);
                     string json = JsonConvert.ToJson(val);
                     parameter.Add(new SQLiteParameter("@" + info.Name, json));
                 }
             }
-            string UpdateSql = sqlCondi.Substring(0, sqlCondi.Length - 1) + sqlEnd;
+            parameter.Add(new SQLiteParameter("@pid", detail.pid));
+            string UpdateSql = sqlCondi + sqlEnd;
             dbHelper.ExecuteNonQuery(UpdateSql, parameter.ToArray());
         }
 

@@ -130,5 +130,14 @@ namespace AliHelper
             return detailDao.GetProductDetail(id);
         }
 
+        public AliProduct GetAliProduct(int Id)
+        {
+            return productDao.GetAliProduct(Id);
+        }
+
+        public bool IsNeedUpdateDetail(int id)
+        {
+            return productDao.IsNeedUpdateDetail(id);
+        }
     }
 }
