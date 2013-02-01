@@ -40,7 +40,6 @@
             this.updateAllProduct = new System.Windows.Forms.ToolStripButton();
             this.updateAllImages = new System.Windows.Forms.ToolStripButton();
             this.NewProductBtn = new System.Windows.Forms.ToolStripButton();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.NavigatorBar = new Guifreaks.NavigationBar.NaviBar(this.components);
             this.ProductBand = new Guifreaks.NavigationBar.NaviBand(this.components);
             this.InquiryBand = new Guifreaks.NavigationBar.NaviBand(this.components);
@@ -51,11 +50,11 @@
             this.NewPlanMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ModifyPlanMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DeletePlanMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Explorer = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.ProductsStrip.SuspendLayout();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NavigatorBar)).BeginInit();
             this.NavigatorBar.SuspendLayout();
             this.ProductBand.SuspendLayout();
@@ -64,6 +63,7 @@
             this.ClientBand.SuspendLayout();
             this.OrderBand.SuspendLayout();
             this.CfContextMenuStrip.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -154,24 +154,6 @@
             this.NewProductBtn.Text = "新增产品";
             this.NewProductBtn.Click += new System.EventHandler(this.newProductBtn_Click);
             // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 49);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.NavigatorBar);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.splitContainer1.Panel2.CausesValidation = false;
-            this.splitContainer1.Size = new System.Drawing.Size(823, 447);
-            this.splitContainer1.SplitterDistance = 130;
-            this.splitContainer1.TabIndex = 0;
-            // 
             // NavigatorBar
             // 
             this.NavigatorBar.ActiveBand = this.ProductBand;
@@ -182,10 +164,9 @@
             this.NavigatorBar.Controls.Add(this.OrderBand);
             this.NavigatorBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.NavigatorBar.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
-            this.NavigatorBar.Location = new System.Drawing.Point(0, 0);
+            this.NavigatorBar.Location = new System.Drawing.Point(3, 3);
             this.NavigatorBar.Name = "NavigatorBar";
-            this.NavigatorBar.ShowCollapseButton = false;
-            this.NavigatorBar.Size = new System.Drawing.Size(130, 447);
+            this.NavigatorBar.Size = new System.Drawing.Size(180, 441);
             this.NavigatorBar.TabIndex = 6;
             this.NavigatorBar.Text = "naviBar1";
             this.NavigatorBar.VisibleLargeButtons = 3;
@@ -198,13 +179,13 @@
             // 
             this.ProductBand.ClientArea.Location = new System.Drawing.Point(0, 0);
             this.ProductBand.ClientArea.Name = "ClientArea";
-            this.ProductBand.ClientArea.Size = new System.Drawing.Size(128, 284);
+            this.ProductBand.ClientArea.Size = new System.Drawing.Size(178, 278);
             this.ProductBand.ClientArea.TabIndex = 0;
             this.ProductBand.LargeImage = global::AliHelper.Properties.Resources.klipper;
             this.ProductBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
             this.ProductBand.Location = new System.Drawing.Point(1, 27);
             this.ProductBand.Name = "ProductBand";
-            this.ProductBand.Size = new System.Drawing.Size(128, 284);
+            this.ProductBand.Size = new System.Drawing.Size(178, 278);
             this.ProductBand.SmallImage = global::AliHelper.Properties.Resources.s_klipper_dock;
             this.ProductBand.TabIndex = 0;
             this.ProductBand.Text = "产品列表";
@@ -217,13 +198,13 @@
             // 
             this.InquiryBand.ClientArea.Location = new System.Drawing.Point(0, 0);
             this.InquiryBand.ClientArea.Name = "ClientArea";
-            this.InquiryBand.ClientArea.Size = new System.Drawing.Size(128, 284);
+            this.InquiryBand.ClientArea.Size = new System.Drawing.Size(178, 278);
             this.InquiryBand.ClientArea.TabIndex = 0;
             this.InquiryBand.LargeImage = global::AliHelper.Properties.Resources.s_bookmark;
             this.InquiryBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
             this.InquiryBand.Location = new System.Drawing.Point(1, 27);
             this.InquiryBand.Name = "InquiryBand";
-            this.InquiryBand.Size = new System.Drawing.Size(128, 284);
+            this.InquiryBand.Size = new System.Drawing.Size(178, 278);
             this.InquiryBand.SmallImage = global::AliHelper.Properties.Resources.s_bookmark;
             this.InquiryBand.TabIndex = 2;
             this.InquiryBand.Text = "阿里外贸邮";
@@ -236,13 +217,13 @@
             // 
             this.UpdateBand.ClientArea.Location = new System.Drawing.Point(0, 0);
             this.UpdateBand.ClientArea.Name = "ClientArea";
-            this.UpdateBand.ClientArea.Size = new System.Drawing.Size(128, 284);
+            this.UpdateBand.ClientArea.Size = new System.Drawing.Size(178, 278);
             this.UpdateBand.ClientArea.TabIndex = 0;
             this.UpdateBand.LargeImage = global::AliHelper.Properties.Resources.history;
             this.UpdateBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
             this.UpdateBand.Location = new System.Drawing.Point(1, 27);
             this.UpdateBand.Name = "UpdateBand";
-            this.UpdateBand.Size = new System.Drawing.Size(128, 284);
+            this.UpdateBand.Size = new System.Drawing.Size(178, 278);
             this.UpdateBand.SmallImage = global::AliHelper.Properties.Resources.s_history;
             this.UpdateBand.TabIndex = 1;
             this.UpdateBand.Text = "重发计划";
@@ -255,13 +236,13 @@
             // 
             this.ClientBand.ClientArea.Location = new System.Drawing.Point(0, 0);
             this.ClientBand.ClientArea.Name = "ClientArea";
-            this.ClientBand.ClientArea.Size = new System.Drawing.Size(128, 284);
+            this.ClientBand.ClientArea.Size = new System.Drawing.Size(178, 278);
             this.ClientBand.ClientArea.TabIndex = 0;
             this.ClientBand.LargeImage = global::AliHelper.Properties.Resources.s_colorize;
             this.ClientBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
             this.ClientBand.Location = new System.Drawing.Point(1, 27);
             this.ClientBand.Name = "ClientBand";
-            this.ClientBand.Size = new System.Drawing.Size(128, 284);
+            this.ClientBand.Size = new System.Drawing.Size(178, 278);
             this.ClientBand.SmallImage = global::AliHelper.Properties.Resources.s_colorize;
             this.ClientBand.TabIndex = 3;
             this.ClientBand.Text = "客户维护";
@@ -274,13 +255,13 @@
             // 
             this.OrderBand.ClientArea.Location = new System.Drawing.Point(0, 0);
             this.OrderBand.ClientArea.Name = "ClientArea";
-            this.OrderBand.ClientArea.Size = new System.Drawing.Size(128, 284);
+            this.OrderBand.ClientArea.Size = new System.Drawing.Size(178, 278);
             this.OrderBand.ClientArea.TabIndex = 0;
             this.OrderBand.LargeImage = global::AliHelper.Properties.Resources.wizard;
             this.OrderBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
             this.OrderBand.Location = new System.Drawing.Point(1, 27);
             this.OrderBand.Name = "OrderBand";
-            this.OrderBand.Size = new System.Drawing.Size(128, 284);
+            this.OrderBand.Size = new System.Drawing.Size(178, 278);
             this.OrderBand.SmallImage = global::AliHelper.Properties.Resources.s_wizard;
             this.OrderBand.TabIndex = 4;
             this.OrderBand.Text = "订单跟进";
@@ -314,12 +295,36 @@
             this.DeletePlanMenuItem.Size = new System.Drawing.Size(146, 22);
             this.DeletePlanMenuItem.Text = "删除重发计划";
             // 
+            // Explorer
+            // 
+            this.Explorer.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.Explorer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Explorer.Location = new System.Drawing.Point(189, 3);
+            this.Explorer.Name = "Explorer";
+            this.Explorer.Size = new System.Drawing.Size(631, 441);
+            this.Explorer.TabIndex = 7;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.Explorer, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.NavigatorBar, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 49);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(823, 447);
+            this.tableLayoutPanel1.TabIndex = 5;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(823, 518);
-            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.ProductsStrip);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -335,8 +340,6 @@
             this.menuStrip1.PerformLayout();
             this.ProductsStrip.ResumeLayout(false);
             this.ProductsStrip.PerformLayout();
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.NavigatorBar)).EndInit();
             this.NavigatorBar.ResumeLayout(false);
             this.ProductBand.ResumeLayout(false);
@@ -345,6 +348,7 @@
             this.ClientBand.ResumeLayout(false);
             this.OrderBand.ResumeLayout(false);
             this.CfContextMenuStrip.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -361,7 +365,6 @@
         private System.Windows.Forms.ToolStripButton updateGroup;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.ToolStripButton updateAllProduct;
-        private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripButton NewProductBtn;
         private System.Windows.Forms.ToolStripButton updateAllImages;
         private System.Windows.Forms.ContextMenuStrip CfContextMenuStrip;
@@ -374,5 +377,7 @@
         private Guifreaks.NavigationBar.NaviBand InquiryBand;
         private Guifreaks.NavigationBar.NaviBand ClientBand;
         private Guifreaks.NavigationBar.NaviBand OrderBand;
+        private System.Windows.Forms.Panel Explorer;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }
