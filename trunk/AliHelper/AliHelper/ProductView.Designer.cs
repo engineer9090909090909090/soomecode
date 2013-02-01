@@ -29,8 +29,7 @@ namespace AliHelper
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.ProductInfoControl = new System.Windows.Forms.TabControl();
             this.BaseInfoTab = new System.Windows.Forms.TabPage();
@@ -137,9 +136,7 @@ namespace AliHelper
             this.label11 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.ProductInfoControl.SuspendLayout();
             this.BaseInfoTab.SuspendLayout();
@@ -160,25 +157,10 @@ namespace AliHelper
             this.AttrTab.SuspendLayout();
             this.DescTab.SuspendLayout();
             this.TransTab.SuspendLayout();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.dataGridView1);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.ProductInfoControl);
-            this.splitContainer1.Size = new System.Drawing.Size(1047, 721);
-            this.splitContainer1.SplitterDistance = 350;
-            this.splitContainer1.TabIndex = 0;
             // 
             // dataGridView1
             // 
@@ -187,27 +169,28 @@ namespace AliHelper
             this.dataGridView1.AllowUserToOrderColumns = true;
             this.dataGridView1.AllowUserToResizeColumns = false;
             this.dataGridView1.AllowUserToResizeRows = false;
+            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridView1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SunkenHorizontal;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlDark;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.ControlDark;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 25;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.ShowEditingIcon = false;
             this.dataGridView1.ShowRowErrors = false;
             this.dataGridView1.Size = new System.Drawing.Size(1047, 350);
-            this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // ProductInfoControl
@@ -217,6 +200,7 @@ namespace AliHelper
             this.ProductInfoControl.Controls.Add(this.DescTab);
             this.ProductInfoControl.Controls.Add(this.TransTab);
             this.ProductInfoControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ProductInfoControl.ItemSize = new System.Drawing.Size(60, 20);
             this.ProductInfoControl.Location = new System.Drawing.Point(0, 0);
             this.ProductInfoControl.Name = "ProductInfoControl";
             this.ProductInfoControl.SelectedIndex = 0;
@@ -244,10 +228,10 @@ namespace AliHelper
             this.BaseInfoTab.Controls.Add(this.summary);
             this.BaseInfoTab.Controls.Add(this.button2);
             this.BaseInfoTab.Controls.Add(this.button1);
-            this.BaseInfoTab.Location = new System.Drawing.Point(4, 21);
+            this.BaseInfoTab.Location = new System.Drawing.Point(4, 24);
             this.BaseInfoTab.Name = "BaseInfoTab";
             this.BaseInfoTab.Padding = new System.Windows.Forms.Padding(3);
-            this.BaseInfoTab.Size = new System.Drawing.Size(1039, 342);
+            this.BaseInfoTab.Size = new System.Drawing.Size(1039, 339);
             this.BaseInfoTab.TabIndex = 0;
             this.BaseInfoTab.Text = "基本信息";
             this.BaseInfoTab.UseVisualStyleBackColor = true;
@@ -588,7 +572,7 @@ namespace AliHelper
             this.ComputeLink.TabIndex = 31;
             this.ComputeLink.TabStop = true;
             this.ComputeLink.Text = "从我的电脑选取";
-            this.ComputeLink.Click += new System.EventHandler(ComputeLink_Click);
+            this.ComputeLink.Click += new System.EventHandler(this.ComputeLink_Click);
             // 
             // label1
             // 
@@ -733,10 +717,10 @@ namespace AliHelper
             this.AttrTab.Controls.Add(this.customAttrKey1);
             this.AttrTab.Controls.Add(this.label12);
             this.AttrTab.Controls.Add(this.label6);
-            this.AttrTab.Location = new System.Drawing.Point(4, 21);
+            this.AttrTab.Location = new System.Drawing.Point(4, 24);
             this.AttrTab.Name = "AttrTab";
             this.AttrTab.Padding = new System.Windows.Forms.Padding(3);
-            this.AttrTab.Size = new System.Drawing.Size(1039, 342);
+            this.AttrTab.Size = new System.Drawing.Size(1039, 339);
             this.AttrTab.TabIndex = 1;
             this.AttrTab.Text = "产品属性";
             this.AttrTab.UseVisualStyleBackColor = true;
@@ -910,10 +894,10 @@ namespace AliHelper
             // DescTab
             // 
             this.DescTab.Controls.Add(this.webBrowser1);
-            this.DescTab.Location = new System.Drawing.Point(4, 21);
+            this.DescTab.Location = new System.Drawing.Point(4, 24);
             this.DescTab.Name = "DescTab";
             this.DescTab.Padding = new System.Windows.Forms.Padding(3);
-            this.DescTab.Size = new System.Drawing.Size(1039, 342);
+            this.DescTab.Size = new System.Drawing.Size(1039, 339);
             this.DescTab.TabIndex = 2;
             this.DescTab.Text = "产品详情";
             this.DescTab.UseVisualStyleBackColor = true;
@@ -925,7 +909,7 @@ namespace AliHelper
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
             this.webBrowser1.ScriptErrorsSuppressed = true;
-            this.webBrowser1.Size = new System.Drawing.Size(1033, 336);
+            this.webBrowser1.Size = new System.Drawing.Size(1033, 333);
             this.webBrowser1.TabIndex = 0;
             this.webBrowser1.Url = new System.Uri("", System.UriKind.Relative);
             this.webBrowser1.WebBrowserShortcutsEnabled = false;
@@ -962,10 +946,10 @@ namespace AliHelper
             this.TransTab.Controls.Add(this.label11);
             this.TransTab.Controls.Add(this.label9);
             this.TransTab.Controls.Add(this.label8);
-            this.TransTab.Location = new System.Drawing.Point(4, 21);
+            this.TransTab.Location = new System.Drawing.Point(4, 24);
             this.TransTab.Name = "TransTab";
             this.TransTab.Padding = new System.Windows.Forms.Padding(3);
-            this.TransTab.Size = new System.Drawing.Size(1039, 342);
+            this.TransTab.Size = new System.Drawing.Size(1039, 339);
             this.TransTab.TabIndex = 3;
             this.TransTab.Text = "交易信息";
             this.TransTab.UseVisualStyleBackColor = true;
@@ -1232,6 +1216,24 @@ namespace AliHelper
             this.label8.TabIndex = 0;
             this.label8.Text = "最小起订量";
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.dataGridView1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.ProductInfoControl);
+            this.splitContainer1.Size = new System.Drawing.Size(1047, 721);
+            this.splitContainer1.SplitterDistance = 350;
+            this.splitContainer1.TabIndex = 0;
+            // 
             // ProductView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1241,9 +1243,6 @@ namespace AliHelper
             this.Name = "ProductView";
             this.Size = new System.Drawing.Size(1047, 721);
             this.Load += new System.EventHandler(this.ProductView_Load);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ProductInfoControl.ResumeLayout(false);
             this.BaseInfoTab.ResumeLayout(false);
@@ -1274,6 +1273,9 @@ namespace AliHelper
             this.DescTab.ResumeLayout(false);
             this.TransTab.ResumeLayout(false);
             this.TransTab.PerformLayout();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1281,7 +1283,6 @@ namespace AliHelper
         
         #endregion
 
-        private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.TabControl ProductInfoControl;
         private System.Windows.Forms.TabPage BaseInfoTab;
@@ -1388,5 +1389,6 @@ namespace AliHelper
         private RadioButton fmppr0dyn_y;
         private Label label22;
         private CheckBox dynamicImageWaterMarkId;
+        private SplitContainer splitContainer1;
     }
 }

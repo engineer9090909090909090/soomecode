@@ -44,11 +44,7 @@ namespace AliHelper
             ListBox listbox = (ListBox)sender;
             string selectId = listbox.SelectedValue.ToString();
             List<AttributeNode> nodes = HttpClient.GetSelectCategoryAttributes(selectId);
-            foreach (AttributeNode node in nodes)
-            {
-                System.Diagnostics.Trace.WriteLine(node.Data.Id + " = " +node.Data.Value );
-            }
-            System.Diagnostics.Trace.WriteLine("=============");
+            
         }
 
         private void tabControl1_Click(object sender, EventArgs e)
