@@ -322,9 +322,9 @@ namespace AliHelper
 
         private void UnLoadProdcutPanel()
         {
-            if (splitContainer1.Panel2.Controls.Count > 0)
+            if (this.Explorer.Controls.Count > 0)
             {
-                splitContainer1.Panel2.Controls.RemoveAt(0);
+                this.Explorer.Controls.RemoveAt(0);
                 this.productView1.Dispose();
             }
             this.productView1 = null;
@@ -338,15 +338,15 @@ namespace AliHelper
                 return;
             }
             this.productView1 = new AliHelper.ProductView();
-            this.splitContainer1.Panel2.SuspendLayout();
+            this.Explorer.SuspendLayout();
             this.productView1.Location = new System.Drawing.Point(0, 0);
             this.productView1.Name = "productView1";
             this.productView1.AutoSize = true;
             this.productView1.TabIndex = 0;
-            this.productView1.Size = new System.Drawing.Size(this.splitContainer1.Panel2.Width, this.splitContainer1.Panel2.Height);
+            this.productView1.Size = new System.Drawing.Size(this.Explorer.Width, this.Explorer.Height);
             this.productView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Panel2.Controls.Add(productView1);
-            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.Explorer.Controls.Add(productView1);
+            this.Explorer.ResumeLayout(false);
         }
 
         private void NewPlanMenuItem_Click(object sender, EventArgs e)
@@ -368,7 +368,6 @@ namespace AliHelper
             f.ShowDialog(this);
             */
         }
-
 
     }
 }
