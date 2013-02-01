@@ -18,17 +18,18 @@ namespace AliHelper
 {
     public partial class MainForm : Form
     {
-        //alibaba vip manage url
-        public static string ManageHtml = "http://hz.productposting.alibaba.com/product/manage_products.htm#tab=approved";
         private ProductsManager productsManager;
         private ImpProductDetail impProductDetail;
         ProductView productView1;
+ 
         #region 构造方法
         public MainForm()
         {
             productsManager = new ProductsManager();
             impProductDetail = new ImpProductDetail();
             InitializeComponent();
+            LoadNavigatorBar();
+            LoadProdutPanel();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -38,27 +39,24 @@ namespace AliHelper
             impProductDetail.InitDataCacheFormOptions();
             productsManager.InitGroupOptions();
             List<AliGroup> groups = productsManager.GetGroupList();
-            LoadNavigatorBar();
             UpdateGroupUI(groups);
-            LoadProdutPanel();
         }
         #endregion
 
-        #region TreeView NodeMouse Event
-        void treeView1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
-        {
-
-        }
-
-        void treeView1_NodeMouseDoubleClick(object sender, System.Windows.Forms.TreeNodeMouseClickEventArgs e)
-        {
-        }
-
+        #region TreeView NodeMouse 事件处理
+        
         void treeView1_NodeMouseClick(object sender, System.Windows.Forms.TreeNodeMouseClickEventArgs e)
         {
-            TreeNode currentNode = e.Node;
-            int GroupId = Convert.ToInt32(currentNode.Tag);
-            this.productView1.LoadDataGridView(GroupId);
+            if (e.Button == MouseButtons.Left)
+            {
+                TreeNode currentNode = e.Node;
+                int GroupId = Convert.ToInt32(currentNode.Tag);
+                this.productView1.LoadDataGridView(GroupId);
+            }
+            else if (e.Button == MouseButtons.Right)
+            { 
+                
+            }
         }
         #endregion
 
@@ -73,9 +71,7 @@ namespace AliHelper
             this.treeView1.Dock = DockStyle.Fill;
             this.treeView1.Size = new System.Drawing.Size(130, 423);
             this.treeView1.TabIndex = 4;
-            this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
-            this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
-            this.treeView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeView1_KeyDown);
+            this.treeView1.NodeMouseClick += new TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
             ProductBand.ClientArea.Controls.Add(treeView1);
 
             ListView listView1 = new ListView();
@@ -85,7 +81,7 @@ namespace AliHelper
             nameColumnHeader.Width = 80;
             ColumnHeader timeColumnHeader = new System.Windows.Forms.ColumnHeader();
             timeColumnHeader.Text = "重发时间";
-            timeColumnHeader.Width = 130;
+            timeColumnHeader.Width = 100;
             listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { nameColumnHeader, timeColumnHeader });
             listView1.Name = "listView1";
             listView1.AllowDrop = false;
@@ -104,48 +100,36 @@ namespace AliHelper
             Bitmap icons = (Bitmap)global::AliHelper.Properties.IconImages.OutlookLargeIcons;
             icons.MakeTransparent(Color.FromArgb(255, 0, 255));
             outlookLargeIcons.Images.AddStrip(icons);
-            ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("收件箱");
-            listViewItem1.ImageIndex = 1;
-            ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("已发送");
-            listViewItem2.ImageIndex = 3;
-            ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("垃圾箱");
-            listViewItem3.ImageIndex = 5;
-            ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("已删除");
-            listViewItem4.ImageIndex = 6;
+            ListViewItem listViewItem1 = new ListViewItem("收件箱", 1);
+            listViewItem1.Name = MailQueryListType.Inbox;
+            ListViewItem listViewItem2 = new ListViewItem("已发送", 3);
+            listViewItem2.Name = MailQueryListType.Sendbox;
+            ListViewItem listViewItem3 = new ListViewItem("垃圾箱", 5);
+            listViewItem3.Name = MailQueryListType.Trash;
+            ListViewItem listViewItem4 = new ListViewItem("已删除", 6);
+            listViewItem4.Name = MailQueryListType.Spam;
             ListView MailListView = new System.Windows.Forms.ListView();
             MailListView.Name = "MailListView";
             MailListView.BorderStyle = BorderStyle.None;
-            MailListView.Location = new System.Drawing.Point(0, 0);
-            MailListView.Size = new System.Drawing.Size(130, 500);
-            InquiryBand.ClientArea.Margin = new Padding(30);
-            MailListView.Dock = DockStyle.Fill;
-
-            /*
-            int height = InquiryBand.ClientArea.Height;
-            int width = InquiryBand.ClientArea.Width;
-            MailListView.Location = new System.Drawing.Point(width/4, 20);
-            MailListView.Size = new System.Drawing.Size(width / 2, height - 40);
-             */
+            MailListView.Location = new System.Drawing.Point(40, 20);
+            MailListView.Size = new System.Drawing.Size(80, 300);
             MailListView.LargeImageList = outlookLargeIcons;
             MailListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1,listViewItem2,listViewItem3,listViewItem4});
             MailListView.UseCompatibleStateImageBehavior = false;
+            MailListView.ItemSelectionChanged += new ListViewItemSelectionChangedEventHandler(MailListView_ItemSelectionChanged);
             MailListView.View = System.Windows.Forms.View.LargeIcon;
-            InquiryBand.ClientArea.SizeChanged += new EventHandler(InquiryBand_ClientArea_SizeChanged);
             InquiryBand.ClientArea.Controls.Add(MailListView);
         }
 
-        void InquiryBand_ClientArea_SizeChanged(object sender, EventArgs e)
+        void MailListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            /*
-            int height = InquiryBand.ClientArea.Height;
-            int width = InquiryBand.ClientArea.Width;
-            if (height < 300) height = 300;
-            ListView MailListView = (ListView)InquiryBand.ClientArea.Controls["MailListView"];
-            MailListView.Location = new System.Drawing.Point(width <100 ? 0 :width / 4, 20);
-            MailListView.Size = new System.Drawing.Size(width <100 ? width: width / 2, height - 40);
-             */
+            if (e.IsSelected)
+            {
+                string ItemName = e.Item.Name;
+            }
         }
+
 
         private void NavigatorBar_ActiveBandChanged(object sender, EventArgs e)
         {
@@ -245,6 +229,7 @@ namespace AliHelper
         }
         #endregion
 
+        #region ToolButton 事件处理
         public void UpdateGroupUI(List<AliGroup> groups)
         {
             treeView1.Nodes.Clear();
@@ -314,12 +299,13 @@ namespace AliHelper
 
         private void newProductBtn_Click(object sender, EventArgs e)
         {
-            //HttpClient.GetCountries();
             EditCategory f = new EditCategory();
             f.StartPosition = FormStartPosition.CenterParent;
             f.ShowDialog(this);
         }
+        #endregion
 
+        #region ProductPanel 处理
         private void UnLoadProdcutPanel()
         {
             if (this.Explorer.Controls.Count > 0)
@@ -348,26 +334,26 @@ namespace AliHelper
             this.Explorer.Controls.Add(productView1);
             this.Explorer.ResumeLayout(false);
         }
+        #endregion
 
+        #region 重发计划处理
         private void NewPlanMenuItem_Click(object sender, EventArgs e)
         {
-            /*
             NewPlanForm f = new NewPlanForm();
             f.Text = "新建重发计划";
             f.StartPosition = FormStartPosition.CenterParent;
             f.ShowDialog(this);
-            */
         }
 
         private void ModifyPlanMenuItem_Click(object sender, EventArgs e)
         {
-            /*
+           
             NewPlanForm f = new NewPlanForm();
             f.Text = "编辑重发计划";
             f.StartPosition = FormStartPosition.CenterParent;
             f.ShowDialog(this);
-            */
         }
+        #endregion
 
     }
 }

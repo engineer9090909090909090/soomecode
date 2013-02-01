@@ -297,7 +297,7 @@
             // 
             // Explorer
             // 
-            this.Explorer.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.Explorer.BackColor = System.Drawing.SystemColors.Control;
             this.Explorer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Explorer.Location = new System.Drawing.Point(189, 3);
             this.Explorer.Name = "Explorer";

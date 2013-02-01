@@ -116,7 +116,7 @@ namespace AliHelper
             {
                 HttpHelper.GetHtml(urlstring, cookieContainer);
             }
-            string manageHtml = HttpHelper.GetHtml(MainForm.ManageHtml, cookieContainer);
+            string manageHtml = HttpHelper.GetHtml(HttpClient.ManageHtml, cookieContainer);
             DataCache.Instance.CsrfToken = HttpClient.GetCsrfToken(manageHtml);
             DataCache.Instance.CheckCodeUrl = HttpClient.GetCheckCodeUrl(manageHtml);
             ShareCookie.Instance.LoginCookieContainer = cookieContainer;
