@@ -397,6 +397,8 @@
     <Content Include="KindEditor\skins\common\rm.gif" />
     <Content Include="KindEditor\skins\default.css" />
     <Content Include="KindEditor\skins\default\default.gif" />
+    <None Include="Resources\Dollars.ico" />
+    <None Include="Resources\Dollars.png" />
     <None Include="Resources\s_wizard.png" />
     <None Include="Resources\s_klipper_dock.png" />
     <None Include="Resources\s_history.png" />
