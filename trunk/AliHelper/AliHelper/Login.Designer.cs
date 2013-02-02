@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.loginPanel = new System.Windows.Forms.Panel();
             this.LogPanel = new System.Windows.Forms.Panel();
@@ -201,10 +202,10 @@
             this.Controls.Add(this.BtnLogin);
             this.Controls.Add(this.changeModel);
             this.Controls.Add(this.loginPanel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "LoginForm";
-            this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "登录";
