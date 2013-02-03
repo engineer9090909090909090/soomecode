@@ -18,7 +18,7 @@ namespace AliHelper.DAO
         private AliProductDetailDao aliProductDetailDao;
         private DAOFactory()
         {
-            string DataBasePath = FileUtils.GetAppDataFolder() + Path.DirectorySeparatorChar + Constants.DB_FILE;
+            string DataBasePath = FileUtils.GetUserDataFolder() + Path.DirectorySeparatorChar + Constants.DB_FILE;
             //File.Delete(DataBasePath);
             if (!File.Exists(DataBasePath))
             {
