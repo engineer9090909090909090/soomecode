@@ -6,6 +6,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
+using System.Net;
+using System.Net.NetworkInformation;
 
 namespace AliRank
 {
@@ -126,6 +128,21 @@ namespace AliRank
             StringBuilder ret = new StringBuilder();
             return System.Text.Encoding.Default.GetString(ms.ToArray()); 
         } 
+
+        public static bool PingIpAddress(string ipAddress)
+        {
+            Ping pingSender = new Ping();
+            PingOptions options = new PingOptions();
+            // Use the default Ttl value which is 128,
+            // but change the fragmentation behavior.
+            options.DontFragment = true;
+            // Create a buffer of 32 bytes of data to be transmitted.
+            string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            byte[] buffer = Encoding.ASCII.GetBytes(data);
+            int timeout = 120;
+            PingReply reply = pingSender.Send(ipAddress, timeout, buffer, options);
+            return (reply.Status == IPStatus.Success);
+        }
     }
 
 
