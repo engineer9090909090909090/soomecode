@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Soomes;
 using System.Web;
 using System.Net;
+using System.IO;
 
 namespace AliHelper
 {
@@ -97,7 +98,13 @@ namespace AliHelper
                     DataRow row = this.dataTable.NewRow();
                     row["Id"] = item.Id;
                     row["Check"] = false;
-                    row["Image"] = global::AliHelper.Properties.Resources.no_image;
+                    string imageFile = FileUtils.GetProductImagesFolder() + Path.DirectorySeparatorChar + item.Id + ".jpg";
+                    if (File.Exists(imageFile))
+                    {
+                        row["Image"] = Image.FromFile(imageFile, true);
+                    }else{
+                        row["Image"] = global::AliHelper.Properties.Resources.no_image;
+                    }
                     row["Subject"] = item.Subject;
                     row["RedModel"] = item.RedModel;
                     row["IsWindowProduct"] = item.IsWindowProduct?"是":"";
