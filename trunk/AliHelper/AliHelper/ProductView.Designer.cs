@@ -190,7 +190,7 @@ namespace AliHelper
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.ShowEditingIcon = false;
             this.dataGridView1.ShowRowErrors = false;
-            this.dataGridView1.Size = new System.Drawing.Size(1047, 350);
+            this.dataGridView1.Size = new System.Drawing.Size(1047, 320);
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
@@ -205,7 +205,7 @@ namespace AliHelper
             this.ProductInfoControl.Location = new System.Drawing.Point(0, 0);
             this.ProductInfoControl.Name = "ProductInfoControl";
             this.ProductInfoControl.SelectedIndex = 0;
-            this.ProductInfoControl.Size = new System.Drawing.Size(1047, 367);
+            this.ProductInfoControl.Size = new System.Drawing.Size(1047, 397);
             this.ProductInfoControl.TabIndex = 0;
             // 
             // BaseInfoTab
@@ -232,7 +232,7 @@ namespace AliHelper
             this.BaseInfoTab.Location = new System.Drawing.Point(4, 24);
             this.BaseInfoTab.Name = "BaseInfoTab";
             this.BaseInfoTab.Padding = new System.Windows.Forms.Padding(3);
-            this.BaseInfoTab.Size = new System.Drawing.Size(1039, 339);
+            this.BaseInfoTab.Size = new System.Drawing.Size(1039, 369);
             this.BaseInfoTab.TabIndex = 0;
             this.BaseInfoTab.Text = "基本信息";
             this.BaseInfoTab.UseVisualStyleBackColor = true;
@@ -250,10 +250,11 @@ namespace AliHelper
             // 
             // staticImage
             // 
+            this.staticImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.staticImage.Image = global::AliHelper.Properties.Resources.no_image;
             this.staticImage.Location = new System.Drawing.Point(3, 0);
             this.staticImage.Name = "staticImage";
-            this.staticImage.Size = new System.Drawing.Size(150, 147);
+            this.staticImage.Size = new System.Drawing.Size(100, 100);
             this.staticImage.TabIndex = 28;
             this.staticImage.TabStop = false;
             // 
@@ -1232,7 +1233,7 @@ namespace AliHelper
             // 
             this.splitContainer1.Panel2.Controls.Add(this.ProductInfoControl);
             this.splitContainer1.Size = new System.Drawing.Size(1047, 721);
-            this.splitContainer1.SplitterDistance = 350;
+            this.splitContainer1.SplitterDistance = 320;
             this.splitContainer1.TabIndex = 0;
             // 
             // ProductView
