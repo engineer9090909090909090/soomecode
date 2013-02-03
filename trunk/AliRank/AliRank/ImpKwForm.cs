@@ -83,7 +83,7 @@ namespace AliRank
                 Image img = global::AliRank.Properties.Resources.no_image; 
                 if (!string.IsNullOrEmpty(obj.ProductImg) && File.Exists(obj.ProductImg))
                 {
-                    img = new Bitmap(Image.FromFile(obj.ProductImg));
+                    img = Image.FromFile(obj.ProductImg, true);
                 }
                 imageList1.Images.Add(img);
                 ListViewItem item = new ListViewItem();

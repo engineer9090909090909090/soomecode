@@ -234,7 +234,7 @@ namespace AliRank
                     {
                         row["Image"] = global::AliRank.Properties.Resources.no_image; 
                     }else {
-                        row["Image"] = new Bitmap(Image.FromFile(item.ProductImg));
+                        row["Image"] = Image.FromFile(item.ProductImg, true);
                     }
                     row["productName"] = item.ProductName;
                     row["productId"] = item.ProductId;
@@ -471,9 +471,16 @@ namespace AliRank
             {
                 CurrVpnModel = vpnDao.GetEffctiveVPN();
             }
+            
             if (CurrVpnModel == null)
             {
                 return false;
+            }
+            bool IsPingPass = FileUtils.PingIpAddress(CurrVpnModel.Address);
+            if (IsPingPass == false)
+            {
+                vpnDao.UpdateVPNStatus(CurrVpnModel.Address, Constants.INVALID);
+                return ConnectNextVpn(null);
             }
             this.MessageLabel.Text = "正在连接到VPN地址" + CurrVpnModel.Address;
             this.toolStripStatusLabel1.Text = "正在连接到VPN地址" + CurrVpnModel.Address;
