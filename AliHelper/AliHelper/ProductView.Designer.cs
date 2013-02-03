@@ -186,7 +186,7 @@ namespace AliHelper
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.RowTemplate.Height = 25;
+            this.dataGridView1.RowTemplate.Height = 50;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.ShowEditingIcon = false;
             this.dataGridView1.ShowRowErrors = false;
@@ -722,7 +722,7 @@ namespace AliHelper
             this.AttrTab.Location = new System.Drawing.Point(4, 24);
             this.AttrTab.Name = "AttrTab";
             this.AttrTab.Padding = new System.Windows.Forms.Padding(3);
-            this.AttrTab.Size = new System.Drawing.Size(1039, 339);
+            this.AttrTab.Size = new System.Drawing.Size(1039, 369);
             this.AttrTab.TabIndex = 1;
             this.AttrTab.Text = "产品属性";
             this.AttrTab.UseVisualStyleBackColor = true;
@@ -899,7 +899,7 @@ namespace AliHelper
             this.DescTab.Location = new System.Drawing.Point(4, 24);
             this.DescTab.Name = "DescTab";
             this.DescTab.Padding = new System.Windows.Forms.Padding(3);
-            this.DescTab.Size = new System.Drawing.Size(1039, 339);
+            this.DescTab.Size = new System.Drawing.Size(1039, 369);
             this.DescTab.TabIndex = 2;
             this.DescTab.Text = "产品详情";
             this.DescTab.UseVisualStyleBackColor = true;
@@ -951,7 +951,7 @@ namespace AliHelper
             this.TransTab.Location = new System.Drawing.Point(4, 24);
             this.TransTab.Name = "TransTab";
             this.TransTab.Padding = new System.Windows.Forms.Padding(3);
-            this.TransTab.Size = new System.Drawing.Size(1039, 339);
+            this.TransTab.Size = new System.Drawing.Size(1039, 369);
             this.TransTab.TabIndex = 3;
             this.TransTab.Text = "交易信息";
             this.TransTab.UseVisualStyleBackColor = true;
