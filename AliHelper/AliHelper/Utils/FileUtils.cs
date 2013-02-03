@@ -21,9 +21,19 @@ namespace AliHelper
             return AppDataFolder;
         }
 
-        public static string GetImageFolder()
+        public static string GetPhotoBankFolder()
         {
-            string imageDir = GetUserDataFolder() + Path.DirectorySeparatorChar + Constants.IMAGE_DIR;
+            string imageDir = GetUserDataFolder() + Path.DirectorySeparatorChar + Constants.PhtotBank;
+            if (!Directory.Exists(imageDir))
+            {
+                Directory.CreateDirectory(imageDir);
+            }
+            return imageDir;
+        }
+
+        public static string GetProductImagesFolder()
+        {
+            string imageDir = GetUserDataFolder() + Path.DirectorySeparatorChar + Constants.ProductImages;
             if (!Directory.Exists(imageDir))
             {
                 Directory.CreateDirectory(imageDir);
@@ -41,7 +51,29 @@ namespace AliHelper
 
         public static string DownloadImage(WebClient webClient, string url, int id)
         {
-            string imageFile = FileUtils.GetImageFolder() + Path.DirectorySeparatorChar + id + ".jpg";
+            string imageFile = FileUtils.GetPhotoBankFolder() + Path.DirectorySeparatorChar + id + ".jpg";
+            if (File.Exists(imageFile))
+            {
+                return imageFile;
+            }
+            webClient.DownloadFile(url, imageFile);
+            return imageFile;
+        }
+
+        public static string DownloadProductImage(WebClient webClient, string url, int id)
+        {
+            string imageFile = FileUtils.GetProductImagesFolder() + Path.DirectorySeparatorChar + id + ".jpg";
+            if (File.Exists(imageFile))
+            {
+                return imageFile;
+            }
+            webClient.DownloadFile(url, imageFile);
+            return imageFile;
+        }
+
+        public static string DownloadProductImage(WebClient webClient, string url, int id, int order)
+        {
+            string imageFile = FileUtils.GetProductImagesFolder() + Path.DirectorySeparatorChar + id + "_" + order + ".jpg";
             if (File.Exists(imageFile))
             {
                 return imageFile;

@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Soomes;
 using System.Web;
+using System.Net;
 
 namespace AliHelper
 {
@@ -541,6 +542,40 @@ namespace AliHelper
 
         }
 
+        public void LoadProductIamges()
+        {
+            List<ImageJson> imageJsons = JsonConvert.FromJson<List<ImageJson>>(AliProductDetail.imageFiles.Value);
+            if (imageJsons == null || imageJsons.Count == 0)
+            {
+                return;
+            }
+            for (int i = 1; i <= 6; i++ )
+            {
+                PictureBox picBox = (PictureBox) this.dynamicImagePanel.Controls.Find("dnImage"+i, false)[0];
+                picBox.Image = global::AliHelper.Properties.Resources.no_image;
+            }
+            this.staticImage.Image = global::AliHelper.Properties.Resources.no_image;
+            WebClient webClient = new WebClient();
+            int j = 1;
+            foreach (ImageJson image in imageJsons)
+            {
+                if (this.AliProductDetail.static_and_dyn0.Checked)
+                {
+                    image.localImg = FileUtils.DownloadProductImage(webClient, image.fileURL, AliProductDetail.pid);
+                    this.staticImage.Image = Image.FromFile(image.localImg, true);
+                }
+                else
+                {
+                    image.localImg = FileUtils.DownloadProductImage(webClient, image.fileURL, AliProductDetail.pid, image.fileSrcOrder);
+                    PictureBox picBox = (PictureBox)this.dynamicImagePanel.Controls.Find("dnImage" + j, false)[0];
+                    picBox.Image = Image.FromFile(image.localImg, true);
+                    j++;
+                }
+            }
+            webClient.Dispose();
+            webClient = null;
+        }
+
         private void LoadSystemAttributes(AttributeNode attrNode, ref int height, ref int tabIndex)
         {
             Label label = new System.Windows.Forms.Label();
@@ -737,11 +772,13 @@ namespace AliHelper
                     {
                         AliProduct product = productsManager.GetAliProduct(id);
                         detail = impProductDetail.GetEditFormElements(product);
+                        
                         productsManager.InsertOrUpdateProdcutDetail(detail);
                     }
                     this.AliProductDetail = detail;
                     if (detail != null)
                     {
+                        this.LoadProductIamges();
                         this.LoadProductDetailValue();
                     }
                 }
@@ -811,3 +848,4 @@ namespace AliHelper
         
     }
 }
+                    

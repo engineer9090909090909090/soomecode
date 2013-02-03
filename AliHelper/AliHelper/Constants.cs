@@ -12,7 +12,10 @@ namespace AliHelper
         public const string HomeUrl = "http://www.alibaba.com/";
 
         public const string DB_FILE = "data.db";
-        public const string IMAGE_DIR = "images";
+
+        public const string PhtotBank = "PhtotBank";
+
+        public const string ProductImages = "ProductImages";
 
         public const string YES = "1";
         public const string NO =  "0";

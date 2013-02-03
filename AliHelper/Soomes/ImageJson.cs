@@ -15,6 +15,7 @@ namespace Soomes
         public int fileId { set; get; }
         public bool isError { set; get; }
         public string Id { set; get; }
+        public string localImg { set; get; }
 
     }
 }

@@ -28,18 +28,23 @@ namespace AliHelper
             productsManager = new ProductsManager();
             impProductDetail = new ImpProductDetail();
             InitializeComponent();
+            List<AliGroup> groups = productsManager.GetGroupList();
+            if (groups.Count == 0)
+            {
+                groups = HttpClient.GetGroups(-1, 0, DataCache.Instance.CsrfToken);
+                productsManager.UpdateGroups(groups);
+            }
+            impProductDetail.InitDataCacheFormOptions();
+            productsManager.InitGroupOptions();
             LoadNavigatorBar();
+            UpdateGroupUI(groups);
             LoadProdutPanel();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            HttpClient.GetMailList();
+            //HttpClient.GetMailList();
             CheckForIllegalCrossThreadCalls = false;
-            impProductDetail.InitDataCacheFormOptions();
-            productsManager.InitGroupOptions();
-            List<AliGroup> groups = productsManager.GetGroupList();
-            UpdateGroupUI(groups);
         }
         #endregion
 
@@ -268,6 +273,8 @@ namespace AliHelper
             {
                 groupDic.Add(group.Name, group.Id);
             }
+            List<AliProduct> productList = new List<AliProduct>();
+            WebClient webClient = new WebClient();
             foreach (AliGroup group in groups)
             {
                 if (group.Level == 1)
@@ -276,14 +283,18 @@ namespace AliHelper
                     productsManager.UpdateGroupProdcuts(group.Id, products);
                     foreach (AliProduct item in products)
                     {
+                        FileUtils.DownloadProductImage(webClient, item.AbsImageUrl, item.Id);
                         if (productsManager.IsNeedUpdateDetail(item.Id))
                         {
                             ProductDetail detail = impProductDetail.GetEditFormElements(item);
                             productsManager.InsertOrUpdateProdcutDetail(detail);
+                            productList.Add(item);
                         }
                     }
                 }
             }
+            webClient.Dispose();
+            webClient = null;
         }
         
         public void GetGroupProduct(List<AliGroup> groups, AliGroup currGroup, string csrfToken)

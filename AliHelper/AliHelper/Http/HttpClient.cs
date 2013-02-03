@@ -17,7 +17,7 @@ namespace AliHelper
         //alibaba vip manage url
         public static string ManageHtml = "http://hz.productposting.alibaba.com/product/manage_products.htm#tab=approved";
 
-        public static string GroupListRequest = "http://hz.productposting.alibaba.com/product/group_ajax.htm?event=listGroup&parentGroupId={0}&_csrf_token_={1}&pageSize=";
+        public static string GroupListRequest = "http://hz.productposting.alibaba.com/product/group_ajax.htm?event=listGroupForCom&parentGroupId={0}&_csrf_token_={1}&pageSize=";
 
         public static string ProudctListRequest = "http://hz.productposting.alibaba.com/product/managementproducts/asyQueryProductList.do?status=approved&imageType=all&repositoryType=all&page={0}&size=50&changePageSize=Y&_csrf_token_={1}&groupId={2}&groupLevel={3}";
 
