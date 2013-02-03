@@ -7,6 +7,10 @@ namespace AliHelper
 {
     class Constants
     {
+        public const string LoginUrl = "https://login.alibaba.com/";
+
+        public const string HomeUrl = "http://www.alibaba.com/";
+
         public const string DB_FILE = "data.db";
         public const string IMAGE_DIR = "images";
 

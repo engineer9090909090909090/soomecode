@@ -12,7 +12,7 @@ namespace AliHelper
         public static DataCache Instance = new DataCache();
 
         private DataCache() { }
-
+        public string AliID { get; set; }
         public string CsrfToken { get; set; }
         public string CheckCodeUrl;
 

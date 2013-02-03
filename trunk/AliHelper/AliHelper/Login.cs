@@ -15,8 +15,6 @@ namespace AliHelper
     {
 
         private bool IsIELoginModel = false;
-        private string loginUrl = "https://login.alibaba.com/";
-        private string homeUrl = "http://www.alibaba.com/";
         BackgroundWorker bgWorker = new BackgroundWorker();
         private Passporter passporter;
         public LoginForm()
@@ -36,18 +34,19 @@ namespace AliHelper
             WebBrowser browser = (WebBrowser)sender;
             if (browser.ReadyState != System.Windows.Forms.WebBrowserReadyState.Complete)
                 return;
-            if (e.Url.ToString() == homeUrl)
+            if (e.Url.ToString() == Constants.HomeUrl)
             {
                 browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(loginPageLoadCompleted);
                 ShareCookie.Instance.LoginCookie = FullWebBrowserCookie.GetCookieInternal(browser.Url, false);
                 string manageHtml = HttpClient.RemoteRequest(HttpClient.ManageHtml, null);
                 DataCache.Instance.CsrfToken = HttpClient.GetCsrfToken(manageHtml);
                 DataCache.Instance.CheckCodeUrl = HttpClient.GetCheckCodeUrl(manageHtml);
+                DataCache.Instance.AliID = FileUtils.GetAliId(ShareCookie.Instance.LoginCookie, Constants.HomeUrl);
                 this.DialogResult = DialogResult.OK;
             }
             if (e.Url.ToString() != browser.Url.ToString())
                 return;
-            if (browser.Url.ToString() == loginUrl)
+            if (browser.Url.ToString() == Constants.LoginUrl)
             {
                 HtmlElement header = browser.Document.GetElementById("header");
                 if (header != null) header.Style = "display:none";
@@ -67,7 +66,7 @@ namespace AliHelper
             {
                 this.webBrowser1.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(loginPageLoadCompleted);
                 this.webBrowser1.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(loginPageLoadCompleted);
-                this.webBrowser1.Navigate(loginUrl);
+                this.webBrowser1.Navigate(Constants.LoginUrl);
 
                 this.changeModel.Text = "切换到普通登录模式";
                 this.Size = new Size(330, 450);
