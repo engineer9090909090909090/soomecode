@@ -16,6 +16,8 @@ namespace AliHelper.DAO
         private AliGroupDao aliGroupDao;
         private AliImageDao aliImageDao;
         private AliProductDetailDao aliProductDetailDao;
+        private AppDicDAO appDicDAO;
+        private FinanceDao financeDao;
         private DAOFactory()
         {
             string DataBasePath = FileUtils.GetUserDataFolder() + Path.DirectorySeparatorChar + Constants.DB_FILE;
@@ -63,7 +65,24 @@ namespace AliHelper.DAO
             }
             return aliProductDetailDao;
         }
-        
 
+        public AppDicDAO GetAppDicDAO()
+        {
+            if (appDicDAO == null)
+            {
+                this.appDicDAO = new AppDicDAO(dbHelper);
+            }
+            return appDicDAO;
+        }
+
+        public FinanceDao GetFinanceDao()
+        {
+            if (financeDao == null)
+            {
+                this.financeDao = new FinanceDao(dbHelper);
+            }
+            return financeDao;
+        }
+        
     }
 }

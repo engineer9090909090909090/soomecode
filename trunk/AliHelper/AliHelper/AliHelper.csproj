@@ -73,6 +73,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AliHelperEvent.cs" />
+    <Compile Include="Bussness\BaseManager.cs" />
+    <Compile Include="Bussness\FinOrderManager.cs" />
     <Compile Include="Bussness\ImpProductDetail.cs" />
     <Compile Include="Bussness\ProductsManager.cs" />
     <Compile Include="CheckCodeForm.cs">
@@ -87,12 +89,20 @@
     <Compile Include="DAO\AliImageDao.cs" />
     <Compile Include="DAO\AliProductDetailDao.cs" />
     <Compile Include="DAO\DAOFactory.cs" />
+    <Compile Include="DAO\FinanceDao.cs" />
+    <Compile Include="DAO\AppDicDAO.cs" />
     <Compile Include="DAO\SQLiteDBHelper.cs" />
     <Compile Include="EditCategory.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="EditCategory.Designer.cs">
       <DependentUpon>EditCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FinView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FinView.Designer.cs">
+      <DependentUpon>FinView.cs</DependentUpon>
     </Compile>
     <Compile Include="NewPlanForm.cs">
       <SubType>Form</SubType>
@@ -169,6 +179,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditCategory.resx">
       <DependentUpon>EditCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FinView.resx">
+      <DependentUpon>FinView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewPlanForm.resx">
       <DependentUpon>NewPlanForm.cs</DependentUpon>
