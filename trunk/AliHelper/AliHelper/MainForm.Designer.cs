@@ -52,6 +52,7 @@
             this.DeletePlanMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Explorer = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.FinanceBand = new Guifreaks.NavigationBar.NaviBand(this.components);
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.ProductsStrip.SuspendLayout();
@@ -64,6 +65,7 @@
             this.OrderBand.SuspendLayout();
             this.CfContextMenuStrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.FinanceBand.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -162,6 +164,7 @@
             this.NavigatorBar.Controls.Add(this.UpdateBand);
             this.NavigatorBar.Controls.Add(this.ClientBand);
             this.NavigatorBar.Controls.Add(this.OrderBand);
+            this.NavigatorBar.Controls.Add(this.FinanceBand);
             this.NavigatorBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.NavigatorBar.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
             this.NavigatorBar.Location = new System.Drawing.Point(3, 3);
@@ -245,7 +248,7 @@
             this.ClientBand.Size = new System.Drawing.Size(178, 278);
             this.ClientBand.SmallImage = global::AliHelper.Properties.Resources.s_colorize;
             this.ClientBand.TabIndex = 3;
-            this.ClientBand.Text = "客户维护";
+            this.ClientBand.Text = "客户管理";
             // 
             // OrderBand
             // 
@@ -264,7 +267,7 @@
             this.OrderBand.Size = new System.Drawing.Size(178, 278);
             this.OrderBand.SmallImage = global::AliHelper.Properties.Resources.s_wizard;
             this.OrderBand.TabIndex = 4;
-            this.OrderBand.Text = "订单跟进";
+            this.OrderBand.Text = "订单管理";
             // 
             // CfContextMenuStrip
             // 
@@ -319,6 +322,24 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(823, 447);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
+            // FinanceBand
+            // 
+            // 
+            // FinanceBand.ClientArea
+            // 
+            this.FinanceBand.ClientArea.Location = new System.Drawing.Point(0, 0);
+            this.FinanceBand.ClientArea.Name = "ClientArea";
+            this.FinanceBand.ClientArea.Size = new System.Drawing.Size(178, 278);
+            this.FinanceBand.ClientArea.TabIndex = 0;
+            this.FinanceBand.LargeImage = global::AliHelper.Properties.Resources.Dollars;
+            this.FinanceBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
+            this.FinanceBand.Location = new System.Drawing.Point(1, 27);
+            this.FinanceBand.Name = "FinanceBand";
+            this.FinanceBand.Size = new System.Drawing.Size(178, 278);
+            this.FinanceBand.SmallImage = global::AliHelper.Properties.Resources.s_dollars;
+            this.FinanceBand.TabIndex = 10;
+            this.FinanceBand.Text = "财务管理";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -350,6 +371,7 @@
             this.OrderBand.ResumeLayout(false);
             this.CfContextMenuStrip.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.FinanceBand.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -380,5 +402,6 @@
         private Guifreaks.NavigationBar.NaviBand OrderBand;
         private System.Windows.Forms.Panel Explorer;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private Guifreaks.NavigationBar.NaviBand FinanceBand;
     }
 }

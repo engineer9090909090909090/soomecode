@@ -137,6 +137,13 @@ namespace AliHelper.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap s_dollars {
+            get {
+                object obj = ResourceManager.GetObject("s_dollars", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap s_history {
             get {
                 object obj = ResourceManager.GetObject("s_history", resourceCulture);

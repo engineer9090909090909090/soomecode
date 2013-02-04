@@ -48,27 +48,24 @@ namespace AliHelper
         }
         #endregion
 
-        #region TreeView NodeMouse 事件处理
         
-        void treeView1_NodeMouseClick(object sender, System.Windows.Forms.TreeNodeMouseClickEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                TreeNode currentNode = e.Node;
-                int GroupId = Convert.ToInt32(currentNode.Tag);
-                this.productView1.LoadDataGridView(GroupId);
-            }
-            else if (e.Button == MouseButtons.Right)
-            { 
-                
-            }
-        }
-        #endregion
 
         #region NavigatorBar 处理
 
         protected void LoadNavigatorBar()
         {
+            ToolStripMenuItem UpdateGroupItem = new ToolStripMenuItem();
+            UpdateGroupItem.Name = "UpdateGroupItem";
+            UpdateGroupItem.Size = new System.Drawing.Size(146, 22);
+            UpdateGroupItem.Text = "更新本组产品";
+            UpdateGroupItem.Click += new EventHandler(UpdateGroupItem_Click);
+
+            ContextMenuStrip TreeNodeContextMenuStrip = new ContextMenuStrip();
+            TreeNodeContextMenuStrip.Items.AddRange(
+                new System.Windows.Forms.ToolStripItem[] { UpdateGroupItem });
+            TreeNodeContextMenuStrip.Name = "TreeNodeContextMenuStrip";
+            TreeNodeContextMenuStrip.Size = new System.Drawing.Size(147, 20);
+
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.treeView1.LineColor = System.Drawing.Color.Empty;
             this.treeView1.Location = new System.Drawing.Point(0, 23);
@@ -76,6 +73,7 @@ namespace AliHelper
             this.treeView1.Dock = DockStyle.Fill;
             this.treeView1.Size = new System.Drawing.Size(130, 423);
             this.treeView1.TabIndex = 4;
+            this.treeView1.ContextMenuStrip = TreeNodeContextMenuStrip;
             this.treeView1.NodeMouseClick += new TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
             ProductBand.ClientArea.Controls.Add(treeView1);
 
@@ -126,6 +124,46 @@ namespace AliHelper
             MailListView.View = System.Windows.Forms.View.LargeIcon;
             InquiryBand.ClientArea.Controls.Add(MailListView);
         }
+
+        #region TreeView NodeMouse 事件处理
+
+        void treeView1_NodeMouseClick(object sender, System.Windows.Forms.TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                TreeNode currentNode = e.Node;
+                AliGroup group = (AliGroup)currentNode.Tag;
+                if (group != null)
+                {
+                    this.productView1.LoadDataGridView(group.Id);
+                }
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                TreeNode currentNode = e.Node;
+                AliGroup group = (AliGroup)currentNode.Tag;
+                this.treeView1.ContextMenuStrip.Tag = group;
+                if (group != null)
+                {
+                    this.treeView1.ContextMenuStrip.Show();
+                }
+            }
+        }
+        void UpdateGroupItem_Click(object sender, EventArgs e)
+        {
+            this.BeginInvoke(new Action(() =>
+            {
+                AliGroup group = (AliGroup)this.treeView1.ContextMenuStrip.Tag;
+                if (group != null)
+                {
+                    List<AliGroup> groups = new List<AliGroup>();
+                    groups.Add(group);
+                    GetGroupProduct(groups, DataCache.Instance.CsrfToken);
+                }
+            }));
+        }
+        #endregion
+        
 
         void MailListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
@@ -239,14 +277,13 @@ namespace AliHelper
         {
             treeView1.Nodes.Clear();
             TreeNode t = new TreeNode("产品分组");//作为根节点
-            t.Tag = -1;
             treeView1.Nodes.Add(t);
             foreach (AliGroup p in groups)
             {
                 if (p.Level == 1)
                 {
                     TreeNode t1 = new TreeNode(p.Name);
-                    t1.Tag = p.Id;
+                    t1.Tag = p;
                     t.Nodes.Add(t1);
                     if (p.HasChildren)
                     {
@@ -255,7 +292,7 @@ namespace AliHelper
                             if (c.ParentId == p.Id && c.Level == p.Level + 1)
                             {
                                 TreeNode t2 = new TreeNode(c.Name);
-                                t2.Tag = c.Id;
+                                t2.Tag = c;
                                 t1.Nodes.Add(t2);
                             }
                         }

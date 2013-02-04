@@ -29,7 +29,7 @@ namespace AliHelper
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.ProductInfoControl = new System.Windows.Forms.TabControl();
             this.BaseInfoTab = new System.Windows.Forms.TabPage();
@@ -177,14 +177,14 @@ namespace AliHelper
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlDark;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.ControlDark;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 50;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -250,11 +250,10 @@ namespace AliHelper
             // 
             // staticImage
             // 
-            this.staticImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.staticImage.Image = global::AliHelper.Properties.Resources.no_image;
             this.staticImage.Location = new System.Drawing.Point(3, 0);
             this.staticImage.Name = "staticImage";
-            this.staticImage.Size = new System.Drawing.Size(100, 100);
+            this.staticImage.Size = new System.Drawing.Size(150, 150);
             this.staticImage.TabIndex = 28;
             this.staticImage.TabStop = false;
             // 
@@ -514,7 +513,6 @@ namespace AliHelper
             // 
             // dnImage1
             // 
-            this.dnImage1.Image = global::AliHelper.Properties.Resources.no_image;
             this.dnImage1.Location = new System.Drawing.Point(3, 0);
             this.dnImage1.Name = "dnImage1";
             this.dnImage1.Size = new System.Drawing.Size(72, 72);

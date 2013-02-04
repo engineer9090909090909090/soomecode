@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AliHelperEvent.cs" />
     <Compile Include="Bussness\ImpProductDetail.cs" />
     <Compile Include="Bussness\ProductsManager.cs" />
     <Compile Include="CheckCodeForm.cs">
@@ -137,6 +138,7 @@
     <Compile Include="Http\HttpClient.cs" />
     <Compile Include="Utils\IEHandleUtils.cs" />
     <Compile Include="Utils\ImageCodeCracker.cs" />
+    <Compile Include="Utils\ImageUtils.cs" />
     <Compile Include="Utils\JsonConvert.cs" />
     <Compile Include="LoadCode.cs" />
     <Compile Include="Login.cs">
@@ -398,6 +400,8 @@
     <Content Include="KindEditor\skins\common\rm.gif" />
     <Content Include="KindEditor\skins\default.css" />
     <Content Include="KindEditor\skins\default\default.gif" />
+    <None Include="Resources\s_dollars.png" />
+    <None Include="Resources\Dollars1.png" />
     <None Include="Resources\Dollars.ico" />
     <None Include="Resources\Dollars.png" />
     <None Include="Resources\s_wizard.png" />
