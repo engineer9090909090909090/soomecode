@@ -16,6 +16,8 @@ namespace AliHelper
     [System.Runtime.InteropServices.ComVisibleAttribute(true)]
     public partial class ProductView : UserControl
     {
+        private event NewProductgEvent NewItemEvent;
+        private event EditProductgEvent EditItemEvent;
         private ProductsManager productsManager;
         private ImpProductDetail impProductDetail;
         private DataTable dataTable;
@@ -29,8 +31,37 @@ namespace AliHelper
             productsManager = new ProductsManager();
             impProductDetail = new ImpProductDetail();
             this.webBrowser1.ObjectForScripting = this;
+            this.staticImage.Image = ImageUtils.ResizeImage(global::AliHelper.Properties.Resources.no_image, 150, 150);
             this.webBrowser1.Navigate(Application.StartupPath + "\\KindEditor\\Editor.htm");
+            this.NewItemEvent += new NewProductgEvent(ProductView_NewItemEvent);
+            this.EditItemEvent += new EditProductgEvent(ProductView_EditItemEvent);
             InitDataGridview();
+        }
+
+        void ProductView_EditItemEvent(object sender, ProductEventArgs e)
+        {
+            int id = e.ProductId;
+            ProductDetail detail = productsManager.GetProductDetail(id);
+            if (detail == null)
+            {
+                AliProduct product = productsManager.GetAliProduct(id);
+                detail = impProductDetail.GetEditFormElements(product);
+                productsManager.InsertOrUpdateProdcutDetail(detail);
+            }
+            this.AliProductDetail = detail;
+            if (this.AliProductDetail != null)
+            {
+                this.BeginInvoke(new Action(() =>
+                {
+                    this.LoadProductIamges();
+                    this.LoadProductDetailValue();
+                }));
+            }
+        }
+
+        void ProductView_NewItemEvent(object sender, ProductEventArgs e)
+        {
+            
         }
 
         #region Load DataGridView
@@ -56,14 +87,14 @@ namespace AliHelper
             column7.Visible = false;
             DataGridViewColumn column0 = this.dataGridView1.Columns[1];
             column0.HeaderText = "选中";
-            column0.Width = 80;
+            column0.Width = 40;
             DataGridViewColumn column = this.dataGridView1.Columns[2];
             column.HeaderText = "产品图片";
-            column.Width = 120;
+            column.Width = 80;
 
             DataGridViewColumn column1 = this.dataGridView1.Columns[3];
             column1.HeaderText = "产品名称";
-            column1.Width = 360;
+            column1.Width = 450;
 
             DataGridViewColumn column11 = this.dataGridView1.Columns[4];
             column11.HeaderText = "型号";
@@ -101,9 +132,9 @@ namespace AliHelper
                     string imageFile = FileUtils.GetProductImagesFolder() + Path.DirectorySeparatorChar + item.Id + ".jpg";
                     if (File.Exists(imageFile))
                     {
-                        row["Image"] = Image.FromFile(imageFile, true);
+                        row["Image"] = ImageUtils.ResizeImage(imageFile, 50, 50);
                     }else{
-                        row["Image"] = global::AliHelper.Properties.Resources.no_image;
+                        row["Image"] = ImageUtils.ResizeImage(global::AliHelper.Properties.Resources.no_image, 50, 50);
                     }
                     row["Subject"] = item.Subject;
                     row["RedModel"] = item.RedModel;
@@ -559,9 +590,9 @@ namespace AliHelper
             for (int i = 1; i <= 6; i++ )
             {
                 PictureBox picBox = (PictureBox) this.dynamicImagePanel.Controls.Find("dnImage"+i, false)[0];
-                picBox.Image = global::AliHelper.Properties.Resources.no_image;
+                picBox.Image = ImageUtils.ResizeImage(global::AliHelper.Properties.Resources.no_image, 72, 72);
             }
-            this.staticImage.Image = global::AliHelper.Properties.Resources.no_image;
+            this.staticImage.Image = ImageUtils.ResizeImage(global::AliHelper.Properties.Resources.no_image, 150, 150);
             WebClient webClient = new WebClient();
             int j = 1;
             foreach (ImageJson image in imageJsons)
@@ -569,13 +600,14 @@ namespace AliHelper
                 if (this.AliProductDetail.static_and_dyn0.Checked)
                 {
                     image.localImg = FileUtils.DownloadProductImage(webClient, image.fileURL, AliProductDetail.pid);
-                    this.staticImage.Image = Image.FromFile(image.localImg, true);
+                    this.staticImage.Image = ImageUtils.ResizeImage(image.localImg, 150, 150);
                 }
                 else
                 {
                     image.localImg = FileUtils.DownloadProductImage(webClient, image.fileURL, AliProductDetail.pid, image.fileSrcOrder);
+                    
                     PictureBox picBox = (PictureBox)this.dynamicImagePanel.Controls.Find("dnImage" + j, false)[0];
-                    picBox.Image = Image.FromFile(image.localImg, true);
+                    picBox.Image = ImageUtils.ResizeImage(image.localImg, 72,72);
                     j++;
                 }
             }
@@ -774,19 +806,9 @@ namespace AliHelper
                 if (id != PrevSelectedId)
                 {
                     PrevSelectedId = id;
-                    ProductDetail detail = productsManager.GetProductDetail(id);
-                    if (detail == null)
+                    if (this.EditItemEvent != null)
                     {
-                        AliProduct product = productsManager.GetAliProduct(id);
-                        detail = impProductDetail.GetEditFormElements(product);
-                        
-                        productsManager.InsertOrUpdateProdcutDetail(detail);
-                    }
-                    this.AliProductDetail = detail;
-                    if (detail != null)
-                    {
-                        this.LoadProductIamges();
-                        this.LoadProductDetailValue();
+                        this.EditItemEvent(sender, new ProductEventArgs(0, id));
                     }
                 }
             }
