@@ -20,6 +20,7 @@ namespace AliHelper
     {
         private ProductsManager productsManager;
         private ImpProductDetail impProductDetail;
+        private string ExplorerCurrentSubName;
         ProductView productView1;
  
         #region 构造方法
@@ -47,8 +48,6 @@ namespace AliHelper
             CheckForIllegalCrossThreadCalls = false;
         }
         #endregion
-
-        
 
         #region NavigatorBar 处理
 
@@ -177,30 +176,35 @@ namespace AliHelper
         private void NavigatorBar_ActiveBandChanged(object sender, EventArgs e)
         {
             string bandName = NavigatorBar.ActiveBand.Name;
+            if (bandName == ExplorerCurrentSubName)
+            {
+                return;
+            }
+            UnLoadExplorerSubPanel();
             if (bandName == "ProductBand")
             {
                 LoadProdutPanel();
             }
             else if (bandName == "UpdateBand")
             {
-                UnLoadProdcutPanel();
             }
             else if (bandName == "ProductBand")
             {
-                UnLoadProdcutPanel();
             }
             else if (bandName == "InquiryBand")
             {
-                UnLoadProdcutPanel();
             }
             else if (bandName == "ClientBand")
             {
-                UnLoadProdcutPanel();
             }
             else if (bandName == "OrderBand")
             {
-                UnLoadProdcutPanel();
             }
+            else if (bandName == "FinanceBand")
+            {
+                LoadFinPanel();
+            }
+            ExplorerCurrentSubName = bandName;
             GC.Collect();
         }
 
@@ -353,16 +357,34 @@ namespace AliHelper
         }
         #endregion
 
+
         #region ProductPanel 处理
-        private void UnLoadProdcutPanel()
+
+        private void UnLoadExplorerSubPanel()
         {
             if (this.Explorer.Controls.Count > 0)
             {
+                Control SubPanel = this.Explorer.Controls[0];
                 this.Explorer.Controls.RemoveAt(0);
-                this.productView1.Dispose();
+                SubPanel.Dispose();
+                SubPanel = null;
             }
             this.productView1 = null;
             GC.Collect();
+        }
+
+        private void LoadFinPanel()
+        {
+            FinView finView = new AliHelper.FinView();
+            this.Explorer.SuspendLayout();
+            finView.Location = new System.Drawing.Point(0, 0);
+            finView.Name = "finView";
+            finView.AutoSize = true;
+            finView.TabIndex = 1;
+            finView.Size = new System.Drawing.Size(this.Explorer.Width, this.Explorer.Height);
+            finView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Explorer.Controls.Add(finView);
+            this.Explorer.ResumeLayout(false);
         }
 
         private void LoadProdutPanel()

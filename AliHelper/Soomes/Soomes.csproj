@@ -46,10 +46,12 @@
     <Compile Include="AliGroupInfo.cs" />
     <Compile Include="AliLoginUser.cs" />
     <Compile Include="AliProductInfo.cs" />
+    <Compile Include="AppDic.cs" />
     <Compile Include="AttributeNode.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="AliProduct.cs" />
     <Compile Include="CategroyNode.cs" />
+    <Compile Include="Finance.cs" />
     <Compile Include="FormElement.cs" />
     <Compile Include="ImageGroupNode.cs" />
     <Compile Include="ImageInfo.cs" />

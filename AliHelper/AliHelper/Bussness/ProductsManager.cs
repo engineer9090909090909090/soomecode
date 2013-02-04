@@ -7,7 +7,7 @@ using AliHelper.DAO;
 
 namespace AliHelper
 {
-    public class ProductsManager
+    public class ProductsManager : BaseManager
     {
 
         public AliGroupDao groupDao;

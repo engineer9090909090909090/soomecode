@@ -27,5 +27,9 @@ namespace AliHelper
 
         public const int AttrType_SysAttr = 1;
         public const int AttrType_FixAttr = 2;
+
+        public const string DebitCredit = "DebitCreditType";
+        public const string Employee = "Employee";
+        public const string BussnessType = "BussnessType";
     }
 }
