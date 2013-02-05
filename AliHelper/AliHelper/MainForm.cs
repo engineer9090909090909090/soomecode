@@ -193,6 +193,7 @@ namespace AliHelper
             }
             else if (bandName == "InquiryBand")
             {
+                LoadMailViewPanel();
             }
             else if (bandName == "ClientBand")
             {
@@ -202,7 +203,7 @@ namespace AliHelper
             }
             else if (bandName == "FinanceBand")
             {
-                LoadFinPanel();
+                LoadFinViewPanel();
             }
             ExplorerCurrentSubName = bandName;
             GC.Collect();
@@ -358,7 +359,7 @@ namespace AliHelper
         #endregion
 
 
-        #region ProductPanel 处理
+        #region ExplorerPanel 处理
 
         private void UnLoadExplorerSubPanel()
         {
@@ -373,7 +374,7 @@ namespace AliHelper
             GC.Collect();
         }
 
-        private void LoadFinPanel()
+        private void LoadFinViewPanel()
         {
             FinView finView = new AliHelper.FinView();
             this.Explorer.SuspendLayout();
@@ -384,6 +385,21 @@ namespace AliHelper
             finView.Size = new System.Drawing.Size(this.Explorer.Width, this.Explorer.Height);
             finView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Explorer.Controls.Add(finView);
+            this.Explorer.ResumeLayout(false);
+        }
+
+
+        private void LoadMailViewPanel()
+        {
+            MailView view = new AliHelper.MailView();
+            this.Explorer.SuspendLayout();
+            view.Location = new System.Drawing.Point(0, 0);
+            view.Name = "mailView";
+            view.AutoSize = true;
+            view.TabIndex = 1;
+            view.Size = new System.Drawing.Size(this.Explorer.Width, this.Explorer.Height);
+            view.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Explorer.Controls.Add(view);
             this.Explorer.ResumeLayout(false);
         }
 
