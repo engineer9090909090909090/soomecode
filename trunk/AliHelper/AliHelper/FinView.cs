@@ -49,7 +49,7 @@ namespace AliHelper
             DataGridViewColumn EventTime = FinDetailDataView.Columns[1];
             EventTime.HeaderText = "时间";
             EventTime.Name = "EventTime";
-            EventTime.Width = 80;
+            EventTime.Width = 100;
             EventTime.ReadOnly = true;
             DataGridViewColumn EventName = FinDetailDataView.Columns[2]; 
             EventName.HeaderText = "项目名称";
@@ -85,7 +85,6 @@ namespace AliHelper
             Remark.HeaderText = "备注";
             Remark.Name = "Remark";
             Remark.ReadOnly = true;
-            Remark.Width = 200;
             
         }
 
