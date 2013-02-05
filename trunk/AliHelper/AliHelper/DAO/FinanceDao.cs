@@ -23,7 +23,7 @@ namespace AliHelper.DAO
             dbHelper.ExecuteNonQuery(
               "CREATE TABLE IF NOT EXISTS FinDetails("
             + "DetailId integer NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
-            + "EventTime datetime not null,"
+            + "EventTime varchar(10) not null,"
             + "EventName varchar(500) not null,"
             + "EventType varchar(50) not null,"
             + "Amount double not null,"
@@ -37,7 +37,7 @@ namespace AliHelper.DAO
             dbHelper.ExecuteNonQuery(
              "CREATE TABLE IF NOT EXISTS Finance("
            + "FinId integer NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
-           + "FinDate datetime not null,"
+           + "FinDate varchar(10) not null,"
            + "FinSource varchar(100) not null,"
            + "FinCompany varchar(100) not null,"
            + "Association varchar(50) not null,"
@@ -58,7 +58,7 @@ namespace AliHelper.DAO
 
         public QueryObject<FinDetails> GetFinDetails(QueryObject<FinDetails> query)
         {
-            string sql = "select DetailId,EventTime,EventName,EventType,Amount,Association,OrderNo,ItemType,Remark ";
+            string sql = "select DetailId,EventTime,EventName,Amount,OrderNo,ItemType,Association,EventType,Remark ";
             sql = sql + "FROM FinDetails where 1 = 1 ";
             List<SQLiteParameter> QueryParameters = new List<SQLiteParameter>();
             if (query.Condition != null)
@@ -113,7 +113,7 @@ namespace AliHelper.DAO
             {
                 FinDetails info = new FinDetails();
                 info.DetailId = Convert.ToInt32(row["DetailId"]);
-                info.EventTime = Convert.ToDateTime(row["EventTime"]);
+                info.EventTime = (string)row["EventTime"];
                 info.EventName = (string)row["EventName"];
                 info.EventType = (string)row["EventType"];
                 info.Amount = Convert.ToDouble(row["Amount"]);
