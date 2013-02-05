@@ -104,6 +104,12 @@
     <Compile Include="FinView.Designer.cs">
       <DependentUpon>FinView.cs</DependentUpon>
     </Compile>
+    <Compile Include="MailView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MailView.Designer.cs">
+      <DependentUpon>MailView.cs</DependentUpon>
+    </Compile>
     <Compile Include="NewPlanForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -182,6 +188,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FinView.resx">
       <DependentUpon>FinView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MailView.resx">
+      <DependentUpon>MailView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewPlanForm.resx">
       <DependentUpon>NewPlanForm.cs</DependentUpon>
