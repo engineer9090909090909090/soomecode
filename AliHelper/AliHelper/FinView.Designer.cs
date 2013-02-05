@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.BaseTabPage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -104,7 +104,7 @@
             // 
             // FinDetailGroup
             // 
-            this.FinDetailGroup.Caption = null;
+            this.FinDetailGroup.Caption = "查询条件";
             this.FinDetailGroup.Controls.Add(this.FinDetailExpBtn);
             this.FinDetailGroup.Controls.Add(this.FinDetailQueryBtn);
             this.FinDetailGroup.Controls.Add(this.EndDateTxt);
@@ -124,13 +124,14 @@
             this.FinDetailGroup.Dock = System.Windows.Forms.DockStyle.Top;
             this.FinDetailGroup.ExpandedHeight = 121;
             this.FinDetailGroup.HeaderContextMenuStrip = null;
-            this.FinDetailGroup.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
-            this.FinDetailGroup.Location = new System.Drawing.Point(4, 4);
+            this.FinDetailGroup.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2003Silver;
+            this.FinDetailGroup.Location = new System.Drawing.Point(1, 1);
+            this.FinDetailGroup.Margin = new System.Windows.Forms.Padding(0);
             this.FinDetailGroup.Name = "FinDetailGroup";
             this.FinDetailGroup.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
-            this.FinDetailGroup.Size = new System.Drawing.Size(916, 121);
+            this.FinDetailGroup.Size = new System.Drawing.Size(922, 121);
             this.FinDetailGroup.TabIndex = 0;
-            this.FinDetailGroup.Text = "naviGroup1";
+            this.FinDetailGroup.Text = "查询条件";
             // 
             // FinDetailExpBtn
             // 
@@ -281,24 +282,24 @@
             this.FinDetailDataView.AllowUserToDeleteRows = false;
             this.FinDetailDataView.AllowUserToResizeRows = false;
             this.FinDetailDataView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.FinDetailDataView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.FinDetailDataView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.FinDetailDataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.FinDetailDataView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.FinDetailDataView.Location = new System.Drawing.Point(1, 129);
+            this.FinDetailDataView.Location = new System.Drawing.Point(1, 123);
             this.FinDetailDataView.Margin = new System.Windows.Forms.Padding(0);
             this.FinDetailDataView.MultiSelect = false;
             this.FinDetailDataView.Name = "FinDetailDataView";
             this.FinDetailDataView.ReadOnly = true;
             this.FinDetailDataView.RowHeadersVisible = false;
             this.FinDetailDataView.RowTemplate.Height = 23;
-            this.FinDetailDataView.Size = new System.Drawing.Size(922, 290);
+            this.FinDetailDataView.Size = new System.Drawing.Size(922, 296);
             this.FinDetailDataView.TabIndex = 1;
             // 
             // BizTabPage
