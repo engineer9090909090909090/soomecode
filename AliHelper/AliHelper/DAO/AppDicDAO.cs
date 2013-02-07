@@ -48,7 +48,7 @@ namespace AliHelper.DAO
          public List<AppDic> GetOptions(string type)
          {
              List<AppDic> list = new List<AppDic>();
-             string sql = "SELECT Type, Key, Value FROM AppDics WHERE Type = @Type";
+             string sql = "SELECT Id, Type, Key, Value FROM AppDics WHERE Type = @Type";
              List<SQLiteParameter> parameters = new List<SQLiteParameter>();
              parameters.Add(new SQLiteParameter("@Type", type));
              DataTable dt = dbHelper.ExecuteDataTable(sql, parameters.ToArray());
@@ -58,7 +58,7 @@ namespace AliHelper.DAO
                  AppDic item = new AppDic();
                  item.Type = (string)row["Type"];
                  item.Key = (string)row["Key"];
-                 item.Value = (string)row["Value"];
+                 item.Label = (string)row["Value"];
                  list.Add(item);
              }
              return list;
@@ -93,6 +93,17 @@ namespace AliHelper.DAO
                 };
                 dbHelper.ExecuteNonQuery(InsSql, parameter);
             }
+         }
+
+         public void DeleteAppDic(string type, string key)
+         {
+             string DelSql = @"delete from AppDics WHERE Type = @Type and Key = @Key";
+            SQLiteParameter[] parameter = new SQLiteParameter[]
+            {
+                new SQLiteParameter("@Type", type), 
+                new SQLiteParameter("@Key", key)
+            };
+            dbHelper.ExecuteNonQuery(DelSql, parameter);
          }
     }
 

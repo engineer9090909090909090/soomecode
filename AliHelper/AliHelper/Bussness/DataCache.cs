@@ -11,10 +11,18 @@ namespace AliHelper
         
         public static DataCache Instance = new DataCache();
 
-        private DataCache() { }
+        private DataCache() 
+        {
+            DicTypeOptions = new Dictionary<string, string>();
+            DicTypeOptions.Add(Constants.DebitCredit, "收支类型");
+            DicTypeOptions.Add(Constants.BussnessType, "业务类型");
+            DicTypeOptions.Add(Constants.Employee, "人员");
+        }
         public string AliID { get; set; }
         public string CsrfToken { get; set; }
         public string CheckCodeUrl;
+
+        public Dictionary<string, string> DicTypeOptions { set; get; }
 
         public List<FormElement> MinOrderUnitOptions { set; get; }
         public List<FormElement> MoneyTypeOptions { set; get; }
