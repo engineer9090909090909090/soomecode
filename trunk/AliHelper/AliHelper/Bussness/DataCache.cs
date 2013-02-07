@@ -17,6 +17,7 @@ namespace AliHelper
             DicTypeOptions.Add(Constants.DebitCredit, "收支类型");
             DicTypeOptions.Add(Constants.BussnessType, "业务类型");
             DicTypeOptions.Add(Constants.Employee, "人员");
+            DicTypeOptions.Add(Constants.OrderStatusType, "订单状态类型");
         }
         public string AliID { get; set; }
         public string CsrfToken { get; set; }

@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.StatusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.MainMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,14 +46,21 @@
             this.UpdateBand = new Guifreaks.NavigationBar.NaviBand(this.components);
             this.ClientBand = new Guifreaks.NavigationBar.NaviBand(this.components);
             this.OrderBand = new Guifreaks.NavigationBar.NaviBand(this.components);
+            this.FinanceBand = new Guifreaks.NavigationBar.NaviBand(this.components);
             this.CfContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.NewPlanMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ModifyPlanMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DeletePlanMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Explorer = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.FinanceBand = new Guifreaks.NavigationBar.NaviBand(this.components);
-            this.statusStrip1.SuspendLayout();
+            this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
+            this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.AppNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.DataDicMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FinToolStrip = new System.Windows.Forms.ToolStrip();
+            this.NewFinanceBtn = new System.Windows.Forms.ToolStripButton();
+            this.NewWater = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.StatusStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.ProductsStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NavigatorBar)).BeginInit();
@@ -63,25 +70,29 @@
             this.UpdateBand.SuspendLayout();
             this.ClientBand.SuspendLayout();
             this.OrderBand.SuspendLayout();
-            this.CfContextMenuStrip.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
             this.FinanceBand.SuspendLayout();
+            this.CfContextMenuStrip.SuspendLayout();
+            this.toolStripContainer.ContentPanel.SuspendLayout();
+            this.toolStripContainer.TopToolStripPanel.SuspendLayout();
+            this.toolStripContainer.SuspendLayout();
+            this.tableLayoutPanel.SuspendLayout();
+            this.FinToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // statusStrip1
+            // StatusStrip
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 496);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(823, 22);
-            this.statusStrip1.TabIndex = 0;
-            this.statusStrip1.Text = "statusStrip1";
+            this.StatusStrip.Location = new System.Drawing.Point(0, 496);
+            this.StatusStrip.Name = "StatusStrip";
+            this.StatusStrip.Size = new System.Drawing.Size(823, 22);
+            this.StatusStrip.TabIndex = 0;
+            this.StatusStrip.Text = "statusStrip1";
             // 
             // statusLabel
             // 
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(43, 17);
+            this.statusLabel.Size = new System.Drawing.Size(41, 17);
             this.statusLabel.Text = "状态栏";
             // 
             // menuStrip1
@@ -98,25 +109,28 @@
             // MainMenuItem
             // 
             this.MainMenuItem.Name = "MainMenuItem";
-            this.MainMenuItem.Size = new System.Drawing.Size(55, 20);
+            this.MainMenuItem.Size = new System.Drawing.Size(53, 20);
             this.MainMenuItem.Text = "主菜单";
             // 
             // SettingMenuItem
             // 
+            this.SettingMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.DataDicMenuItem});
             this.SettingMenuItem.Name = "SettingMenuItem";
-            this.SettingMenuItem.Size = new System.Drawing.Size(43, 20);
+            this.SettingMenuItem.Size = new System.Drawing.Size(41, 20);
             this.SettingMenuItem.Text = "设置";
             // 
             // ProductsStrip
             // 
+            this.ProductsStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.ProductsStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.updateGroup,
             this.updateAllProduct,
             this.updateAllImages,
             this.NewProductBtn});
-            this.ProductsStrip.Location = new System.Drawing.Point(0, 24);
+            this.ProductsStrip.Location = new System.Drawing.Point(3, 0);
             this.ProductsStrip.Name = "ProductsStrip";
-            this.ProductsStrip.Size = new System.Drawing.Size(823, 25);
+            this.ProductsStrip.Size = new System.Drawing.Size(328, 25);
             this.ProductsStrip.TabIndex = 2;
             this.ProductsStrip.Text = "v";
             // 
@@ -125,7 +139,7 @@
             this.updateGroup.Image = ((System.Drawing.Image)(resources.GetObject("updateGroup.Image")));
             this.updateGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.updateGroup.Name = "updateGroup";
-            this.updateGroup.Size = new System.Drawing.Size(75, 22);
+            this.updateGroup.Size = new System.Drawing.Size(73, 22);
             this.updateGroup.Text = "同步分组";
             this.updateGroup.Click += new System.EventHandler(this.updateGroup_Click);
             // 
@@ -134,7 +148,7 @@
             this.updateAllProduct.Image = ((System.Drawing.Image)(resources.GetObject("updateAllProduct.Image")));
             this.updateAllProduct.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.updateAllProduct.Name = "updateAllProduct";
-            this.updateAllProduct.Size = new System.Drawing.Size(99, 22);
+            this.updateAllProduct.Size = new System.Drawing.Size(97, 22);
             this.updateAllProduct.Text = "同步所有产品";
             this.updateAllProduct.Click += new System.EventHandler(this.updateAllProduct_Click);
             // 
@@ -143,7 +157,7 @@
             this.updateAllImages.Image = ((System.Drawing.Image)(resources.GetObject("updateAllImages.Image")));
             this.updateAllImages.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.updateAllImages.Name = "updateAllImages";
-            this.updateAllImages.Size = new System.Drawing.Size(75, 22);
+            this.updateAllImages.Size = new System.Drawing.Size(73, 22);
             this.updateAllImages.Text = "同步图片";
             this.updateAllImages.Click += new System.EventHandler(this.updateAllImages_Click);
             // 
@@ -152,7 +166,7 @@
             this.NewProductBtn.Image = ((System.Drawing.Image)(resources.GetObject("NewProductBtn.Image")));
             this.NewProductBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.NewProductBtn.Name = "NewProductBtn";
-            this.NewProductBtn.Size = new System.Drawing.Size(75, 22);
+            this.NewProductBtn.Size = new System.Drawing.Size(73, 22);
             this.NewProductBtn.Text = "新增产品";
             this.NewProductBtn.Click += new System.EventHandler(this.newProductBtn_Click);
             // 
@@ -168,6 +182,7 @@
             this.NavigatorBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.NavigatorBar.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
             this.NavigatorBar.Location = new System.Drawing.Point(3, 3);
+            this.NavigatorBar.Margin = new System.Windows.Forms.Padding(3, 3, 1, 3);
             this.NavigatorBar.Name = "NavigatorBar";
             this.NavigatorBar.Size = new System.Drawing.Size(180, 441);
             this.NavigatorBar.TabIndex = 6;
@@ -269,59 +284,6 @@
             this.OrderBand.TabIndex = 4;
             this.OrderBand.Text = "订单管理";
             // 
-            // CfContextMenuStrip
-            // 
-            this.CfContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.NewPlanMenuItem,
-            this.ModifyPlanMenuItem,
-            this.DeletePlanMenuItem});
-            this.CfContextMenuStrip.Name = "CfContextMenuStrip";
-            this.CfContextMenuStrip.Size = new System.Drawing.Size(147, 70);
-            // 
-            // NewPlanMenuItem
-            // 
-            this.NewPlanMenuItem.Name = "NewPlanMenuItem";
-            this.NewPlanMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.NewPlanMenuItem.Text = "新建重发计划";
-            this.NewPlanMenuItem.Click += new System.EventHandler(this.NewPlanMenuItem_Click);
-            // 
-            // ModifyPlanMenuItem
-            // 
-            this.ModifyPlanMenuItem.Name = "ModifyPlanMenuItem";
-            this.ModifyPlanMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.ModifyPlanMenuItem.Text = "编辑重发计划";
-            this.ModifyPlanMenuItem.Click += new System.EventHandler(this.ModifyPlanMenuItem_Click);
-            // 
-            // DeletePlanMenuItem
-            // 
-            this.DeletePlanMenuItem.Name = "DeletePlanMenuItem";
-            this.DeletePlanMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.DeletePlanMenuItem.Text = "删除重发计划";
-            // 
-            // Explorer
-            // 
-            this.Explorer.BackColor = System.Drawing.SystemColors.Control;
-            this.Explorer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Explorer.Location = new System.Drawing.Point(189, 3);
-            this.Explorer.Name = "Explorer";
-            this.Explorer.Size = new System.Drawing.Size(631, 441);
-            this.Explorer.TabIndex = 7;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.Explorer, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.NavigatorBar, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 49);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(823, 447);
-            this.tableLayoutPanel1.TabIndex = 5;
-            // 
             // FinanceBand
             // 
             // 
@@ -340,14 +302,136 @@
             this.FinanceBand.TabIndex = 10;
             this.FinanceBand.Text = "财务管理";
             // 
+            // CfContextMenuStrip
+            // 
+            this.CfContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.NewPlanMenuItem,
+            this.ModifyPlanMenuItem,
+            this.DeletePlanMenuItem});
+            this.CfContextMenuStrip.Name = "CfContextMenuStrip";
+            this.CfContextMenuStrip.Size = new System.Drawing.Size(143, 70);
+            // 
+            // NewPlanMenuItem
+            // 
+            this.NewPlanMenuItem.Name = "NewPlanMenuItem";
+            this.NewPlanMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.NewPlanMenuItem.Text = "新建重发计划";
+            this.NewPlanMenuItem.Click += new System.EventHandler(this.NewPlanMenuItem_Click);
+            // 
+            // ModifyPlanMenuItem
+            // 
+            this.ModifyPlanMenuItem.Name = "ModifyPlanMenuItem";
+            this.ModifyPlanMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.ModifyPlanMenuItem.Text = "编辑重发计划";
+            this.ModifyPlanMenuItem.Click += new System.EventHandler(this.ModifyPlanMenuItem_Click);
+            // 
+            // DeletePlanMenuItem
+            // 
+            this.DeletePlanMenuItem.Name = "DeletePlanMenuItem";
+            this.DeletePlanMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.DeletePlanMenuItem.Text = "删除重发计划";
+            // 
+            // Explorer
+            // 
+            this.Explorer.BackColor = System.Drawing.SystemColors.Control;
+            this.Explorer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Explorer.Location = new System.Drawing.Point(187, 3);
+            this.Explorer.Name = "Explorer";
+            this.Explorer.Size = new System.Drawing.Size(633, 441);
+            this.Explorer.TabIndex = 7;
+            // 
+            // toolStripContainer
+            // 
+            this.toolStripContainer.BottomToolStripPanelVisible = false;
+            // 
+            // toolStripContainer.ContentPanel
+            // 
+            this.toolStripContainer.ContentPanel.Controls.Add(this.tableLayoutPanel);
+            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(823, 447);
+            this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStripContainer.LeftToolStripPanelVisible = false;
+            this.toolStripContainer.Location = new System.Drawing.Point(0, 24);
+            this.toolStripContainer.Name = "toolStripContainer";
+            this.toolStripContainer.RightToolStripPanelVisible = false;
+            this.toolStripContainer.Size = new System.Drawing.Size(823, 472);
+            this.toolStripContainer.TabIndex = 7;
+            this.toolStripContainer.Text = "toolStripContainer";
+            // 
+            // toolStripContainer.TopToolStripPanel
+            // 
+            this.toolStripContainer.TopToolStripPanel.Controls.Add(this.ProductsStrip);
+            this.toolStripContainer.TopToolStripPanel.Controls.Add(this.FinToolStrip);
+            // 
+            // tableLayoutPanel
+            // 
+            this.tableLayoutPanel.ColumnCount = 2;
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel.Controls.Add(this.Explorer, 1, 0);
+            this.tableLayoutPanel.Controls.Add(this.NavigatorBar, 0, 0);
+            this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
+            this.tableLayoutPanel.Name = "tableLayoutPanel";
+            this.tableLayoutPanel.RowCount = 1;
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel.Size = new System.Drawing.Size(823, 447);
+            this.tableLayoutPanel.TabIndex = 5;
+            // 
+            // AppNotifyIcon
+            // 
+            this.AppNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("AppNotifyIcon.Icon")));
+            this.AppNotifyIcon.Text = "notifyIcon1";
+            this.AppNotifyIcon.Visible = true;
+            this.AppNotifyIcon.DoubleClick += new System.EventHandler(this.AppNotifyIcon_DoubleClick);
+            // 
+            // DataDicMenuItem
+            // 
+            this.DataDicMenuItem.Name = "DataDicMenuItem";
+            this.DataDicMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.DataDicMenuItem.Text = "数据字典(&D)";
+            this.DataDicMenuItem.Click += new System.EventHandler(this.DataDicMenuItem_Click);
+            // 
+            // FinToolStrip
+            // 
+            this.FinToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.FinToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.NewFinanceBtn,
+            this.toolStripSeparator1,
+            this.NewWater});
+            this.FinToolStrip.Location = new System.Drawing.Point(331, 0);
+            this.FinToolStrip.Name = "FinToolStrip";
+            this.FinToolStrip.Size = new System.Drawing.Size(207, 25);
+            this.FinToolStrip.TabIndex = 3;
+            // 
+            // NewFinanceBtn
+            // 
+            this.NewFinanceBtn.Image = ((System.Drawing.Image)(resources.GetObject("NewFinanceBtn.Image")));
+            this.NewFinanceBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.NewFinanceBtn.Name = "NewFinanceBtn";
+            this.NewFinanceBtn.Size = new System.Drawing.Size(73, 22);
+            this.NewFinanceBtn.Text = "新增账目";
+            // 
+            // NewWater
+            // 
+            this.NewWater.Image = ((System.Drawing.Image)(resources.GetObject("NewWater.Image")));
+            this.NewWater.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.NewWater.Name = "NewWater";
+            this.NewWater.Size = new System.Drawing.Size(85, 22);
+            this.NewWater.Text = "新增流水";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(823, 518);
-            this.Controls.Add(this.tableLayoutPanel1);
-            this.Controls.Add(this.ProductsStrip);
-            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.toolStripContainer);
+            this.Controls.Add(this.StatusStrip);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
@@ -356,8 +440,9 @@
             this.Text = "阿里外贸助手";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
+            this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
+            this.StatusStrip.ResumeLayout(false);
+            this.StatusStrip.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ProductsStrip.ResumeLayout(false);
@@ -369,9 +454,16 @@
             this.UpdateBand.ResumeLayout(false);
             this.ClientBand.ResumeLayout(false);
             this.OrderBand.ResumeLayout(false);
-            this.CfContextMenuStrip.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
             this.FinanceBand.ResumeLayout(false);
+            this.CfContextMenuStrip.ResumeLayout(false);
+            this.toolStripContainer.ContentPanel.ResumeLayout(false);
+            this.toolStripContainer.TopToolStripPanel.ResumeLayout(false);
+            this.toolStripContainer.TopToolStripPanel.PerformLayout();
+            this.toolStripContainer.ResumeLayout(false);
+            this.toolStripContainer.PerformLayout();
+            this.tableLayoutPanel.ResumeLayout(false);
+            this.FinToolStrip.ResumeLayout(false);
+            this.FinToolStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -379,7 +471,7 @@
 
         #endregion
 
-        private System.Windows.Forms.StatusStrip statusStrip1;
+        public System.Windows.Forms.StatusStrip StatusStrip;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem MainMenuItem;
@@ -394,14 +486,21 @@
         private System.Windows.Forms.ToolStripMenuItem NewPlanMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ModifyPlanMenuItem;
         private System.Windows.Forms.ToolStripMenuItem DeletePlanMenuItem;
-        private Guifreaks.NavigationBar.NaviBar NavigatorBar;
+        public Guifreaks.NavigationBar.NaviBar NavigatorBar;
         private Guifreaks.NavigationBar.NaviBand ProductBand;
         private Guifreaks.NavigationBar.NaviBand UpdateBand;
         private Guifreaks.NavigationBar.NaviBand InquiryBand;
         private Guifreaks.NavigationBar.NaviBand ClientBand;
         private Guifreaks.NavigationBar.NaviBand OrderBand;
-        private System.Windows.Forms.Panel Explorer;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        public System.Windows.Forms.Panel Explorer;
         private Guifreaks.NavigationBar.NaviBand FinanceBand;
+        private System.Windows.Forms.ToolStripContainer toolStripContainer;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
+        private System.Windows.Forms.NotifyIcon AppNotifyIcon;
+        private System.Windows.Forms.ToolStripMenuItem DataDicMenuItem;
+        private System.Windows.Forms.ToolStrip FinToolStrip;
+        private System.Windows.Forms.ToolStripButton NewFinanceBtn;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSplitButton NewWater;
     }
 }

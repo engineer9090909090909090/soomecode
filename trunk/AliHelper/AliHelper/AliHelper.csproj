@@ -92,6 +92,13 @@
     <Compile Include="DAO\FinanceDao.cs" />
     <Compile Include="DAO\AppDicDAO.cs" />
     <Compile Include="DAO\SQLiteDBHelper.cs" />
+    <Compile Include="DAO\OrderDao.cs" />
+    <Compile Include="DicForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DicForm.Designer.cs">
+      <DependentUpon>DicForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditCategory.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -182,6 +189,9 @@
     <Compile Include="Utils\VerifyCode.cs" />
     <EmbeddedResource Include="CheckCodeForm.resx">
       <DependentUpon>CheckCodeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DicForm.resx">
+      <DependentUpon>DicForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditCategory.resx">
       <DependentUpon>EditCategory.cs</DependentUpon>
