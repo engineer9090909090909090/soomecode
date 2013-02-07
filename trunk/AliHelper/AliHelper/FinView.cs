@@ -23,8 +23,14 @@ namespace AliHelper
 
         private void FinView_Load(object sender, EventArgs e)
         {
-            this.BeginDateTxt.Value = DateTime.Now;
+            this.BeginDateTxt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             this.EndDateTxt.Value = DateTime.Now;
+            this.ItemTypeTxt.DisplayMember = "Label";
+            this.ItemTypeTxt.ValueMember = "Key";
+            this.EventTypeTxt.DisplayMember = "Label";
+            this.EventTypeTxt.ValueMember = "Key";
+            this.ItemTypeTxt.DataSource = finOrderManager.GetQueryAppDicOptions(Constants.BussnessType);
+            this.EventTypeTxt.DataSource = finOrderManager.GetQueryAppDicOptions(Constants.DebitCredit);
             BindDataWithPage(1);
         }
 

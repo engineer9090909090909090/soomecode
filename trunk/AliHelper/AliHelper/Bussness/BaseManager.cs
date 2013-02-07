@@ -25,9 +25,21 @@ namespace AliHelper
             return appDicDAO.GetOptions(type);
         }
 
+        public List<AppDic> GetQueryAppDicOptions(string type)
+        {
+            List<AppDic> list =  appDicDAO.GetOptions(type);
+            list.Insert(0, new AppDic());
+            return list;
+        }
+
         public void SetAppDicValue(string type, string key, string value)
         {
             appDicDAO.SetValue(type, key, value);
+        }
+
+        public void DeleteAppDic(string type, string key)
+        {
+            appDicDAO.DeleteAppDic(type, key);
         }
     }
 }
