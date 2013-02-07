@@ -11,6 +11,6 @@ namespace Soomes
 
         public string Key { set; get; }
 
-        public string Value { set; get; }
+        public string Label { set; get; }
     }
 }
