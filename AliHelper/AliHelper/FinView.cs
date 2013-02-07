@@ -17,6 +17,8 @@ namespace AliHelper
         public FinView()
         {
             InitializeComponent();
+            FinDetailPager.PageIndex = 1;
+            FinDetailPager.PageSize = 100;
             InitDataGridView();
             finOrderManager = new FinOrderManager();
         }
@@ -119,7 +121,7 @@ namespace AliHelper
             else
             {
                 FinDetailPager.PageIndex = Page;
-                FinDetailPager.PageSize = 20;
+                FinDetailPager.PageSize = 100;
                 FinDetailPager.RecordCount = 0;
             }
         }

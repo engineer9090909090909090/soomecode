@@ -37,6 +37,7 @@ namespace AliHelper
             }
             impProductDetail.InitDataCacheFormOptions();
             productsManager.InitGroupOptions();
+             
             LoadNavigatorBar();
             UpdateGroupUI(groups);
             LoadProdutPanel();
@@ -46,7 +47,32 @@ namespace AliHelper
         {
             //HttpClient.GetMailList();
             CheckForIllegalCrossThreadCalls = false;
+            HideAllToolsStrip();
+            ShowToolsStrip("ProductsStrip");
         }
+
+        private void MainForm_SizeChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.Hide();
+            }
+        }
+
+        private void AppNotifyIcon_DoubleClick(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.Show();
+                this.WindowState = FormWindowState.Maximized;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Minimized;
+                this.Hide();
+            }
+        }
+
         #endregion
 
         #region NavigatorBar 处理
@@ -83,7 +109,7 @@ namespace AliHelper
             nameColumnHeader.Width = 80;
             ColumnHeader timeColumnHeader = new System.Windows.Forms.ColumnHeader();
             timeColumnHeader.Text = "重发时间";
-            timeColumnHeader.Width = 100;
+            timeColumnHeader.Width = 98;
             listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { nameColumnHeader, timeColumnHeader });
             listView1.Name = "listView1";
             listView1.AllowDrop = false;
@@ -122,6 +148,31 @@ namespace AliHelper
             MailListView.ItemSelectionChanged += new ListViewItemSelectionChangedEventHandler(MailListView_ItemSelectionChanged);
             MailListView.View = System.Windows.Forms.View.LargeIcon;
             InquiryBand.ClientArea.Controls.Add(MailListView);
+
+
+            ImageList FinOutlookLargeIcons = new ImageList();
+            FinOutlookLargeIcons.ImageSize = new Size(32, 32);
+            Bitmap finIcons = (Bitmap)global::AliHelper.Properties.IconImages.OutlookLargeIcons;
+            finIcons.MakeTransparent(Color.FromArgb(255, 0, 255));
+            FinOutlookLargeIcons.Images.AddStrip(finIcons);
+            ListViewItem baseViewItem = new ListViewItem("基本账目", 0);
+            baseViewItem.Name = MailQueryListType.Inbox;
+            ListViewItem bussViewItem = new ListViewItem("业务总账", 2);
+            bussViewItem.Name = MailQueryListType.Sendbox;
+            ListViewItem waterViewItem = new ListViewItem("账务流水", 4);
+            waterViewItem.Name = MailQueryListType.Trash;
+            ListView FinListView = new System.Windows.Forms.ListView();
+            FinListView.Name = "FinListView";
+            FinListView.BorderStyle = BorderStyle.None;
+            FinListView.Location = new System.Drawing.Point(40, 20);
+            FinListView.Size = new System.Drawing.Size(80, 300);
+            FinListView.LargeImageList = outlookLargeIcons;
+            FinListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            baseViewItem,bussViewItem,waterViewItem});
+            FinListView.UseCompatibleStateImageBehavior = false;
+            FinListView.ItemSelectionChanged += new ListViewItemSelectionChangedEventHandler(MailListView_ItemSelectionChanged);
+            FinListView.View = System.Windows.Forms.View.LargeIcon;
+            FinanceBand.ClientArea.Controls.Add(FinListView);
         }
 
         #region TreeView NodeMouse 事件处理
@@ -181,9 +232,11 @@ namespace AliHelper
                 return;
             }
             UnLoadExplorerSubPanel();
+            HideAllToolsStrip();
             if (bandName == "ProductBand")
             {
                 LoadProdutPanel();
+                ShowToolsStrip("ProductsStrip");
             }
             else if (bandName == "UpdateBand")
             {
@@ -204,6 +257,7 @@ namespace AliHelper
             else if (bandName == "FinanceBand")
             {
                 LoadFinViewPanel();
+                ShowToolsStrip("FinToolStrip");
             }
             ExplorerCurrentSubName = bandName;
             GC.Collect();
@@ -373,6 +427,31 @@ namespace AliHelper
             this.productView1 = null;
             GC.Collect();
         }
+        private void HideAllToolsStrip()
+        {
+            if (this.toolStripContainer.TopToolStripPanel.Controls.Count > 0)
+            {
+                foreach (Control SubPanel in toolStripContainer.TopToolStripPanel.Controls)
+                {
+                    SubPanel.Hide();
+                }
+            }
+        }
+
+        private void ShowToolsStrip(string name)
+        {
+            if (this.toolStripContainer.TopToolStripPanel.Controls.Count > 0)
+            {
+                foreach (Control SubPanel in toolStripContainer.TopToolStripPanel.Controls)
+                {
+                    if (SubPanel.Name == name)
+                    {
+                        SubPanel.Show();
+                    }
+                }
+            }
+        }
+
 
         private void LoadFinViewPanel()
         {
@@ -440,6 +519,13 @@ namespace AliHelper
             f.ShowDialog(this);
         }
         #endregion
+
+        private void DataDicMenuItem_Click(object sender, EventArgs e)
+        {
+            DicForm f = new DicForm();
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
+        }
 
     }
 }

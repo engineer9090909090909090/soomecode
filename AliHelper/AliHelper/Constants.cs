@@ -32,5 +32,6 @@ namespace AliHelper
         public const string DebitCredit = "DebitCreditType";
         public const string Employee = "Employee";
         public const string BussnessType = "BussnessType";
+        public const string OrderStatusType = "OrderStatusType";
     }
 }

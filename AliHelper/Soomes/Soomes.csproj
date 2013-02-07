@@ -58,10 +58,12 @@
     <Compile Include="ImageJson.cs" />
     <Compile Include="MailQuery.cs" />
     <Compile Include="MailResult.cs" />
+    <Compile Include="Order.cs" />
     <Compile Include="ProductDetail.cs" />
     <Compile Include="ProductStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryObject.cs" />
+    <Compile Include="OrderSummer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
