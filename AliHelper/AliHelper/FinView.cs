@@ -21,6 +21,12 @@ namespace AliHelper
             FinDetailPager.PageSize = 100;
             InitDataGridView();
             finOrderManager = new FinOrderManager();
+            finOrderManager.OnNewEditEvent += new NewEditItemEvent(finOrderManager_OnNewEditEvent);
+        }
+
+        void finOrderManager_OnNewEditEvent(object sender, ItemEventArgs e)
+        {
+            BindDataWithPage(FinDetailPager.PageIndex);
         }
 
         private void FinView_Load(object sender, EventArgs e)
@@ -42,7 +48,7 @@ namespace AliHelper
             dataTable.Columns.Add("DetailId", typeof(Int32));
             dataTable.Columns.Add("EventTime", typeof(string));
             dataTable.Columns.Add("EventName", typeof(string));
-            dataTable.Columns.Add("Amount", typeof(string));
+            dataTable.Columns.Add("TotalAmount", typeof(string));
             dataTable.Columns.Add("OrderNo", typeof(string));
             dataTable.Columns.Add("ItemType", typeof(string));
             dataTable.Columns.Add("Association", typeof(string));
@@ -66,7 +72,7 @@ namespace AliHelper
             EventName.Width = 250;
             DataGridViewColumn Amount = FinDetailDataView.Columns[3]; 
             Amount.HeaderText = "金额";
-            Amount.Name = "Amount";
+            Amount.Name = "TotalAmount";
             Amount.ReadOnly = true;
             Amount.Width = 80;
             DataGridViewColumn OrderNo = FinDetailDataView.Columns[4]; 
@@ -149,6 +155,11 @@ namespace AliHelper
             query.Condition.Association = this.AssociationTxt.Text.Trim();
             QueryObject<FinDetails> result = finOrderManager.GetFinDetails(query);
 
+        }
+
+        private void FinDetailDataView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            
         }
 
         

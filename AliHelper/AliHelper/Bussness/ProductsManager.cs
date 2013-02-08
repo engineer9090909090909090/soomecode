@@ -9,7 +9,7 @@ namespace AliHelper
 {
     public class ProductsManager : BaseManager
     {
-
+        public event NewEditItemEvent OnAddOrUpdateItemEvent;
         public AliGroupDao groupDao;
         public AliProductDao productDao;
         public AliImageDao aliImageDao;
@@ -22,6 +22,15 @@ namespace AliHelper
             detailDao = DAOFactory.Instance.GetAliProductDetailDao();
         }
 
+        public virtual void FireNewUpdateEvent(object o)
+        {
+            if (OnAddOrUpdateItemEvent != null)
+            {
+                ItemEventArgs e = new ItemEventArgs(o);
+                OnAddOrUpdateItemEvent(this, e);
+            }
+        }
+
         public void UpdateGroupProdcuts(int GroupId, List<AliProduct> products)
         {
             //productDao.DeleteProduct4GroupId(GroupId);
@@ -31,6 +40,7 @@ namespace AliHelper
         public void InsertOrUpdateProdcutDetail(ProductDetail detail)
         {
             detailDao.InsertOrUpdate(detail);
+            FireNewUpdateEvent(detail.pid);
         }
 
         public void UpdateGroups(List<AliGroup> groups)

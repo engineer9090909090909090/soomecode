@@ -527,5 +527,12 @@ namespace AliHelper
             f.ShowDialog(this);
         }
 
+        private void NewFinance_Click(object sender, EventArgs e)
+        {
+            EditFin f = new EditFin();
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
+        }
+
     }
 }

@@ -16,8 +16,7 @@ namespace AliHelper
     [System.Runtime.InteropServices.ComVisibleAttribute(true)]
     public partial class ProductView : UserControl
     {
-        private event NewProductgEvent NewItemEvent;
-        private event EditProductgEvent EditItemEvent;
+
         private ProductsManager productsManager;
         private ImpProductDetail impProductDetail;
         private DataTable dataTable;
@@ -33,36 +32,17 @@ namespace AliHelper
             this.webBrowser1.ObjectForScripting = this;
             this.staticImage.Image = ImageUtils.ResizeImage(global::AliHelper.Properties.Resources.no_image, 150, 150);
             this.webBrowser1.Navigate(Application.StartupPath + "\\KindEditor\\Editor.htm");
-            this.NewItemEvent += new NewProductgEvent(ProductView_NewItemEvent);
-            this.EditItemEvent += new EditProductgEvent(ProductView_EditItemEvent);
+            productsManager.OnAddOrUpdateItemEvent += new NewEditItemEvent(productsManager_OnAddOrUpdateItemEvent);
             InitDataGridview();
         }
 
-        void ProductView_EditItemEvent(object sender, ProductEventArgs e)
+        void productsManager_OnAddOrUpdateItemEvent(object sender, ItemEventArgs e)
         {
-            int id = e.ProductId;
-            ProductDetail detail = productsManager.GetProductDetail(id);
-            if (detail == null)
-            {
-                AliProduct product = productsManager.GetAliProduct(id);
-                detail = impProductDetail.GetEditFormElements(product);
-                productsManager.InsertOrUpdateProdcutDetail(detail);
-            }
-            this.AliProductDetail = detail;
-            if (this.AliProductDetail != null)
-            {
-                this.BeginInvoke(new Action(() =>
-                {
-                    this.LoadProductIamges();
-                    this.LoadProductDetailValue();
-                }));
-            }
+            this.AliProductDetail = productsManager.GetProductDetail((int)e.Item);
+            this.LoadProductIamges();
+            this.LoadProductDetailValue();
         }
 
-        void ProductView_NewItemEvent(object sender, ProductEventArgs e)
-        {
-            
-        }
 
         #region Load DataGridView
 
@@ -806,10 +786,23 @@ namespace AliHelper
                 if (id != PrevSelectedId)
                 {
                     PrevSelectedId = id;
-                    if (this.EditItemEvent != null)
+                    ProductDetail detail = productsManager.GetProductDetail(id);
+                    this.AliProductDetail = detail;
+                    if (detail == null)
                     {
-                        this.EditItemEvent(sender, new ProductEventArgs(0, id));
+                        this.BeginInvoke(new Action(() =>
+                        {
+                            AliProduct product = productsManager.GetAliProduct(id);
+                            detail = impProductDetail.GetEditFormElements(product);
+                            productsManager.InsertOrUpdateProdcutDetail(detail);
+                        }));
                     }
+                    else 
+                    {
+                        this.LoadProductIamges();
+                        this.LoadProductDetailValue();
+                    }
+                    
                 }
             }
         }

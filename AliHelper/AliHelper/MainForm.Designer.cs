@@ -35,6 +35,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.MainMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SettingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DataDicMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ProductsStrip = new System.Windows.Forms.ToolStrip();
             this.updateGroup = new System.Windows.Forms.ToolStripButton();
             this.updateAllProduct = new System.Windows.Forms.ToolStripButton();
@@ -54,12 +55,11 @@
             this.Explorer = new System.Windows.Forms.Panel();
             this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.AppNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.DataDicMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FinToolStrip = new System.Windows.Forms.ToolStrip();
-            this.NewFinanceBtn = new System.Windows.Forms.ToolStripButton();
-            this.NewWater = new System.Windows.Forms.ToolStripSplitButton();
+            this.NewFinance = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.AppNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.NewWater = new System.Windows.Forms.ToolStripButton();
             this.StatusStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.ProductsStrip.SuspendLayout();
@@ -120,6 +120,13 @@
             this.SettingMenuItem.Size = new System.Drawing.Size(41, 20);
             this.SettingMenuItem.Text = "设置";
             // 
+            // DataDicMenuItem
+            // 
+            this.DataDicMenuItem.Name = "DataDicMenuItem";
+            this.DataDicMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.DataDicMenuItem.Text = "数据字典(&D)";
+            this.DataDicMenuItem.Click += new System.EventHandler(this.DataDicMenuItem_Click);
+            // 
             // ProductsStrip
             // 
             this.ProductsStrip.Dock = System.Windows.Forms.DockStyle.None;
@@ -128,7 +135,7 @@
             this.updateAllProduct,
             this.updateAllImages,
             this.NewProductBtn});
-            this.ProductsStrip.Location = new System.Drawing.Point(3, 0);
+            this.ProductsStrip.Location = new System.Drawing.Point(3, 25);
             this.ProductsStrip.Name = "ProductsStrip";
             this.ProductsStrip.Size = new System.Drawing.Size(328, 25);
             this.ProductsStrip.TabIndex = 2;
@@ -184,7 +191,7 @@
             this.NavigatorBar.Location = new System.Drawing.Point(3, 3);
             this.NavigatorBar.Margin = new System.Windows.Forms.Padding(3, 3, 1, 3);
             this.NavigatorBar.Name = "NavigatorBar";
-            this.NavigatorBar.Size = new System.Drawing.Size(180, 441);
+            this.NavigatorBar.Size = new System.Drawing.Size(180, 416);
             this.NavigatorBar.TabIndex = 6;
             this.NavigatorBar.Text = "naviBar1";
             this.NavigatorBar.VisibleLargeButtons = 3;
@@ -197,13 +204,13 @@
             // 
             this.ProductBand.ClientArea.Location = new System.Drawing.Point(0, 0);
             this.ProductBand.ClientArea.Name = "ClientArea";
-            this.ProductBand.ClientArea.Size = new System.Drawing.Size(178, 278);
+            this.ProductBand.ClientArea.Size = new System.Drawing.Size(178, 253);
             this.ProductBand.ClientArea.TabIndex = 0;
             this.ProductBand.LargeImage = global::AliHelper.Properties.Resources.klipper;
             this.ProductBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
             this.ProductBand.Location = new System.Drawing.Point(1, 27);
             this.ProductBand.Name = "ProductBand";
-            this.ProductBand.Size = new System.Drawing.Size(178, 278);
+            this.ProductBand.Size = new System.Drawing.Size(178, 253);
             this.ProductBand.SmallImage = global::AliHelper.Properties.Resources.s_klipper_dock;
             this.ProductBand.TabIndex = 0;
             this.ProductBand.Text = "产品列表";
@@ -216,13 +223,13 @@
             // 
             this.InquiryBand.ClientArea.Location = new System.Drawing.Point(0, 0);
             this.InquiryBand.ClientArea.Name = "ClientArea";
-            this.InquiryBand.ClientArea.Size = new System.Drawing.Size(178, 278);
+            this.InquiryBand.ClientArea.Size = new System.Drawing.Size(178, 253);
             this.InquiryBand.ClientArea.TabIndex = 0;
             this.InquiryBand.LargeImage = global::AliHelper.Properties.Resources.s_bookmark;
             this.InquiryBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
             this.InquiryBand.Location = new System.Drawing.Point(1, 27);
             this.InquiryBand.Name = "InquiryBand";
-            this.InquiryBand.Size = new System.Drawing.Size(178, 278);
+            this.InquiryBand.Size = new System.Drawing.Size(178, 253);
             this.InquiryBand.SmallImage = global::AliHelper.Properties.Resources.s_bookmark;
             this.InquiryBand.TabIndex = 2;
             this.InquiryBand.Text = "阿里外贸邮";
@@ -235,13 +242,13 @@
             // 
             this.UpdateBand.ClientArea.Location = new System.Drawing.Point(0, 0);
             this.UpdateBand.ClientArea.Name = "ClientArea";
-            this.UpdateBand.ClientArea.Size = new System.Drawing.Size(178, 278);
+            this.UpdateBand.ClientArea.Size = new System.Drawing.Size(178, 253);
             this.UpdateBand.ClientArea.TabIndex = 0;
             this.UpdateBand.LargeImage = global::AliHelper.Properties.Resources.history;
             this.UpdateBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
             this.UpdateBand.Location = new System.Drawing.Point(1, 27);
             this.UpdateBand.Name = "UpdateBand";
-            this.UpdateBand.Size = new System.Drawing.Size(178, 278);
+            this.UpdateBand.Size = new System.Drawing.Size(178, 253);
             this.UpdateBand.SmallImage = global::AliHelper.Properties.Resources.s_history;
             this.UpdateBand.TabIndex = 1;
             this.UpdateBand.Text = "重发计划";
@@ -254,13 +261,13 @@
             // 
             this.ClientBand.ClientArea.Location = new System.Drawing.Point(0, 0);
             this.ClientBand.ClientArea.Name = "ClientArea";
-            this.ClientBand.ClientArea.Size = new System.Drawing.Size(178, 278);
+            this.ClientBand.ClientArea.Size = new System.Drawing.Size(178, 253);
             this.ClientBand.ClientArea.TabIndex = 0;
             this.ClientBand.LargeImage = global::AliHelper.Properties.Resources.s_colorize;
             this.ClientBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
             this.ClientBand.Location = new System.Drawing.Point(1, 27);
             this.ClientBand.Name = "ClientBand";
-            this.ClientBand.Size = new System.Drawing.Size(178, 278);
+            this.ClientBand.Size = new System.Drawing.Size(178, 253);
             this.ClientBand.SmallImage = global::AliHelper.Properties.Resources.s_colorize;
             this.ClientBand.TabIndex = 3;
             this.ClientBand.Text = "客户管理";
@@ -273,13 +280,13 @@
             // 
             this.OrderBand.ClientArea.Location = new System.Drawing.Point(0, 0);
             this.OrderBand.ClientArea.Name = "ClientArea";
-            this.OrderBand.ClientArea.Size = new System.Drawing.Size(178, 278);
+            this.OrderBand.ClientArea.Size = new System.Drawing.Size(178, 253);
             this.OrderBand.ClientArea.TabIndex = 0;
             this.OrderBand.LargeImage = global::AliHelper.Properties.Resources.wizard;
             this.OrderBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
             this.OrderBand.Location = new System.Drawing.Point(1, 27);
             this.OrderBand.Name = "OrderBand";
-            this.OrderBand.Size = new System.Drawing.Size(178, 278);
+            this.OrderBand.Size = new System.Drawing.Size(178, 253);
             this.OrderBand.SmallImage = global::AliHelper.Properties.Resources.s_wizard;
             this.OrderBand.TabIndex = 4;
             this.OrderBand.Text = "订单管理";
@@ -291,13 +298,13 @@
             // 
             this.FinanceBand.ClientArea.Location = new System.Drawing.Point(0, 0);
             this.FinanceBand.ClientArea.Name = "ClientArea";
-            this.FinanceBand.ClientArea.Size = new System.Drawing.Size(178, 278);
+            this.FinanceBand.ClientArea.Size = new System.Drawing.Size(178, 253);
             this.FinanceBand.ClientArea.TabIndex = 0;
             this.FinanceBand.LargeImage = global::AliHelper.Properties.Resources.Dollars;
             this.FinanceBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
             this.FinanceBand.Location = new System.Drawing.Point(1, 27);
             this.FinanceBand.Name = "FinanceBand";
-            this.FinanceBand.Size = new System.Drawing.Size(178, 278);
+            this.FinanceBand.Size = new System.Drawing.Size(178, 253);
             this.FinanceBand.SmallImage = global::AliHelper.Properties.Resources.s_dollars;
             this.FinanceBand.TabIndex = 10;
             this.FinanceBand.Text = "财务管理";
@@ -337,7 +344,7 @@
             this.Explorer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Explorer.Location = new System.Drawing.Point(187, 3);
             this.Explorer.Name = "Explorer";
-            this.Explorer.Size = new System.Drawing.Size(633, 441);
+            this.Explorer.Size = new System.Drawing.Size(633, 416);
             this.Explorer.TabIndex = 7;
             // 
             // toolStripContainer
@@ -347,7 +354,7 @@
             // toolStripContainer.ContentPanel
             // 
             this.toolStripContainer.ContentPanel.Controls.Add(this.tableLayoutPanel);
-            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(823, 447);
+            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(823, 422);
             this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer.LeftToolStripPanelVisible = false;
             this.toolStripContainer.Location = new System.Drawing.Point(0, 24);
@@ -375,8 +382,34 @@
             this.tableLayoutPanel.Name = "tableLayoutPanel";
             this.tableLayoutPanel.RowCount = 1;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(823, 447);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(823, 422);
             this.tableLayoutPanel.TabIndex = 5;
+            // 
+            // FinToolStrip
+            // 
+            this.FinToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.FinToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.NewFinance,
+            this.toolStripSeparator1,
+            this.NewWater});
+            this.FinToolStrip.Location = new System.Drawing.Point(3, 0);
+            this.FinToolStrip.Name = "FinToolStrip";
+            this.FinToolStrip.Size = new System.Drawing.Size(195, 25);
+            this.FinToolStrip.TabIndex = 3;
+            // 
+            // NewFinance
+            // 
+            this.NewFinance.Image = ((System.Drawing.Image)(resources.GetObject("NewFinance.Image")));
+            this.NewFinance.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.NewFinance.Name = "NewFinance";
+            this.NewFinance.Size = new System.Drawing.Size(73, 22);
+            this.NewFinance.Text = "新增账目";
+            this.NewFinance.Click += new System.EventHandler(this.NewFinance_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // AppNotifyIcon
             // 
@@ -385,45 +418,13 @@
             this.AppNotifyIcon.Visible = true;
             this.AppNotifyIcon.DoubleClick += new System.EventHandler(this.AppNotifyIcon_DoubleClick);
             // 
-            // DataDicMenuItem
-            // 
-            this.DataDicMenuItem.Name = "DataDicMenuItem";
-            this.DataDicMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.DataDicMenuItem.Text = "数据字典(&D)";
-            this.DataDicMenuItem.Click += new System.EventHandler(this.DataDicMenuItem_Click);
-            // 
-            // FinToolStrip
-            // 
-            this.FinToolStrip.Dock = System.Windows.Forms.DockStyle.None;
-            this.FinToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.NewFinanceBtn,
-            this.toolStripSeparator1,
-            this.NewWater});
-            this.FinToolStrip.Location = new System.Drawing.Point(331, 0);
-            this.FinToolStrip.Name = "FinToolStrip";
-            this.FinToolStrip.Size = new System.Drawing.Size(207, 25);
-            this.FinToolStrip.TabIndex = 3;
-            // 
-            // NewFinanceBtn
-            // 
-            this.NewFinanceBtn.Image = ((System.Drawing.Image)(resources.GetObject("NewFinanceBtn.Image")));
-            this.NewFinanceBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.NewFinanceBtn.Name = "NewFinanceBtn";
-            this.NewFinanceBtn.Size = new System.Drawing.Size(73, 22);
-            this.NewFinanceBtn.Text = "新增账目";
-            // 
             // NewWater
             // 
             this.NewWater.Image = ((System.Drawing.Image)(resources.GetObject("NewWater.Image")));
             this.NewWater.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.NewWater.Name = "NewWater";
-            this.NewWater.Size = new System.Drawing.Size(85, 22);
+            this.NewWater.Size = new System.Drawing.Size(73, 22);
             this.NewWater.Text = "新增流水";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // MainForm
             // 
@@ -499,8 +500,8 @@
         private System.Windows.Forms.NotifyIcon AppNotifyIcon;
         private System.Windows.Forms.ToolStripMenuItem DataDicMenuItem;
         private System.Windows.Forms.ToolStrip FinToolStrip;
-        private System.Windows.Forms.ToolStripButton NewFinanceBtn;
+        private System.Windows.Forms.ToolStripButton NewFinance;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripSplitButton NewWater;
+        private System.Windows.Forms.ToolStripButton NewWater;
     }
 }

@@ -5,18 +5,15 @@ using System.Text;
 
 namespace AliHelper
 {
-    public delegate void NewProductgEvent(object sender, ProductEventArgs e);
-    public delegate void EditProductgEvent(object sender, ProductEventArgs e);
+    public delegate void NewEditItemEvent(object sender, ItemEventArgs e);
 
-    public class ProductEventArgs : EventArgs
+    public class ItemEventArgs : EventArgs
     {
-        public int CategoryId;
-        public int ProductId;
+        public object Item;
 
-        public ProductEventArgs(int _CategoryId, int _Id)
+        public ItemEventArgs(object _item)
         {
-            this.CategoryId = _CategoryId;
-            this.ProductId = _Id;
+            this.Item = _item;
         }
     }
 }
