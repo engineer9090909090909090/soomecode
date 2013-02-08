@@ -27,6 +27,8 @@ namespace AliHelper.DAO
             + "EventName varchar(500) not null,"
             + "EventType varchar(50) not null,"
             + "Amount double not null,"
+            + "Rate double not null default 1.00,"
+            + "Currency varchar(3) not null,"
             + "Association varchar(50) not null,"
             + "OrderNo varchar(50),"
             + "ItemType varchar(50),"
@@ -58,8 +60,8 @@ namespace AliHelper.DAO
 
         public QueryObject<FinDetails> GetFinDetails(QueryObject<FinDetails> query)
         {
-            string sql = "select DetailId,EventTime,EventName,Amount,OrderNo,ItemType,Association,EventType,Remark ";
-            sql = sql + "FROM FinDetails where 1 = 1 ";
+            string sql = "select DetailId,EventTime,EventName,Amount,OrderNo,ItemType,Association,EventType,Remark, ";
+            sql = sql + "Rate, Currency, Amount * Rate TotalAmount FROM FinDetails where 1 = 1 ";
             List<SQLiteParameter> QueryParameters = new List<SQLiteParameter>();
             if (query.Condition != null)
             {
@@ -117,6 +119,9 @@ namespace AliHelper.DAO
                 info.EventName = (string)row["EventName"];
                 info.EventType = (string)row["EventType"];
                 info.Amount = Convert.ToDouble(row["Amount"]);
+                info.Currency = (string)row["Currency"];
+                info.TotalAmount = Convert.ToDouble(row["TotalAmount"]);
+                info.Rate = Convert.ToDouble(row["Rate"]);
                 info.Association = (string)row["Association"];
                 info.OrderNo = (string)row["OrderNo"];
                 info.ItemType = (string)row["ItemType"];
@@ -128,10 +133,10 @@ namespace AliHelper.DAO
 
         public void InsertOrUpdateDetails(List<FinDetails> list)
         {
-            string InsSql = @"INSERT INTO FinDetails(SEventTime,EventName,EventType,Amount,Association,OrderNo,ItemType,Remark,CreatedTime,ModifiedTime)"
-                            + "values(@EventTime,@EventName,@EventType,@Amount,@Association,@OrderNo,@ItemType,@Remark,@CreatedTime,@ModifiedTime)";
+            string InsSql = @"INSERT INTO FinDetails(EventTime,EventName,EventType,Amount,Association,OrderNo,ItemType,Remark,Currency, Rate, CreatedTime,ModifiedTime)"
+                            + "values(@EventTime,@EventName,@EventType,@Amount,@Association,@OrderNo,@ItemType,@Currency, @Rate, @Remark,@CreatedTime,@ModifiedTime)";
             string UpdSql = @"update FinDetails set EventTime=@EventTime,EventName=@EventName,EventType=@EventType,Amount=@Amount,Association=@Association,"
-                            + "OrderNo=@OrderNo,ItemType=@ItemType,Remark=@Remark,ModifiedTime=@ModifiedTime"
+                            + "OrderNo=@OrderNo,ItemType=@ItemType,Remark=@Remark,Currency = @Currency, Rate = @Rate, ModifiedTime=@ModifiedTime"
                             + "where DetailId = @DetailId";
 
             string ExistRecordSql = "SELECT count(1) FROM FinDetails WHERE DetailId = ";
@@ -152,6 +157,8 @@ namespace AliHelper.DAO
                     new SQLiteParameter("@Association",item.Association),
                     new SQLiteParameter("@OrderNo",item.OrderNo),
                     new SQLiteParameter("@ItemType",item.ItemType),
+                    new SQLiteParameter("@Currency",item.Currency),
+                    new SQLiteParameter("@Rate",item.Rate),
                     new SQLiteParameter("@Remark",item.Remark),
                     new SQLiteParameter("@CreatedTime", CurrentTime),
                     new SQLiteParameter("@ModifiedTime",CurrentTime)

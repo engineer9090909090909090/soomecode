@@ -278,6 +278,7 @@
             this.FinDetailDataView.RowTemplate.Height = 23;
             this.FinDetailDataView.Size = new System.Drawing.Size(936, 348);
             this.FinDetailDataView.TabIndex = 1;
+            this.FinDetailDataView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.FinDetailDataView_CellDoubleClick);
             // 
             // FinDetailPager
             // 

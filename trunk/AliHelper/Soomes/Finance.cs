@@ -11,7 +11,9 @@ namespace Soomes
         public string EventTime { set; get; }
         public string EventName { set; get; }
         public string EventType { set; get; }
+        public string Currency { set; get; }
         public double Amount { set; get; }
+        public double Rate { set; get; }
         public string Association { set; get; }
         public string OrderNo { set; get; }
         public string ItemType { set; get; }
@@ -22,6 +24,9 @@ namespace Soomes
         //query field
         public string BeginTime { set; get; }
         public string EndTime { set; get; }
+
+        //qurey result field
+        public double TotalAmount { set; get; }
     }
 
 

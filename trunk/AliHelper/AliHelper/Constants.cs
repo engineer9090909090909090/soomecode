@@ -33,5 +33,6 @@ namespace AliHelper
         public const string Employee = "Employee";
         public const string BussnessType = "BussnessType";
         public const string OrderStatusType = "OrderStatusType";
+        public const string CurrencyType = "CurrencyType";
     }
 }

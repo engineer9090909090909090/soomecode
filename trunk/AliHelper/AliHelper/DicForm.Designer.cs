@@ -29,23 +29,25 @@
         private void InitializeComponent()
         {
             this.EditGroup = new System.Windows.Forms.GroupBox();
+            this.ValLabel = new System.Windows.Forms.Label();
+            this.KeyLabel = new System.Windows.Forms.Label();
+            this.AddBtn = new System.Windows.Forms.Button();
+            this.NewValTxt = new System.Windows.Forms.TextBox();
+            this.NewKeyTxt = new System.Windows.Forms.TextBox();
+            this.NewDicType = new System.Windows.Forms.ComboBox();
             this.DicListView = new System.Windows.Forms.ListView();
             this.KeyColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ValColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.NewDicType = new System.Windows.Forms.ComboBox();
-            this.NewKeyTxt = new System.Windows.Forms.TextBox();
-            this.NewValTxt = new System.Windows.Forms.TextBox();
-            this.AddBtn = new System.Windows.Forms.Button();
-            this.KeyLabel = new System.Windows.Forms.Label();
-            this.ValLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.DeleteBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.EditBtn = new System.Windows.Forms.Button();
             this.EditValTxt = new System.Windows.Forms.TextBox();
             this.EditKeyTxt = new System.Windows.Forms.TextBox();
             this.EditDicType = new System.Windows.Forms.ComboBox();
-            this.DeleteBtn = new System.Windows.Forms.Button();
+            this.QueryDicType = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.EditGroup.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -65,15 +67,66 @@
             this.EditGroup.TabStop = false;
             this.EditGroup.Text = "新增字典";
             // 
+            // ValLabel
+            // 
+            this.ValLabel.AutoSize = true;
+            this.ValLabel.Location = new System.Drawing.Point(27, 99);
+            this.ValLabel.Name = "ValLabel";
+            this.ValLabel.Size = new System.Drawing.Size(29, 12);
+            this.ValLabel.TabIndex = 5;
+            this.ValLabel.Text = "值：";
+            // 
+            // KeyLabel
+            // 
+            this.KeyLabel.AutoSize = true;
+            this.KeyLabel.Location = new System.Drawing.Point(27, 66);
+            this.KeyLabel.Name = "KeyLabel";
+            this.KeyLabel.Size = new System.Drawing.Size(29, 12);
+            this.KeyLabel.TabIndex = 4;
+            this.KeyLabel.Text = "键：";
+            // 
+            // AddBtn
+            // 
+            this.AddBtn.Location = new System.Drawing.Point(115, 125);
+            this.AddBtn.Name = "AddBtn";
+            this.AddBtn.Size = new System.Drawing.Size(70, 23);
+            this.AddBtn.TabIndex = 3;
+            this.AddBtn.Text = "增加";
+            this.AddBtn.UseVisualStyleBackColor = true;
+            this.AddBtn.Click += new System.EventHandler(this.AddBtn_Click);
+            // 
+            // NewValTxt
+            // 
+            this.NewValTxt.Location = new System.Drawing.Point(60, 94);
+            this.NewValTxt.Name = "NewValTxt";
+            this.NewValTxt.Size = new System.Drawing.Size(126, 21);
+            this.NewValTxt.TabIndex = 2;
+            // 
+            // NewKeyTxt
+            // 
+            this.NewKeyTxt.Location = new System.Drawing.Point(60, 59);
+            this.NewKeyTxt.Name = "NewKeyTxt";
+            this.NewKeyTxt.Size = new System.Drawing.Size(126, 21);
+            this.NewKeyTxt.TabIndex = 1;
+            // 
+            // NewDicType
+            // 
+            this.NewDicType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.NewDicType.FormattingEnabled = true;
+            this.NewDicType.Location = new System.Drawing.Point(18, 24);
+            this.NewDicType.Name = "NewDicType";
+            this.NewDicType.Size = new System.Drawing.Size(168, 20);
+            this.NewDicType.TabIndex = 0;
+            // 
             // DicListView
             // 
             this.DicListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.KeyColumn,
             this.ValColumn});
             this.DicListView.FullRowSelect = true;
-            this.DicListView.Location = new System.Drawing.Point(230, 11);
+            this.DicListView.Location = new System.Drawing.Point(230, 38);
             this.DicListView.Name = "DicListView";
-            this.DicListView.Size = new System.Drawing.Size(375, 326);
+            this.DicListView.Size = new System.Drawing.Size(375, 299);
             this.DicListView.TabIndex = 1;
             this.DicListView.UseCompatibleStateImageBehavior = false;
             this.DicListView.View = System.Windows.Forms.View.Details;
@@ -88,57 +141,6 @@
             // 
             this.ValColumn.Text = "值";
             this.ValColumn.Width = 220;
-            // 
-            // NewDicType
-            // 
-            this.NewDicType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.NewDicType.FormattingEnabled = true;
-            this.NewDicType.Location = new System.Drawing.Point(18, 24);
-            this.NewDicType.Name = "NewDicType";
-            this.NewDicType.Size = new System.Drawing.Size(168, 20);
-            this.NewDicType.TabIndex = 0;
-            // 
-            // NewKeyTxt
-            // 
-            this.NewKeyTxt.Location = new System.Drawing.Point(60, 59);
-            this.NewKeyTxt.Name = "NewKeyTxt";
-            this.NewKeyTxt.Size = new System.Drawing.Size(126, 21);
-            this.NewKeyTxt.TabIndex = 1;
-            // 
-            // NewValTxt
-            // 
-            this.NewValTxt.Location = new System.Drawing.Point(60, 94);
-            this.NewValTxt.Name = "NewValTxt";
-            this.NewValTxt.Size = new System.Drawing.Size(126, 21);
-            this.NewValTxt.TabIndex = 2;
-            // 
-            // AddBtn
-            // 
-            this.AddBtn.Location = new System.Drawing.Point(115, 125);
-            this.AddBtn.Name = "AddBtn";
-            this.AddBtn.Size = new System.Drawing.Size(70, 23);
-            this.AddBtn.TabIndex = 3;
-            this.AddBtn.Text = "增加";
-            this.AddBtn.UseVisualStyleBackColor = true;
-            this.AddBtn.Click += new System.EventHandler(this.AddBtn_Click);
-            // 
-            // KeyLabel
-            // 
-            this.KeyLabel.AutoSize = true;
-            this.KeyLabel.Location = new System.Drawing.Point(27, 66);
-            this.KeyLabel.Name = "KeyLabel";
-            this.KeyLabel.Size = new System.Drawing.Size(29, 12);
-            this.KeyLabel.TabIndex = 4;
-            this.KeyLabel.Text = "键：";
-            // 
-            // ValLabel
-            // 
-            this.ValLabel.AutoSize = true;
-            this.ValLabel.Location = new System.Drawing.Point(27, 99);
-            this.ValLabel.Name = "ValLabel";
-            this.ValLabel.Size = new System.Drawing.Size(29, 12);
-            this.ValLabel.TabIndex = 5;
-            this.ValLabel.Text = "值：";
             // 
             // groupBox1
             // 
@@ -155,6 +157,17 @@
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "编辑字典";
+            // 
+            // DeleteBtn
+            // 
+            this.DeleteBtn.Enabled = false;
+            this.DeleteBtn.Location = new System.Drawing.Point(116, 121);
+            this.DeleteBtn.Name = "DeleteBtn";
+            this.DeleteBtn.Size = new System.Drawing.Size(70, 23);
+            this.DeleteBtn.TabIndex = 6;
+            this.DeleteBtn.Text = "删除";
+            this.DeleteBtn.UseVisualStyleBackColor = true;
+            this.DeleteBtn.Click += new System.EventHandler(this.DeleteBtn_Click);
             // 
             // label1
             // 
@@ -209,22 +222,32 @@
             this.EditDicType.Size = new System.Drawing.Size(168, 20);
             this.EditDicType.TabIndex = 0;
             // 
-            // DeleteBtn
+            // QueryDicType
             // 
-            this.DeleteBtn.Enabled = false;
-            this.DeleteBtn.Location = new System.Drawing.Point(116, 121);
-            this.DeleteBtn.Name = "DeleteBtn";
-            this.DeleteBtn.Size = new System.Drawing.Size(70, 23);
-            this.DeleteBtn.TabIndex = 6;
-            this.DeleteBtn.Text = "删除";
-            this.DeleteBtn.UseVisualStyleBackColor = true;
-            this.DeleteBtn.Click += new System.EventHandler(this.DeleteBtn_Click);
+            this.QueryDicType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.QueryDicType.FormattingEnabled = true;
+            this.QueryDicType.Location = new System.Drawing.Point(335, 13);
+            this.QueryDicType.Name = "QueryDicType";
+            this.QueryDicType.Size = new System.Drawing.Size(168, 20);
+            this.QueryDicType.TabIndex = 6;
+            this.QueryDicType.SelectedIndexChanged += new System.EventHandler(this.QueryDicType_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(260, 18);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 12);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "字典类型：";
             // 
             // DicForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(616, 348);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.QueryDicType);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.DicListView);
             this.Controls.Add(this.EditGroup);
@@ -234,11 +257,13 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "数据字典";
+            this.Load += new System.EventHandler(this.DicForm_Load);
             this.EditGroup.ResumeLayout(false);
             this.EditGroup.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -262,5 +287,7 @@
         private System.Windows.Forms.TextBox EditKeyTxt;
         private System.Windows.Forms.ComboBox EditDicType;
         private System.Windows.Forms.Button DeleteBtn;
+        private System.Windows.Forms.ComboBox QueryDicType;
+        private System.Windows.Forms.Label label3;
     }
 }

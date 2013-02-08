@@ -18,22 +18,6 @@ namespace AliHelper
         {
             InitializeComponent();
             baseManager = new BaseManager();
-            this.NewDicType.DisplayMember = "Value";
-            this.NewDicType.ValueMember = "Key";
-            this.EditDicType.DisplayMember = "Value";
-            this.EditDicType.ValueMember = "Key";
-            foreach(string key in DataCache.Instance.DicTypeOptions.Keys)
-            {
-                string val = (string) DataCache.Instance.DicTypeOptions[key];
-                KeyValuePair<string, string> item = new KeyValuePair<string,string>(key, val);
-                this.NewDicType.Items.Add(item);
-                this.EditDicType.Items.Add(item);
-            }
-            this.NewDicType.SelectedIndex = 0;
-            this.EditDicType.SelectedIndex = 0;
-            this.EditDicType.Enabled = false;
-            this.EditKeyTxt.Enabled = false;
-            LoadAppDicData();
         }
 
         private void AddBtn_Click(object sender, EventArgs e)
@@ -67,21 +51,33 @@ namespace AliHelper
         {
             this.DicListView.Groups.Clear();
             this.DicListView.Items.Clear();
-            foreach (string key in DataCache.Instance.DicTypeOptions.Keys)
+            KeyValuePair<string, string> item = (KeyValuePair<string, string>)this.QueryDicType.SelectedItem;
+            if (string.IsNullOrEmpty(item.Key))
             {
-                string val = (string)DataCache.Instance.DicTypeOptions[key];
-                List<AppDic> options = baseManager.GetAppDicOptions(key);
-                ListViewGroup group = new ListViewGroup(val);
-                this.DicListView.Groups.Add(group);
-                int i = 0;
-                foreach (AppDic dic in options)
+                foreach (string key in DataCache.Instance.DicTypeOptions.Keys)
                 {
-                    ListViewItem item0 = new ListViewItem(
-                        new string[] { dic.Key, dic.Label },
-                        i++, group);
-                    item0.Tag = dic;
-                    this.DicListView.Items.Add(item0);
+                    LoadAppDicList4Type(key);
                 }
+            }
+            else {
+                LoadAppDicList4Type(item.Key);
+            }
+        }
+
+        private void LoadAppDicList4Type(string Type)
+        {
+            string val = (string)DataCache.Instance.DicTypeOptions[Type];
+            List<AppDic> options = baseManager.GetAppDicOptions(Type);
+            ListViewGroup group = new ListViewGroup(val);
+            this.DicListView.Groups.Add(group);
+            int i = 0;
+            foreach (AppDic dic in options)
+            {
+                ListViewItem item0 = new ListViewItem(
+                    new string[] { dic.Key, dic.Label },
+                    i++, group);
+                item0.Tag = dic;
+                this.DicListView.Items.Add(item0);
             }
         }
 
@@ -120,6 +116,39 @@ namespace AliHelper
             {
                 LoadAppDicData();
             }));
+        }
+
+        private void QueryDicType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.BeginInvoke(new Action(() =>
+            {
+                LoadAppDicData();
+            }));
+        }
+
+        private void DicForm_Load(object sender, EventArgs e)
+        {
+            this.NewDicType.DisplayMember = "Value";
+            this.NewDicType.ValueMember = "Key";
+            this.EditDicType.DisplayMember = "Value";
+            this.EditDicType.ValueMember = "Key";
+            this.QueryDicType.DisplayMember = "Value";
+            this.QueryDicType.ValueMember = "Key";
+            KeyValuePair<string, string> item0 = new KeyValuePair<string, string>("", "所有");
+            this.QueryDicType.Items.Add(item0);
+            foreach (string key in DataCache.Instance.DicTypeOptions.Keys)
+            {
+                string val = (string)DataCache.Instance.DicTypeOptions[key];
+                KeyValuePair<string, string> item = new KeyValuePair<string, string>(key, val);
+                this.NewDicType.Items.Add(item);
+                this.EditDicType.Items.Add(item);
+                this.QueryDicType.Items.Add(item);
+            }
+            this.NewDicType.SelectedIndex = 0;
+            this.EditDicType.SelectedIndex = 0;
+            this.QueryDicType.SelectedIndex = 0;
+            this.EditDicType.Enabled = false;
+            this.EditKeyTxt.Enabled = false;
         }
     }
 }
