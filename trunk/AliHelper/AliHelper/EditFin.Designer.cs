@@ -60,8 +60,8 @@
             this.label19 = new System.Windows.Forms.Label();
             this.AssociationTxt = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
-            this.AmountTxt = new AliHelper.NumericTextbox();
-            this.RateTxt = new AliHelper.NumericTextbox();
+            this.AmountTxt = new AliHelper.NumericTextbox1();
+            this.RateTxt = new AliHelper.NumericTextbox1();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -492,8 +492,8 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox TotalAmount;
-        private NumericTextbox RateTxt;
-        private NumericTextbox AmountTxt;
+        private NumericTextbox1 RateTxt;
+        private NumericTextbox1 AmountTxt;
         private System.Windows.Forms.ComboBox AssociationTxt;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label13;
