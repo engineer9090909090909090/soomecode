@@ -34,5 +34,9 @@ namespace AliHelper
         public const string BussnessType = "BussnessType";
         public const string OrderStatusType = "OrderStatusType";
         public const string CurrencyType = "CurrencyType";
+
+        public const string FinanceBaseView = "FinanceBaseView";
+        public const string FinanceBizView = "FinanceBizView";
+        public const string FinanceWaterView = "FinanceWaterView";
     }
 }

@@ -23,8 +23,9 @@ namespace AliHelper.DAO
             dbHelper.ExecuteNonQuery(
               "CREATE TABLE IF NOT EXISTS FinDetails("
             + "DetailId integer NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
-            + "EventTime varchar(10) not null,"
-            + "EventName varchar(500) not null,"
+            + "FinId integer NOT NULL default 0,"
+            + "FinDate varchar(10) not null,"
+            + "Description varchar(500) not null,"
             + "EventType varchar(50) not null,"
             + "Amount double not null,"
             + "Rate double not null default 1.00,"
@@ -40,8 +41,13 @@ namespace AliHelper.DAO
              "CREATE TABLE IF NOT EXISTS Finance("
            + "FinId integer NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
            + "FinDate varchar(10) not null,"
-           + "FinSource varchar(100) not null,"
-           + "FinCompany varchar(100) not null,"
+           + "Description varchar(100) not null,"
+           + "EventType varchar(50) not null,"
+           + "ItemType varchar(50) not null,"
+           + "Account varchar(50) not null,"
+           + "ReferenceNo varchar(50),"
+           + "ReceivePaymentor varchar(100),"
+           + "Customer varchar(50),"
            + "Association varchar(50) not null,"
            + "Amount double not null,"
            + "Rate double not null default 1.00,"
@@ -50,34 +56,28 @@ namespace AliHelper.DAO
            + "CreatedTime datetime,"
            + "ModifiedTime datetime)");
 
-            dbHelper.ExecuteNonQuery(
-             "CREATE TABLE IF NOT EXISTS Finance_FinDetails("
-           + "FinId integer NOT NULL,"
-           + "DetailId integer NOT NULL)");
-
-            dbHelper.ExecuteNonQuery("Create Index IF NOT EXISTS Index_key on Finance_FinDetails(FinId, DetailId);");
         }
 
         public QueryObject<FinDetails> GetFinDetails(QueryObject<FinDetails> query)
         {
-            string sql = "select DetailId,EventTime,EventName,Amount,OrderNo,ItemType,Association,EventType,Remark, ";
+            string sql = "select DetailId, FinId, FinDate,Description,Amount,OrderNo,ItemType,Association,EventType,Remark, ";
             sql = sql + "Rate, Currency, Amount * Rate TotalAmount FROM FinDetails where 1 = 1 ";
             List<SQLiteParameter> QueryParameters = new List<SQLiteParameter>();
             if (query.Condition != null)
             {
                 if (query.Condition.BeginTime != null)
                 {
-                    sql = sql + "and EventTime >= @BeginTime ";
+                    sql = sql + "and FinDate >= @BeginTime ";
                     QueryParameters.Add(new SQLiteParameter("@BeginTime", query.Condition.BeginTime));
                 }
                 if (query.Condition.EndTime != null)
                 {
-                    sql = sql + "and EventTime <= @EndTime ";
+                    sql = sql + "and FinDate <= @EndTime ";
                     QueryParameters.Add(new SQLiteParameter("@EndTime", query.Condition.EndTime));
                 }
-                if (!string.IsNullOrEmpty(query.Condition.EventName))
+                if (!string.IsNullOrEmpty(query.Condition.FinDate))
                 {
-                    sql = sql + "and EventName like '%" + query.Condition.EventName.Trim() + "%' ";
+                    sql = sql + "and Description like '%" + query.Condition.Description.Trim() + "%' ";
                 }
                 if (!string.IsNullOrEmpty(query.Condition.ItemType))
                 {
@@ -115,8 +115,9 @@ namespace AliHelper.DAO
             {
                 FinDetails info = new FinDetails();
                 info.DetailId = Convert.ToInt32(row["DetailId"]);
-                info.EventTime = (string)row["EventTime"];
-                info.EventName = (string)row["EventName"];
+                info.FinId = Convert.ToInt32(row["FinId"]);
+                info.FinDate = (string)row["FinDate"];
+                info.Description = (string)row["Description"];
                 info.EventType = (string)row["EventType"];
                 info.Amount = Convert.ToDouble(row["Amount"]);
                 info.Currency = (string)row["Currency"];
@@ -133,9 +134,9 @@ namespace AliHelper.DAO
 
         public void InsertOrUpdateDetails(List<FinDetails> list)
         {
-            string InsSql = @"INSERT INTO FinDetails(EventTime,EventName,EventType,Amount,Association,OrderNo,ItemType,Remark,Currency, Rate, CreatedTime,ModifiedTime)"
-                            + "values(@EventTime,@EventName,@EventType,@Amount,@Association,@OrderNo,@ItemType, @Remark, @Currency, @Rate, @CreatedTime, @ModifiedTime)";
-            string UpdSql = @"update FinDetails set EventTime=@EventTime,EventName=@EventName,EventType=@EventType,Amount=@Amount,Association=@Association,"
+            string InsSql = @"INSERT INTO FinDetails(FinDate,FinId,Description,EventType,Amount,Association,OrderNo,ItemType,Remark,Currency, Rate, CreatedTime,ModifiedTime)"
+                            + "values(@FinDate,@FinId,@Description,@EventType,@Amount,@Association,@OrderNo,@ItemType, @Remark, @Currency, @Rate, @CreatedTime, @ModifiedTime)";
+            string UpdSql = @"update FinDetails set FinDate=@FinDate,Description=@Description,EventType=@EventType,Amount=@Amount,Association=@Association,"
                             + "OrderNo=@OrderNo,ItemType=@ItemType,Remark=@Remark,Currency = @Currency, Rate = @Rate, ModifiedTime=@ModifiedTime"
                             + "where DetailId = @DetailId";
 
@@ -150,8 +151,9 @@ namespace AliHelper.DAO
                 SQLiteParameter[] parameter = new SQLiteParameter[]
                 {
                     new SQLiteParameter("@DetailId",item.DetailId),
-                    new SQLiteParameter("@EventTime",item.EventTime),
-                    new SQLiteParameter("@EventName",item.EventName),
+                    new SQLiteParameter("@FinId",item.FinId),
+                    new SQLiteParameter("@FinDate",item.FinDate),
+                    new SQLiteParameter("@Description",item.Description),
                     new SQLiteParameter("@EventType",item.EventType),
                     new SQLiteParameter("@Amount",item.Amount),
                     new SQLiteParameter("@Association",item.Association),
@@ -197,6 +199,137 @@ namespace AliHelper.DAO
             {
                 return null;
             }
+        }
+
+        public List<FinDetails> GetFinDetails(int finId)
+        {
+            string sql = "select *, Amount * Rate TotalAmount from FinDetails where FinId = " + finId;
+            DataTable dt = dbHelper.ExecuteDataTable(sql, null);
+            return DetailTableToList(dt);
+        }
+
+
+
+        public void InsertOrUpdateDetails(Finance finance)
+        {
+
+            string InsSql = @"INSERT INTO Finance(FinDate, Description, EventType, Account, ReferenceNo, ReceivePaymentor, Customer, Association,Amount,Rate,Currency,Remark, CreatedTime,ModifiedTime)"
+                            + "values(@FinDate, @Description, @EventType, @Account, @ReferenceNo, @ReceivePaymentor, @Customer, @Association,@Amount,@Rate,@Currency,@Remark, @CreatedTime, @ModifiedTime)";
+            string UpdSql = @"update Finance set Description=@Description,FinDate=@FinDate,EventType=@EventType,Amount=@Amount,Association=@Association,"
+                            + "ReceivePaymentor=@ReceivePaymentor,Account=@Account,ReferenceNo=@ReferenceNo, Customer= @Customer, Remark=@Remark,Currency = @Currency, Rate = @Rate, ModifiedTime=@ModifiedTime"
+                            + "where FinId = @FinId";
+
+            string ExistRecordSql = "SELECT count(1) FROM Finance WHERE FinId = ";
+
+            List<SQLiteParameter[]> InsertParameters = new List<SQLiteParameter[]>();
+            List<SQLiteParameter[]> UpdateParameters = new List<SQLiteParameter[]>();
+            DateTime CurrentTime = DateTime.Now;
+            SQLiteParameter[] parameter = new SQLiteParameter[]
+            {
+                new SQLiteParameter("@FinDate",finance.FinDate),
+                new SQLiteParameter("@Description",finance.Description),
+                new SQLiteParameter("@EventType",finance.EventType),
+                new SQLiteParameter("@Account",finance.Account),
+                new SQLiteParameter("@ReferenceNo",finance.ReferenceNo),
+                new SQLiteParameter("@ReceivePaymentor",finance.ReceivePaymentor),
+                new SQLiteParameter("@Customer",finance.Customer),
+                new SQLiteParameter("@Association",finance.Association),
+                new SQLiteParameter("@Amount",finance.Amount),
+                new SQLiteParameter("@Rate",finance.Rate),
+                new SQLiteParameter("@Currency",finance.Currency),
+                new SQLiteParameter("@Remark",finance.Remark),
+                new SQLiteParameter("@CreatedTime", CurrentTime),
+                new SQLiteParameter("@ModifiedTime",CurrentTime)
+            };
+            int record = Convert.ToInt32(dbHelper.ExecuteScalar(ExistRecordSql + finance.FinId, null));
+            if (record == 0)
+            {
+                dbHelper.ExecuteNonQuery(InsSql, InsertParameters);
+            }
+            else
+            {
+                dbHelper.ExecuteNonQuery(UpdSql, UpdateParameters);
+            }
+        }
+
+
+        public QueryObject<Finance> GetFinances(QueryObject<Finance> query)
+        {
+            string sql = "select *, Amount * Rate TotalAmount FROM Finance f where 1 = 1 ";
+            List<SQLiteParameter> QueryParameters = new List<SQLiteParameter>();
+            if (query.Condition != null)
+            {
+                if (query.Condition.BeginTime != null)
+                {
+                    sql = sql + "and f.FinDate >= @BeginTime ";
+                    QueryParameters.Add(new SQLiteParameter("@BeginTime", query.Condition.BeginTime));
+                }
+                if (query.Condition.EndTime != null)
+                {
+                    sql = sql + "and f.FinDate <= @EndTime ";
+                    QueryParameters.Add(new SQLiteParameter("@EndTime", query.Condition.EndTime));
+                }
+                if (!string.IsNullOrEmpty(query.Condition.Description))
+                {
+                    sql = sql + "and f.Description like '%" + query.Condition.Description.Trim() + "%' ";
+                }
+                if (!string.IsNullOrEmpty(query.Condition.ItemType))
+                {
+                    sql = sql + "and f.ItemType = @ItemType ";
+                    QueryParameters.Add(new SQLiteParameter("@ItemType", query.Condition.ItemType));
+                }
+                if (!string.IsNullOrEmpty(query.Condition.EventType))
+                {
+                    sql = sql + "and f.EventType = @EventType ";
+                    QueryParameters.Add(new SQLiteParameter("@EventType", query.Condition.EventType));
+                }
+                if (!string.IsNullOrEmpty(query.Condition.Association))
+                {
+                    sql = sql + "and f.Association like '%" + query.Condition.Association.Trim() + "%' ";
+                }
+                if (!string.IsNullOrEmpty(query.Condition.ReceivePaymentor))
+                {
+                    sql = sql + "and f.ReceivePaymentor like '%" + query.Condition.ReceivePaymentor.Trim() + "%' ";
+                }
+            }
+            query.dt = dbHelper.ExecuteDataTable(sql, QueryParameters.ToArray());
+            List<Finance> FinanceList = FinanceTableToList(query.dt);
+            foreach(Finance fin in FinanceList)
+            {
+                if (fin.FinId > 0)
+                {
+                    fin.Details = GetFinDetails(fin.FinId);
+                }
+            }
+            query.Result = FinanceList;
+            return query;
+        }
+
+
+        public List<Finance> FinanceTableToList(DataTable dt)
+        {
+            List<Finance> list = new List<Finance>();
+            foreach (DataRow row in dt.Rows)
+            {
+                Finance info = new Finance();
+                info.FinId = Convert.ToInt32(row["FinId"]);
+                info.FinDate = (string)row["FinDate"];
+                info.Description = (string)row["Description"];
+                info.EventType = (string)row["EventType"];
+                info.Amount = Convert.ToDouble(row["Amount"]);
+                info.Currency = (string)row["Currency"];
+                info.TotalAmount = Convert.ToDouble(row["TotalAmount"]);
+                info.Rate = Convert.ToDouble(row["Rate"]);
+                info.Association = (string)row["Association"];
+                info.Account = (string)row["Account"];
+                info.ReferenceNo = (string)row["ReferenceNo"];
+                info.ReceivePaymentor = (string)row["ReceivePaymentor"];
+                info.Customer = (string)row["Customer"];
+                info.ItemType = (string)row["ItemType"];
+                info.Remark = (string)row["Remark"];
+                list.Add(info);
+            }
+            return list;
         }
 
     }
