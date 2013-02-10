@@ -34,7 +34,6 @@
             this.ItemTypeTxt = new System.Windows.Forms.ComboBox();
             this.EventTimeTxt = new System.Windows.Forms.DateTimePicker();
             this.label7 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -43,6 +42,12 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.AssociationTxt = new System.Windows.Forms.ComboBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.AmountTxt = new AliHelper.NumericTextbox();
+            this.RateTxt = new AliHelper.NumericTextbox();
             this.label18 = new System.Windows.Forms.Label();
             this.TotalAmount = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
@@ -56,12 +61,7 @@
             this.RemarkTxt = new System.Windows.Forms.TextBox();
             this.Confirm = new System.Windows.Forms.Button();
             this.Cannel = new System.Windows.Forms.Button();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.AssociationTxt = new System.Windows.Forms.ComboBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.AmountTxt = new AliHelper.NumericTextbox1();
-            this.RateTxt = new AliHelper.NumericTextbox1();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -115,17 +115,6 @@
             this.label7.Size = new System.Drawing.Size(125, 12);
             this.label7.TabIndex = 14;
             this.label7.Text = "*必须(业务员/经手人)";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Location = new System.Drawing.Point(-52, 190);
-            this.label1.Margin = new System.Windows.Forms.Padding(10);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 12);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "开始时间";
             // 
             // label6
             // 
@@ -185,9 +174,9 @@
             this.label5.ForeColor = System.Drawing.Color.Red;
             this.label5.Location = new System.Drawing.Point(275, 193);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(53, 12);
+            this.label5.Size = new System.Drawing.Size(89, 12);
             this.label5.TabIndex = 26;
-            this.label5.Text = "(订单号)";
+            this.label5.Text = "(订单号/PI/PO)";
             // 
             // label9
             // 
@@ -201,6 +190,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label20);
             this.groupBox1.Controls.Add(this.AssociationTxt);
             this.groupBox1.Controls.Add(this.label19);
@@ -236,6 +226,76 @@
             this.groupBox1.Size = new System.Drawing.Size(440, 370);
             this.groupBox1.TabIndex = 28;
             this.groupBox1.TabStop = false;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.BackColor = System.Drawing.Color.Transparent;
+            this.label20.ForeColor = System.Drawing.Color.Red;
+            this.label20.Location = new System.Drawing.Point(198, 64);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(35, 12);
+            this.label20.TabIndex = 47;
+            this.label20.Text = "*必须";
+            // 
+            // AssociationTxt
+            // 
+            this.AssociationTxt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.AssociationTxt.FormattingEnabled = true;
+            this.AssociationTxt.Location = new System.Drawing.Point(97, 295);
+            this.AssociationTxt.Name = "AssociationTxt";
+            this.AssociationTxt.Size = new System.Drawing.Size(178, 20);
+            this.AssociationTxt.TabIndex = 46;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.BackColor = System.Drawing.Color.Transparent;
+            this.label19.ForeColor = System.Drawing.Color.Red;
+            this.label19.Location = new System.Drawing.Point(275, 264);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(35, 12);
+            this.label19.TabIndex = 45;
+            this.label19.Text = "*必须";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.BackColor = System.Drawing.Color.Transparent;
+            this.label13.ForeColor = System.Drawing.Color.Red;
+            this.label13.Location = new System.Drawing.Point(277, 230);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(35, 12);
+            this.label13.TabIndex = 44;
+            this.label13.Text = "*必须";
+            // 
+            // AmountTxt
+            // 
+            this.AmountTxt.CommaFormat = true;
+            this.AmountTxt.CurrencyFormat = false;
+            this.AmountTxt.DecimalPrecision = 2;
+            this.AmountTxt.Location = new System.Drawing.Point(97, 153);
+            this.AmountTxt.Name = "AmountTxt";
+            this.AmountTxt.PercentFormat = false;
+            this.AmountTxt.ReadOnly = false;
+            this.AmountTxt.Size = new System.Drawing.Size(104, 24);
+            this.AmountTxt.TabIndex = 43;
+            this.AmountTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.AmountTxt.Leave += new System.EventHandler(this.AmountTxt_Leave);
+            // 
+            // RateTxt
+            // 
+            this.RateTxt.CommaFormat = false;
+            this.RateTxt.CurrencyFormat = false;
+            this.RateTxt.DecimalPrecision = 4;
+            this.RateTxt.Location = new System.Drawing.Point(97, 121);
+            this.RateTxt.Name = "RateTxt";
+            this.RateTxt.PercentFormat = false;
+            this.RateTxt.ReadOnly = false;
+            this.RateTxt.Size = new System.Drawing.Size(104, 24);
+            this.RateTxt.TabIndex = 42;
+            this.RateTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.RateTxt.Leave += new System.EventHandler(this.AmountTxt_Leave);
             // 
             // label18
             // 
@@ -368,75 +428,16 @@
             this.Cannel.UseVisualStyleBackColor = true;
             this.Cannel.Click += new System.EventHandler(this.Cannel_Click);
             // 
-            // label13
+            // label1
             // 
-            this.label13.AutoSize = true;
-            this.label13.BackColor = System.Drawing.Color.Transparent;
-            this.label13.ForeColor = System.Drawing.Color.Red;
-            this.label13.Location = new System.Drawing.Point(277, 230);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(35, 12);
-            this.label13.TabIndex = 44;
-            this.label13.Text = "*必须";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.BackColor = System.Drawing.Color.Transparent;
-            this.label19.ForeColor = System.Drawing.Color.Red;
-            this.label19.Location = new System.Drawing.Point(275, 264);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(35, 12);
-            this.label19.TabIndex = 45;
-            this.label19.Text = "*必须";
-            // 
-            // AssociationTxt
-            // 
-            this.AssociationTxt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.AssociationTxt.FormattingEnabled = true;
-            this.AssociationTxt.Location = new System.Drawing.Point(97, 295);
-            this.AssociationTxt.Name = "AssociationTxt";
-            this.AssociationTxt.Size = new System.Drawing.Size(178, 20);
-            this.AssociationTxt.TabIndex = 46;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.BackColor = System.Drawing.Color.Transparent;
-            this.label20.ForeColor = System.Drawing.Color.Red;
-            this.label20.Location = new System.Drawing.Point(198, 64);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(35, 12);
-            this.label20.TabIndex = 47;
-            this.label20.Text = "*必须";
-            // 
-            // AmountTxt
-            // 
-            this.AmountTxt.CommaFormat = true;
-            this.AmountTxt.CurrencyFormat = false;
-            this.AmountTxt.DecimalPrecision = 2;
-            this.AmountTxt.Location = new System.Drawing.Point(97, 153);
-            this.AmountTxt.Name = "AmountTxt";
-            this.AmountTxt.PercentFormat = false;
-            this.AmountTxt.ReadOnly = false;
-            this.AmountTxt.Size = new System.Drawing.Size(104, 24);
-            this.AmountTxt.TabIndex = 43;
-            this.AmountTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.AmountTxt.Leave += new System.EventHandler(this.AmountTxt_Leave);
-            // 
-            // RateTxt
-            // 
-            this.RateTxt.CommaFormat = false;
-            this.RateTxt.CurrencyFormat = false;
-            this.RateTxt.DecimalPrecision = 4;
-            this.RateTxt.Location = new System.Drawing.Point(97, 121);
-            this.RateTxt.Name = "RateTxt";
-            this.RateTxt.PercentFormat = false;
-            this.RateTxt.ReadOnly = false;
-            this.RateTxt.Size = new System.Drawing.Size(104, 24);
-            this.RateTxt.TabIndex = 42;
-            this.RateTxt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.RateTxt.Leave += new System.EventHandler(this.AmountTxt_Leave);
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Location = new System.Drawing.Point(35, 62);
+            this.label1.Margin = new System.Windows.Forms.Padding(10);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(53, 12);
+            this.label1.TabIndex = 48;
+            this.label1.Text = "时    间";
             // 
             // EditFin
             // 
@@ -446,7 +447,6 @@
             this.Controls.Add(this.Cannel);
             this.Controls.Add(this.Confirm);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.label1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "EditFin";
@@ -458,7 +458,6 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -470,7 +469,6 @@
         private System.Windows.Forms.ComboBox ItemTypeTxt;
         private System.Windows.Forms.DateTimePicker EventTimeTxt;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label4;
@@ -492,11 +490,12 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox TotalAmount;
-        private NumericTextbox1 RateTxt;
-        private NumericTextbox1 AmountTxt;
+        private NumericTextbox RateTxt;
+        private NumericTextbox AmountTxt;
         private System.Windows.Forms.ComboBox AssociationTxt;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label1;
     }
 }
