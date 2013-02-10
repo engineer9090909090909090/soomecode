@@ -14,6 +14,7 @@ namespace AliHelper
     public partial class FinView : UserControl
     {
         FinOrderManager finOrderManager;
+        DataTable dataTable = new DataTable(); 
         public FinView()
         {
             InitializeComponent();
@@ -42,10 +43,32 @@ namespace AliHelper
             BindDataWithPage(1);
         }
 
-        private void InitDataGridView() {
-
-            DataTable dataTable = new DataTable();
+        private void BindDateTable(List<FinDetails> list)
+        {
+            int i = 0;
+            foreach (FinDetails item in list)
+            {
+                DataRow row = this.dataTable.NewRow();
+                row["DetailId"] = item.DetailId;
+                row["Id"] = 1 + i;
+                row["EventTime"] = item.EventTime;
+                row["EventName"] = item.EventName;
+                row["TotalAmount"] = "￥" + item.TotalAmount.ToString("#,##0.00");
+                row["OrderNo"] = item.OrderNo;
+                row["ItemType"] = item.ItemType;
+                row["Association"] = item.Association;
+                row["EventType"] = item.EventType;
+                row["Remark"] = item.Remark;
+                this.dataTable.Rows.Add(row);
+                FinDetailDataView.Rows[i].Cells[4].Style.ForeColor = 
+                (item.TotalAmount > 0)? Color.Red : Color.Blue;
+                i++;
+            }
+        }
+        private void InitDataGridView() 
+        {
             dataTable.Columns.Add("DetailId", typeof(Int32));
+            dataTable.Columns.Add("Id", typeof(Int32));
             dataTable.Columns.Add("EventTime", typeof(string));
             dataTable.Columns.Add("EventName", typeof(string));
             dataTable.Columns.Add("TotalAmount", typeof(string));
@@ -55,47 +78,64 @@ namespace AliHelper
             dataTable.Columns.Add("EventType", typeof(string));
             dataTable.Columns.Add("Remark", typeof(string));
             FinDetailDataView.DataSource = dataTable;
+
+            DataGridViewCellStyle cellStyle2 = new DataGridViewCellStyle();
+            cellStyle2.Alignment = DataGridViewContentAlignment.MiddleRight;
+            cellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             DataGridViewColumn DetailId = FinDetailDataView.Columns[0];
-            DetailId.HeaderText = "序号";
+            DetailId.HeaderText = "Id";
             DetailId.Name = "DetailId";
             DetailId.Width = 50;
             DetailId.ReadOnly = true;
-            DataGridViewColumn EventTime = FinDetailDataView.Columns[1];
+            DetailId.Visible = false;
+
+            DataGridViewColumn Id = FinDetailDataView.Columns[1];
+            Id.HeaderText = "序号";
+            Id.Name = "Id";
+            Id.Width = 50;
+            Id.ReadOnly = true;
+            DataGridViewColumn EventTime = FinDetailDataView.Columns[2];
             EventTime.HeaderText = "时间";
             EventTime.Name = "EventTime";
             EventTime.Width = 100;
             EventTime.ReadOnly = true;
-            DataGridViewColumn EventName = FinDetailDataView.Columns[2]; 
+            DataGridViewColumn EventName = FinDetailDataView.Columns[3]; 
             EventName.HeaderText = "项目名称";
             EventName.Name = "EventName";
             EventName.ReadOnly = true;
             EventName.Width = 250;
-            DataGridViewColumn Amount = FinDetailDataView.Columns[3]; 
+            DataGridViewColumn Amount = FinDetailDataView.Columns[4]; 
             Amount.HeaderText = "金额";
             Amount.Name = "TotalAmount";
             Amount.ReadOnly = true;
-            Amount.Width = 80;
-            DataGridViewColumn OrderNo = FinDetailDataView.Columns[4]; 
+            Amount.Width = 100;
+            Amount.DefaultCellStyle = cellStyle2;
+            
+
+            DataGridViewColumn OrderNo = FinDetailDataView.Columns[5]; 
             OrderNo.HeaderText = "所属业务";
             OrderNo.Name = "OrderNo";
             OrderNo.Width = 100;
             OrderNo.ReadOnly = true;
-            DataGridViewColumn ItemType = FinDetailDataView.Columns[5];  
+            DataGridViewColumn ItemType = FinDetailDataView.Columns[6];  
             ItemType.HeaderText = "项目类型";
             ItemType.Name = "ItemType";
             ItemType.Width = 100;
             ItemType.ReadOnly = true;
-            DataGridViewColumn Association = FinDetailDataView.Columns[6]; 
+            ItemType.DefaultCellStyle = cellStyle2;
+            DataGridViewColumn Association = FinDetailDataView.Columns[7]; 
             Association.HeaderText = "经手人/相关人";
             Association.Name = "Association";
             Association.Width = 100;
             Association.ReadOnly = true;
-            DataGridViewColumn EventType = FinDetailDataView.Columns[7]; 
+            Association.DefaultCellStyle = cellStyle2;
+            DataGridViewColumn EventType = FinDetailDataView.Columns[8]; 
             EventType.HeaderText = "收支类型";
             EventType.Name = "EventType";
-            EventType.Width = 100;
+            EventType.Width = 70;
             EventType.ReadOnly = true;
-            DataGridViewColumn Remark = FinDetailDataView.Columns[8]; 
+            EventType.DefaultCellStyle = cellStyle2;
+            DataGridViewColumn Remark = FinDetailDataView.Columns[9]; 
             Remark.HeaderText = "备注";
             Remark.Name = "Remark";
             Remark.ReadOnly = true;
@@ -104,6 +144,7 @@ namespace AliHelper
 
         private void BindDataWithPage(int Page)
         {
+            dataTable.Clear();
             QueryObject<FinDetails> query = new QueryObject<FinDetails>();
             query.Page = Page;
             query.PageSize = FinDetailPager.PageSize;
@@ -121,8 +162,7 @@ namespace AliHelper
                 FinDetailPager.PageIndex = result.Page;
                 FinDetailPager.PageSize = result.PageSize;
                 FinDetailPager.RecordCount = result.RecordCount;
-                FinDetailDataView.DataBindings.Clear();
-                FinDetailDataView.DataSource = result.dt;
+                BindDateTable(result.Result);
             }
             else
             {
@@ -159,7 +199,11 @@ namespace AliHelper
 
         private void FinDetailDataView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+            int id = Convert.ToInt32(this.FinDetailDataView.Rows[e.RowIndex].Cells[0].Value);
+            EditFin f = new EditFin();
+            FinDetails detail = finOrderManager.GetFinDetail(id);
+            f.LoadEditData(detail);
+            f.ShowDialog(this);
         }
 
         

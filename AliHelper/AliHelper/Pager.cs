@@ -17,7 +17,6 @@ namespace AliHelper
         private int _PageIndex = 1;
         private int _PageSize = 20;
         private int _RecordCount;
-        private bool _DisplayPageSize;
         private string PagerText = "当前{1}/{2}页,每页{3}条,总共{0}条记录";
 
         public event EventHandler PageIndexChanged;
@@ -25,22 +24,13 @@ namespace AliHelper
         public Pager()
         {
             InitializeComponent();
+            ShowPageSizeList();
+            this.cmbPageSize.SelectedIndex = 0;
         }
 
 
-        [DefaultValue(true), Category("自定义属性"), Description("是否显示每页显示记录数")]
-        public bool ShowPageSizeDropdown
-        {
-            get
-            {
-                return this._DisplayPageSize;
-            }
-            set
-            {
-                this._DisplayPageSize = value;
-                ShowPageSizeList();
-            }
-        }
+        [Category("自定义属性"), Description("是否显示每页显示记录数")]
+        public bool ShowPageSizeDropdown { set; get; }
 
         
 
@@ -65,7 +55,7 @@ namespace AliHelper
             }
         }
 
-        [DefaultValue(10), Description("每页显示的记录数"), Category("自定义属性")]
+        [DefaultValue(20), Description("每页显示的记录数"), Category("自定义属性")]
         public int PageSize
         {
             get
@@ -76,7 +66,7 @@ namespace AliHelper
             {
                 if (value <= 1)
                 {
-                    value = 10;
+                    value = 20;
                 }
                 this._PageSize = value;
             }
@@ -257,13 +247,12 @@ namespace AliHelper
 
         private void ShowPageSizeList()
         {
-            if (!this._DisplayPageSize)
+            if (!this.ShowPageSizeDropdown)
             {
                 this.lab1PageSize.Visible = false;
                 this.lab2PageSize.Visible = false;
                 this.lab3PageSize.Visible = false;
                 this.cmbPageSize.Visible = false;
-                this.Size = new Size(530, 25);
             }
             else
             {
@@ -271,7 +260,6 @@ namespace AliHelper
                 this.lab2PageSize.Visible = true;
                 this.lab3PageSize.Visible = true;
                 this.cmbPageSize.Visible = true;
-                this.Size = new Size(630, 25);
             }
         }
 
@@ -281,8 +269,8 @@ namespace AliHelper
             { 
                 string text = this.cmbPageSize.SelectedItem.ToString();
                 this._PageSize = Convert.ToInt32(text);
+                btnGo_Click(sender, e);
             }
         }
-
     }
 }

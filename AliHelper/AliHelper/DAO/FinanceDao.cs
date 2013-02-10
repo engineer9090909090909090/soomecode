@@ -134,7 +134,7 @@ namespace AliHelper.DAO
         public void InsertOrUpdateDetails(List<FinDetails> list)
         {
             string InsSql = @"INSERT INTO FinDetails(EventTime,EventName,EventType,Amount,Association,OrderNo,ItemType,Remark,Currency, Rate, CreatedTime,ModifiedTime)"
-                            + "values(@EventTime,@EventName,@EventType,@Amount,@Association,@OrderNo,@ItemType,@Currency, @Rate, @Remark,@CreatedTime,@ModifiedTime)";
+                            + "values(@EventTime,@EventName,@EventType,@Amount,@Association,@OrderNo,@ItemType, @Remark, @Currency, @Rate, @CreatedTime, @ModifiedTime)";
             string UpdSql = @"update FinDetails set EventTime=@EventTime,EventName=@EventName,EventType=@EventType,Amount=@Amount,Association=@Association,"
                             + "OrderNo=@OrderNo,ItemType=@ItemType,Remark=@Remark,Currency = @Currency, Rate = @Rate, ModifiedTime=@ModifiedTime"
                             + "where DetailId = @DetailId";
@@ -183,8 +183,21 @@ namespace AliHelper.DAO
             }
         }
 
+        public FinDetails GetFinDetail(int id)
+        {
+            string sql = "select *, Amount * Rate TotalAmount from FinDetails where DetailId = " + id;
 
-
+            DataTable dt = dbHelper.ExecuteDataTable(sql, null);
+            List<FinDetails> list =  DetailTableToList(dt);
+            if (list.Count > 0)
+            {
+                return list[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
 
     }
 }

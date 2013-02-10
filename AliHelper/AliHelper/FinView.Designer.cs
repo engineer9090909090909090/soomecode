@@ -287,7 +287,7 @@
             this.FinDetailPager.Name = "FinDetailPager";
             this.FinDetailPager.PageSize = 20;
             this.FinDetailPager.RecordCount = 0;
-            this.FinDetailPager.ShowPageSizeDropdown = false;
+            this.FinDetailPager.ShowPageSizeDropdown = true;
             this.FinDetailPager.Size = new System.Drawing.Size(930, 22);
             this.FinDetailPager.TabIndex = 2;
             this.FinDetailPager.PageIndexChanged += new System.EventHandler(this.FinDetailPager_PageIndexChanged);

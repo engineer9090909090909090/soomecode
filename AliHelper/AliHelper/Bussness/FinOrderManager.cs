@@ -46,5 +46,10 @@ namespace AliHelper.Bussness
             financeDao.InsertOrUpdateDetails(list);
             FireNewEditEvent(list);
         }
+
+        public FinDetails GetFinDetail(int id)
+        {
+            return financeDao.GetFinDetail(id);
+        }
     }
 }
