@@ -156,11 +156,11 @@ namespace AliHelper
             finIcons.MakeTransparent(Color.FromArgb(255, 0, 255));
             FinOutlookLargeIcons.Images.AddStrip(finIcons);
             ListViewItem baseViewItem = new ListViewItem("基本账目", 0);
-            baseViewItem.Name = MailQueryListType.Inbox;
+            baseViewItem.Name = Constants.FinanceBaseView;
             ListViewItem bussViewItem = new ListViewItem("业务总账", 2);
-            bussViewItem.Name = MailQueryListType.Sendbox;
+            bussViewItem.Name = Constants.FinanceBizView;
             ListViewItem waterViewItem = new ListViewItem("账务流水", 4);
-            waterViewItem.Name = MailQueryListType.Trash;
+            waterViewItem.Name = Constants.FinanceWaterView;
             ListView FinListView = new System.Windows.Forms.ListView();
             FinListView.Name = "FinListView";
             FinListView.BorderStyle = BorderStyle.None;
@@ -170,7 +170,7 @@ namespace AliHelper
             FinListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             baseViewItem,bussViewItem,waterViewItem});
             FinListView.UseCompatibleStateImageBehavior = false;
-            FinListView.ItemSelectionChanged += new ListViewItemSelectionChangedEventHandler(MailListView_ItemSelectionChanged);
+            FinListView.ItemSelectionChanged += new ListViewItemSelectionChangedEventHandler(FinListView_ItemSelectionChanged);
             FinListView.View = System.Windows.Forms.View.LargeIcon;
             FinanceBand.ClientArea.Controls.Add(FinListView);
         }
@@ -220,6 +220,26 @@ namespace AliHelper
             if (e.IsSelected)
             {
                 string ItemName = e.Item.Name;
+            }
+        }
+
+        void FinListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (e.IsSelected)
+            {
+                UnLoadExplorerSubPanel();
+                if (e.Item.Name == Constants.FinanceWaterView)
+                {
+                    LoadFinWaterViewPanel();
+                }
+                else if (e.Item.Name == Constants.FinanceBaseView)
+                {
+                    LoadFinViewPanel();
+                }
+                else if (e.Item.Name == Constants.FinanceBizView)
+                {
+
+                }
             }
         }
 
@@ -455,15 +475,28 @@ namespace AliHelper
 
         private void LoadFinViewPanel()
         {
-            FinView finView = new AliHelper.FinView();
+            FinView FinBaseView = new AliHelper.FinView();
             this.Explorer.SuspendLayout();
-            finView.Location = new System.Drawing.Point(0, 0);
-            finView.Name = "finView";
-            finView.AutoSize = true;
-            finView.TabIndex = 1;
-            finView.Size = new System.Drawing.Size(this.Explorer.Width, this.Explorer.Height);
-            finView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Explorer.Controls.Add(finView);
+            FinBaseView.Location = new System.Drawing.Point(0, 0);
+            FinBaseView.Name = "FinBaseView";
+            FinBaseView.AutoSize = true;
+            FinBaseView.TabIndex = 1;
+            FinBaseView.Size = new System.Drawing.Size(this.Explorer.Width, this.Explorer.Height);
+            FinBaseView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Explorer.Controls.Add(FinBaseView);
+            this.Explorer.ResumeLayout(false);
+        }
+        private void LoadFinWaterViewPanel()
+        {
+            FinanceWaterView FinanceWaterView = new AliHelper.FinanceWaterView();
+            this.Explorer.SuspendLayout();
+            FinanceWaterView.Location = new System.Drawing.Point(0, 0);
+            FinanceWaterView.Name = "FinanceWaterView";
+            FinanceWaterView.AutoSize = true;
+            FinanceWaterView.TabIndex = 1;
+            FinanceWaterView.Size = new System.Drawing.Size(this.Explorer.Width, this.Explorer.Height);
+            FinanceWaterView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Explorer.Controls.Add(FinanceWaterView);
             this.Explorer.ResumeLayout(false);
         }
 

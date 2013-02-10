@@ -51,5 +51,10 @@ namespace AliHelper.Bussness
         {
             return financeDao.GetFinDetail(id);
         }
+
+        public QueryObject<Finance> GetFinances(QueryObject<Finance> query)
+        {
+            return financeDao.GetFinances(query);
+        }
     }
 }

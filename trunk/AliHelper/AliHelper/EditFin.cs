@@ -39,9 +39,9 @@ namespace AliHelper
         public void LoadEditData(FinDetails detail)
         {
             this.Tag = detail;
-            this.EventNameTxt.Text = detail.EventName;
+            this.EventNameTxt.Text = detail.Description;
             this.EventTypeTxt.SelectedText = detail.EventType;
-            this.EventTimeTxt.Text = detail.EventTime;
+            this.EventTimeTxt.Text = detail.FinDate;
             this.ItemTypeTxt.SelectedText = detail.ItemType;
             this.RemarkTxt.Text = detail.Remark;
             this.OrderNoTxt.Text = detail.OrderNo;
@@ -62,9 +62,9 @@ namespace AliHelper
             {
                 detail = (FinDetails)this.Tag;
             }
-            detail.EventName = this.EventNameTxt.Text.Trim();
+            detail.Description = this.EventNameTxt.Text.Trim();
             detail.EventType = ((AppDic)this.EventTypeTxt.SelectedItem).Key;
-            detail.EventTime = this.EventTimeTxt.Value.ToString(Constants.DateFormat);
+            detail.FinDate = this.EventTimeTxt.Value.ToString(Constants.DateFormat);
             detail.ItemType = ((AppDic)this.ItemTypeTxt.SelectedItem).Key; ;
             detail.Remark = this.RemarkTxt.Text.Trim();
             detail.OrderNo = this.OrderNoTxt.Text.Trim();
@@ -76,7 +76,7 @@ namespace AliHelper
             {
                 return;
             }
-            if (string.IsNullOrEmpty(detail.EventName))
+            if (string.IsNullOrEmpty(detail.Description))
             {
                 return;
             }

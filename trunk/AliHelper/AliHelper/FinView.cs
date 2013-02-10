@@ -14,10 +14,11 @@ namespace AliHelper
     public partial class FinView : UserControl
     {
         FinOrderManager finOrderManager;
-        DataTable dataTable = new DataTable(); 
+        DataTable dataTable;
         public FinView()
         {
             InitializeComponent();
+            dataTable = new DataTable(); 
             FinDetailPager.PageIndex = 1;
             FinDetailPager.PageSize = 100;
             InitDataGridView();
@@ -51,8 +52,8 @@ namespace AliHelper
                 DataRow row = this.dataTable.NewRow();
                 row["DetailId"] = item.DetailId;
                 row["Id"] = 1 + i;
-                row["EventTime"] = item.EventTime;
-                row["EventName"] = item.EventName;
+                row["Description"] = item.FinDate;
+                row["Description"] = item.Description;
                 row["TotalAmount"] = "￥" + item.TotalAmount.ToString("#,##0.00");
                 row["OrderNo"] = item.OrderNo;
                 row["ItemType"] = item.ItemType;
@@ -151,7 +152,7 @@ namespace AliHelper
             query.Condition = new FinDetails();
             query.Condition.BeginTime = this.BeginDateTxt.Value.ToString(Constants.DateFormat);
             query.Condition.EndTime = this.EndDateTxt.Value.ToString(Constants.DateFormat);
-            query.Condition.EventName = this.EventNameTxt.Text.Trim();
+            query.Condition.Description = this.EventNameTxt.Text.Trim();
             query.Condition.EventType = (string)this.EventTypeTxt.SelectedValue;
             query.Condition.ItemType = (string)this.ItemTypeTxt.SelectedValue;
             query.Condition.OrderNo = this.OrderNoTxt.Text.Trim();
@@ -188,7 +189,7 @@ namespace AliHelper
             query.Condition = new FinDetails();
             query.Condition.BeginTime = this.BeginDateTxt.Value.ToString(Constants.DateFormat);
             query.Condition.EndTime = this.EndDateTxt.Value.ToString(Constants.DateFormat);
-            query.Condition.EventName = this.EventNameTxt.Text.Trim();
+            query.Condition.Description = this.EventNameTxt.Text.Trim();
             query.Condition.EventType = (string)this.EventTypeTxt.SelectedValue;
             query.Condition.ItemType = (string)this.ItemTypeTxt.SelectedValue;
             query.Condition.OrderNo = this.OrderNoTxt.Text.Trim();

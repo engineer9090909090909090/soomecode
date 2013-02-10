@@ -84,6 +84,18 @@
       <DependentUpon>CheckCodeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="Control\RowMergeViewTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Control\RowMergeViewTestForm.Designer.cs">
+      <DependentUpon>RowMergeViewTestForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Control\RowMergeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Control\RowMergeView.designer.cs">
+      <DependentUpon>RowMergeView.cs</DependentUpon>
+    </Compile>
     <Compile Include="DAO\AliGroupDao.cs" />
     <Compile Include="DAO\AliProductDao.cs" />
     <Compile Include="DAO\AliImageDao.cs" />
@@ -110,6 +122,12 @@
     </Compile>
     <Compile Include="EditFin.Designer.cs">
       <DependentUpon>EditFin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FinanceWaterView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FinanceWaterView.Designer.cs">
+      <DependentUpon>FinanceWaterView.cs</DependentUpon>
     </Compile>
     <Compile Include="FinView.cs">
       <SubType>UserControl</SubType>
@@ -199,6 +217,12 @@
     <EmbeddedResource Include="CheckCodeForm.resx">
       <DependentUpon>CheckCodeForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Control\RowMergeViewTestForm.resx">
+      <DependentUpon>RowMergeViewTestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Control\RowMergeView.resx">
+      <DependentUpon>RowMergeView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DicForm.resx">
       <DependentUpon>DicForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -207,6 +231,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditFin.resx">
       <DependentUpon>EditFin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FinanceWaterView.resx">
+      <DependentUpon>FinanceWaterView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FinView.resx">
       <DependentUpon>FinView.cs</DependentUpon>
