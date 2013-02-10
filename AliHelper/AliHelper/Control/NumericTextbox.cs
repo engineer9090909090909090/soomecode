@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace AliHelper
 {
-    public class NumericTextbox1 : System.Windows.Forms.UserControl
+    public class NumericTextbox : System.Windows.Forms.UserControl
     {
         private System.Windows.Forms.TextBox txtNumeric;
         protected bool nonNumberEntered;
@@ -27,7 +27,7 @@ namespace AliHelper
         /// <summary>
         /// Constructor is largely blank.
         /// </summary>
-        public NumericTextbox1()
+        public NumericTextbox()
         {
             // This call is required by the Windows.Forms Form Designer.
             InitializeComponent();
