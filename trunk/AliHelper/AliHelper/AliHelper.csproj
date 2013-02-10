@@ -129,6 +129,9 @@
     <Compile Include="NewPlanForm.Designer.cs">
       <DependentUpon>NewPlanForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="NumericTextbox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="ProductView.cs">
       <SubType>UserControl</SubType>
     </Compile>

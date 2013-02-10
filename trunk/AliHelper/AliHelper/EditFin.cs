@@ -28,9 +28,12 @@ namespace AliHelper
             this.EventTypeTxt.ValueMember = "Key";
             this.CurrenyTxt.DisplayMember = "Label";
             this.CurrenyTxt.ValueMember = "Key";
+            this.AssociationTxt.DisplayMember = "Label";
+            this.AssociationTxt.ValueMember = "Key";
             this.ItemTypeTxt.DataSource = finOrderManager.GetAppDicOptions(Constants.BussnessType);
             this.EventTypeTxt.DataSource = finOrderManager.GetAppDicOptions(Constants.DebitCredit);
             this.CurrenyTxt.DataSource = finOrderManager.GetAppDicOptions(Constants.CurrencyType);
+            this.AssociationTxt.DataSource = finOrderManager.GetAppDicOptions(Constants.Employee);
         }
 
         public void LoadEditData(FinDetails detail)
@@ -44,8 +47,8 @@ namespace AliHelper
             this.OrderNoTxt.Text = detail.OrderNo;
             this.AssociationTxt.Text = detail.Association;
             this.CurrenyTxt.SelectedText = detail.Currency;
-            this.TotalAmount.Text = detail.TotalAmount.ToString("###,###.0000");
-            this.AmountTxt.Text = detail.Amount.ToString("###,###.0000");
+            this.TotalAmount.Text = detail.TotalAmount.ToString("#,##0.00");
+            this.AmountTxt.Text = detail.Amount.ToString("#,##0.00");
         }
 
         private void Confirm_Click(object sender, EventArgs e)
@@ -68,6 +71,11 @@ namespace AliHelper
             detail.Association = this.AssociationTxt.Text.Trim();
             detail.Rate = Convert.ToDouble(this.RateTxt.Text.Trim());
             detail.Currency = ((AppDic)this.CurrenyTxt.SelectedItem).Key;
+            detail.Amount = Convert.ToDouble(this.AmountTxt.Text);
+            if (detail.Amount == 0)
+            {
+                return;
+            }
             if (string.IsNullOrEmpty(detail.EventName))
             {
                 return;
@@ -89,17 +97,18 @@ namespace AliHelper
             this.Close();
         }
 
-        private void AmountTxt_KeyDown(object sender, KeyEventArgs e)
+        private void AmountTxt_Leave(object sender, EventArgs e)
         {
             try
             {
                 double amount = Convert.ToDouble(this.AmountTxt.Text);
                 double rate = Convert.ToDouble(this.RateTxt.Text);
                 double total = amount * rate;
-                this.TotalAmount.Text = total.ToString("###,###.0000");
+                this.TotalAmount.Text = "￥" + total.ToString("#,##0.00");
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Trace.WriteLine(ex.Message);
             }
         }
 
@@ -114,7 +123,10 @@ namespace AliHelper
                     this.RateTxt.Text = "1.0";
                     this.RateTxt.ReadOnly = true;
                 }
-                AmountTxt_KeyDown(sender, null);
+                else if (curreny.ToUpper() == "USD")
+                {
+                    this.RateTxt.Text = "6.2000";
+                }
             }
         }
 

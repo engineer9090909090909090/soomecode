@@ -47,7 +47,6 @@
             this.btnLast = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.lblPager = new System.Windows.Forms.ToolStripLabel();
-            this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,8 +70,7 @@
             this.btnNext,
             this.btnLast,
             this.toolStripSeparator1,
-            this.lblPager,
-            this.bindingNavigatorSeparator});
+            this.lblPager});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -108,8 +106,10 @@
             // 
             this.cmbCurrentPage.AutoSize = false;
             this.cmbCurrentPage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCurrentPage.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.cmbCurrentPage.Name = "cmbCurrentPage";
-            this.cmbCurrentPage.Size = new System.Drawing.Size(40, 20);
+            this.cmbCurrentPage.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.cmbCurrentPage.Size = new System.Drawing.Size(45, 20);
             // 
             // toolStripLabel3
             // 
@@ -136,6 +136,7 @@
             // 
             this.cmbPageSize.AutoSize = false;
             this.cmbPageSize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbPageSize.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.cmbPageSize.Items.AddRange(new object[] {
             "20",
             "30",
@@ -143,7 +144,9 @@
             "100",
             "200"});
             this.cmbPageSize.Name = "cmbPageSize";
-            this.cmbPageSize.Size = new System.Drawing.Size(40, 20);
+            this.cmbPageSize.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.cmbPageSize.Size = new System.Drawing.Size(45, 20);
+            this.cmbPageSize.Visible = false;
             this.cmbPageSize.SelectedIndexChanged += new System.EventHandler(this.cmbPageSize_SelectedIndexChanged);
             // 
             // lab1PageSize
@@ -187,7 +190,7 @@
             this.txtCurrentPage.AutoSize = false;
             this.txtCurrentPage.Margin = new System.Windows.Forms.Padding(1, 1, 1, 0);
             this.txtCurrentPage.Name = "txtCurrentPage";
-            this.txtCurrentPage.Size = new System.Drawing.Size(30, 21);
+            this.txtCurrentPage.Size = new System.Drawing.Size(30, 20);
             this.txtCurrentPage.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtCurrentPage.ToolTipText = "Location";
             // 
@@ -219,17 +222,11 @@
             // 
             // lblPager
             // 
-            this.lblPager.AutoSize = false;
             this.lblPager.Name = "lblPager";
             this.lblPager.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblPager.Size = new System.Drawing.Size(250, 22);
+            this.lblPager.Size = new System.Drawing.Size(227, 22);
             this.lblPager.Text = "当前{1}/{2}页,每页{3}条,总共{0}条记录";
             this.lblPager.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // bindingNavigatorSeparator
-            // 
-            this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
-            this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 25);
             // 
             // Pager
             // 
@@ -252,7 +249,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton btnFirst;
         private System.Windows.Forms.ToolStripButton btnPrev;
-        private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator;
         private System.Windows.Forms.ToolStripTextBox txtCurrentPage;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator1;
         private System.Windows.Forms.ToolStripButton btnNext;
