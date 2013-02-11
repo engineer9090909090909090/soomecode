@@ -39,8 +39,11 @@ namespace AliHelper
             this.ItemTypeTxt.ValueMember = "Key";
             this.EventTypeTxt.DisplayMember = "Label";
             this.EventTypeTxt.ValueMember = "Key";
+            this.AssociationTxt.DisplayMember = "Label";
+            this.AssociationTxt.ValueMember = "Key";
             this.ItemTypeTxt.DataSource = finOrderManager.GetQueryAppDicOptions(Constants.BussnessType);
             this.EventTypeTxt.DataSource = finOrderManager.GetQueryAppDicOptions(Constants.DebitCredit);
+            this.AssociationTxt.DataSource = finOrderManager.GetQueryAppDicOptions(Constants.Employee);
             BindDataWithPage(1);
         }
 
@@ -52,7 +55,7 @@ namespace AliHelper
                 DataRow row = this.dataTable.NewRow();
                 row["DetailId"] = item.DetailId;
                 row["Id"] = 1 + i;
-                row["Description"] = item.FinDate;
+                row["FinDate"] = item.FinDate;
                 row["Description"] = item.Description;
                 row["TotalAmount"] = "￥" + item.TotalAmount.ToString("#,##0.00");
                 row["OrderNo"] = item.OrderNo;
@@ -70,8 +73,8 @@ namespace AliHelper
         {
             dataTable.Columns.Add("DetailId", typeof(Int32));
             dataTable.Columns.Add("Id", typeof(Int32));
-            dataTable.Columns.Add("EventTime", typeof(string));
-            dataTable.Columns.Add("EventName", typeof(string));
+            dataTable.Columns.Add("FinDate", typeof(string));
+            dataTable.Columns.Add("Description", typeof(string));
             dataTable.Columns.Add("TotalAmount", typeof(string));
             dataTable.Columns.Add("OrderNo", typeof(string));
             dataTable.Columns.Add("ItemType", typeof(string));
@@ -95,16 +98,16 @@ namespace AliHelper
             Id.Name = "Id";
             Id.Width = 50;
             Id.ReadOnly = true;
-            DataGridViewColumn EventTime = FinDetailDataView.Columns[2];
-            EventTime.HeaderText = "时间";
-            EventTime.Name = "EventTime";
-            EventTime.Width = 100;
-            EventTime.ReadOnly = true;
-            DataGridViewColumn EventName = FinDetailDataView.Columns[3]; 
-            EventName.HeaderText = "项目名称";
-            EventName.Name = "EventName";
-            EventName.ReadOnly = true;
-            EventName.Width = 250;
+            DataGridViewColumn FinDate = FinDetailDataView.Columns[2];
+            FinDate.HeaderText = "时间";
+            FinDate.Name = "FinDate";
+            FinDate.Width = 100;
+            FinDate.ReadOnly = true;
+            DataGridViewColumn Description = FinDetailDataView.Columns[3];
+            Description.HeaderText = "描述";
+            Description.Name = "Description";
+            Description.ReadOnly = true;
+            Description.Width = 250;
             DataGridViewColumn Amount = FinDetailDataView.Columns[4]; 
             Amount.HeaderText = "金额";
             Amount.Name = "TotalAmount";
@@ -139,6 +142,7 @@ namespace AliHelper
             DataGridViewColumn Remark = FinDetailDataView.Columns[9]; 
             Remark.HeaderText = "备注";
             Remark.Name = "Remark";
+            Remark.Width = 200;
             Remark.ReadOnly = true;
             
         }
@@ -201,7 +205,7 @@ namespace AliHelper
         private void FinDetailDataView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             int id = Convert.ToInt32(this.FinDetailDataView.Rows[e.RowIndex].Cells[0].Value);
-            EditFin f = new EditFin();
+            EditFinDetail f = new EditFinDetail();
             FinDetails detail = finOrderManager.GetFinDetail(id);
             f.LoadEditData(detail);
             f.ShowDialog(this);

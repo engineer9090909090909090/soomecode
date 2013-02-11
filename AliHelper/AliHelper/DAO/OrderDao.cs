@@ -25,7 +25,7 @@ namespace AliHelper.DAO
             + "Id integer NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
             + "BeginDate varchar(10) not null,"
             + "EndDate varchar(10),"
-            + "OrderName varchar(50) not null,"
+            + "Description varchar(150) not null,"
             + "OrderNo varchar(10) not null,"
             + "SalesMan varchar(20) not null,"
             + "Status varchar(10) not null,"
@@ -38,7 +38,7 @@ namespace AliHelper.DAO
 
         public QueryObject<Order> GetOrders(QueryObject<Order> query)
         {
-            string sql = "select Id,BeginDate,EndDate,OrderName,OrderNo,SalesMan,Status,Remark,CreatedTime,ModifiedTime ";
+            string sql = "select Id,BeginDate,EndDate,Description,OrderNo,SalesMan,Status,Remark,CreatedTime,ModifiedTime ";
             sql = sql + "FROM Orders where 1 = 1 ";
             query.dt = dbHelper.ExecuteDataTable(sql, null);
             query.Result = DataTableToList(query.dt);
@@ -54,7 +54,7 @@ namespace AliHelper.DAO
                 info.Id = Convert.ToInt32(row["Id"]);
                 info.BeginDate = (string)row["BeginDate"];
                 info.EndDate = (string)row["EndDate"];
-                info.OrderName = (string)row["OrderName"];
+                info.Description = (string)row["Description"];
                 info.OrderNo = (string)row["OrderNo"];
                 info.SalesMan = (string)row["SalesMan"];
                 info.Status = (string)row["Status"];
@@ -66,10 +66,10 @@ namespace AliHelper.DAO
             return list;
         }
 
-        public void InsertOrUpdateOrders(List<Order> list)
+        public void InsertOrUpdateOrder(Order order)
         {
-            string InsSql = @"INSERT INTO Orders(BeginDate,EndDate,OrderName,OrderNo,SalesMan,Status,Remark,CreatedTime,ModifiedTime)"
-                            + "values(@BeginDate,@EndDate,@OrderName,@OrderNo,@SalesMan,@Status,@Remark,@CreatedTime,@ModifiedTime)";
+            string InsSql = @"INSERT INTO Orders(BeginDate,EndDate,Description,OrderNo,SalesMan,Status,Remark,CreatedTime,ModifiedTime)"
+                            + "values(@BeginDate,@EndDate,@Description,@OrderNo,@SalesMan,@Status,@Remark,@CreatedTime,@ModifiedTime)";
             string UpdSql = @"update Orders set OrderName= @OrderName, @EndDate,Status = @Status, Remark=@Remark, ModifiedTime=@ModifiedTime"
                             + "where Id = @Id";
 
@@ -78,44 +78,28 @@ namespace AliHelper.DAO
             List<SQLiteParameter[]> InsertParameters = new List<SQLiteParameter[]>();
             List<SQLiteParameter[]> UpdateParameters = new List<SQLiteParameter[]>();
             DateTime CurrentTime = DateTime.Now;
-            foreach(Order item in list)
+            SQLiteParameter[] parameter = new SQLiteParameter[]
             {
-
-                SQLiteParameter[] parameter = new SQLiteParameter[]
-                {
-                    new SQLiteParameter("@Id",item.Id),
-                    new SQLiteParameter("@BeginDate",item.BeginDate),
-                    new SQLiteParameter("@EndDate",item.EndDate),
-                    new SQLiteParameter("@OrderName",item.OrderName),
-                    new SQLiteParameter("@OrderNo",item.OrderNo),
-                    new SQLiteParameter("@SalesMan",item.SalesMan),
-                    new SQLiteParameter("@Status",item.Status),
-                    new SQLiteParameter("@Remark",item.Remark),
-                    new SQLiteParameter("@CreatedTime", CurrentTime),
-                    new SQLiteParameter("@ModifiedTime",CurrentTime)
-                };
-                int record = Convert.ToInt32(dbHelper.ExecuteScalar(ExistRecordSql + item.Id, null));
-                if (record == 0)
-                {
-                    InsertParameters.Add(parameter);
-                }
-                else
-                {
-                    UpdateParameters.Add(parameter);
-                }
+                new SQLiteParameter("@Id",order.Id),
+                new SQLiteParameter("@BeginDate",order.BeginDate),
+                new SQLiteParameter("@EndDate",order.EndDate),
+                new SQLiteParameter("@Description",order.Description),
+                new SQLiteParameter("@OrderNo",order.OrderNo),
+                new SQLiteParameter("@SalesMan",order.SalesMan),
+                new SQLiteParameter("@Status",order.Status),
+                new SQLiteParameter("@Remark",order.Remark),
+                new SQLiteParameter("@CreatedTime", CurrentTime),
+                new SQLiteParameter("@ModifiedTime",CurrentTime)
+            };
+            int record = Convert.ToInt32(dbHelper.ExecuteScalar(ExistRecordSql + order.Id, null));
+            if (record == 0)
+            {
+                dbHelper.ExecuteNonQuery(InsSql, parameter);
             }
-            if (InsertParameters.Count > 0)
+            else
             {
-                dbHelper.ExecuteNonQuery(InsSql, InsertParameters);
-            }
-            if (UpdateParameters.Count > 0)
-            {
-                dbHelper.ExecuteNonQuery(UpdSql, UpdateParameters);
+                dbHelper.ExecuteNonQuery(UpdSql, parameter);
             }
         }
-
-
-
-
     }
 }

@@ -50,12 +50,12 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.FinanceView = new RowMergeView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.FinanceView = new RowMergeView();
             ((System.ComponentModel.ISupportInitialize)(this.FinDetailGroup)).BeginInit();
             this.FinDetailGroup.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.FinanceView)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.FinanceView)).BeginInit();
             this.SuspendLayout();
             // 
             // FinDetailGroup
@@ -115,6 +115,7 @@
             this.FinDetailQueryBtn.TabIndex = 8;
             this.FinDetailQueryBtn.Text = "查询(&Q)";
             this.FinDetailQueryBtn.UseVisualStyleBackColor = true;
+            this.FinDetailQueryBtn.Click += new System.EventHandler(this.FinDetailQueryBtn_Click);
             // 
             // EndDate
             // 
@@ -235,6 +236,21 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "开始时间";
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.FinDetailGroup, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.FinanceView, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(798, 425);
+            this.tableLayoutPanel1.TabIndex = 4;
+            // 
             // FinanceView
             // 
             this.FinanceView.AllowUserToAddRows = false;
@@ -263,21 +279,6 @@
             this.FinanceView.Size = new System.Drawing.Size(798, 325);
             this.FinanceView.TabIndex = 3;
             // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.FinDetailGroup, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.FinanceView, 0, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(798, 425);
-            this.tableLayoutPanel1.TabIndex = 4;
-            // 
             // FinanceWaterView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -290,8 +291,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.FinDetailGroup)).EndInit();
             this.FinDetailGroup.ResumeLayout(false);
             this.FinDetailGroup.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.FinanceView)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.FinanceView)).EndInit();
             this.ResumeLayout(false);
 
         }

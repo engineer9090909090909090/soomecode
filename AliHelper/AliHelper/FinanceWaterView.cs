@@ -32,8 +32,11 @@ namespace AliHelper
             this.ItemType.ValueMember = "Key";
             this.EventType.DisplayMember = "Label";
             this.EventType.ValueMember = "Key";
+            this.Association.DisplayMember = "Label";
+            this.Association.ValueMember = "Key";
             this.ItemType.DataSource = finOrderManager.GetQueryAppDicOptions(Constants.BussnessType);
             this.EventType.DataSource = finOrderManager.GetQueryAppDicOptions(Constants.DebitCredit);
+            this.Association.DataSource = finOrderManager.GetQueryAppDicOptions(Constants.Employee);
             BindDataWithPage();
         }
 
@@ -175,11 +178,11 @@ namespace AliHelper
             DataGridViewColumn Remark = FinanceView.Columns[10];
             Remark.HeaderText = "备注";
             Remark.Name = "Remark";
-            Association.Width = 150;
+            Association.Width = 250;
             Remark.ReadOnly = true;
 
             DataGridViewColumn DetailEventName = FinanceView.Columns[11];
-            DetailEventName.HeaderText = "项目名称";
+            DetailEventName.HeaderText = "描述";
             DetailEventName.Name = "DetailEventName";
             DetailEventName.ReadOnly = true;
             DetailEventName.Width = 200;
@@ -206,7 +209,7 @@ namespace AliHelper
             DataGridViewColumn DetailRemark = FinanceView.Columns[15];
             DetailRemark.HeaderText = "备注";
             DetailRemark.Name = "Remark";
-            EventType.Width = 200;
+            EventType.Width = 300;
             DetailRemark.ReadOnly = true;
 
         }
@@ -228,6 +231,11 @@ namespace AliHelper
             query.Condition.Association = (string)this.Association.SelectedValue;
             QueryObject<Finance> result = finOrderManager.GetFinances(query);
             BindDateTable(result.Result);
+        }
+
+        private void FinDetailQueryBtn_Click(object sender, EventArgs e)
+        {
+            BindDataWithPage();
         }
 
 

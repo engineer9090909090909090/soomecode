@@ -101,7 +101,7 @@ namespace AliHelper.DAO
             if (query.IsExport == false)
             {
                 query.RecordCount = dbHelper.GetItemCount(sql, QueryParameters.ToArray());
-                sql = sql + "limit " + query.Page + ", " + query.PageSize;
+                sql = sql + "limit " + query.Start + ", " + query.PageSize;
             }
             query.dt = dbHelper.ExecuteDataTable(sql, QueryParameters.ToArray());
             query.Result = DetailTableToList(query.dt);

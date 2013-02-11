@@ -50,6 +50,11 @@ namespace AliHelper
             HideAllToolsStrip();
             ShowToolsStrip("ProductsStrip");
         }
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            productsManager = null;
+            impProductDetail = null;
+        }
 
         private void MainForm_SizeChanged(object sender, EventArgs e)
         {
@@ -562,10 +567,18 @@ namespace AliHelper
 
         private void NewFinance_Click(object sender, EventArgs e)
         {
-            EditFin f = new EditFin();
+            EditFinDetail f = new EditFinDetail();
             f.StartPosition = FormStartPosition.CenterParent;
             f.ShowDialog(this);
         }
+
+        private void NewWater_Click(object sender, EventArgs e)
+        {
+            NewAddDetail f = new NewAddDetail();
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
+        }
+
 
     }
 }
