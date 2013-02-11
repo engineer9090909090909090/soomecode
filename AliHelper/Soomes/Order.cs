@@ -10,7 +10,7 @@ namespace Soomes
         public int Id { set; get; }
         public string BeginDate { set; get; }
         public string EndDate { set; get; }
-        public string OrderName { set; get; }
+        public string Description { set; get; }
         public string SalesMan { set; get; }
         public string OrderNo { set; get; }
         public string Status { set; get; }

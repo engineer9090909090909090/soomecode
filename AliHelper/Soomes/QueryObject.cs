@@ -10,6 +10,14 @@ namespace Soomes
     {
         public int PageSize { set; get; }
         public int Page { set; get; }
+
+        public int Start
+        {
+            get
+            {
+                return (Page - 1)*PageSize;
+            }
+        }
         public int RecordCount { set; get; }
         public bool IsExport { set; get; }
         public T Condition { set; get; }
