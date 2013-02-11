@@ -1,6 +1,6 @@
 ﻿namespace AliHelper
 {
-    partial class EditFin
+    partial class EditFinDetail
     {
         /// <summary>
         /// Required designer variable.

@@ -11,10 +11,10 @@ using AliHelper.Bussness;
 
 namespace AliHelper
 {
-    public partial class EditFin : Form
+    public partial class EditFinDetail : Form
     {
         FinOrderManager finOrderManager;
-        public EditFin()
+        public EditFinDetail()
         {
             InitializeComponent();
             finOrderManager = new FinOrderManager();

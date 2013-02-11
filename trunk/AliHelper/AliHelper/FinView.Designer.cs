@@ -39,7 +39,6 @@
             this.EndDateTxt = new System.Windows.Forms.DateTimePicker();
             this.EventTypeTxt = new System.Windows.Forms.ComboBox();
             this.OrderNoTxt = new System.Windows.Forms.TextBox();
-            this.AssociationTxt = new System.Windows.Forms.TextBox();
             this.EventNameTxt = new System.Windows.Forms.TextBox();
             this.ItemTypeTxt = new System.Windows.Forms.ComboBox();
             this.BeginDateTxt = new System.Windows.Forms.DateTimePicker();
@@ -51,6 +50,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.FinDetailDataView = new System.Windows.Forms.DataGridView();
+            this.AssociationTxt = new System.Windows.Forms.ComboBox();
             this.FinDetailPager = new AliHelper.Pager();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FinDetailGroup)).BeginInit();
@@ -81,12 +81,12 @@
             // FinDetailGroup
             // 
             this.FinDetailGroup.Caption = "查询条件";
+            this.FinDetailGroup.Controls.Add(this.AssociationTxt);
             this.FinDetailGroup.Controls.Add(this.FinDetailExpBtn);
             this.FinDetailGroup.Controls.Add(this.FinDetailQueryBtn);
             this.FinDetailGroup.Controls.Add(this.EndDateTxt);
             this.FinDetailGroup.Controls.Add(this.EventTypeTxt);
             this.FinDetailGroup.Controls.Add(this.OrderNoTxt);
-            this.FinDetailGroup.Controls.Add(this.AssociationTxt);
             this.FinDetailGroup.Controls.Add(this.EventNameTxt);
             this.FinDetailGroup.Controls.Add(this.ItemTypeTxt);
             this.FinDetailGroup.Controls.Add(this.BeginDateTxt);
@@ -152,13 +152,6 @@
             this.OrderNoTxt.Name = "OrderNoTxt";
             this.OrderNoTxt.Size = new System.Drawing.Size(124, 21);
             this.OrderNoTxt.TabIndex = 11;
-            // 
-            // AssociationTxt
-            // 
-            this.AssociationTxt.Location = new System.Drawing.Point(630, 34);
-            this.AssociationTxt.Name = "AssociationTxt";
-            this.AssociationTxt.Size = new System.Drawing.Size(150, 21);
-            this.AssociationTxt.TabIndex = 10;
             // 
             // EventNameTxt
             // 
@@ -232,7 +225,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(53, 12);
             this.label3.TabIndex = 2;
-            this.label3.Text = "项目类型";
+            this.label3.Text = "款项类型";
             // 
             // label2
             // 
@@ -282,12 +275,20 @@
             this.FinDetailDataView.TabIndex = 1;
             this.FinDetailDataView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.FinDetailDataView_CellDoubleClick);
             // 
+            // AssociationTxt
+            // 
+            this.AssociationTxt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.AssociationTxt.FormattingEnabled = true;
+            this.AssociationTxt.Location = new System.Drawing.Point(634, 34);
+            this.AssociationTxt.Name = "AssociationTxt";
+            this.AssociationTxt.Size = new System.Drawing.Size(142, 20);
+            this.AssociationTxt.TabIndex = 16;
+            // 
             // FinDetailPager
             // 
             this.FinDetailPager.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FinDetailPager.Location = new System.Drawing.Point(4, 454);
             this.FinDetailPager.Name = "FinDetailPager";
-            this.FinDetailPager.PageSize = 20;
             this.FinDetailPager.RecordCount = 0;
             this.FinDetailPager.ShowPageSizeDropdown = true;
             this.FinDetailPager.Size = new System.Drawing.Size(930, 22);
@@ -327,11 +328,11 @@
         private System.Windows.Forms.DateTimePicker BeginDateTxt;
         private System.Windows.Forms.ComboBox EventTypeTxt;
         private System.Windows.Forms.TextBox OrderNoTxt;
-        private System.Windows.Forms.TextBox AssociationTxt;
         private System.Windows.Forms.TextBox EventNameTxt;
         private System.Windows.Forms.ComboBox ItemTypeTxt;
         private System.Windows.Forms.DateTimePicker EndDateTxt;
         private System.Windows.Forms.Button FinDetailQueryBtn;
         private System.Windows.Forms.Button FinDetailExpBtn;
+        private System.Windows.Forms.ComboBox AssociationTxt;
     }
 }

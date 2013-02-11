@@ -117,11 +117,11 @@
     <Compile Include="EditCategory.Designer.cs">
       <DependentUpon>EditCategory.cs</DependentUpon>
     </Compile>
-    <Compile Include="EditFin.cs">
+    <Compile Include="EditFinDetail.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditFin.Designer.cs">
-      <DependentUpon>EditFin.cs</DependentUpon>
+    <Compile Include="EditFinDetail.Designer.cs">
+      <DependentUpon>EditFinDetail.cs</DependentUpon>
     </Compile>
     <Compile Include="FinanceWaterView.cs">
       <SubType>UserControl</SubType>
@@ -168,7 +168,7 @@
       <DependentUpon>ImageForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Passporter.cs" />
-    <Compile Include="RegUtil.cs" />
+    <Compile Include="Utils\RegUtil.cs" />
     <Compile Include="Properties\TreeViewImages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -214,6 +214,12 @@
       <DependentUpon>Pager.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\VerifyCode.cs" />
+    <Compile Include="EditFinWater.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditFinWater.Designer.cs">
+      <DependentUpon>EditFinWater.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="CheckCodeForm.resx">
       <DependentUpon>CheckCodeForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -229,8 +235,8 @@
     <EmbeddedResource Include="EditCategory.resx">
       <DependentUpon>EditCategory.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EditFin.resx">
-      <DependentUpon>EditFin.cs</DependentUpon>
+    <EmbeddedResource Include="EditFinDetail.resx">
+      <DependentUpon>EditFinDetail.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FinanceWaterView.resx">
       <DependentUpon>FinanceWaterView.cs</DependentUpon>
@@ -279,6 +285,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TestForm.resx">
       <DependentUpon>TestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditFinWater.resx">
+      <DependentUpon>EditFinWater.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
