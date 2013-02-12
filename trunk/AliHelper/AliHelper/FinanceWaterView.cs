@@ -61,7 +61,7 @@ namespace AliHelper
                     row["DetailEventName"] = detail.Description;
                     row["DetailOrderNo"] = detail.OrderNo;
                     row["DetailAmount"] = "(" +finance.Currency + ")"+ detail.Amount;
-                    row["TotalAmount"] = "￥" + detail.TotalAmount.ToString("#,##0.00");
+                    row["DetailTotalAmount"] = "￥" + detail.TotalAmount.ToString("#,##0.00");
                     row["DetailRemark"] = detail.Remark;
                     this.dataTable.Rows.Add(row);
                 }
@@ -90,7 +90,7 @@ namespace AliHelper
             dataTable.Columns.Add("DetailRemark", typeof(string));
 
             FinanceView.DataSource = dataTable;
-            FinanceView.ColumnHeadersHeight = 40;
+            FinanceView.ColumnHeadersHeight = 25;
             FinanceView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             FinanceView.MergeColumnNames.Add("FinId");
             FinanceView.MergeColumnNames.Add("FinDate");
@@ -103,7 +103,6 @@ namespace AliHelper
             FinanceView.MergeColumnNames.Add("ReceivePaymentor");
             FinanceView.MergeColumnNames.Add("Association");
             FinanceView.MergeColumnNames.Add("Remark");
-            FinanceView.AddSpanHeader(11, 5, "明细");
 
             DataGridViewCellStyle cellStyle2 = new DataGridViewCellStyle();
             cellStyle2.Alignment = DataGridViewContentAlignment.MiddleRight;
@@ -113,7 +112,7 @@ namespace AliHelper
             DetailId.Name = "FinId";
             DetailId.Width = 50;
             DetailId.ReadOnly = true;
-            DetailId.Visible = false;
+            //DetailId.Visible = false;
 
             DataGridViewColumn FinDate = FinanceView.Columns[1];
             FinDate.HeaderText = "时间";
@@ -137,14 +136,14 @@ namespace AliHelper
             Amount.HeaderText = "金额";
             Amount.Name = "Amount";
             Amount.ReadOnly = true;
-            Amount.Width = 100;
+            Amount.Width = 90;
             Amount.DefaultCellStyle = cellStyle2;
 
             DataGridViewColumn Rate = FinanceView.Columns[5];
             Rate.HeaderText = "汇率";
             Rate.Name = "Rate";
             Rate.ReadOnly = true;
-            Rate.Width = 70;
+            Rate.Width = 65;
             Rate.DefaultCellStyle = cellStyle2;
 
             DataGridViewColumn TotalAmount = FinanceView.Columns[6];
@@ -166,50 +165,48 @@ namespace AliHelper
             ReceivePaymentor.Name = "ReceivePaymentor";
             ReceivePaymentor.Width = 120;
             ReceivePaymentor.ReadOnly = true;
-            ReceivePaymentor.DefaultCellStyle = cellStyle2;
 
             DataGridViewColumn Association = FinanceView.Columns[9];
             Association.HeaderText = "经手人/相关人";
             Association.Name = "Association";
-            Association.Width = 80;
+            Association.Width = 100;
             Association.ReadOnly = true;
-            Association.DefaultCellStyle = cellStyle2;
             
             DataGridViewColumn Remark = FinanceView.Columns[10];
             Remark.HeaderText = "备注";
             Remark.Name = "Remark";
-            Association.Width = 250;
+            Remark.Width = 250;
             Remark.ReadOnly = true;
 
             DataGridViewColumn DetailEventName = FinanceView.Columns[11];
-            DetailEventName.HeaderText = "描述";
+            DetailEventName.HeaderText = "描述(明细)";
             DetailEventName.Name = "DetailEventName";
             DetailEventName.ReadOnly = true;
             DetailEventName.Width = 200;
 
             DataGridViewColumn DetailOrderNo = FinanceView.Columns[12];
-            DetailOrderNo.HeaderText = "所属业务";
+            DetailOrderNo.HeaderText = "所属业务(明细)";
             DetailOrderNo.Name = "DetailOrderNo";
             DetailOrderNo.Width = 100;
             DetailOrderNo.ReadOnly = true;
             DataGridViewColumn DetailAmount = FinanceView.Columns[13];
-            DetailAmount.HeaderText = "金额";
+            DetailAmount.HeaderText = "金额(明细)";
             DetailAmount.Name = "DetailAmount";
             DetailAmount.Width = 100;
             DetailAmount.ReadOnly = true;
             DetailAmount.DefaultCellStyle = cellStyle2;
 
             DataGridViewColumn DetailTotalAmount = FinanceView.Columns[14];
-            DetailTotalAmount.HeaderText = "总金额";
+            DetailTotalAmount.HeaderText = "总金额(明细)";
             DetailTotalAmount.Name = "DetailAmount";
             DetailTotalAmount.Width = 100;
             DetailTotalAmount.ReadOnly = true;
             DetailTotalAmount.DefaultCellStyle = cellStyle2;
 
             DataGridViewColumn DetailRemark = FinanceView.Columns[15];
-            DetailRemark.HeaderText = "备注";
+            DetailRemark.HeaderText = "备注(明细)";
             DetailRemark.Name = "Remark";
-            EventType.Width = 300;
+            DetailRemark.Width = 300;
             DetailRemark.ReadOnly = true;
 
         }
@@ -229,6 +226,7 @@ namespace AliHelper
             query.Condition.Description = this.Description.Text.Trim();
             query.Condition.EventType = (string)this.EventType.SelectedValue;
             query.Condition.Association = (string)this.Association.SelectedValue;
+            query.Condition.ReceivePaymentor = this.ReceivePaymentor.Text.Trim();
             QueryObject<Finance> result = finOrderManager.GetFinances(query);
             BindDateTable(result.Result);
         }

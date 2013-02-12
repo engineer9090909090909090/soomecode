@@ -52,6 +52,12 @@ namespace AliHelper.Bussness
             return financeDao.GetFinDetail(id);
         }
 
+        public void InsertOrUpdateFinance(Finance obj)
+        {
+            financeDao.InsertOrUpdateFinance(obj);
+            FireNewEditEvent(obj);
+        }
+
         public QueryObject<Finance> GetFinances(QueryObject<Finance> query)
         {
             return financeDao.GetFinances(query);

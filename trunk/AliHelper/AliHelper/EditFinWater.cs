@@ -31,10 +31,13 @@ namespace AliHelper
             this.Curreny.ValueMember = "Key";
             this.Association.DisplayMember = "Label";
             this.Association.ValueMember = "Key";
+            this.Account.DisplayMember = "Label";
+            this.Account.ValueMember = "Key";
             this.ItemType.DataSource = finOrderManager.GetAppDicOptions(Constants.BussnessType);
             this.EventType.DataSource = finOrderManager.GetAppDicOptions(Constants.DebitCredit);
             this.Curreny.DataSource = finOrderManager.GetAppDicOptions(Constants.CurrencyType);
             this.Association.DataSource = finOrderManager.GetAppDicOptions(Constants.Employee);
+            this.Account.DataSource = finOrderManager.GetAppDicOptions(Constants.RecivePaymentAccounts);
             this.DetailAssociation.DisplayMember = "Label";
             this.DetailAssociation.ValueMember = "Key";
             this.DetailAssociation.DataSource = finOrderManager.GetAppDicOptions(Constants.Employee);
@@ -60,41 +63,88 @@ namespace AliHelper
 
         private void Confirm_Click(object sender, EventArgs e)
         {
-            FinDetails detail = new FinDetails();
+            Finance finance;
             if (this.Tag == null)
             {
-                detail = new FinDetails();
+                finance = new Finance();
             }
             else
             {
-                detail = (FinDetails)this.Tag;
+                finance = (Finance)this.Tag;
             }
-            detail.Description = this.Description.Text.Trim();
-            detail.EventType = ((AppDic)this.EventType.SelectedItem).Key;
-            detail.FinDate = this.FinDate.Value.ToString(Constants.DateFormat);
-            detail.ItemType = ((AppDic)this.ItemType.SelectedItem).Key; ;
-            detail.Remark = this.Remark.Text.Trim();
-            detail.Association = this.Association.Text.Trim();
-            detail.Rate = Convert.ToDouble(this.Rate.Text.Trim());
-            detail.Currency = ((AppDic)this.Curreny.SelectedItem).Key;
-            detail.Amount = Convert.ToDouble(this.Amount.Text);
-            if (detail.Amount == 0)
+            finance.Description = this.Description.Text.Trim();
+            finance.EventType = ((AppDic)this.EventType.SelectedItem).Key;
+            finance.FinDate = this.FinDate.Value.ToString(Constants.DateFormat);
+            finance.ItemType = ((AppDic)this.ItemType.SelectedItem).Key; ;
+            finance.Remark = this.Remark.Text.Trim();
+            finance.Association = ((AppDic)this.Association.SelectedItem).Key;
+            finance.Rate = Convert.ToDouble(this.Rate.Text.Trim());
+            finance.Currency = ((AppDic)this.Curreny.SelectedItem).Key;
+            finance.Amount = Convert.ToDouble(this.Amount.Text);
+            finance.ReceivePaymentor = this.ReceivePaymentor.Text.Trim();
+            finance.Account = ((AppDic)this.Account.SelectedItem).Key;
+            finance.ReferenceNo = this.ReferenceNo.Text.Trim();
+            if (finance.Amount == 0)
             {
                 return;
             }
-            if (string.IsNullOrEmpty(detail.Description))
+            if (string.IsNullOrEmpty(finance.Description))
             {
                 return;
             }
-            if (string.IsNullOrEmpty(detail.Association))
+            if (string.IsNullOrEmpty(finance.Association))
             {
                 return;
             }
-            List<FinDetails> list = new List<FinDetails>();
-            list.Add(detail);
-            finOrderManager.InsertOrUpdateDetails(list);
-            list.Clear();
-            list = null;
+            bool HasError = false;
+            List<FinDetails> details = new List<FinDetails>();
+            
+            foreach (DataGridViewRow row in DetailView.Rows)
+            { 
+                string desc = (string)row.Cells["DetailDescription"].Value;
+                if (string.IsNullOrEmpty(desc))
+                {
+                    HasError = true;
+                    row.Cells["DetailDescription"].ErrorText = "不能为空";
+                }
+                string orderNo = (string)row.Cells["DetailOrderNo"].Value;
+                if (string.IsNullOrEmpty(orderNo))
+                {
+                    HasError = true;
+                    row.Cells["DetailOrderNo"].ErrorText = "不能为空";
+                }
+                double amount = Convert.ToDouble(row.Cells["DetailAmount"].Value);
+                if (amount == 0.00)
+                {
+                    HasError = true;
+                    row.Cells["DetailAmount"].ErrorText = "不能为零";
+                }
+                string association = (string)row.Cells["DetailAssociation"].Value;
+                if (string.IsNullOrEmpty(association))
+                {
+                    HasError = true;
+                    row.Cells["DetailAssociation"].ErrorText = "不能为空";
+                }
+                string remark = (string)row.Cells["DetailRemark"].Value;
+                FinDetails detail = new FinDetails();
+                detail.FinDate = finance.FinDate;
+                detail.ItemType = finance.ItemType;
+                detail.EventType = finance.EventType;
+                detail.Currency = finance.Currency;
+                detail.Rate = finance.Rate;
+                detail.Description = desc;
+                detail.OrderNo = orderNo;
+                detail.Amount = amount;
+                detail.Association = association;
+                detail.Remark = remark;
+                details.Add(detail);
+            }
+            if (HasError)
+            {
+                return;
+            }
+            finance.Details = details;
+            finOrderManager.InsertOrUpdateFinance(finance);
             this.Close();
         }
 
@@ -105,16 +155,14 @@ namespace AliHelper
 
         private void AmountTxt_Leave(object sender, EventArgs e)
         {
-            try
+            double amount = Convert.ToDouble(this.Amount.Text);
+            double rate = Convert.ToDouble(this.Rate.Text);
+            double total = amount * rate;
+            this.TotalAmount.Text = "￥" + total.ToString("#,##0.00");
+            if (DetailView.Rows.Count == 1)
             {
-                double amount = Convert.ToDouble(this.Amount.Text);
-                double rate = Convert.ToDouble(this.Rate.Text);
-                double total = amount * rate;
-                this.TotalAmount.Text = "￥" + total.ToString("#,##0.00");
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Trace.WriteLine(ex.Message);
+                DetailView.Rows[0].Cells["DetailAmount"].Value = this.Amount.Text;
+                DetailView.Rows[0].Cells["DetailTotalAmount"].Value = this.TotalAmount.Text;
             }
         }
 
@@ -157,24 +205,6 @@ namespace AliHelper
             this.DetailView.Rows.Add();
         }
 
-        private void DetailView_CellLeave(object sender, DataGridViewCellEventArgs e)
-        {
-            int row = e.RowIndex;
-            double total = 0.0;
-            if (e.ColumnIndex == 3)
-            {
-                try
-                {
-                    double val = Convert.ToDouble(DetailView.Rows[row].Cells[3].Value);
-                    total = Convert.ToDouble(this.Rate.Text) * val;
-                }
-                catch
-                {
-                    DetailView.Rows[row].Cells[3].Value = "";
-                }
-                DetailView.Rows[row].Cells[4].Value = "￥" + total.ToString("#,##0.00");
-            }
-        }
 
         private void DetailView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
@@ -183,20 +213,31 @@ namespace AliHelper
                 TextBox textBox1 = e.Control as TextBox; 
                 if (((DataGridView)sender).CurrentCell.ColumnIndex == 3) // 第一列
                 {
+                    textBox1.KeyPress -= new KeyPressEventHandler(Cells_KeyPress);
+                    textBox1.KeyUp -= new KeyEventHandler(Cells_KeyUp);
                     textBox1.KeyPress += new KeyPressEventHandler(Cells_KeyPress);
+                    textBox1.KeyUp += new KeyEventHandler(Cells_KeyUp);
                 }
+            }
+        }
+
+        void Cells_KeyUp(object sender, KeyEventArgs e)
+        {
+            TextBox textBox1 = (TextBox)sender;
+            if (!string.IsNullOrEmpty(textBox1.Text.Trim()) && textBox1.Text.Trim() != "-")
+            {
+                int CurrentRow = DetailView.CurrentRow.Index;
+                double val = Convert.ToDouble(textBox1.Text);
+                double total = Convert.ToDouble(this.Rate.Text) * val;
+                DetailView.Rows[CurrentRow].Cells[4].Value = "￥" + total.ToString("#,##0.00");
             }
         }
 
         private void Cells_KeyPress(object sender, KeyPressEventArgs e)
         {
             TextBox textBox1 = (TextBox)sender;
-            if ((Convert.ToInt32(e.KeyChar) < 48 || 
-                Convert.ToInt32(e.KeyChar) > 57) 
-                && Convert.ToInt32(e.KeyChar) != 46 
-                && Convert.ToInt32(e.KeyChar) != 8
-                && Convert.ToInt32(e.KeyChar) != 45
-                && Convert.ToInt32(e.KeyChar) != 13)
+            if ((Convert.ToInt32(e.KeyChar) < 48 || Convert.ToInt32(e.KeyChar) > 57) && Convert.ToInt32(e.KeyChar) != 46 
+                && Convert.ToInt32(e.KeyChar) != 8 && Convert.ToInt32(e.KeyChar) != 45 && Convert.ToInt32(e.KeyChar) != 13)
             {
                 e.Handled = true;  // 输入非法就屏蔽
             }

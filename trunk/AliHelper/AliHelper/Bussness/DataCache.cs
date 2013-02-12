@@ -19,6 +19,7 @@ namespace AliHelper
             DicTypeOptions.Add(Constants.Employee, "人员");
             DicTypeOptions.Add(Constants.OrderStatusType, "订单状态类型");
             DicTypeOptions.Add(Constants.CurrencyType, "币种");
+            DicTypeOptions.Add(Constants.RecivePaymentAccounts, "收付款账户");
         }
         public string AliID { get; set; }
         public string CsrfToken { get; set; }

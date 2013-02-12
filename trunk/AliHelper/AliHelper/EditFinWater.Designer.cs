@@ -487,7 +487,6 @@
             this.DetailView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.DetailView.Size = new System.Drawing.Size(752, 248);
             this.DetailView.TabIndex = 10;
-            this.DetailView.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DetailView_CellLeave);
             this.DetailView.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.DetailView_EditingControlShowing);
             // 
             // Check
