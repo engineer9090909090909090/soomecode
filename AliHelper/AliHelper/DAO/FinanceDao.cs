@@ -5,6 +5,7 @@ using System.Text;
 using Soomes;
 using System.Data.SQLite;
 using System.Data;
+using System.Data.Common;
 
 namespace AliHelper.DAO
 {
@@ -126,13 +127,26 @@ namespace AliHelper.DAO
                 info.Association = (string)row["Association"];
                 info.OrderNo = (string)row["OrderNo"];
                 info.ItemType = (string)row["ItemType"];
-                info.Remark = (string)row["Remark"];
+                info.Remark = Convert.IsDBNull(row["Remark"])?"": (string)row["Remark"];
                 list.Add(info);
             }
             return list;
         }
 
         public void InsertOrUpdateDetails(List<FinDetails> list)
+        {
+            using (SQLiteConnection connection = dbHelper.GetConnection())
+            {
+                connection.Open();
+                using (DbTransaction transaction = connection.BeginTransaction())
+                {
+                    InsertOrUpdateDetails(connection, list);
+                    transaction.Commit();
+                }
+            }
+        }
+
+        public void InsertOrUpdateDetails(SQLiteConnection connection, List<FinDetails> list)
         {
             string InsSql = @"INSERT INTO FinDetails(FinDate,FinId,Description,EventType,Amount,Association,OrderNo,ItemType,Remark,Currency, Rate, CreatedTime,ModifiedTime)"
                             + "values(@FinDate,@FinId,@Description,@EventType,@Amount,@Association,@OrderNo,@ItemType, @Remark, @Currency, @Rate, @CreatedTime, @ModifiedTime)";
@@ -165,7 +179,7 @@ namespace AliHelper.DAO
                     new SQLiteParameter("@CreatedTime", CurrentTime),
                     new SQLiteParameter("@ModifiedTime",CurrentTime)
                 };
-                int record = Convert.ToInt32(dbHelper.ExecuteScalar(ExistRecordSql + item.DetailId, null));
+                int record = Convert.ToInt32(dbHelper.ExecuteScalar(connection, ExistRecordSql + item.DetailId, null));
                 if (record == 0)
                 {
                     InsertParameters.Add(parameter);
@@ -177,11 +191,11 @@ namespace AliHelper.DAO
             }
             if (InsertParameters.Count > 0)
             {
-                dbHelper.ExecuteNonQuery(InsSql, InsertParameters);
+                dbHelper.ExecuteNonQuery(connection, InsSql, InsertParameters);
             }
             if (UpdateParameters.Count > 0)
             {
-                dbHelper.ExecuteNonQuery(UpdSql, UpdateParameters);
+                dbHelper.ExecuteNonQuery(connection, UpdSql, UpdateParameters);
             }
         }
 
@@ -210,13 +224,13 @@ namespace AliHelper.DAO
 
 
 
-        public void InsertOrUpdateDetails(Finance finance)
+        public void InsertOrUpdateFinance(Finance finance)
         {
-
-            string InsSql = @"INSERT INTO Finance(FinDate, Description, EventType, Account, ReferenceNo, ReceivePaymentor, Customer, Association,Amount,Rate,Currency,Remark, CreatedTime,ModifiedTime)"
-                            + "values(@FinDate, @Description, @EventType, @Account, @ReferenceNo, @ReceivePaymentor, @Customer, @Association,@Amount,@Rate,@Currency,@Remark, @CreatedTime, @ModifiedTime)";
+            
+            string InsSql = @"INSERT INTO Finance(FinDate, Description, EventType, ItemType, Account, ReferenceNo, ReceivePaymentor, Customer, Association,Amount,Rate,Currency,Remark, CreatedTime,ModifiedTime)"
+                            + "values(@FinDate, @Description, @EventType, @ItemType, @Account, @ReferenceNo, @ReceivePaymentor, @Customer, @Association,@Amount,@Rate,@Currency,@Remark, @CreatedTime, @ModifiedTime)";
             string UpdSql = @"update Finance set Description=@Description,FinDate=@FinDate,EventType=@EventType,Amount=@Amount,Association=@Association,"
-                            + "ReceivePaymentor=@ReceivePaymentor,Account=@Account,ReferenceNo=@ReferenceNo, Customer= @Customer, Remark=@Remark,Currency = @Currency, Rate = @Rate, ModifiedTime=@ModifiedTime"
+                            + "ReceivePaymentor=@ReceivePaymentor,Account=@Account,ItemType=@ItemType,ReferenceNo=@ReferenceNo, Customer= @Customer, Remark=@Remark,Currency = @Currency, Rate = @Rate, ModifiedTime=@ModifiedTime"
                             + "where FinId = @FinId";
 
             string ExistRecordSql = "SELECT count(1) FROM Finance WHERE FinId = ";
@@ -230,6 +244,7 @@ namespace AliHelper.DAO
                 new SQLiteParameter("@Description",finance.Description),
                 new SQLiteParameter("@EventType",finance.EventType),
                 new SQLiteParameter("@Account",finance.Account),
+                new SQLiteParameter("@ItemType",finance.ItemType),
                 new SQLiteParameter("@ReferenceNo",finance.ReferenceNo),
                 new SQLiteParameter("@ReceivePaymentor",finance.ReceivePaymentor),
                 new SQLiteParameter("@Customer",finance.Customer),
@@ -242,13 +257,28 @@ namespace AliHelper.DAO
                 new SQLiteParameter("@ModifiedTime",CurrentTime)
             };
             int record = Convert.ToInt32(dbHelper.ExecuteScalar(ExistRecordSql + finance.FinId, null));
-            if (record == 0)
+            using (SQLiteConnection connection = dbHelper.GetConnection())
             {
-                dbHelper.ExecuteNonQuery(InsSql, InsertParameters);
-            }
-            else
-            {
-                dbHelper.ExecuteNonQuery(UpdSql, UpdateParameters);
+                connection.Open();
+                using (DbTransaction transaction = connection.BeginTransaction())
+                {
+                    if (record == 0)
+                    {
+                        dbHelper.ExecuteNonQuery(connection, InsSql, parameter);
+                        int LasertInsertId = dbHelper.GetLastInsertId(connection);
+                        foreach (FinDetails detail in finance.Details)
+                        {
+                            detail.FinId = LasertInsertId;
+                        }
+                    }
+                    else
+                    {
+                        dbHelper.ExecuteNonQuery(connection, UpdSql, parameter);
+                        dbHelper.ExecuteNonQuery("delete from FinDetails FinId =" + finance.FinId);
+                    }
+                    InsertOrUpdateDetails(connection, finance.Details);
+                    transaction.Commit();
+                }
             }
         }
 
@@ -322,11 +352,11 @@ namespace AliHelper.DAO
                 info.Rate = Convert.ToDouble(row["Rate"]);
                 info.Association = (string)row["Association"];
                 info.Account = (string)row["Account"];
-                info.ReferenceNo = (string)row["ReferenceNo"];
+                info.ReferenceNo = Convert.IsDBNull(row["ReferenceNo"]) ? "" : (string)row["ReferenceNo"];
                 info.ReceivePaymentor = (string)row["ReceivePaymentor"];
-                info.Customer = (string)row["Customer"];
+                info.Customer = Convert.IsDBNull(row["Customer"])?"":(string)row["Customer"];
                 info.ItemType = (string)row["ItemType"];
-                info.Remark = (string)row["Remark"];
+                info.Remark = Convert.IsDBNull(row["Remark"])?"":(string)row["Remark"];
                 list.Add(info);
             }
             return list;
