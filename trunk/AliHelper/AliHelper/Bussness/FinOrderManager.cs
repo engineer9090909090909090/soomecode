@@ -10,14 +10,22 @@ namespace AliHelper.Bussness
     public class FinOrderManager : BaseManager
     {
         public FinanceDao financeDao;
-        public event NewEditItemEvent OnNewEditEvent;
-
-        public virtual void FireNewEditEvent(object o)
+        static public event NewEditItemEvent OnEditFinDetailEvent;
+        static public event NewEditItemEvent OnEditFinanceEvent;
+        public virtual void FireEditFinDetailEvent(object o)
         {
-            if (OnNewEditEvent != null)
+            if (FinOrderManager.OnEditFinDetailEvent != null)
             {
                 ItemEventArgs e = new ItemEventArgs(o);
-                OnNewEditEvent(this, e);
+                OnEditFinDetailEvent(this, e);
+            }
+        }
+        public virtual void FireEditFinanceEvent(object o)
+        {
+            if (FinOrderManager.OnEditFinanceEvent != null)
+            {
+                ItemEventArgs e = new ItemEventArgs(o);
+                OnEditFinanceEvent(this, e);
             }
         }
 
@@ -38,13 +46,13 @@ namespace AliHelper.Bussness
             financeDao.InsertOrUpdateDetails(list);
             list.Clear();
             list = null;
-            FireNewEditEvent(detail);
+            FireEditFinDetailEvent(detail);
         }
 
         public void InsertOrUpdateDetails(List<FinDetails> list) 
         {
             financeDao.InsertOrUpdateDetails(list);
-            FireNewEditEvent(list);
+            FireEditFinDetailEvent(list);
         }
 
         public FinDetails GetFinDetail(int id)
@@ -55,12 +63,17 @@ namespace AliHelper.Bussness
         public void InsertOrUpdateFinance(Finance obj)
         {
             financeDao.InsertOrUpdateFinance(obj);
-            FireNewEditEvent(obj);
+            FireEditFinanceEvent(obj);
         }
 
         public QueryObject<Finance> GetFinances(QueryObject<Finance> query)
         {
             return financeDao.GetFinances(query);
+        }
+
+        public Finance GetFinance(int finId)
+        {
+            return financeDao.GetFinance(finId);
         }
     }
 }

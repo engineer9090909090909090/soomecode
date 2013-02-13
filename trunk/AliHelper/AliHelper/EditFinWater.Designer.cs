@@ -1,6 +1,6 @@
 ﻿namespace AliHelper
 {
-    partial class NewAddDetail
+    partial class EditFinWater
     {
         /// <summary>
         /// Required designer variable.
@@ -94,6 +94,7 @@
             this.Description.Name = "Description";
             this.Description.Size = new System.Drawing.Size(267, 21);
             this.Description.TabIndex = 1;
+            this.Description.Leave += new System.EventHandler(this.AmountTxt_Leave);
             // 
             // ItemType
             // 
@@ -543,7 +544,7 @@
             this.DetailRemark.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.DetailRemark.Width = 200;
             // 
-            // NewAddDetail
+            // EditFinWater
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -554,7 +555,7 @@
             this.Controls.Add(this.groupBox1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "NewAddDetail";
+            this.Name = "EditFinWater";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

@@ -23,10 +23,10 @@ namespace AliHelper
             FinDetailPager.PageSize = 100;
             InitDataGridView();
             finOrderManager = new FinOrderManager();
-            finOrderManager.OnNewEditEvent += new NewEditItemEvent(finOrderManager_OnNewEditEvent);
+            FinOrderManager.OnEditFinDetailEvent += new NewEditItemEvent(OnNewEditEvent);
         }
 
-        void finOrderManager_OnNewEditEvent(object sender, ItemEventArgs e)
+        void OnNewEditEvent(object sender, ItemEventArgs e)
         {
             BindDataWithPage(FinDetailPager.PageIndex);
         }

@@ -468,9 +468,21 @@ namespace AliHelper
 
         public static Bitmap ResizeImage(string fileName, int newW, int newH)
         {
-            Bitmap oldBmp = new Bitmap(fileName);
-            Bitmap newBmp = ResizeImage(oldBmp, newW, newH);
-            oldBmp.Dispose();
+            if (!File.Exists(fileName))
+            {
+                return ResizeImage(global::AliHelper.Properties.Resources.no_image, newW, newH);
+            }
+            Bitmap newBmp = null;
+            try
+            {
+                Bitmap oldBmp = new Bitmap(fileName);
+                newBmp = ResizeImage(oldBmp, newW, newH);
+                oldBmp.Dispose();
+            }
+            catch
+            {
+                newBmp = ResizeImage(global::AliHelper.Properties.Resources.no_image, newW, newH);
+            }
             return newBmp;
         }
 

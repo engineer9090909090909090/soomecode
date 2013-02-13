@@ -277,6 +277,7 @@
             this.FinanceView.RowTemplate.Height = 23;
             this.FinanceView.Size = new System.Drawing.Size(798, 325);
             this.FinanceView.TabIndex = 3;
+            this.FinanceView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.FinanceView_CellDoubleClick);
             // 
             // FinanceWaterView
             // 
