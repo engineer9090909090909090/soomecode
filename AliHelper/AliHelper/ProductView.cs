@@ -110,12 +110,7 @@ namespace AliHelper
                     row["Id"] = item.Id;
                     row["Check"] = false;
                     string imageFile = FileUtils.GetProductImagesFolder() + Path.DirectorySeparatorChar + item.Id + ".jpg";
-                    if (File.Exists(imageFile))
-                    {
-                        row["Image"] = ImageUtils.ResizeImage(imageFile, 50, 50);
-                    }else{
-                        row["Image"] = ImageUtils.ResizeImage(global::AliHelper.Properties.Resources.no_image, 50, 50);
-                    }
+                    row["Image"] = ImageUtils.ResizeImage(imageFile, 50, 50);
                     row["Subject"] = item.Subject;
                     row["RedModel"] = item.RedModel;
                     row["IsWindowProduct"] = item.IsWindowProduct?"是":"";

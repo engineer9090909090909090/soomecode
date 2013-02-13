@@ -52,7 +52,7 @@ namespace AliHelper.DAO
            + "Association varchar(50) not null,"
            + "Amount double not null,"
            + "Rate double not null default 1.00,"
-           + "Currency varchar(3) not null,"
+           + "Currency varchar(10) not null,"
            + "Remark varchar(500),"
            + "CreatedTime datetime,"
            + "ModifiedTime datetime)");
@@ -151,7 +151,7 @@ namespace AliHelper.DAO
             string InsSql = @"INSERT INTO FinDetails(FinDate,FinId,Description,EventType,Amount,Association,OrderNo,ItemType,Remark,Currency, Rate, CreatedTime,ModifiedTime)"
                             + "values(@FinDate,@FinId,@Description,@EventType,@Amount,@Association,@OrderNo,@ItemType, @Remark, @Currency, @Rate, @CreatedTime, @ModifiedTime)";
             string UpdSql = @"update FinDetails set FinDate=@FinDate,Description=@Description,EventType=@EventType,Amount=@Amount,Association=@Association,"
-                            + "OrderNo=@OrderNo,ItemType=@ItemType,Remark=@Remark,Currency = @Currency, Rate = @Rate, ModifiedTime=@ModifiedTime"
+                            + "OrderNo=@OrderNo,ItemType=@ItemType,Remark=@Remark,Currency = @Currency, Rate = @Rate, ModifiedTime=@ModifiedTime "
                             + "where DetailId = @DetailId";
 
             string ExistRecordSql = "SELECT count(1) FROM FinDetails WHERE DetailId = ";
@@ -230,8 +230,8 @@ namespace AliHelper.DAO
             string InsSql = @"INSERT INTO Finance(FinDate, Description, EventType, ItemType, Account, ReferenceNo, ReceivePaymentor, Customer, Association,Amount,Rate,Currency,Remark, CreatedTime,ModifiedTime)"
                             + "values(@FinDate, @Description, @EventType, @ItemType, @Account, @ReferenceNo, @ReceivePaymentor, @Customer, @Association,@Amount,@Rate,@Currency,@Remark, @CreatedTime, @ModifiedTime)";
             string UpdSql = @"update Finance set Description=@Description,FinDate=@FinDate,EventType=@EventType,Amount=@Amount,Association=@Association,"
-                            + "ReceivePaymentor=@ReceivePaymentor,Account=@Account,ItemType=@ItemType,ReferenceNo=@ReferenceNo, Customer= @Customer, Remark=@Remark,Currency = @Currency, Rate = @Rate, ModifiedTime=@ModifiedTime"
-                            + "where FinId = @FinId";
+                            + "ReceivePaymentor=@ReceivePaymentor,Account=@Account,ItemType=@ItemType,ReferenceNo=@ReferenceNo,Customer=@Customer,Remark=@Remark,Currency=@Currency,Rate =@Rate,ModifiedTime=@ModifiedTime "
+                            + "WHERE FinId=@FinId";
 
             string ExistRecordSql = "SELECT count(1) FROM Finance WHERE FinId = ";
 
@@ -240,6 +240,7 @@ namespace AliHelper.DAO
             DateTime CurrentTime = DateTime.Now;
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {
+                 new SQLiteParameter("@FinId",finance.FinId),
                 new SQLiteParameter("@FinDate",finance.FinDate),
                 new SQLiteParameter("@Description",finance.Description),
                 new SQLiteParameter("@EventType",finance.EventType),
@@ -274,7 +275,7 @@ namespace AliHelper.DAO
                     else
                     {
                         dbHelper.ExecuteNonQuery(connection, UpdSql, parameter);
-                        dbHelper.ExecuteNonQuery("delete from FinDetails FinId =" + finance.FinId);
+                        dbHelper.ExecuteNonQuery(connection, "delete from FinDetails where FinId =" + finance.FinId);
                     }
                     InsertOrUpdateDetails(connection, finance.Details);
                     transaction.Commit();
@@ -335,6 +336,22 @@ namespace AliHelper.DAO
             return query;
         }
 
+        public Finance GetFinance(int finId)
+        {
+            string sql = "select *, Amount * Rate TotalAmount from Finance where FinId = " + finId;
+            DataTable dt = dbHelper.ExecuteDataTable(sql, null);
+            List<Finance> list =  FinanceTableToList(dt);
+            if (list.Count > 0)
+            {
+                Finance finance = list[0];
+                finance.Details = this.GetFinDetails(finance.FinId);
+                return finance;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         public List<Finance> FinanceTableToList(DataTable dt)
         {

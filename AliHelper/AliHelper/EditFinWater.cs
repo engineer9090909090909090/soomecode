@@ -12,10 +12,10 @@ using System.Runtime.InteropServices;
 
 namespace AliHelper
 {
-    public partial class NewAddDetail : Form
+    public partial class EditFinWater : Form
     {
         FinOrderManager finOrderManager;
-        public NewAddDetail()
+        public EditFinWater()
         {
             InitializeComponent();
             finOrderManager = new FinOrderManager();
@@ -41,24 +41,37 @@ namespace AliHelper
             this.DetailAssociation.DisplayMember = "Label";
             this.DetailAssociation.ValueMember = "Key";
             this.DetailAssociation.DataSource = finOrderManager.GetAppDicOptions(Constants.Employee);
-            int index = this.DetailView.Rows.Add();
-            DetailView.Rows[index].Cells[1].Value = this.Description.Text;
-            DetailView.Rows[index].Cells[3].Value = this.Amount.Text;
-            DetailView.Rows[index].Cells[4].Value = this.TotalAmount.Text;
+
         }
 
-        public void LoadEditData(FinDetails detail)
+        public void LoadEditData(Finance finance)
         {
-            this.Tag = detail;
-            this.Description.Text = detail.Description;
-            this.EventType.SelectedText = detail.EventType;
-            this.FinDate.Text = detail.FinDate;
-            this.ItemType.SelectedText = detail.ItemType;
-            this.Remark.Text = detail.Remark;
-            this.Association.Text = detail.Association;
-            this.Curreny.SelectedText = detail.Currency;
-            this.TotalAmount.Text = detail.TotalAmount.ToString("#,##0.00");
-            this.Amount.Text = detail.Amount.ToString("#,##0.00");
+            this.Tag = finance;
+            this.Description.Text = finance.Description;
+            this.EventType.SelectedText = finance.EventType;
+            this.FinDate.Text = finance.FinDate;
+            this.ItemType.SelectedText = finance.ItemType;
+            this.Remark.Text = finance.Remark;
+            this.Association.Text = finance.Association;
+            this.Curreny.SelectedText = finance.Currency;
+            this.ReceivePaymentor.Text = finance.ReceivePaymentor;
+            this.Customer.Text = finance.Customer;
+            this.Account.SelectedText = finance.Account;
+            this.ReferenceNo.Text = finance.ReferenceNo;
+            this.TotalAmount.Text = "￥"+ finance.TotalAmount.ToString("#,##0.00");
+            this.Amount.Text = finance.Amount.ToString("#,##0.00");
+
+            foreach (FinDetails detail in finance.Details)
+            {
+                int index = DetailView.Rows.Add();
+                DetailView.Rows[index].Cells["DetailDescription"].Value = detail.Description;
+                DetailView.Rows[index].Cells["DetailOrderNo"].Value = detail.OrderNo;
+                DetailView.Rows[index].Cells["DetailAssociation"].Value = detail.Association;
+                DetailView.Rows[index].Cells["DetailRemark"].Value = detail.Remark;
+                DetailView.Rows[index].Cells["DetailAmount"].Value = detail.Amount.ToString("#,##0.00");
+                DetailView.Rows[index].Cells["DetailTotalAmount"].Value = "￥"+detail.TotalAmount.ToString("#,##0.00");
+            }
+
         }
 
         private void Confirm_Click(object sender, EventArgs e)
@@ -84,6 +97,7 @@ namespace AliHelper
             finance.ReceivePaymentor = this.ReceivePaymentor.Text.Trim();
             finance.Account = ((AppDic)this.Account.SelectedItem).Key;
             finance.ReferenceNo = this.ReferenceNo.Text.Trim();
+            finance.Customer = this.Customer.Text.Trim();
             if (finance.Amount == 0)
             {
                 return;
@@ -127,6 +141,7 @@ namespace AliHelper
                 }
                 string remark = (string)row.Cells["DetailRemark"].Value;
                 FinDetails detail = new FinDetails();
+                detail.FinId = finance.FinId;
                 detail.FinDate = finance.FinDate;
                 detail.ItemType = finance.ItemType;
                 detail.EventType = finance.EventType;
@@ -159,8 +174,19 @@ namespace AliHelper
             double rate = Convert.ToDouble(this.Rate.Text);
             double total = amount * rate;
             this.TotalAmount.Text = "￥" + total.ToString("#,##0.00");
-            if (DetailView.Rows.Count == 1)
+            if (DetailView.Rows.Count == 0)
             {
+                int index = this.DetailView.Rows.Add();
+                List<AppDic> employees = finOrderManager.GetAppDicOptions(Constants.Employee);
+                if (employees != null)
+                    DetailView.Rows[index].Cells["DetailAssociation"].Value = employees[0].Key;
+                DetailView.Rows[index].Cells["DetailDescription"].Value = this.Description.Text;
+                DetailView.Rows[index].Cells["DetailAmount"].Value = this.Amount.Text;
+                DetailView.Rows[index].Cells["DetailTotalAmount"].Value = this.TotalAmount.Text;
+            }
+            else if (DetailView.Rows.Count == 1)
+            {
+                DetailView.Rows[0].Cells["DetailDescription"].Value = this.Description.Text;
                 DetailView.Rows[0].Cells["DetailAmount"].Value = this.Amount.Text;
                 DetailView.Rows[0].Cells["DetailTotalAmount"].Value = this.TotalAmount.Text;
             }
@@ -202,7 +228,12 @@ namespace AliHelper
 
         private void NewAdd_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            this.DetailView.Rows.Add();
+            int index = this.DetailView.Rows.Add();
+            List<AppDic> employee = finOrderManager.GetAppDicOptions(Constants.Employee);
+            if (employee != null)
+            {
+                DetailView.Rows[index].Cells["DetailAssociation"].Value = employee[0].Key;
+            }
         }
 
 

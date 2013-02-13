@@ -46,6 +46,15 @@ namespace AliHelper.DAO
             return new SQLiteConnection(connectionString);
         }
 
+        public void ExecuteNonQuery(SQLiteConnection connection, string sql)
+        {
+            using (SQLiteCommand command = new SQLiteCommand(connection))
+            {
+                command.CommandText = sql;
+                command.ExecuteNonQuery();
+            }
+        }
+
         public int ExecuteNonQuery(SQLiteConnection connection, string sql, SQLiteParameter[] parameters)
         {
             int affectedRows = 0;

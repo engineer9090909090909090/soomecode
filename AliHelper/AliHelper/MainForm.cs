@@ -574,7 +574,7 @@ namespace AliHelper
 
         private void NewWater_Click(object sender, EventArgs e)
         {
-            NewAddDetail f = new NewAddDetail();
+            EditFinWater f = new EditFinWater();
             f.StartPosition = FormStartPosition.CenterParent;
             f.ShowDialog(this);
         }

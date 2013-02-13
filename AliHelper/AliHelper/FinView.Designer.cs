@@ -15,8 +15,6 @@
         {
             if (disposing && (components != null))
             {
-                finOrderManager = null;
-                dataTable.Dispose();
                 components.Dispose();
             }
             base.Dispose(disposing);
