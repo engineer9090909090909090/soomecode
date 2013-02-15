@@ -15,7 +15,6 @@
         {
             if (disposing && (components != null))
             {
-                dataTable.Dispose();
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -30,8 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FinanceWaterView));
             this.FinDetailGroup = new Guifreaks.NavigationBar.NaviGroup(this.components);
             this.Association = new System.Windows.Forms.ComboBox();
             this.FinDetailExpBtn = new System.Windows.Forms.Button();
@@ -50,11 +47,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.FinanceView = new RowMergeView();
+            this.FinGrid = new SourceGrid.Grid();
             ((System.ComponentModel.ISupportInitialize)(this.FinDetailGroup)).BeginInit();
             this.FinDetailGroup.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.FinanceView)).BeginInit();
             this.SuspendLayout();
             // 
             // FinDetailGroup
@@ -240,7 +236,7 @@
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.FinDetailGroup, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.FinanceView, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.FinGrid, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -250,34 +246,20 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(798, 425);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
-            // FinanceView
+            // FinGrid
             // 
-            this.FinanceView.AllowUserToAddRows = false;
-            this.FinanceView.AllowUserToDeleteRows = false;
-            this.FinanceView.AllowUserToResizeRows = false;
-            this.FinanceView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.FinanceView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.FinanceView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.FinanceView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.FinanceView.Location = new System.Drawing.Point(0, 100);
-            this.FinanceView.Margin = new System.Windows.Forms.Padding(0);
-            this.FinanceView.MergeColumnHeaderBackColor = System.Drawing.SystemColors.Control;
-            this.FinanceView.MergeColumnNames = ((System.Collections.Generic.List<string>)(resources.GetObject("FinanceView.MergeColumnNames")));
-            this.FinanceView.MultiSelect = false;
-            this.FinanceView.Name = "FinanceView";
-            this.FinanceView.ReadOnly = true;
-            this.FinanceView.RowHeadersVisible = false;
-            this.FinanceView.RowTemplate.Height = 23;
-            this.FinanceView.Size = new System.Drawing.Size(798, 325);
-            this.FinanceView.TabIndex = 3;
-            this.FinanceView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.FinanceView_CellDoubleClick);
+            this.FinGrid.AutoSize = true;
+            this.FinGrid.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.FinGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FinGrid.EnableSort = true;
+            this.FinGrid.Location = new System.Drawing.Point(3, 103);
+            this.FinGrid.Name = "FinGrid";
+            this.FinGrid.OptimizeMode = SourceGrid.CellOptimizeMode.ForRows;
+            this.FinGrid.SelectionMode = SourceGrid.GridSelectionMode.Cell;
+            this.FinGrid.Size = new System.Drawing.Size(792, 319);
+            this.FinGrid.TabIndex = 3;
+            this.FinGrid.TabStop = true;
+            this.FinGrid.ToolTipText = "";
             // 
             // FinanceWaterView
             // 
@@ -292,7 +274,7 @@
             this.FinDetailGroup.ResumeLayout(false);
             this.FinDetailGroup.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.FinanceView)).EndInit();
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -314,9 +296,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private RowMergeView FinanceView;
         private System.Windows.Forms.ComboBox Association;
         private System.Windows.Forms.ComboBox ItemType;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private SourceGrid.Grid FinGrid;
     }
 }

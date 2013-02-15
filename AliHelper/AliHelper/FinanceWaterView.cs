@@ -13,12 +13,11 @@ namespace AliHelper
 {
     public partial class FinanceWaterView : UserControl
     {
-        FinOrderManager finOrderManager;
-        private DataTable dataTable;
+        private FinOrderManager finOrderManager;
+        private List<Finance> list;
         public FinanceWaterView()
         {
             InitializeComponent();
-            InitDataGridView();
             finOrderManager = new FinOrderManager();
             FinOrderManager.OnEditFinanceEvent += new NewEditItemEvent(OnNewEditEvent);
         }
@@ -39,184 +38,6 @@ namespace AliHelper
             BindDataWithPage();
         }
 
-        private void BindDateTable(List<Finance> list)
-        {
-            int rowIndex = 0;
-            int dateIndex = 0;
-            foreach (Finance finance in list)
-            {
-                dateIndex++;
-                foreach (FinDetails detail in finance.Details)
-                {
-                    DataRow row = this.dataTable.NewRow();
-                    row["FinId"] = finance.FinId;
-                    row["FinDate"] = finance.FinDate + "(" + dateIndex + ")";
-                    row["EventType"] = finance.EventType;
-                    row["Description"] = finance.Description;
-                    row["Amount"] = "(" + finance.Currency + ")" + finance.Amount.ToString("#,##0.00");
-                    row["Rate"] = finance.Rate.ToString("#,##0.0000");
-                    row["TotalAmount"] = "￥" + finance.TotalAmount.ToString("#,##0.00");
-                    row["ReferenceNo"] = finance.ReferenceNo;
-                    row["ReceivePaymentor"] = finance.ReceivePaymentor;
-                    //row["Association"] = finance.Association;
-                    row["Remark"] = finance.Remark;
-                    row["DetailEventName"] = detail.Description;
-                    row["DetailOrderNo"] = detail.OrderNo;
-                    row["DetailAmount"] = "(" + finance.Currency + ")" + detail.Amount.ToString("#,##0.00");
-                    row["DetailTotalAmount"] = "￥" + detail.TotalAmount.ToString("#,##0.00");
-                    row["DetailRemark"] = detail.Remark;
-                    this.dataTable.Rows.Add(row);
-                    FinanceView.Rows[rowIndex].Cells["Amount"].Style.ForeColor =
-                        (finance.Amount > 0) ? Color.Red : Color.Blue;
-                    FinanceView.Rows[rowIndex].Cells["DetailAmount"].Style.ForeColor =
-                        (detail.Amount > 0) ? Color.Red : Color.Blue;
-                    rowIndex++;
-                    
-                }
-            }
-        }
-
-        private void InitDataGridView()
-        {
-            dataTable = new DataTable();
-            dataTable.Columns.Add("FinId", typeof(Int32));
-            dataTable.Columns.Add("FinDate", typeof(string));
-            dataTable.Columns.Add("EventType", typeof(string));
-            dataTable.Columns.Add("Description", typeof(string));
-            dataTable.Columns.Add("Amount", typeof(string));//Currency
-            dataTable.Columns.Add("Rate", typeof(string));
-            dataTable.Columns.Add("TotalAmount", typeof(string));
-            dataTable.Columns.Add("ReferenceNo", typeof(string));
-            dataTable.Columns.Add("ReceivePaymentor", typeof(string));
-            //dataTable.Columns.Add("Association", typeof(string));
-            dataTable.Columns.Add("Remark", typeof(string));
-            dataTable.Columns.Add("DetailEventName", typeof(string));
-            dataTable.Columns.Add("DetailOrderNo", typeof(string));
-            dataTable.Columns.Add("DetailAmount", typeof(string));
-            dataTable.Columns.Add("DetailTotalAmount", typeof(string));
-            dataTable.Columns.Add("DetailRemark", typeof(string));
-            FinanceView.DataSource = dataTable;
-            FinanceView.ColumnHeadersHeight = 25;
-            FinanceView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            //FinanceView.MergeColumnNames.Add("FinId");
-            FinanceView.MergeColumnNames.Add("FinDate");
-            FinanceView.MergeColumnNames.Add("EventType");
-            FinanceView.MergeColumnNames.Add("Description");
-            FinanceView.MergeColumnNames.Add("Amount");
-            FinanceView.MergeColumnNames.Add("Rate");
-            FinanceView.MergeColumnNames.Add("TotalAmount");
-            FinanceView.MergeColumnNames.Add("ReferenceNo");
-            FinanceView.MergeColumnNames.Add("ReceivePaymentor");
-            FinanceView.MergeColumnNames.Add("Remark");
-
-            int colIndex = 0;
-            DataGridViewCellStyle cellStyle2 = new DataGridViewCellStyle();
-            cellStyle2.Alignment = DataGridViewContentAlignment.MiddleRight;
-            cellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            DataGridViewColumn FinId = FinanceView.Columns[colIndex++];
-            FinId.HeaderText = "序号";
-            FinId.Name = "FinId";
-            FinId.Width = 50;
-            FinId.ReadOnly = true;
-            FinId.Visible = false;
-
-            DataGridViewColumn FinDate = FinanceView.Columns[colIndex++];
-            FinDate.HeaderText = "时间";
-            FinDate.Name = "FinDate";
-            FinDate.Width = 90;
-            FinDate.ReadOnly = true;
-
-            DataGridViewColumn EventType = FinanceView.Columns[colIndex++];
-            EventType.HeaderText = "收支类型";
-            EventType.Name = "EventType";
-            EventType.Width = 70;
-            EventType.ReadOnly = true;
-
-            DataGridViewColumn Desciption = FinanceView.Columns[colIndex++];
-            Desciption.HeaderText = "款项说明";
-            Desciption.Name = "EventType";
-            Desciption.Width = 200;
-            Desciption.ReadOnly = true;
-
-            DataGridViewColumn Amount = FinanceView.Columns[colIndex++];
-            Amount.HeaderText = "金额";
-            Amount.Name = "Amount";
-            Amount.ReadOnly = true;
-            Amount.Width = 100;
-            Amount.DefaultCellStyle = cellStyle2;
-
-            DataGridViewColumn Rate = FinanceView.Columns[colIndex++];
-            Rate.HeaderText = "汇率";
-            Rate.Name = "Rate";
-            Rate.ReadOnly = true;
-            Rate.Width = 65;
-            Rate.DefaultCellStyle = cellStyle2;
-
-            DataGridViewColumn TotalAmount = FinanceView.Columns[colIndex++];
-            TotalAmount.HeaderText = "总金额";
-            TotalAmount.Name = "TotalAmount";
-            TotalAmount.ReadOnly = true;
-            TotalAmount.Width = 100;
-            TotalAmount.DefaultCellStyle = cellStyle2;
-
-
-            DataGridViewColumn ReferenceNo = FinanceView.Columns[colIndex++];
-            ReferenceNo.HeaderText = "流水号";
-            ReferenceNo.Name = "ReferenceNo";
-            ReferenceNo.Width = 80;
-            ReferenceNo.ReadOnly = true;
-
-            DataGridViewColumn ReceivePaymentor = FinanceView.Columns[colIndex++];
-            ReceivePaymentor.HeaderText = "收付款单位";
-            ReceivePaymentor.Name = "ReceivePaymentor";
-            ReceivePaymentor.Width = 120;
-            ReceivePaymentor.ReadOnly = true;
-
-            //DataGridViewColumn Association = FinanceView.Columns[colIndex++];
-            //Association.HeaderText = "经手人/相关人";
-            //Association.Name = "Association";
-            //Association.Width = 100;
-            //Association.ReadOnly = true;
-
-            DataGridViewColumn Remark = FinanceView.Columns[colIndex++];
-            Remark.HeaderText = "备注";
-            Remark.Name = "Remark";
-            Remark.Width = 250;
-            Remark.ReadOnly = true;
-
-            DataGridViewColumn DetailEventName = FinanceView.Columns[colIndex++];
-            DetailEventName.HeaderText = "描述(明细)";
-            DetailEventName.Name = "DetailEventName";
-            DetailEventName.ReadOnly = true;
-            DetailEventName.Width = 200;
-
-            DataGridViewColumn DetailOrderNo = FinanceView.Columns[colIndex++];
-            DetailOrderNo.HeaderText = "所属业务(明细)";
-            DetailOrderNo.Name = "DetailOrderNo";
-            DetailOrderNo.Width = 100;
-            DetailOrderNo.ReadOnly = true;
-            DataGridViewColumn DetailAmount = FinanceView.Columns[colIndex++];
-            DetailAmount.HeaderText = "金额(明细)";
-            DetailAmount.Name = "DetailAmount";
-            DetailAmount.Width = 100;
-            DetailAmount.ReadOnly = true;
-            DetailAmount.DefaultCellStyle = cellStyle2;
-
-            DataGridViewColumn DetailTotalAmount = FinanceView.Columns[colIndex++];
-            DetailTotalAmount.HeaderText = "总金额(明细)";
-            DetailTotalAmount.Name = "DetailAmount";
-            DetailTotalAmount.Width = 100;
-            DetailTotalAmount.ReadOnly = true;
-            DetailTotalAmount.DefaultCellStyle = cellStyle2;
-
-            DataGridViewColumn DetailRemark = FinanceView.Columns[colIndex++];
-            DetailRemark.HeaderText = "备注(明细)";
-            DetailRemark.Name = "Remark";
-            DetailRemark.Width = 300;
-            DetailRemark.ReadOnly = true;
-
-        }
-
         void OnNewEditEvent(object sender, ItemEventArgs e)
         {
             BindDataWithPage();
@@ -224,7 +45,6 @@ namespace AliHelper
 
         private void BindDataWithPage()
         {
-            dataTable.Clear();
             QueryObject<Finance> query = new QueryObject<Finance>();
             query.Condition = new Finance();
             query.Condition.BeginTime = this.BeginDate.Value.ToString(Constants.DateFormat);
@@ -234,7 +54,8 @@ namespace AliHelper
             query.Condition.Association = (string)this.Association.SelectedValue;
             query.Condition.ReceivePaymentor = this.ReceivePaymentor.Text.Trim();
             QueryObject<Finance> result = finOrderManager.GetFinances(query);
-            BindDateTable(result.Result);
+            list = result.Result;
+            DoFill(list);
         }
 
         private void FinDetailQueryBtn_Click(object sender, EventArgs e)
@@ -242,6 +63,7 @@ namespace AliHelper
             BindDataWithPage();
         }
 
+        /*
         private void FinanceView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             int id = Convert.ToInt32(this.FinanceView.Rows[e.RowIndex].Cells[0].Value);
@@ -250,7 +72,147 @@ namespace AliHelper
             f.LoadEditData(finance);
             f.ShowDialog(this);
         }
+        */
 
+        public void DoFill(List<Finance> list)
+        {
+            FinGrid.Redim(20, 15);
+            FinGrid.FixedRows = 1;
+            FinGrid[0, 0] = new MyHeader("日期");
+            FinGrid[0, 0].RowSpan = 2;
+            FinGrid[0, 0].Column.Width = 100;
+            FinGrid[0, 1] = new MyHeader("收支类型");
+            FinGrid[0, 1].RowSpan = 2;
+            FinGrid[0, 1].Column.Width = 70;
+            FinGrid[0, 2] = new MyHeader("款项说明"); 
+            FinGrid[0, 2].RowSpan = 2;
+            FinGrid[0, 2].Column.Width = 200;
+            FinGrid[0, 3] = new MyHeader("金额");
+            FinGrid[0, 3].RowSpan = 2;
+            FinGrid[0, 3].Column.Width = 150;
+            FinGrid[0, 4] = new MyHeader("汇率");
+            FinGrid[0, 4].RowSpan = 2;
+            FinGrid[0, 4].Column.Width = 100;
+            FinGrid[0, 5] = new MyHeader("总金额");
+            FinGrid[0, 5].RowSpan = 2;
+            FinGrid[0, 5].Column.Width = 150;
+            FinGrid[0, 6] = new MyHeader("流水号");
+            FinGrid[0, 6].RowSpan = 2;
+            FinGrid[0, 6].Column.Width = 150;
+            FinGrid[0, 7] = new MyHeader("收付款单位");
+            FinGrid[0, 7].RowSpan = 2;
+            FinGrid[0, 7].Column.Width = 150;
+            FinGrid[0, 8] = new MyHeader("经手人/相关人");
+            FinGrid[0, 8].RowSpan = 2;
+            FinGrid[0, 8].Column.Width = 100;
+            FinGrid[0, 9] = new MyHeader("备注");
+            FinGrid[0, 9].RowSpan = 2;
+            FinGrid[0, 9].Column.Width = 200;
+            FinGrid[0, 10] = new MyHeader("明细");
+            FinGrid[0, 10].ColumnSpan = 5;
+            FinGrid[1, 10] = new MyHeader("描述");
+            FinGrid[1, 10].Column.Width = 200;
+            FinGrid[1, 11] = new MyHeader("所属业务");
+            FinGrid[1, 11].Column.Width = 150;
+            FinGrid[1, 12] = new MyHeader("金额");
+            FinGrid[1, 12].Column.Width = 150;
+            FinGrid[1, 13] = new MyHeader("总金额");
+            FinGrid[1, 13].Column.Width = 150;
+            FinGrid[1, 14] = new MyHeader("备注");
+            FinGrid[1, 14].Column.Width = 300;
+            SourceGrid.Cells.Controllers.CustomEvents clickEvent = new SourceGrid.Cells.Controllers.CustomEvents();
+            clickEvent.DoubleClick += new EventHandler(clickEvent_Click);
+            SourceGrid.Cells.Views.Cell view;
+            int r = 2;
+            foreach (Finance finance in list)
+            {
+                int detailCount = finance.Details.Count();
+                FinGrid[r, 0] = new SourceGrid.Cells.Cell(finance.FinDate, typeof(string));
+                FinGrid[r, 0].AddController(clickEvent);
+                FinGrid[r, 1] = new SourceGrid.Cells.Cell(finance.EventType, typeof(string));
+                FinGrid[r, 1].AddController(clickEvent);
+                FinGrid[r, 2] = new SourceGrid.Cells.Cell(finance.Description, typeof(string));
+                FinGrid[r, 2].AddController(clickEvent);
+                string amount = "(" + finance.Currency + ")" + finance.Amount.ToString("#,##0.00");
+                FinGrid[r, 3] = new SourceGrid.Cells.Cell(amount, typeof(string));
+                view = new SourceGrid.Cells.Views.Cell();
+                view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleRight;
+                view.ForeColor = (finance.TotalAmount > 0) ? Color.Red : Color.Blue;
+                FinGrid[r, 3].View = view;
+                string rate = finance.Rate.ToString("#,##0.0000");
+                FinGrid[r, 4] = new SourceGrid.Cells.Cell(rate, typeof(string));
+                string totalAmount= "￥" + finance.TotalAmount.ToString("#,##0.00");
+                FinGrid[r, 5] = new SourceGrid.Cells.Cell(totalAmount, typeof(string));
+                view = new SourceGrid.Cells.Views.Cell();
+                view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleRight;
+                view.ForeColor = (finance.TotalAmount > 0) ? Color.Red : Color.Blue;
+                FinGrid[r, 5].View = view;
+                FinGrid[r, 6] = new SourceGrid.Cells.Cell(finance.ReferenceNo, typeof(string));
+                FinGrid[r, 7] = new SourceGrid.Cells.Cell(finance.ReceivePaymentor, typeof(string));
+                FinGrid[r, 8] = new SourceGrid.Cells.Cell(finance.Association, typeof(string));
+                FinGrid[r, 9] = new SourceGrid.Cells.Cell(finance.Remark, typeof(string));
+                if (detailCount > 1)
+                {
+                    FinGrid[r, 0].RowSpan = detailCount;
+                    FinGrid[r, 1].RowSpan = detailCount;
+                    FinGrid[r, 2].RowSpan = detailCount;
+                    FinGrid[r, 3].RowSpan = detailCount;
+                    FinGrid[r, 4].RowSpan = detailCount;
+                    FinGrid[r, 5].RowSpan = detailCount;
+                    FinGrid[r, 6].RowSpan = detailCount;
+                    FinGrid[r, 7].RowSpan = detailCount;
+                    FinGrid[r, 8].RowSpan = detailCount;
+                    FinGrid[r, 9].RowSpan = detailCount;
+                }
+                foreach (FinDetails detail in finance.Details)
+                {
+                    FinGrid[r, 10] = new SourceGrid.Cells.Cell(detail.Description, typeof(string));
+                    FinGrid[r, 11] = new SourceGrid.Cells.Cell(detail.OrderNo, typeof(string));
+                    string detailAmount = "(" + finance.Currency + ")" + detail.Amount.ToString("#,##0.00");
+                    FinGrid[r, 12] = new SourceGrid.Cells.Cell(detailAmount, typeof(string));
+                    view = new SourceGrid.Cells.Views.Cell();
+                    view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleRight;
+                    view.ForeColor = (finance.TotalAmount > 0) ? Color.Red : Color.Blue;
+                    FinGrid[r, 12].View = view;
+                    string detailTotalAmount = "￥" + detail.TotalAmount.ToString("#,##0.00");
+                    FinGrid[r, 13] = new SourceGrid.Cells.Cell(detailTotalAmount, typeof(string));
+                    view = new SourceGrid.Cells.Views.Cell();
+                    view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleRight;
+                    view.ForeColor = (finance.TotalAmount > 0) ? Color.Red : Color.Blue;
+                    FinGrid[r, 13].View = view;
+                    FinGrid[r, 14] = new SourceGrid.Cells.Cell(detail.Remark, typeof(string));
+                    r++;
+                }
+            }
+            FinGrid.ClipboardMode = SourceGrid.ClipboardMode.All;
+        }
+
+        private class MyHeader : SourceGrid.Cells.ColumnHeader
+        {
+            public MyHeader(object value)
+                : base(value)
+            {
+                //1 Header Row
+                SourceGrid.Cells.Views.ColumnHeader view = new SourceGrid.Cells.Views.ColumnHeader();
+                //view.Font = new Font(FontFamily.GenericSansSerif, 10);
+                view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleCenter;
+                View = view;
+                AutomaticSortEnabled = false;
+            }
+        }
+
+        private void clickEvent_Click(object sender, EventArgs e)
+        {
+            SourceGrid.CellContext context = (SourceGrid.CellContext)sender;
+            int index = context.Position.Row - 2;
+            int id = this.list[index].FinId;;
+            EditFinWater f = new EditFinWater();
+            Finance finance = finOrderManager.GetFinance(id);
+            f.LoadEditData(finance);
+            f.ShowDialog(this);
+        }
 
     }
+
+   
 }
