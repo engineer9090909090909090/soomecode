@@ -160,11 +160,11 @@ namespace AliHelper
             Bitmap finIcons = (Bitmap)global::AliHelper.Properties.IconImages.OutlookLargeIcons;
             finIcons.MakeTransparent(Color.FromArgb(255, 0, 255));
             FinOutlookLargeIcons.Images.AddStrip(finIcons);
-            ListViewItem baseViewItem = new ListViewItem("基本账目", 0);
+            ListViewItem baseViewItem = new ListViewItem("详细账目", 0);
             baseViewItem.Name = Constants.FinanceBaseView;
-            ListViewItem bussViewItem = new ListViewItem("业务总账", 2);
+            ListViewItem bussViewItem = new ListViewItem("业务账目", 2);
             bussViewItem.Name = Constants.FinanceBizView;
-            ListViewItem waterViewItem = new ListViewItem("账务流水", 4);
+            ListViewItem waterViewItem = new ListViewItem("流水账目", 4);
             waterViewItem.Name = Constants.FinanceWaterView;
             ListView FinListView = new System.Windows.Forms.ListView();
             FinListView.Name = "FinListView";
@@ -243,7 +243,7 @@ namespace AliHelper
                 }
                 else if (e.Item.Name == Constants.FinanceBizView)
                 {
-
+                    LoadOrderFanViewPanel();
                 }
             }
         }
@@ -278,6 +278,7 @@ namespace AliHelper
             }
             else if (bandName == "OrderBand")
             {
+               
             }
             else if (bandName == "FinanceBand")
             {
@@ -491,6 +492,22 @@ namespace AliHelper
             this.Explorer.Controls.Add(FinBaseView);
             this.Explorer.ResumeLayout(false);
         }
+
+        private void LoadOrderFanViewPanel()
+        {
+            OrderView FinorderView = new AliHelper.OrderView();
+            this.Explorer.SuspendLayout();
+            FinorderView.IsFinOrderView = true;
+            FinorderView.Location = new System.Drawing.Point(0, 0);
+            FinorderView.Name = "FinorderView";
+            FinorderView.AutoSize = true;
+            FinorderView.TabIndex = 1;
+            FinorderView.Size = new System.Drawing.Size(this.Explorer.Width, this.Explorer.Height);
+            FinorderView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Explorer.Controls.Add(FinorderView);
+            this.Explorer.ResumeLayout(false);
+        }
+
         private void LoadFinWaterViewPanel()
         {
             FinanceWaterView FinanceWaterView = new AliHelper.FinanceWaterView();
@@ -575,6 +592,13 @@ namespace AliHelper
         private void NewWater_Click(object sender, EventArgs e)
         {
             EditFinWater f = new EditFinWater();
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
+        }
+
+        private void NewOrderBtn_Click(object sender, EventArgs e)
+        {
+            NewOrderForm f = new NewOrderForm();
             f.StartPosition = FormStartPosition.CenterParent;
             f.ShowDialog(this);
         }

@@ -76,7 +76,7 @@ namespace AliHelper.DAO
                     sql = sql + "and FinDate <= @EndTime ";
                     QueryParameters.Add(new SQLiteParameter("@EndTime", query.Condition.EndTime));
                 }
-                if (!string.IsNullOrEmpty(query.Condition.FinDate))
+                if (!string.IsNullOrEmpty(query.Condition.Description))
                 {
                     sql = sql + "and Description like '%" + query.Condition.Description.Trim() + "%' ";
                 }

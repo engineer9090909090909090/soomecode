@@ -10,8 +10,10 @@ namespace AliHelper.Bussness
     public class FinOrderManager : BaseManager
     {
         public FinanceDao financeDao;
+        public OrderDao orderDao;
         static public event NewEditItemEvent OnEditFinDetailEvent;
         static public event NewEditItemEvent OnEditFinanceEvent;
+        static public event NewEditItemEvent OnEditOrderEvent;
         public virtual void FireEditFinDetailEvent(object o)
         {
             if (FinOrderManager.OnEditFinDetailEvent != null)
@@ -29,9 +31,19 @@ namespace AliHelper.Bussness
             }
         }
 
+        public virtual void FireEditOrderEvent(object o)
+        {
+            if (FinOrderManager.OnEditOrderEvent != null)
+            {
+                ItemEventArgs e = new ItemEventArgs(o);
+                OnEditOrderEvent(this, e);
+            }
+        }
+
         public FinOrderManager()
         {
             financeDao = DAOFactory.Instance.GetFinanceDao();
+            orderDao = DAOFactory.Instance.GetOrderDao();
         }
 
         public QueryObject<FinDetails> GetFinDetails(QueryObject<FinDetails> query)
@@ -74,6 +86,17 @@ namespace AliHelper.Bussness
         public Finance GetFinance(int finId)
         {
             return financeDao.GetFinance(finId);
+        }
+
+        public QueryObject<Order> GetOrders(QueryObject<Order> query)
+        {
+            return orderDao.GetOrders(query);
+        }
+
+        public void InsertOrder(Order o)
+        {
+            orderDao.InsertOrUpdateOrder(o);
+            FireEditOrderEvent(o);
         }
     }
 }

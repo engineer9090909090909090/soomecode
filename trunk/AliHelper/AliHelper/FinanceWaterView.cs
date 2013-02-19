@@ -76,7 +76,12 @@ namespace AliHelper
 
         public void DoFill(List<Finance> list)
         {
-            FinGrid.Redim(20, 15);
+            int rowCount = 2;
+            foreach (Finance finance in list)
+            {
+                rowCount = rowCount + finance.Details.Count;
+            }
+            FinGrid.Redim(rowCount, 15);
             FinGrid.FixedRows = 1;
             FinGrid[0, 0] = new MyHeader("日期");
             FinGrid[0, 0].RowSpan = 2;

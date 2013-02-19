@@ -60,9 +60,10 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.NewWater = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.NewOrder = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.AppNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.NewOrder = new System.Windows.Forms.ToolStripButton();
+            this.NewOrderBtn = new System.Windows.Forms.ToolStripButton();
             this.StatusStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.ProductsStrip.SuspendLayout();
@@ -96,7 +97,7 @@
             // statusLabel
             // 
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(41, 17);
+            this.statusLabel.Size = new System.Drawing.Size(43, 17);
             this.statusLabel.Text = "状态栏";
             // 
             // menuStrip1
@@ -113,7 +114,7 @@
             // MainMenuItem
             // 
             this.MainMenuItem.Name = "MainMenuItem";
-            this.MainMenuItem.Size = new System.Drawing.Size(53, 20);
+            this.MainMenuItem.Size = new System.Drawing.Size(55, 20);
             this.MainMenuItem.Text = "主菜单";
             // 
             // SettingMenuItem
@@ -121,13 +122,13 @@
             this.SettingMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.DataDicMenuItem});
             this.SettingMenuItem.Name = "SettingMenuItem";
-            this.SettingMenuItem.Size = new System.Drawing.Size(41, 20);
+            this.SettingMenuItem.Size = new System.Drawing.Size(43, 20);
             this.SettingMenuItem.Text = "设置";
             // 
             // DataDicMenuItem
             // 
             this.DataDicMenuItem.Name = "DataDicMenuItem";
-            this.DataDicMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.DataDicMenuItem.Size = new System.Drawing.Size(137, 22);
             this.DataDicMenuItem.Text = "数据字典(&D)";
             this.DataDicMenuItem.Click += new System.EventHandler(this.DataDicMenuItem_Click);
             // 
@@ -141,7 +142,7 @@
             this.NewProductBtn});
             this.ProductsStrip.Location = new System.Drawing.Point(3, 25);
             this.ProductsStrip.Name = "ProductsStrip";
-            this.ProductsStrip.Size = new System.Drawing.Size(328, 25);
+            this.ProductsStrip.Size = new System.Drawing.Size(336, 25);
             this.ProductsStrip.TabIndex = 2;
             this.ProductsStrip.Text = "v";
             // 
@@ -150,7 +151,7 @@
             this.updateGroup.Image = ((System.Drawing.Image)(resources.GetObject("updateGroup.Image")));
             this.updateGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.updateGroup.Name = "updateGroup";
-            this.updateGroup.Size = new System.Drawing.Size(73, 22);
+            this.updateGroup.Size = new System.Drawing.Size(75, 22);
             this.updateGroup.Text = "同步分组";
             this.updateGroup.Click += new System.EventHandler(this.updateGroup_Click);
             // 
@@ -159,7 +160,7 @@
             this.updateAllProduct.Image = ((System.Drawing.Image)(resources.GetObject("updateAllProduct.Image")));
             this.updateAllProduct.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.updateAllProduct.Name = "updateAllProduct";
-            this.updateAllProduct.Size = new System.Drawing.Size(97, 22);
+            this.updateAllProduct.Size = new System.Drawing.Size(99, 22);
             this.updateAllProduct.Text = "同步所有产品";
             this.updateAllProduct.Click += new System.EventHandler(this.updateAllProduct_Click);
             // 
@@ -168,7 +169,7 @@
             this.updateAllImages.Image = ((System.Drawing.Image)(resources.GetObject("updateAllImages.Image")));
             this.updateAllImages.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.updateAllImages.Name = "updateAllImages";
-            this.updateAllImages.Size = new System.Drawing.Size(73, 22);
+            this.updateAllImages.Size = new System.Drawing.Size(75, 22);
             this.updateAllImages.Text = "同步图片";
             this.updateAllImages.Click += new System.EventHandler(this.updateAllImages_Click);
             // 
@@ -177,7 +178,7 @@
             this.NewProductBtn.Image = ((System.Drawing.Image)(resources.GetObject("NewProductBtn.Image")));
             this.NewProductBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.NewProductBtn.Name = "NewProductBtn";
-            this.NewProductBtn.Size = new System.Drawing.Size(73, 22);
+            this.NewProductBtn.Size = new System.Drawing.Size(75, 22);
             this.NewProductBtn.Text = "新增产品";
             this.NewProductBtn.Click += new System.EventHandler(this.newProductBtn_Click);
             // 
@@ -320,26 +321,26 @@
             this.ModifyPlanMenuItem,
             this.DeletePlanMenuItem});
             this.CfContextMenuStrip.Name = "CfContextMenuStrip";
-            this.CfContextMenuStrip.Size = new System.Drawing.Size(143, 70);
+            this.CfContextMenuStrip.Size = new System.Drawing.Size(147, 70);
             // 
             // NewPlanMenuItem
             // 
             this.NewPlanMenuItem.Name = "NewPlanMenuItem";
-            this.NewPlanMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.NewPlanMenuItem.Size = new System.Drawing.Size(146, 22);
             this.NewPlanMenuItem.Text = "新建重发计划";
             this.NewPlanMenuItem.Click += new System.EventHandler(this.NewPlanMenuItem_Click);
             // 
             // ModifyPlanMenuItem
             // 
             this.ModifyPlanMenuItem.Name = "ModifyPlanMenuItem";
-            this.ModifyPlanMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.ModifyPlanMenuItem.Size = new System.Drawing.Size(146, 22);
             this.ModifyPlanMenuItem.Text = "编辑重发计划";
             this.ModifyPlanMenuItem.Click += new System.EventHandler(this.ModifyPlanMenuItem_Click);
             // 
             // DeletePlanMenuItem
             // 
             this.DeletePlanMenuItem.Name = "DeletePlanMenuItem";
-            this.DeletePlanMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.DeletePlanMenuItem.Size = new System.Drawing.Size(146, 22);
             this.DeletePlanMenuItem.Text = "删除重发计划";
             // 
             // Explorer
@@ -396,10 +397,11 @@
             this.FinToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.NewFinance,
             this.toolStripSeparator1,
-            this.NewWater});
+            this.NewWater,
+            this.NewOrderBtn});
             this.FinToolStrip.Location = new System.Drawing.Point(3, 0);
             this.FinToolStrip.Name = "FinToolStrip";
-            this.FinToolStrip.Size = new System.Drawing.Size(195, 25);
+            this.FinToolStrip.Size = new System.Drawing.Size(274, 25);
             this.FinToolStrip.TabIndex = 3;
             // 
             // NewFinance
@@ -407,7 +409,7 @@
             this.NewFinance.Image = ((System.Drawing.Image)(resources.GetObject("NewFinance.Image")));
             this.NewFinance.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.NewFinance.Name = "NewFinance";
-            this.NewFinance.Size = new System.Drawing.Size(73, 22);
+            this.NewFinance.Size = new System.Drawing.Size(75, 22);
             this.NewFinance.Text = "新增账目";
             this.NewFinance.Click += new System.EventHandler(this.NewFinance_Click);
             // 
@@ -421,7 +423,7 @@
             this.NewWater.Image = ((System.Drawing.Image)(resources.GetObject("NewWater.Image")));
             this.NewWater.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.NewWater.Name = "NewWater";
-            this.NewWater.Size = new System.Drawing.Size(73, 22);
+            this.NewWater.Size = new System.Drawing.Size(75, 22);
             this.NewWater.Text = "新增流水";
             this.NewWater.Click += new System.EventHandler(this.NewWater_Click);
             // 
@@ -433,23 +435,15 @@
             this.toolStripButton1});
             this.toolStrip1.Location = new System.Drawing.Point(3, 50);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(158, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(162, 25);
             this.toolStrip1.TabIndex = 4;
-            // 
-            // NewOrder
-            // 
-            this.NewOrder.Image = ((System.Drawing.Image)(resources.GetObject("NewOrder.Image")));
-            this.NewOrder.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.NewOrder.Name = "NewOrder";
-            this.NewOrder.Size = new System.Drawing.Size(73, 22);
-            this.NewOrder.Text = "新增订单";
             // 
             // toolStripButton1
             // 
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(73, 22);
+            this.toolStripButton1.Size = new System.Drawing.Size(75, 22);
             this.toolStripButton1.Text = "订单分类";
             // 
             // AppNotifyIcon
@@ -458,6 +452,23 @@
             this.AppNotifyIcon.Text = "notifyIcon1";
             this.AppNotifyIcon.Visible = true;
             this.AppNotifyIcon.DoubleClick += new System.EventHandler(this.AppNotifyIcon_DoubleClick);
+            // 
+            // NewOrder
+            // 
+            this.NewOrder.Image = ((System.Drawing.Image)(resources.GetObject("NewOrder.Image")));
+            this.NewOrder.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.NewOrder.Name = "NewOrder";
+            this.NewOrder.Size = new System.Drawing.Size(75, 22);
+            this.NewOrder.Text = "新增订单";
+            // 
+            // NewOrderBtn
+            // 
+            this.NewOrderBtn.Image = ((System.Drawing.Image)(resources.GetObject("NewOrderBtn.Image")));
+            this.NewOrderBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.NewOrderBtn.Name = "NewOrderBtn";
+            this.NewOrderBtn.Size = new System.Drawing.Size(75, 22);
+            this.NewOrderBtn.Text = "新增订单";
+            this.NewOrderBtn.Click += new System.EventHandler(this.NewOrderBtn_Click);
             // 
             // MainForm
             // 
@@ -540,7 +551,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton NewWater;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton NewOrder;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton NewOrderBtn;
+        private System.Windows.Forms.ToolStripButton NewOrder;
     }
 }
