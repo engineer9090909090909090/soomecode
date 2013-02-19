@@ -138,7 +138,7 @@ namespace AliHelper
 
         private void SetPagerText()
         {
-            this.txtCurrentPage.Text = this.PageIndex.ToString();
+            //this.txtCurrentPage.Text = this.PageIndex.ToString();
             string[] strArray = new string[] { this.RecordCount.ToString(), this.PageIndex.ToString(), this.PageCount.ToString(), this.PageSize.ToString() };
             this.lblPager.Text = string.Format(this.PagerText, (object[])strArray);
             this.cmbCurrentPage.Items.Clear();

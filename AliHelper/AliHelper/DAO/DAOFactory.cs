@@ -18,6 +18,8 @@ namespace AliHelper.DAO
         private AliProductDetailDao aliProductDetailDao;
         private AppDicDAO appDicDAO;
         private FinanceDao financeDao;
+        private OrderDao orderDao;
+
         private DAOFactory()
         {
             string DataBasePath = FileUtils.GetUserDataFolder() + Path.DirectorySeparatorChar + Constants.DB_FILE;
@@ -83,6 +85,14 @@ namespace AliHelper.DAO
             }
             return financeDao;
         }
-        
+
+        public OrderDao GetOrderDao()
+        {
+            if (orderDao == null)
+            {
+                orderDao = new OrderDao(dbHelper);
+            }
+            return orderDao;
+        }
     }
 }

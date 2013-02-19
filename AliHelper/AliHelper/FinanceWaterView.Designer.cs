@@ -76,11 +76,11 @@
             this.FinDetailGroup.ExpandedHeight = 100;
             this.FinDetailGroup.HeaderContextMenuStrip = null;
             this.FinDetailGroup.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2003Silver;
-            this.FinDetailGroup.Location = new System.Drawing.Point(0, 0);
+            this.FinDetailGroup.Location = new System.Drawing.Point(1, 1);
             this.FinDetailGroup.Margin = new System.Windows.Forms.Padding(0);
             this.FinDetailGroup.Name = "FinDetailGroup";
             this.FinDetailGroup.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
-            this.FinDetailGroup.Size = new System.Drawing.Size(798, 100);
+            this.FinDetailGroup.Size = new System.Drawing.Size(796, 100);
             this.FinDetailGroup.TabIndex = 2;
             this.FinDetailGroup.Text = "查询条件";
             // 
@@ -233,6 +233,7 @@
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.FinDetailGroup, 0, 0);
@@ -249,14 +250,14 @@
             // FinGrid
             // 
             this.FinGrid.AutoSize = true;
-            this.FinGrid.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.FinGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FinGrid.EnableSort = true;
-            this.FinGrid.Location = new System.Drawing.Point(3, 103);
+            this.FinGrid.Location = new System.Drawing.Point(1, 102);
+            this.FinGrid.Margin = new System.Windows.Forms.Padding(0);
             this.FinGrid.Name = "FinGrid";
             this.FinGrid.OptimizeMode = SourceGrid.CellOptimizeMode.ForRows;
             this.FinGrid.SelectionMode = SourceGrid.GridSelectionMode.Cell;
-            this.FinGrid.Size = new System.Drawing.Size(792, 319);
+            this.FinGrid.Size = new System.Drawing.Size(796, 322);
             this.FinGrid.TabIndex = 3;
             this.FinGrid.TabStop = true;
             this.FinGrid.ToolTipText = "";

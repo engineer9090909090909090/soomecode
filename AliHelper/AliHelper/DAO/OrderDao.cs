@@ -38,9 +38,62 @@ namespace AliHelper.DAO
 
         public QueryObject<Order> GetOrders(QueryObject<Order> query)
         {
-            string sql = "select Id,BeginDate,EndDate,Description,OrderNo,SalesMan,Status,Remark,CreatedTime,ModifiedTime ";
-            sql = sql + "FROM Orders where 1 = 1 ";
-            query.dt = dbHelper.ExecuteDataTable(sql, null);
+            string sql = string.Empty;
+            if (!query.Condition.IsFinOrderView)
+            {
+                sql = "select t.* FROM Orders t where 1 = 1 ";
+            }
+            else {
+                sql = "SELECT t.*, sum(d.Amount * d.Rate) TotalAmount FROM orders t left join findetails d on t.OrderNo = d.OrderNo where 1 = 1 ";
+            }
+
+            List<SQLiteParameter> QueryParameters = new List<SQLiteParameter>();
+            if (query.Condition != null)
+            {
+                if (!string.IsNullOrEmpty(query.Condition.BeginDateForm))
+                {
+                    sql = sql + "and t.BeginDate >= @BeginDateForm ";
+                    QueryParameters.Add(new SQLiteParameter("@BeginDateForm", query.Condition.BeginDateForm));
+                }
+                if (!string.IsNullOrEmpty(query.Condition.BeginDateTo))
+                {
+                    sql = sql + "and t.BeginDate <= @BeginDateTo ";
+                    QueryParameters.Add(new SQLiteParameter("@BeginDateTo", query.Condition.BeginDateTo));
+                }
+                if (!string.IsNullOrEmpty(query.Condition.EndDateForm))
+                {
+                    sql = sql + "and t.EndDate >= @EndDateForm ";
+                    QueryParameters.Add(new SQLiteParameter("@EndDateForm", query.Condition.EndDateForm));
+                }
+                if (!string.IsNullOrEmpty(query.Condition.EndDateTo))
+                {
+                    sql = sql + "and t.EndDate <= @EndDateTo ";
+                    QueryParameters.Add(new SQLiteParameter("@EndDateTo", query.Condition.EndDateTo));
+                }
+                if (!string.IsNullOrEmpty(query.Condition.Description))
+                {
+                    sql = sql + "and t.Description like '%" + query.Condition.Description.Trim() + "%' ";
+                }
+                if (!string.IsNullOrEmpty(query.Condition.Status))
+                {
+                    sql = sql + "and t.Status = @Status ";
+                    QueryParameters.Add(new SQLiteParameter("@Status", query.Condition.Status));
+                }
+                if (!string.IsNullOrEmpty(query.Condition.Remark))
+                {
+                    sql = sql + "and t.Remark like '%" + query.Condition.Remark.Trim() + "%' ";
+                }
+                if (!string.IsNullOrEmpty(query.Condition.SalesMan))
+                {
+                    sql = sql + "and t.SalesMan = @SalesMan ";
+                    QueryParameters.Add(new SQLiteParameter("@SalesMan", query.Condition.SalesMan));
+                }
+            }
+            if (query.Condition.IsFinOrderView)
+            {
+                sql = sql + "Group By t.Id";
+            }
+            query.dt = dbHelper.ExecuteDataTable(sql, QueryParameters.ToArray());
             query.Result = DataTableToList(query.dt);
             return query;
         }
@@ -53,12 +106,13 @@ namespace AliHelper.DAO
                 Order info = new Order();
                 info.Id = Convert.ToInt32(row["Id"]);
                 info.BeginDate = (string)row["BeginDate"];
-                info.EndDate = (string)row["EndDate"];
+                info.EndDate = !Convert.IsDBNull(row["EndDate"]) ? (string)row["EndDate"] : string.Empty;
                 info.Description = (string)row["Description"];
                 info.OrderNo = (string)row["OrderNo"];
                 info.SalesMan = (string)row["SalesMan"];
                 info.Status = (string)row["Status"];
-                info.Remark = (string)row["Remark"];
+                info.Remark = !Convert.IsDBNull(row["Remark"]) ? (string)row["Remark"] : string.Empty;
+                info.TotalAmount = !Convert.IsDBNull(row["TotalAmount"]) ? Convert.ToDouble(row["TotalAmount"]) : 0;
                 info.CreatedTime = Convert.ToDateTime(row["CreatedTime"]);
                 info.ModifiedTime = Convert.ToDateTime(row["ModifiedTime"]);
                 list.Add(info);

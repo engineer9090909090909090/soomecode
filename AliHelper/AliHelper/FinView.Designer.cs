@@ -30,8 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.FinDetailGroup = new Guifreaks.NavigationBar.NaviGroup(this.components);
+            this.AssociationTxt = new System.Windows.Forms.ComboBox();
             this.FinDetailExpBtn = new System.Windows.Forms.Button();
             this.FinDetailQueryBtn = new System.Windows.Forms.Button();
             this.EndDateTxt = new System.Windows.Forms.DateTimePicker();
@@ -48,7 +50,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.FinDetailDataView = new System.Windows.Forms.DataGridView();
-            this.AssociationTxt = new System.Windows.Forms.ComboBox();
             this.FinDetailPager = new AliHelper.Pager();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FinDetailGroup)).BeginInit();
@@ -106,6 +107,15 @@
             this.FinDetailGroup.Size = new System.Drawing.Size(936, 100);
             this.FinDetailGroup.TabIndex = 0;
             this.FinDetailGroup.Text = "查询条件";
+            // 
+            // AssociationTxt
+            // 
+            this.AssociationTxt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.AssociationTxt.FormattingEnabled = true;
+            this.AssociationTxt.Location = new System.Drawing.Point(634, 34);
+            this.AssociationTxt.Name = "AssociationTxt";
+            this.AssociationTxt.Size = new System.Drawing.Size(142, 20);
+            this.AssociationTxt.TabIndex = 16;
             // 
             // FinDetailExpBtn
             // 
@@ -254,33 +264,33 @@
             this.FinDetailDataView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.FinDetailDataView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.FinDetailDataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.FinDetailDataView.ColumnHeadersHeight = 25;
+            this.FinDetailDataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.FinDetailDataView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FinDetailDataView.Location = new System.Drawing.Point(1, 102);
             this.FinDetailDataView.Margin = new System.Windows.Forms.Padding(0);
             this.FinDetailDataView.MultiSelect = false;
             this.FinDetailDataView.Name = "FinDetailDataView";
             this.FinDetailDataView.ReadOnly = true;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.FinDetailDataView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.FinDetailDataView.RowHeadersVisible = false;
             this.FinDetailDataView.RowTemplate.Height = 23;
             this.FinDetailDataView.Size = new System.Drawing.Size(936, 348);
             this.FinDetailDataView.TabIndex = 1;
             this.FinDetailDataView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.FinDetailDataView_CellDoubleClick);
-            // 
-            // AssociationTxt
-            // 
-            this.AssociationTxt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.AssociationTxt.FormattingEnabled = true;
-            this.AssociationTxt.Location = new System.Drawing.Point(634, 34);
-            this.AssociationTxt.Name = "AssociationTxt";
-            this.AssociationTxt.Size = new System.Drawing.Size(142, 20);
-            this.AssociationTxt.TabIndex = 16;
             // 
             // FinDetailPager
             // 

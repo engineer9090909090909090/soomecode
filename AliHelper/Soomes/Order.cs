@@ -18,5 +18,15 @@ namespace Soomes
         public DateTime CreatedTime { set; get; }
         public DateTime ModifiedTime { set; get; }
 
+
+        //query field
+        public string BeginDateForm { set; get; }
+        public string BeginDateTo { set; get; }
+        public string EndDateForm { set; get; }
+        public string EndDateTo { set; get; }
+        public bool IsFinOrderView { set; get; }
+
+        //result field
+        public double TotalAmount { set; get; }
     }
 }
