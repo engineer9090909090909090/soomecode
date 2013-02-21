@@ -510,7 +510,7 @@ namespace AliHelper
 
         private void LoadFinWaterViewPanel()
         {
-            FinanceWaterView FinanceWaterView = new AliHelper.FinanceWaterView();
+            WaterView FinanceWaterView = new AliHelper.WaterView();
             this.Explorer.SuspendLayout();
             FinanceWaterView.Location = new System.Drawing.Point(0, 0);
             FinanceWaterView.Name = "FinanceWaterView";
