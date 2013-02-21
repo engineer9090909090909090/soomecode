@@ -11,11 +11,11 @@ using Soomes;
 
 namespace AliHelper
 {
-    public partial class FinanceWaterView : UserControl
+    public partial class WaterView : UserControl
     {
         private FinOrderManager finOrderManager;
         private List<Finance> list;
-        public FinanceWaterView()
+        public WaterView()
         {
             InitializeComponent();
             finOrderManager = new FinOrderManager();

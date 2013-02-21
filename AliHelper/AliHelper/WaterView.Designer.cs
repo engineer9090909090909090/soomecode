@@ -1,6 +1,6 @@
 ﻿namespace AliHelper
 {
-    partial class FinanceWaterView
+    partial class WaterView
     {
         /// <summary> 
         /// 必需的设计器变量。

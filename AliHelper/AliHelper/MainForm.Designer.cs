@@ -59,11 +59,11 @@
             this.NewFinance = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.NewWater = new System.Windows.Forms.ToolStripButton();
+            this.NewOrderBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.NewOrder = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.AppNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.NewOrder = new System.Windows.Forms.ToolStripButton();
-            this.NewOrderBtn = new System.Windows.Forms.ToolStripButton();
             this.StatusStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.ProductsStrip.SuspendLayout();
@@ -401,7 +401,7 @@
             this.NewOrderBtn});
             this.FinToolStrip.Location = new System.Drawing.Point(3, 0);
             this.FinToolStrip.Name = "FinToolStrip";
-            this.FinToolStrip.Size = new System.Drawing.Size(274, 25);
+            this.FinToolStrip.Size = new System.Drawing.Size(243, 25);
             this.FinToolStrip.TabIndex = 3;
             // 
             // NewFinance
@@ -427,6 +427,15 @@
             this.NewWater.Text = "新增流水";
             this.NewWater.Click += new System.EventHandler(this.NewWater_Click);
             // 
+            // NewOrderBtn
+            // 
+            this.NewOrderBtn.Image = ((System.Drawing.Image)(resources.GetObject("NewOrderBtn.Image")));
+            this.NewOrderBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.NewOrderBtn.Name = "NewOrderBtn";
+            this.NewOrderBtn.Size = new System.Drawing.Size(75, 22);
+            this.NewOrderBtn.Text = "新增订单";
+            this.NewOrderBtn.Click += new System.EventHandler(this.NewOrderBtn_Click);
+            // 
             // toolStrip1
             // 
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
@@ -437,6 +446,14 @@
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(162, 25);
             this.toolStrip1.TabIndex = 4;
+            // 
+            // NewOrder
+            // 
+            this.NewOrder.Image = ((System.Drawing.Image)(resources.GetObject("NewOrder.Image")));
+            this.NewOrder.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.NewOrder.Name = "NewOrder";
+            this.NewOrder.Size = new System.Drawing.Size(75, 22);
+            this.NewOrder.Text = "新增订单";
             // 
             // toolStripButton1
             // 
@@ -452,23 +469,6 @@
             this.AppNotifyIcon.Text = "notifyIcon1";
             this.AppNotifyIcon.Visible = true;
             this.AppNotifyIcon.DoubleClick += new System.EventHandler(this.AppNotifyIcon_DoubleClick);
-            // 
-            // NewOrder
-            // 
-            this.NewOrder.Image = ((System.Drawing.Image)(resources.GetObject("NewOrder.Image")));
-            this.NewOrder.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.NewOrder.Name = "NewOrder";
-            this.NewOrder.Size = new System.Drawing.Size(75, 22);
-            this.NewOrder.Text = "新增订单";
-            // 
-            // NewOrderBtn
-            // 
-            this.NewOrderBtn.Image = ((System.Drawing.Image)(resources.GetObject("NewOrderBtn.Image")));
-            this.NewOrderBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.NewOrderBtn.Name = "NewOrderBtn";
-            this.NewOrderBtn.Size = new System.Drawing.Size(75, 22);
-            this.NewOrderBtn.Text = "新增订单";
-            this.NewOrderBtn.Click += new System.EventHandler(this.NewOrderBtn_Click);
             // 
             // MainForm
             // 

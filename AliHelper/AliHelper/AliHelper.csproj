@@ -41,6 +41,9 @@
     <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationIcon>helper.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Guifreaks.Common">
       <HintPath>..\..\lib\Guifreaks.Common.dll</HintPath>
@@ -90,18 +93,6 @@
     <Compile Include="Controls\DateTimePickerX.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\RowMergeViewTestForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\RowMergeViewTestForm.Designer.cs">
-      <DependentUpon>RowMergeViewTestForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\RowMergeView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\RowMergeView.designer.cs">
-      <DependentUpon>RowMergeView.cs</DependentUpon>
-    </Compile>
     <Compile Include="DAO\AliGroupDao.cs" />
     <Compile Include="DAO\AliProductDao.cs" />
     <Compile Include="DAO\AliImageDao.cs" />
@@ -129,11 +120,11 @@
     <Compile Include="EditFinDetail.Designer.cs">
       <DependentUpon>EditFinDetail.cs</DependentUpon>
     </Compile>
-    <Compile Include="FinanceWaterView.cs">
+    <Compile Include="WaterView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="FinanceWaterView.Designer.cs">
-      <DependentUpon>FinanceWaterView.cs</DependentUpon>
+    <Compile Include="WaterView.Designer.cs">
+      <DependentUpon>WaterView.cs</DependentUpon>
     </Compile>
     <Compile Include="FinView.cs">
       <SubType>UserControl</SubType>
@@ -241,12 +232,6 @@
     <EmbeddedResource Include="CheckCodeForm.resx">
       <DependentUpon>CheckCodeForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\RowMergeViewTestForm.resx">
-      <DependentUpon>RowMergeViewTestForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\RowMergeView.resx">
-      <DependentUpon>RowMergeView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="DicForm.resx">
       <DependentUpon>DicForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -256,8 +241,8 @@
     <EmbeddedResource Include="EditFinDetail.resx">
       <DependentUpon>EditFinDetail.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FinanceWaterView.resx">
-      <DependentUpon>FinanceWaterView.cs</DependentUpon>
+    <EmbeddedResource Include="WaterView.resx">
+      <DependentUpon>WaterView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FinView.resx">
       <DependentUpon>FinView.cs</DependentUpon>
@@ -336,6 +321,7 @@
     <None Include="Resources\loading.gif" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="helper.ico" />
     <Content Include="KindEditor\Editor.htm" />
     <Content Include="KindEditor\kindeditor-min.js" />
     <Content Include="KindEditor\license.txt" />
