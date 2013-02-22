@@ -15,6 +15,7 @@ namespace AliHelper
     public partial class EditFinWater : Form
     {
         FinOrderManager finOrderManager;
+        public Finance UpdateFinance { get; set; }
         public EditFinWater()
         {
             InitializeComponent();
@@ -33,33 +34,35 @@ namespace AliHelper
             this.Association.ValueMember = "Key";
             this.Account.DisplayMember = "Label";
             this.Account.ValueMember = "Key";
+            this.DetailAssociation.DisplayMember = "Label";
+            this.DetailAssociation.ValueMember = "Key";
             this.ItemType.DataSource = finOrderManager.GetAppDicOptions(Constants.BussnessType);
             this.EventType.DataSource = finOrderManager.GetAppDicOptions(Constants.DebitCredit);
             this.Curreny.DataSource = finOrderManager.GetAppDicOptions(Constants.CurrencyType);
             this.Association.DataSource = finOrderManager.GetAppDicOptions(Constants.Employee);
             this.Account.DataSource = finOrderManager.GetAppDicOptions(Constants.RecivePaymentAccounts);
-            this.DetailAssociation.DisplayMember = "Label";
-            this.DetailAssociation.ValueMember = "Key";
+            
             this.DetailAssociation.DataSource = finOrderManager.GetAppDicOptions(Constants.Employee);
-
+            LoadEditData(UpdateFinance);
         }
 
         public void LoadEditData(Finance finance)
         {
+            if (finance == null) return;
             this.Tag = finance;
             this.Description.Text = finance.Description;
-            this.EventType.SelectedText = finance.EventType;
             this.FinDate.Text = finance.FinDate;
-            this.ItemType.SelectedText = finance.ItemType;
             this.Remark.Text = finance.Remark;
             this.Association.Text = finance.Association;
-            this.Curreny.SelectedText = finance.Currency;
             this.ReceivePaymentor.Text = finance.ReceivePaymentor;
             this.Customer.Text = finance.Customer;
-            this.Account.SelectedText = finance.Account;
             this.ReferenceNo.Text = finance.ReferenceNo;
-            this.TotalAmount.Text = "￥"+ finance.TotalAmount.ToString("#,##0.00");
+            this.TotalAmount.Text = "￥" + finance.TotalAmount.ToString("#,##0.00");
             this.Amount.Text = finance.Amount.ToString("#,##0.00");
+            AliHelperUtils.LoadAppDicComboBoxValue(this.ItemType, finance.ItemType);
+            AliHelperUtils.LoadAppDicComboBoxValue(this.EventType, finance.EventType);
+            AliHelperUtils.LoadAppDicComboBoxValue(this.Curreny, finance.Currency);
+            AliHelperUtils.LoadAppDicComboBoxValue(this.Account, finance.Account);
 
             foreach (FinDetails detail in finance.Details)
             {
@@ -71,7 +74,6 @@ namespace AliHelper
                 DetailView.Rows[index].Cells["DetailAmount"].Value = detail.Amount.ToString("#,##0.00");
                 DetailView.Rows[index].Cells["DetailTotalAmount"].Value = "￥"+detail.TotalAmount.ToString("#,##0.00");
             }
-
         }
 
         private void Confirm_Click(object sender, EventArgs e)

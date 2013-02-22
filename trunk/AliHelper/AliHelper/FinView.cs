@@ -206,8 +206,7 @@ namespace AliHelper
         {
             int id = Convert.ToInt32(this.FinDetailDataView.Rows[e.RowIndex].Cells[0].Value);
             EditFinDetail f = new EditFinDetail();
-            FinDetails detail = finOrderManager.GetFinDetail(id);
-            f.LoadEditData(detail);
+            f.UpdateDetail = finOrderManager.GetFinDetail(id);
             f.ShowDialog(this);
         }
 
