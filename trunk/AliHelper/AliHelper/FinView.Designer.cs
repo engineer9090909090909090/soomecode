@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.FinDetailGroup = new Guifreaks.NavigationBar.NaviGroup(this.components);
@@ -51,6 +52,16 @@
             this.label1 = new System.Windows.Forms.Label();
             this.FinDetailDataView = new System.Windows.Forms.DataGridView();
             this.FinDetailPager = new AliHelper.Pager();
+            this.DetailId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FinDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TotalAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OrderNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ItemType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Association = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EventType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Remark = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FinDetailGroup)).BeginInit();
             this.FinDetailGroup.SuspendLayout();
@@ -272,20 +283,31 @@
             this.FinDetailDataView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.FinDetailDataView.ColumnHeadersHeight = 25;
             this.FinDetailDataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.FinDetailDataView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.DetailId,
+            this.Id,
+            this.FinDate,
+            this.Description,
+            this.TotalAmount,
+            this.OrderNo,
+            this.ItemType,
+            this.Association,
+            this.EventType,
+            this.Remark});
             this.FinDetailDataView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FinDetailDataView.Location = new System.Drawing.Point(1, 102);
             this.FinDetailDataView.Margin = new System.Windows.Forms.Padding(0);
             this.FinDetailDataView.MultiSelect = false;
             this.FinDetailDataView.Name = "FinDetailDataView";
             this.FinDetailDataView.ReadOnly = true;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.FinDetailDataView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.FinDetailDataView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.FinDetailDataView.RowHeadersVisible = false;
             this.FinDetailDataView.RowTemplate.Height = 23;
             this.FinDetailDataView.Size = new System.Drawing.Size(936, 348);
@@ -302,6 +324,75 @@
             this.FinDetailPager.Size = new System.Drawing.Size(930, 22);
             this.FinDetailPager.TabIndex = 2;
             this.FinDetailPager.PageIndexChanged += new System.EventHandler(this.FinDetailPager_PageIndexChanged);
+            // 
+            // DetailId
+            // 
+            this.DetailId.HeaderText = "Id";
+            this.DetailId.Name = "DetailId";
+            this.DetailId.ReadOnly = true;
+            this.DetailId.Visible = false;
+            this.DetailId.Width = 50;
+            // 
+            // Id
+            // 
+            this.Id.HeaderText = "序号";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Width = 50;
+            // 
+            // FinDate
+            // 
+            this.FinDate.HeaderText = "时间";
+            this.FinDate.Name = "FinDate";
+            this.FinDate.ReadOnly = true;
+            // 
+            // Description
+            // 
+            this.Description.HeaderText = "描述";
+            this.Description.Name = "Description";
+            this.Description.ReadOnly = true;
+            this.Description.Width = 250;
+            // 
+            // TotalAmount
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.TotalAmount.DefaultCellStyle = dataGridViewCellStyle2;
+            this.TotalAmount.HeaderText = "金额";
+            this.TotalAmount.Name = "TotalAmount";
+            this.TotalAmount.ReadOnly = true;
+            // 
+            // OrderNo
+            // 
+            this.OrderNo.HeaderText = "所属业务";
+            this.OrderNo.Name = "OrderNo";
+            this.OrderNo.ReadOnly = true;
+            // 
+            // ItemType
+            // 
+            this.ItemType.HeaderText = "项目类型";
+            this.ItemType.Name = "ItemType";
+            this.ItemType.ReadOnly = true;
+            this.ItemType.Width = 150;
+            // 
+            // Association
+            // 
+            this.Association.HeaderText = "经手人/相关人";
+            this.Association.Name = "Association";
+            this.Association.ReadOnly = true;
+            // 
+            // EventType
+            // 
+            this.EventType.HeaderText = "收支类型";
+            this.EventType.Name = "EventType";
+            this.EventType.ReadOnly = true;
+            this.EventType.Width = 70;
+            // 
+            // Remark
+            // 
+            this.Remark.HeaderText = "备注";
+            this.Remark.Name = "Remark";
+            this.Remark.ReadOnly = true;
+            this.Remark.Width = 200;
             // 
             // FinView
             // 
@@ -342,5 +433,15 @@
         private System.Windows.Forms.Button FinDetailQueryBtn;
         private System.Windows.Forms.Button FinDetailExpBtn;
         private System.Windows.Forms.ComboBox AssociationTxt;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DetailId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FinDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Description;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TotalAmount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OrderNo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ItemType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Association;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EventType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Remark;
     }
 }

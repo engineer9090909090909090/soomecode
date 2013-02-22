@@ -46,7 +46,10 @@ namespace AliHelper
 
         void OnNewEditEvent(object sender, ItemEventArgs e)
         {
-            BindDataWithPage();
+            this.BeginInvoke(new Action(() =>
+            {
+                BindDataWithPage();
+            }));
         }
 
         private void BindDataWithPage()
@@ -76,6 +79,7 @@ namespace AliHelper
 
         public void DoFill(List<Order> list)
         {
+            OrderGrid.EnableSort = false;
             OrderGrid.Redim(list.Count + 1, 15);
             OrderGrid.FixedRows = 1;
             OrderGrid[0, 0] = new MyHeader("开始日期");
@@ -101,14 +105,18 @@ namespace AliHelper
                 OrderGrid[0, 6].Column.Width = 150;
             }
             SourceGrid.Cells.Controllers.CustomEvents clickEvent = new SourceGrid.Cells.Controllers.CustomEvents();
+            clickEvent.DoubleClick += new EventHandler(clickEvent_Click);
             int r = 1;
             foreach (Order order in list)
             {
                 OrderGrid[r, 0] = new SourceGrid.Cells.Cell(order.BeginDate, typeof(string));
+                OrderGrid[r, 0].AddController(clickEvent);
                 OrderGrid[r, 1] = new SourceGrid.Cells.Cell(order.EndDate, typeof(string));
+                OrderGrid[r, 1].AddController(clickEvent);
                 OrderGrid[r, 2] = new SourceGrid.Cells.Cell(order.OrderNo, typeof(string));
                 OrderGrid[r, 2].AddController(clickEvent);
                 OrderGrid[r, 3] = new SourceGrid.Cells.Cell(order.Description, typeof(string));
+                OrderGrid[r, 3].AddController(clickEvent);
                 OrderGrid[r, 4] = new SourceGrid.Cells.Cell(order.SalesMan, typeof(string));
                 OrderGrid[r, 5] = new SourceGrid.Cells.Cell(order.Status, typeof(string));
                 if (!IsFinOrderView)
@@ -143,6 +151,16 @@ namespace AliHelper
         private void FinDetailQueryBtn_Click(object sender, EventArgs e)
         {
             BindDataWithPage();
+        }
+
+        private void clickEvent_Click(object sender, EventArgs e)
+        {
+            SourceGrid.CellContext context = (SourceGrid.CellContext)sender;
+            int index = context.Position.Row - 1;
+            int id = this.list[index].Id; ;
+            NewOrderForm f = new NewOrderForm();
+            f.UpdateOrder = finOrderManager.GetOrderById(id);
+            f.ShowDialog(this);
         }
     }
 }

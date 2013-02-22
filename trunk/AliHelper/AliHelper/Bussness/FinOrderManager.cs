@@ -93,7 +93,12 @@ namespace AliHelper.Bussness
             return orderDao.GetOrders(query);
         }
 
-        public void InsertOrder(Order o)
+        public Order GetOrderById(int id)
+        {
+            return orderDao.GetOrderById(id);
+        }
+
+        public void InsertOrUpdateOrder(Order o)
         {
             orderDao.InsertOrUpdateOrder(o);
             FireEditOrderEvent(o);

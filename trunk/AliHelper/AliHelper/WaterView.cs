@@ -40,7 +40,11 @@ namespace AliHelper
 
         void OnNewEditEvent(object sender, ItemEventArgs e)
         {
-            BindDataWithPage();
+            this.BeginInvoke(new Action(() =>
+            {
+                BindDataWithPage();
+            }));
+            
         }
 
         private void BindDataWithPage()

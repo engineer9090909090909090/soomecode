@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -155,6 +155,28 @@ namespace AliHelper
             InquiryBand.ClientArea.Controls.Add(MailListView);
 
 
+            ImageList orderLargeIcons = new ImageList();
+            orderLargeIcons.ImageSize = new Size(32, 32);
+            Bitmap orderIcons = (Bitmap)global::AliHelper.Properties.IconImages.OutlookLargeIcons;
+            icons.MakeTransparent(Color.FromArgb(255, 0, 255));
+            orderLargeIcons.Images.AddStrip(orderIcons);
+            ListViewItem orderlistViewItem1 = new ListViewItem("订单列表", 1);
+            orderlistViewItem1.Name = Constants.OrderBaseView;
+            ListViewItem orderlistViewItem2 = new ListViewItem("订单跟踪", 3);
+            listViewItem2.Name = Constants.OrderTrackView;
+            ListView OrderListView = new System.Windows.Forms.ListView();
+            OrderListView.Name = "OrderListView";
+            OrderListView.BorderStyle = BorderStyle.None;
+            OrderListView.Location = new System.Drawing.Point(40, 20);
+            OrderListView.Size = new System.Drawing.Size(80, 300);
+            OrderListView.LargeImageList = outlookLargeIcons;
+            OrderListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {orderlistViewItem1,orderlistViewItem2});
+            OrderListView.UseCompatibleStateImageBehavior = false;
+            OrderListView.ItemSelectionChanged += new ListViewItemSelectionChangedEventHandler(OrderListView_ItemSelectionChanged);
+            OrderListView.View = System.Windows.Forms.View.LargeIcon;
+            OrderBand.ClientArea.Controls.Add(OrderListView);
+
+
             ImageList FinOutlookLargeIcons = new ImageList();
             FinOutlookLargeIcons.ImageSize = new Size(32, 32);
             Bitmap finIcons = (Bitmap)global::AliHelper.Properties.IconImages.OutlookLargeIcons;
@@ -220,6 +242,22 @@ namespace AliHelper
         #endregion
         
 
+        void OrderListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (e.IsSelected)
+            {
+                UnLoadExplorerSubPanel();
+                if (e.Item.Name == Constants.OrderBaseView)
+                {
+                    LoadOrderFanViewPanel(false);
+                }
+                else if (e.Item.Name == Constants.OrderTrackView)
+                {
+                   
+                }
+            }
+        }
+
         void MailListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             if (e.IsSelected)
@@ -243,7 +281,7 @@ namespace AliHelper
                 }
                 else if (e.Item.Name == Constants.FinanceBizView)
                 {
-                    LoadOrderFanViewPanel();
+                    LoadOrderFanViewPanel(true);
                 }
             }
         }
@@ -260,8 +298,8 @@ namespace AliHelper
             HideAllToolsStrip();
             if (bandName == "ProductBand")
             {
-                LoadProdutPanel();
                 ShowToolsStrip("ProductsStrip");
+                LoadProdutPanel();
             }
             else if (bandName == "UpdateBand")
             {
@@ -278,12 +316,13 @@ namespace AliHelper
             }
             else if (bandName == "OrderBand")
             {
-               
+                ShowToolsStrip("FinToolStrip");
+                LoadOrderFanViewPanel(false);
             }
             else if (bandName == "FinanceBand")
             {
-                LoadFinViewPanel();
                 ShowToolsStrip("FinToolStrip");
+                LoadFinViewPanel();
             }
             ExplorerCurrentSubName = bandName;
             GC.Collect();
@@ -493,11 +532,11 @@ namespace AliHelper
             this.Explorer.ResumeLayout(false);
         }
 
-        private void LoadOrderFanViewPanel()
+        private void LoadOrderFanViewPanel(bool IsFinOrderView)
         {
             OrderView FinorderView = new AliHelper.OrderView();
             this.Explorer.SuspendLayout();
-            FinorderView.IsFinOrderView = true;
+            FinorderView.IsFinOrderView = IsFinOrderView;
             FinorderView.Location = new System.Drawing.Point(0, 0);
             FinorderView.Name = "FinorderView";
             FinorderView.AutoSize = true;
