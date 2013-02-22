@@ -54,6 +54,14 @@ namespace AliHelper
 
         private void BindDataWithPage()
         {
+            QueryObject<Order> query = GetQueryObject();
+            QueryObject<Order> result = finOrderManager.GetOrders(query);
+            list = result.Result;
+            DoFill(list);
+        }
+
+        public QueryObject<Order> GetQueryObject()
+        {
             QueryObject<Order> query = new QueryObject<Order>();
             query.Condition = new Order();
             query.Condition.IsFinOrderView = IsFinOrderView;
@@ -72,9 +80,7 @@ namespace AliHelper
             query.Condition.Status = (string)this.Status.SelectedValue;
             query.Condition.SalesMan = (string)this.SalesMan.SelectedValue;
             query.Condition.Remark = this.Remark.Text.Trim();
-            QueryObject<Order> result = finOrderManager.GetOrders(query);
-            list = result.Result;
-            DoFill(list);
+            return query;
         }
 
         public void DoFill(List<Order> list)
@@ -161,6 +167,42 @@ namespace AliHelper
             NewOrderForm f = new NewOrderForm();
             f.UpdateOrder = finOrderManager.GetOrderById(id);
             f.ShowDialog(this);
+        }
+
+        private void ExpBtn_Click(object sender, EventArgs e)
+        {
+            QueryObject<Order> query = GetQueryObject();
+            QueryObject<Order> result = finOrderManager.GetOrders(query);
+
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "Excel工作簿(*.xls,*.xlsx)| *.xls; *.xlsx";
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.RestoreDirectory = true;
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string localFilePath = saveFileDialog1.FileName.ToString();
+                try
+                {
+                    ExportExcel exporter = new ExportExcel();
+                    exporter.AddColumn("BeginDate", "开始日期");
+                    exporter.AddColumn("EndDate", "结束日期");
+                    exporter.AddColumn("OrderNo", "订单编号");
+                    exporter.AddColumn("Description", "订单描述");
+                    exporter.AddColumn("SalesMan", "业务员");
+                    exporter.AddColumn("Status", "订单状态");
+                    if (!IsFinOrderView) {
+                        exporter.AddColumn("Remark", "备注");
+                    } else {
+                        exporter.AddColumn("TotalAmount", "业务总金额");
+                    }
+                    exporter.ExportToExcel<Order>(result.Result, localFilePath);
+                    exporter.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("保存文件出错：" + ex.Message);
+                }
+            }
         }
     }
 }

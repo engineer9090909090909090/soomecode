@@ -45,6 +45,9 @@
     <ApplicationIcon>helper.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.Cells">
+      <HintPath>..\..\lib\Aspose\Aspose.Cells.dll</HintPath>
+    </Reference>
     <Reference Include="Guifreaks.Common">
       <HintPath>..\..\lib\Guifreaks.Common.dll</HintPath>
     </Reference>
@@ -121,6 +124,7 @@
       <DependentUpon>EditFinDetail.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\AliHelperUtils.cs" />
+    <Compile Include="Utils\ExportExcel.cs" />
     <Compile Include="WaterView.cs">
       <SubType>UserControl</SubType>
     </Compile>
