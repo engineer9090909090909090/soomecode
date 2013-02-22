@@ -25,10 +25,7 @@ namespace AliHelper
 
         void OnNewEditEvent(object sender, ItemEventArgs e)
         {
-            this.BeginInvoke(new Action(() =>
-            {
-                BindDataWithPage(FinDetailPager.PageIndex);
-            }));
+            BindDataWithPage(FinDetailPager.PageIndex);
         }
 
         private void FinView_Load(object sender, EventArgs e)
@@ -85,21 +82,27 @@ namespace AliHelper
             query.Condition.EventType = (string)this.EventTypeTxt.SelectedValue;
             query.Condition.ItemType = (string)this.ItemTypeTxt.SelectedValue;
             query.Condition.OrderNo = this.OrderNoTxt.Text.Trim();
-            query.Condition.Association = this.AssociationTxt.Text.Trim();
+            query.Condition.Association = (string)this.AssociationTxt.SelectedValue;
             QueryObject<FinDetails> result = finOrderManager.GetFinDetails(query);
-            if (result.Result != null)
+            if (result.Result != null && result.Result.Count > 0)
             {
                 FinDetailPager.PageIndex = result.Page;
                 FinDetailPager.PageSize = result.PageSize;
                 FinDetailPager.RecordCount = result.RecordCount;
-                BindDateTable(result.Result);
+                this.BeginInvoke(new Action(() =>
+                {
+                    BindDateTable(result.Result);
+                }));
             }
             else
             {
                 FinDetailPager.PageIndex = Page;
                 FinDetailPager.PageSize = 100;
                 FinDetailPager.RecordCount = 0;
-                BindDateTable(null);
+                this.BeginInvoke(new Action(() =>
+                {
+                    BindDateTable(null);
+                }));
             }
         }
         private void FinDetailPager_PageIndexChanged(object sender, EventArgs e)
@@ -123,9 +126,35 @@ namespace AliHelper
             query.Condition.EventType = (string)this.EventTypeTxt.SelectedValue;
             query.Condition.ItemType = (string)this.ItemTypeTxt.SelectedValue;
             query.Condition.OrderNo = this.OrderNoTxt.Text.Trim();
-            query.Condition.Association = this.AssociationTxt.Text.Trim();
+            query.Condition.Association = (string)this.AssociationTxt.SelectedValue;
             QueryObject<FinDetails> result = finOrderManager.GetFinDetails(query);
 
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "Excel工作簿(*.xls,*.xlsx)| *.xls; *.xlsx";
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.RestoreDirectory = true;
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)  
+            {  
+                string localFilePath = saveFileDialog1.FileName.ToString();
+                try
+                {
+                    ExportExcel exporter = new ExportExcel();
+                    exporter.AddColumn("FinDate","日期");
+                    exporter.AddColumn("Description", "描述");
+                    exporter.AddColumn("TotalAmount","金额");
+                    exporter.AddColumn("OrderNo","所属业务");
+                    exporter.AddColumn("ItemType","项目类型");
+                    exporter.AddColumn("Association","经手人/相关人");
+                    exporter.AddColumn("EventType","收支类型");
+                    exporter.AddColumn("Remark","备注");
+                    exporter.ExportToExcel<FinDetails>(result.Result, localFilePath);
+                    exporter.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("保存文件出错："　+　ex.Message);
+                }
+            }
         }
 
         private void FinDetailDataView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

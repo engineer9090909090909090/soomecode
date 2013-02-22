@@ -51,7 +51,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.FinDetailDataView = new System.Windows.Forms.DataGridView();
-            this.FinDetailPager = new AliHelper.Pager();
             this.DetailId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FinDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -62,6 +61,7 @@
             this.Association = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EventType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Remark = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FinDetailPager = new AliHelper.Pager();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FinDetailGroup)).BeginInit();
             this.FinDetailGroup.SuspendLayout();
@@ -273,6 +273,7 @@
             this.FinDetailDataView.AllowUserToDeleteRows = false;
             this.FinDetailDataView.AllowUserToResizeRows = false;
             this.FinDetailDataView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.FinDetailDataView.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -310,20 +311,10 @@
             this.FinDetailDataView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.FinDetailDataView.RowHeadersVisible = false;
             this.FinDetailDataView.RowTemplate.Height = 23;
+            this.FinDetailDataView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.FinDetailDataView.Size = new System.Drawing.Size(936, 348);
             this.FinDetailDataView.TabIndex = 1;
             this.FinDetailDataView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.FinDetailDataView_CellDoubleClick);
-            // 
-            // FinDetailPager
-            // 
-            this.FinDetailPager.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.FinDetailPager.Location = new System.Drawing.Point(4, 454);
-            this.FinDetailPager.Name = "FinDetailPager";
-            this.FinDetailPager.RecordCount = 0;
-            this.FinDetailPager.ShowPageSizeDropdown = true;
-            this.FinDetailPager.Size = new System.Drawing.Size(930, 22);
-            this.FinDetailPager.TabIndex = 2;
-            this.FinDetailPager.PageIndexChanged += new System.EventHandler(this.FinDetailPager_PageIndexChanged);
             // 
             // DetailId
             // 
@@ -393,6 +384,17 @@
             this.Remark.Name = "Remark";
             this.Remark.ReadOnly = true;
             this.Remark.Width = 200;
+            // 
+            // FinDetailPager
+            // 
+            this.FinDetailPager.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FinDetailPager.Location = new System.Drawing.Point(4, 454);
+            this.FinDetailPager.Name = "FinDetailPager";
+            this.FinDetailPager.RecordCount = 0;
+            this.FinDetailPager.ShowPageSizeDropdown = true;
+            this.FinDetailPager.Size = new System.Drawing.Size(930, 22);
+            this.FinDetailPager.TabIndex = 2;
+            this.FinDetailPager.PageIndexChanged += new System.EventHandler(this.FinDetailPager_PageIndexChanged);
             // 
             // FinView
             // 

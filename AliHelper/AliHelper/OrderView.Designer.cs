@@ -33,15 +33,16 @@
             this.FinDetailGroup = new Guifreaks.NavigationBar.NaviGroup(this.components);
             this.Status = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.EndDateTo = new AliHelper.DateTimePickerX();
             this.BeginDateTo = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.Remark = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.SalesMan = new System.Windows.Forms.ComboBox();
-            this.FinDetailExpBtn = new System.Windows.Forms.Button();
+            this.ExpBtn = new System.Windows.Forms.Button();
             this.FinDetailQueryBtn = new System.Windows.Forms.Button();
-            this.EndDateForm = new DateTimePickerX();
+            this.EndDateForm = new AliHelper.DateTimePickerX();
             this.Description = new System.Windows.Forms.TextBox();
             this.BeginDateForm = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
@@ -49,7 +50,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.OrderGrid = new SourceGrid.Grid();
-            this.EndDateTo = new AliHelper.DateTimePickerX();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FinDetailGroup)).BeginInit();
             this.FinDetailGroup.SuspendLayout();
@@ -83,7 +83,7 @@
             this.FinDetailGroup.Controls.Add(this.Remark);
             this.FinDetailGroup.Controls.Add(this.label3);
             this.FinDetailGroup.Controls.Add(this.SalesMan);
-            this.FinDetailGroup.Controls.Add(this.FinDetailExpBtn);
+            this.FinDetailGroup.Controls.Add(this.ExpBtn);
             this.FinDetailGroup.Controls.Add(this.FinDetailQueryBtn);
             this.FinDetailGroup.Controls.Add(this.EndDateForm);
             this.FinDetailGroup.Controls.Add(this.Description);
@@ -122,6 +122,18 @@
             this.label8.Size = new System.Drawing.Size(53, 12);
             this.label8.TabIndex = 17;
             this.label8.Text = "订单状态";
+            // 
+            // EndDateTo
+            // 
+            this.EndDateTo.CustomFormat = " ";
+            this.EndDateTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.EndDateTo.FormatString = "yyyy-MM-dd";
+            this.EndDateTo.Location = new System.Drawing.Point(241, 69);
+            this.EndDateTo.Name = "EndDateTo";
+            this.EndDateTo.OriginalFormat = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.EndDateTo.Size = new System.Drawing.Size(85, 21);
+            this.EndDateTo.TabIndex = 16;
+            this.EndDateTo.ValueX = null;
             // 
             // BeginDateTo
             // 
@@ -178,14 +190,15 @@
             this.SalesMan.Size = new System.Drawing.Size(121, 20);
             this.SalesMan.TabIndex = 10;
             // 
-            // FinDetailExpBtn
+            // ExpBtn
             // 
-            this.FinDetailExpBtn.Location = new System.Drawing.Point(710, 67);
-            this.FinDetailExpBtn.Name = "FinDetailExpBtn";
-            this.FinDetailExpBtn.Size = new System.Drawing.Size(70, 23);
-            this.FinDetailExpBtn.TabIndex = 9;
-            this.FinDetailExpBtn.Text = "导出(&E)";
-            this.FinDetailExpBtn.UseVisualStyleBackColor = true;
+            this.ExpBtn.Location = new System.Drawing.Point(710, 67);
+            this.ExpBtn.Name = "ExpBtn";
+            this.ExpBtn.Size = new System.Drawing.Size(70, 23);
+            this.ExpBtn.TabIndex = 9;
+            this.ExpBtn.Text = "导出(&E)";
+            this.ExpBtn.UseVisualStyleBackColor = true;
+            this.ExpBtn.Click += new System.EventHandler(this.ExpBtn_Click);
             // 
             // FinDetailQueryBtn
             // 
@@ -199,11 +212,15 @@
             // 
             // EndDateForm
             // 
+            this.EndDateForm.CustomFormat = " ";
             this.EndDateForm.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.EndDateForm.FormatString = "yyyy-MM-dd";
             this.EndDateForm.Location = new System.Drawing.Point(241, 35);
             this.EndDateForm.Name = "EndDateForm";
+            this.EndDateForm.OriginalFormat = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.EndDateForm.Size = new System.Drawing.Size(85, 21);
             this.EndDateForm.TabIndex = 5;
+            this.EndDateForm.ValueX = null;
             // 
             // Description
             // 
@@ -276,18 +293,6 @@
             this.OrderGrid.TabStop = true;
             this.OrderGrid.ToolTipText = "";
             // 
-            // EndDateTo
-            // 
-            this.EndDateTo.CustomFormat = " ";
-            this.EndDateTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.EndDateTo.FormatString = "yyyy-MM-dd";
-            this.EndDateTo.Location = new System.Drawing.Point(241, 69);
-            this.EndDateTo.Name = "EndDateTo";
-            this.EndDateTo.OriginalFormat = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.EndDateTo.Size = new System.Drawing.Size(85, 21);
-            this.EndDateTo.TabIndex = 16;
-            this.EndDateTo.ValueX = null;
-            // 
             // OrderView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -310,7 +315,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private Guifreaks.NavigationBar.NaviGroup FinDetailGroup;
         private System.Windows.Forms.ComboBox SalesMan;
-        private System.Windows.Forms.Button FinDetailExpBtn;
+        private System.Windows.Forms.Button ExpBtn;
         private System.Windows.Forms.Button FinDetailQueryBtn;
         private DateTimePickerX EndDateForm;
         private System.Windows.Forms.TextBox Description;

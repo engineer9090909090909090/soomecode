@@ -240,6 +240,7 @@ namespace AliHelper
         private void UpdateUI()
         {
             int pageCount = this.GetPageCount(this._RecordCount, this._PageSize);
+            if (pageCount == 0) pageCount = 1;
             this._PageCount = pageCount;
             this.SetPagerText();
             this.SetBtnEnabled();

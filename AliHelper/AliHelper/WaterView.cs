@@ -67,16 +67,6 @@ namespace AliHelper
             BindDataWithPage();
         }
 
-        /*
-        private void FinanceView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            int id = Convert.ToInt32(this.FinanceView.Rows[e.RowIndex].Cells[0].Value);
-            EditFinWater f = new EditFinWater();
-            Finance finance = finOrderManager.GetFinance(id);
-            f.LoadEditData(finance);
-            f.ShowDialog(this);
-        }
-        */
 
         public void DoFill(List<Finance> list)
         {
@@ -214,10 +204,51 @@ namespace AliHelper
         {
             SourceGrid.CellContext context = (SourceGrid.CellContext)sender;
             int index = context.Position.Row - 2;
-            int id = this.list[index].FinId;;
+            int id = this.list[index].FinId;
             EditFinWater f = new EditFinWater();
             f.UpdateFinance = finOrderManager.GetFinance(id);
             f.ShowDialog(this);
+        }
+
+        private void ExpBtn_Click(object sender, EventArgs e)
+        {
+            QueryObject<Finance> query = new QueryObject<Finance>();
+            query.Condition = new Finance();
+            query.Condition.BeginTime = this.BeginDate.Value.ToString(Constants.DateFormat);
+            query.Condition.EndTime = this.EndDate.Value.ToString(Constants.DateFormat);
+            query.Condition.Description = this.Description.Text.Trim();
+            query.Condition.EventType = (string)this.EventType.SelectedValue;
+            query.Condition.Association = (string)this.Association.SelectedValue;
+            query.Condition.ReceivePaymentor = this.ReceivePaymentor.Text.Trim();
+            QueryObject<Finance> result = finOrderManager.GetFinances(query);
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "Excel工作簿(*.xls,*.xlsx)| *.xls; *.xlsx";
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.RestoreDirectory = true;
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string localFilePath = saveFileDialog1.FileName.ToString();
+                try
+                {
+                    ExportExcel exporter = new ExportExcel();
+                    exporter.AddColumn("FinDate", "日期");
+                    exporter.AddColumn("EventType", "收支类型");
+                    exporter.AddColumn("Description", "款项说明");
+                    exporter.AddColumn("Amount", "金额");
+                    exporter.AddColumn("Rate", "汇率");
+                    exporter.AddColumn("TotalAmount", "总金额");
+                    exporter.AddColumn("ReferenceNo", "流水号");
+                    exporter.AddColumn("ReceivePaymentor", "收付款单位");
+                    exporter.AddColumn("Association", "经手人/相关人");
+                    exporter.AddColumn("Remark", "备注");
+                    exporter.ExportToExcel<Finance>(result.Result, localFilePath);
+                    exporter.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("保存文件出错：" + ex.Message);
+                }
+            }
         }
 
     }

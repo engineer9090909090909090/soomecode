@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.FinDetailGroup = new Guifreaks.NavigationBar.NaviGroup(this.components);
             this.Association = new System.Windows.Forms.ComboBox();
-            this.FinDetailExpBtn = new System.Windows.Forms.Button();
+            this.ExpBtn = new System.Windows.Forms.Button();
             this.FinDetailQueryBtn = new System.Windows.Forms.Button();
             this.EndDate = new System.Windows.Forms.DateTimePicker();
             this.EventType = new System.Windows.Forms.ComboBox();
@@ -57,7 +57,7 @@
             // 
             this.FinDetailGroup.Caption = "查询条件";
             this.FinDetailGroup.Controls.Add(this.Association);
-            this.FinDetailGroup.Controls.Add(this.FinDetailExpBtn);
+            this.FinDetailGroup.Controls.Add(this.ExpBtn);
             this.FinDetailGroup.Controls.Add(this.FinDetailQueryBtn);
             this.FinDetailGroup.Controls.Add(this.EndDate);
             this.FinDetailGroup.Controls.Add(this.EventType);
@@ -93,14 +93,15 @@
             this.Association.Size = new System.Drawing.Size(121, 20);
             this.Association.TabIndex = 10;
             // 
-            // FinDetailExpBtn
+            // ExpBtn
             // 
-            this.FinDetailExpBtn.Location = new System.Drawing.Point(710, 67);
-            this.FinDetailExpBtn.Name = "FinDetailExpBtn";
-            this.FinDetailExpBtn.Size = new System.Drawing.Size(70, 23);
-            this.FinDetailExpBtn.TabIndex = 9;
-            this.FinDetailExpBtn.Text = "导出(&E)";
-            this.FinDetailExpBtn.UseVisualStyleBackColor = true;
+            this.ExpBtn.Location = new System.Drawing.Point(710, 67);
+            this.ExpBtn.Name = "ExpBtn";
+            this.ExpBtn.Size = new System.Drawing.Size(70, 23);
+            this.ExpBtn.TabIndex = 9;
+            this.ExpBtn.Text = "导出(&E)";
+            this.ExpBtn.UseVisualStyleBackColor = true;
+            this.ExpBtn.Click += new System.EventHandler(this.ExpBtn_Click);
             // 
             // FinDetailQueryBtn
             // 
@@ -262,13 +263,13 @@
             this.FinGrid.TabStop = true;
             this.FinGrid.ToolTipText = "";
             // 
-            // FinanceWaterView
+            // WaterView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "FinanceWaterView";
+            this.Name = "WaterView";
             this.Size = new System.Drawing.Size(798, 425);
             this.Load += new System.EventHandler(this.FinanceWaterView_Load);
             ((System.ComponentModel.ISupportInitialize)(this.FinDetailGroup)).EndInit();
@@ -283,7 +284,7 @@
         #endregion
 
         private Guifreaks.NavigationBar.NaviGroup FinDetailGroup;
-        private System.Windows.Forms.Button FinDetailExpBtn;
+        private System.Windows.Forms.Button ExpBtn;
         private System.Windows.Forms.Button FinDetailQueryBtn;
         private System.Windows.Forms.DateTimePicker EndDate;
         private System.Windows.Forms.ComboBox EventType;
