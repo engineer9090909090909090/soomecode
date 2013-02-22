@@ -102,8 +102,13 @@ namespace AliHelper.DAO
             if (query.IsExport == false)
             {
                 query.RecordCount = dbHelper.GetItemCount(sql, QueryParameters.ToArray());
-                sql = sql + "limit " + query.Start + ", " + query.PageSize;
+                sql = sql + "order by FinDate asc limit " + query.Start + ", " + query.PageSize;
             }
+            else 
+            {
+                sql = sql + " order by FinDate asc";
+            }
+            
             query.dt = dbHelper.ExecuteDataTable(sql, QueryParameters.ToArray());
             query.Result = DetailTableToList(query.dt);
             return query;
@@ -218,6 +223,7 @@ namespace AliHelper.DAO
         public List<FinDetails> GetFinDetails(int finId)
         {
             string sql = "select *, Amount * Rate TotalAmount from FinDetails where FinId = " + finId;
+            sql = sql + " order by FinDate asc";
             DataTable dt = dbHelper.ExecuteDataTable(sql, null);
             return DetailTableToList(dt);
         }
@@ -323,6 +329,7 @@ namespace AliHelper.DAO
                     sql = sql + "and f.ReceivePaymentor like '%" + query.Condition.ReceivePaymentor.Trim() + "%' ";
                 }
             }
+            sql = sql + " order by f.FinDate asc";
             query.dt = dbHelper.ExecuteDataTable(sql, QueryParameters.ToArray());
             List<Finance> FinanceList = FinanceTableToList(query.dt);
             foreach(Finance fin in FinanceList)

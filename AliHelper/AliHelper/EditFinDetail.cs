@@ -14,6 +14,7 @@ namespace AliHelper
     public partial class EditFinDetail : Form
     {
         FinOrderManager finOrderManager;
+        public FinDetails UpdateDetail { get; set; }
         public EditFinDetail()
         {
             InitializeComponent();
@@ -34,21 +35,23 @@ namespace AliHelper
             this.EventTypeTxt.DataSource = finOrderManager.GetAppDicOptions(Constants.DebitCredit);
             this.CurrenyTxt.DataSource = finOrderManager.GetAppDicOptions(Constants.CurrencyType);
             this.AssociationTxt.DataSource = finOrderManager.GetAppDicOptions(Constants.Employee);
+            LoadEditData(UpdateDetail);
         }
 
         public void LoadEditData(FinDetails detail)
         {
+            if (detail == null) return;
             this.Tag = detail;
             this.EventNameTxt.Text = detail.Description;
-            this.EventTypeTxt.SelectedText = detail.EventType;
             this.EventTimeTxt.Text = detail.FinDate;
-            this.ItemTypeTxt.SelectedText = detail.ItemType;
             this.RemarkTxt.Text = detail.Remark;
             this.OrderNoTxt.Text = detail.OrderNo;
-            this.AssociationTxt.Text = detail.Association;
-            this.CurrenyTxt.SelectedText = detail.Currency;
             this.TotalAmount.Text = detail.TotalAmount.ToString("#,##0.00");
             this.AmountTxt.Text = detail.Amount.ToString("#,##0.00");
+            AliHelperUtils.LoadAppDicComboBoxValue(this.EventTypeTxt, detail.EventType);
+            AliHelperUtils.LoadAppDicComboBoxValue(this.ItemTypeTxt, detail.ItemType);
+            AliHelperUtils.LoadAppDicComboBoxValue(this.CurrenyTxt, detail.Currency);
+            AliHelperUtils.LoadAppDicComboBoxValue(this.AssociationTxt, detail.Association);
         }
 
         private void Confirm_Click(object sender, EventArgs e)
@@ -68,7 +71,7 @@ namespace AliHelper
             detail.ItemType = ((AppDic)this.ItemTypeTxt.SelectedItem).Key; ;
             detail.Remark = this.RemarkTxt.Text.Trim();
             detail.OrderNo = this.OrderNoTxt.Text.Trim();
-            detail.Association = this.AssociationTxt.Text.Trim();
+            detail.Association = ((AppDic)this.AssociationTxt.SelectedItem).Key;
             detail.Rate = Convert.ToDouble(this.RateTxt.Text.Trim());
             detail.Currency = ((AppDic)this.CurrenyTxt.SelectedItem).Key;
             detail.Amount = Convert.ToDouble(this.AmountTxt.Text);

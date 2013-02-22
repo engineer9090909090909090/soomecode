@@ -212,8 +212,7 @@ namespace AliHelper
             int index = context.Position.Row - 2;
             int id = this.list[index].FinId;;
             EditFinWater f = new EditFinWater();
-            Finance finance = finOrderManager.GetFinance(id);
-            f.LoadEditData(finance);
+            f.UpdateFinance = finOrderManager.GetFinance(id);
             f.ShowDialog(this);
         }
 

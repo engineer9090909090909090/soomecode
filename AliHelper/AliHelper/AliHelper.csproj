@@ -120,6 +120,7 @@
     <Compile Include="EditFinDetail.Designer.cs">
       <DependentUpon>EditFinDetail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utils\AliHelperUtils.cs" />
     <Compile Include="WaterView.cs">
       <SubType>UserControl</SubType>
     </Compile>
