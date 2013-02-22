@@ -112,7 +112,7 @@ namespace AliHelper.DAO
                 info.SalesMan = (string)row["SalesMan"];
                 info.Status = (string)row["Status"];
                 info.Remark = !Convert.IsDBNull(row["Remark"]) ? (string)row["Remark"] : string.Empty;
-                info.TotalAmount = !Convert.IsDBNull(row["TotalAmount"]) ? Convert.ToDouble(row["TotalAmount"]) : 0;
+                info.TotalAmount = dt.Columns["TotalAmount"] != null ? Convert.ToDouble(row["TotalAmount"]) : 0;
                 info.CreatedTime = Convert.ToDateTime(row["CreatedTime"]);
                 info.ModifiedTime = Convert.ToDateTime(row["ModifiedTime"]);
                 list.Add(info);
@@ -122,9 +122,10 @@ namespace AliHelper.DAO
 
         public void InsertOrUpdateOrder(Order order)
         {
-            string InsSql = @"INSERT INTO Orders(BeginDate,EndDate,Description,OrderNo,SalesMan,Status,Remark,CreatedTime,ModifiedTime)"
-                            + "values(@BeginDate,@EndDate,@Description,@OrderNo,@SalesMan,@Status,@Remark,@CreatedTime,@ModifiedTime)";
-            string UpdSql = @"update Orders set OrderName= @OrderName, @EndDate,Status = @Status, Remark=@Remark, ModifiedTime=@ModifiedTime"
+            string InsSql = @"INSERT INTO Orders(BeginDate,EndDate,Description,OrderNo,SalesMan,Status,Remark,CreatedTime,ModifiedTime) "
+                            + "values(@BeginDate,@EndDate,@Description,@OrderNo,@SalesMan,@Status,@Remark,@CreatedTime,@ModifiedTime) ";
+            string UpdSql = @"update Orders set OrderNo=@OrderNo, BeginDate=@BeginDate, EndDate=@EndDate, Description= @Description, "
+                            + "SalesMan=@SalesMan, Status = @Status, Remark=@Remark, ModifiedTime=@ModifiedTime "
                             + "where Id = @Id";
 
             string ExistRecordSql = "SELECT count(1) FROM Orders WHERE Id = ";
@@ -154,6 +155,17 @@ namespace AliHelper.DAO
             {
                 dbHelper.ExecuteNonQuery(UpdSql, parameter);
             }
+        }
+
+        public Order GetOrderById(int id)
+        {
+            string sql = "select t.* FROM Orders t where id = " + id;
+            DataTable dt = dbHelper.ExecuteDataTable(sql, null);
+            List<Order> list = DataTableToList(dt);
+            if (list.Count > 0)
+                return list[0];
+            else 
+                return null;
         }
     }
 }

@@ -14,15 +14,44 @@ namespace AliHelper
     public partial class NewOrderForm : Form
     {
         FinOrderManager finOrderManager;
+        public Order UpdateOrder { set; get; }
         public NewOrderForm()
         {
             InitializeComponent();
             finOrderManager = new FinOrderManager();
         }
+        private void NewOrderForm_Load(object sender, EventArgs e)
+        {
+            this.SalesMan.DisplayMember = "Label";
+            this.SalesMan.ValueMember = "Key";
+            this.Status.DisplayMember = "Label";
+            this.Status.ValueMember = "Key";
+            this.Status.DataSource = finOrderManager.GetAppDicOptions(Constants.OrderStatusType);
+            this.SalesMan.DataSource = finOrderManager.GetAppDicOptions(Constants.Employee);
+            LoadUpdateOrder(UpdateOrder);
+        }
+        private void LoadUpdateOrder(Order order)
+        {
+            if (order == null) return;
+            this.Tag = order;
+            this.BeginDate.Text = order.BeginDate;
+            this.OrderNo.Text = order.OrderNo;
+            this.Description.Text = order.Description;
+            this.Remark.Text = order.Remark;
+            AliHelperUtils.LoadAppDicComboBoxValue(this.SalesMan, order.SalesMan);
+            AliHelperUtils.LoadAppDicComboBoxValue(this.Status, order.Status);
+        }
 
         private void Confirm_Click(object sender, EventArgs e)
         {
-            Order order = new Order();
+            Order order;
+            if (this.Tag == null)
+            {
+                order = new Order();
+            }
+            else {
+                order = (Order)this.Tag;
+            }
             order.BeginDate = this.BeginDate.Value.ToString(Constants.DateFormat);
             order.OrderNo = this.OrderNo.Text.Trim();
             order.Description = this.Description.Text.Trim();
@@ -37,7 +66,7 @@ namespace AliHelper
             {
                 return;
             }
-            finOrderManager.InsertOrder(order);
+            finOrderManager.InsertOrUpdateOrder(order);
             this.Close();
         }
 
@@ -46,14 +75,6 @@ namespace AliHelper
             this.Close();
         }
 
-        private void NewOrderForm_Load(object sender, EventArgs e)
-        {
-            this.SalesMan.DisplayMember = "Label";
-            this.SalesMan.ValueMember = "Key";
-            this.Status.DisplayMember = "Label";
-            this.Status.ValueMember = "Key";
-            this.Status.DataSource = finOrderManager.GetAppDicOptions(Constants.OrderStatusType);
-            this.SalesMan.DataSource = finOrderManager.GetAppDicOptions(Constants.Employee);
-        }
+        
     }
 }

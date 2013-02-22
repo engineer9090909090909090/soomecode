@@ -39,5 +39,8 @@ namespace AliHelper
         public const string FinanceBaseView = "FinanceBaseView";
         public const string FinanceBizView = "FinanceBizView";
         public const string FinanceWaterView = "FinanceWaterView";
+
+        public const string OrderBaseView = "OrderBaseView";
+        public const string OrderTrackView = "OrderTrackView";
     }
 }
