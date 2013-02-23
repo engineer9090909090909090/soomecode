@@ -1,4 +1,5 @@
-﻿namespace AliHelper
+﻿using AliHelper.Bussness;
+namespace AliHelper
 {
     partial class FinView
     {
@@ -13,6 +14,7 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
+            FinOrderManager.OnEditFinDetailEvent -= new NewEditItemEvent(OnNewEditEvent);
             if (disposing && (components != null))
             {
                 components.Dispose();
