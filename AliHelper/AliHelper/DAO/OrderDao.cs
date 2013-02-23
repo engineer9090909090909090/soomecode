@@ -93,6 +93,7 @@ namespace AliHelper.DAO
             {
                 sql = sql + "Group By t.Id";
             }
+            sql = sql + " Order by BeginDate asc";
             query.dt = dbHelper.ExecuteDataTable(sql, QueryParameters.ToArray());
             query.Result = DataTableToList(query.dt);
             return query;

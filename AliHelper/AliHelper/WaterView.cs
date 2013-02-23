@@ -55,6 +55,7 @@ namespace AliHelper
             query.Condition.EndTime = this.EndDate.Value.ToString(Constants.DateFormat);
             query.Condition.Description = this.Description.Text.Trim();
             query.Condition.EventType = (string)this.EventType.SelectedValue;
+            query.Condition.ItemType = (string)this.ItemType.SelectedValue;
             query.Condition.Association = (string)this.Association.SelectedValue;
             query.Condition.ReceivePaymentor = this.ReceivePaymentor.Text.Trim();
             QueryObject<Finance> result = finOrderManager.GetFinances(query);
@@ -70,7 +71,7 @@ namespace AliHelper
 
         public void DoFill(List<Finance> list)
         {
-            int rowCount = 2;
+            int rowCount = 3;
             foreach (Finance finance in list)
             {
                 rowCount = rowCount + finance.Details.Count;
@@ -125,6 +126,8 @@ namespace AliHelper
             clickEvent.DoubleClick += new EventHandler(clickEvent_Click);
             SourceGrid.Cells.Views.Cell view;
             int r = 2;
+            double SumTotalAmount = 0.0;
+            double DetailSumTotalAmount = 0.0;
             foreach (Finance finance in list)
             {
                 int detailCount = finance.Details.Count();
@@ -136,6 +139,7 @@ namespace AliHelper
                 FinGrid[r, 2].AddController(clickEvent);
                 string amount = "(" + finance.Currency + ")" + finance.Amount.ToString("#,##0.00");
                 FinGrid[r, 3] = new SourceGrid.Cells.Cell(amount);
+                FinGrid[r, 3].AddController(clickEvent);
                 view = new SourceGrid.Cells.Views.Cell();
                 view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleRight;
                 view.ForeColor = (finance.TotalAmount > 0) ? Color.Red : Color.Blue;
@@ -146,6 +150,7 @@ namespace AliHelper
                 view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleRight;
                 FinGrid[r, 4].View = view;
                 string totalAmount= "￥" + finance.TotalAmount.ToString("#,##0.00");
+                SumTotalAmount = SumTotalAmount + finance.TotalAmount;
                 FinGrid[r, 5] = new SourceGrid.Cells.Cell(totalAmount);
                 view = new SourceGrid.Cells.Views.Cell();
                 view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleRight;
@@ -178,6 +183,7 @@ namespace AliHelper
                     view.ForeColor = (finance.TotalAmount > 0) ? Color.Red : Color.Blue;
                     FinGrid[r, 12].View = view;
                     string detailTotalAmount = "￥" + detail.TotalAmount.ToString("#,##0.00");
+                    DetailSumTotalAmount = DetailSumTotalAmount + detail.TotalAmount;
                     FinGrid[r, 13] = new SourceGrid.Cells.Cell(detailTotalAmount);
                     view = new SourceGrid.Cells.Views.Cell();
                     view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleRight;
@@ -187,6 +193,17 @@ namespace AliHelper
                     r++;
                 }
             }
+            for (int i = 0; i < 15; i++)
+            {
+                FinGrid[r, i] = new SourceGrid.Cells.Cell("");
+            }
+            FinGrid[r, 2] = new SourceGrid.Cells.Cell("合计");
+            FinGrid[r, 5] = new SourceGrid.Cells.Cell("￥" + SumTotalAmount.ToString("#,##0.00"));
+            FinGrid[r, 13] = new SourceGrid.Cells.Cell("￥" + DetailSumTotalAmount.ToString("#,##0.00"));
+            view = new SourceGrid.Cells.Views.Cell();
+            view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleRight;
+            view.ForeColor = (SumTotalAmount > 0) ? Color.Red : Color.Blue;
+            FinGrid[r, 5].View =  FinGrid[r, 13].View = view;
             FinGrid.ClipboardMode = SourceGrid.ClipboardMode.All;
         }
 
@@ -206,6 +223,7 @@ namespace AliHelper
         private void clickEvent_Click(object sender, EventArgs e)
         {
             SourceGrid.CellContext context = (SourceGrid.CellContext)sender;
+            if (FinGrid.Rows[context.Position.Row].Tag == null) return;
             int id = (int)FinGrid.Rows[context.Position.Row].Tag;
             EditFinWater f = new EditFinWater();
             f.UpdateFinance = finOrderManager.GetFinance(id);
@@ -220,6 +238,7 @@ namespace AliHelper
             query.Condition.EndTime = this.EndDate.Value.ToString(Constants.DateFormat);
             query.Condition.Description = this.Description.Text.Trim();
             query.Condition.EventType = (string)this.EventType.SelectedValue;
+            query.Condition.ItemType = (string)this.ItemType.SelectedValue;
             query.Condition.Association = (string)this.Association.SelectedValue;
             query.Condition.ReceivePaymentor = this.ReceivePaymentor.Text.Trim();
             QueryObject<Finance> result = finOrderManager.GetFinances(query);

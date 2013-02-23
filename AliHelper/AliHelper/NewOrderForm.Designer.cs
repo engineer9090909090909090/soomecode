@@ -208,7 +208,7 @@
             this.Name = "NewOrderForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "新建订单";
+            this.Text = "编辑订单";
             this.Load += new System.EventHandler(this.NewOrderForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

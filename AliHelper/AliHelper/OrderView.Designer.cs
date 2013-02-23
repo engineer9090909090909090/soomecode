@@ -215,7 +215,7 @@ namespace AliHelper
             // EndDateForm
             // 
             this.EndDateForm.CustomFormat = " ";
-            this.EndDateForm.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.EndDateForm.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.EndDateForm.FormatString = "yyyy-MM-dd";
             this.EndDateForm.Location = new System.Drawing.Point(241, 35);
             this.EndDateForm.Name = "EndDateForm";
@@ -289,7 +289,7 @@ namespace AliHelper
             this.OrderGrid.Margin = new System.Windows.Forms.Padding(0);
             this.OrderGrid.Name = "OrderGrid";
             this.OrderGrid.OptimizeMode = SourceGrid.CellOptimizeMode.ForRows;
-            this.OrderGrid.SelectionMode = SourceGrid.GridSelectionMode.Cell;
+            this.OrderGrid.SelectionMode = SourceGrid.GridSelectionMode.Row;
             this.OrderGrid.Size = new System.Drawing.Size(792, 376);
             this.OrderGrid.TabIndex = 3;
             this.OrderGrid.TabStop = true;

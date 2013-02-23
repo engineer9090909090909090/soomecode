@@ -63,7 +63,7 @@ namespace AliHelper
             AliHelperUtils.LoadAppDicComboBoxValue(this.EventType, finance.EventType);
             AliHelperUtils.LoadAppDicComboBoxValue(this.Curreny, finance.Currency);
             AliHelperUtils.LoadAppDicComboBoxValue(this.Account, finance.Account);
-
+            AliHelperUtils.LoadAppDicComboBoxValue(this.Association, finance.Association);
             foreach (FinDetails detail in finance.Details)
             {
                 int index = DetailView.Rows.Add();
@@ -230,11 +230,29 @@ namespace AliHelper
 
         private void NewAdd_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            int index = this.DetailView.Rows.Add();
-            List<AppDic> employee = finOrderManager.GetAppDicOptions(Constants.Employee);
-            if (employee != null)
+            double amount = Convert.ToDouble(Amount.Text);
+            double rate = Convert.ToDouble(Rate.Text);
+            foreach (DataGridViewRow row in DetailView.Rows)
             {
-                DetailView.Rows[index].Cells["DetailAssociation"].Value = employee[0].Key;
+                if (row.Cells["DetailAmount"].Value != null)
+                {
+                    double deAmount = Convert.ToDouble(row.Cells["DetailAmount"].Value);
+                    amount = amount- deAmount;
+                }
+            }
+            double totalAmount = amount * rate;
+            int index = this.DetailView.Rows.Add();
+            DetailView.Rows[index].Cells["DetailAssociation"].Value = Association.SelectedValue;
+            DetailView.Rows[index].Cells["DetailAmount"].Value = amount;
+            DetailView.Rows[index].Cells["DetailTotalAmount"].Value = totalAmount;
+        }
+
+        private void Association_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string val = (string)this.Association.SelectedValue;
+            foreach (DataGridViewRow row in DetailView.Rows)
+            {
+                row.Cells["DetailAssociation"].Value = val;
             }
         }
 
@@ -243,11 +261,11 @@ namespace AliHelper
         {
             if (e.Control is DataGridViewTextBoxEditingControl)
             {
-                TextBox textBox1 = e.Control as TextBox; 
+                TextBox textBox1 = e.Control as TextBox;
+                textBox1.KeyPress -= new KeyPressEventHandler(Cells_KeyPress);
+                textBox1.KeyUp -= new KeyEventHandler(Cells_KeyUp);
                 if (((DataGridView)sender).CurrentCell.ColumnIndex == 3) // 第一列
                 {
-                    textBox1.KeyPress -= new KeyPressEventHandler(Cells_KeyPress);
-                    textBox1.KeyUp -= new KeyEventHandler(Cells_KeyUp);
                     textBox1.KeyPress += new KeyPressEventHandler(Cells_KeyPress);
                     textBox1.KeyUp += new KeyEventHandler(Cells_KeyUp);
                 }
@@ -259,10 +277,16 @@ namespace AliHelper
             TextBox textBox1 = (TextBox)sender;
             if (!string.IsNullOrEmpty(textBox1.Text.Trim()) && textBox1.Text.Trim() != "-")
             {
-                int CurrentRow = DetailView.CurrentRow.Index;
-                double val = Convert.ToDouble(textBox1.Text);
-                double total = Convert.ToDouble(this.Rate.Text) * val;
-                DetailView.Rows[CurrentRow].Cells[4].Value = "￥" + total.ToString("#,##0.00");
+                try
+                {
+                    int CurrentRow = DetailView.CurrentRow.Index;
+                    double val = Convert.ToDouble(textBox1.Text);
+                    double total = Convert.ToDouble(this.Rate.Text) * val;
+                    DetailView.Rows[CurrentRow].Cells[4].Value = "￥" + total.ToString("#,##0.00");
+                }
+                catch { 
+                    
+                }
             }
         }
 
@@ -286,7 +310,5 @@ namespace AliHelper
                 }
             }
         }
-
-
     }
 }
