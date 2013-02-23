@@ -112,7 +112,7 @@ namespace AliHelper.DAO
                 info.SalesMan = (string)row["SalesMan"];
                 info.Status = (string)row["Status"];
                 info.Remark = !Convert.IsDBNull(row["Remark"]) ? (string)row["Remark"] : string.Empty;
-                info.TotalAmount = dt.Columns["TotalAmount"] != null ? Convert.ToDouble(row["TotalAmount"]) : 0;
+                info.TotalAmount = dt.Columns["TotalAmount"] != null && !Convert.IsDBNull(row["TotalAmount"]) ? Convert.ToDouble(row["TotalAmount"]) : 0;
                 info.CreatedTime = Convert.ToDateTime(row["CreatedTime"]);
                 info.ModifiedTime = Convert.ToDateTime(row["ModifiedTime"]);
                 list.Add(info);

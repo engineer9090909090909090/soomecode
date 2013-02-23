@@ -1,4 +1,5 @@
-﻿namespace AliHelper
+﻿using AliHelper.Bussness;
+namespace AliHelper
 {
     partial class WaterView
     {
@@ -13,6 +14,7 @@
         /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
         protected override void Dispose(bool disposing)
         {
+            FinOrderManager.OnEditFinanceEvent -= new NewEditItemEvent(OnNewEditEvent);
             if (disposing && (components != null))
             {
                 components.Dispose();

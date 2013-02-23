@@ -72,38 +72,35 @@ namespace AliHelper
 
         private void BindDataWithPage(int Page)
         {
-            QueryObject<FinDetails> query = new QueryObject<FinDetails>();
-            query.Page = Page;
-            query.PageSize = FinDetailPager.PageSize;
-            query.Condition = new FinDetails();
-            query.Condition.BeginTime = this.BeginDateTxt.Value.ToString(Constants.DateFormat);
-            query.Condition.EndTime = this.EndDateTxt.Value.ToString(Constants.DateFormat);
-            query.Condition.Description = this.EventNameTxt.Text.Trim();
-            query.Condition.EventType = (string)this.EventTypeTxt.SelectedValue;
-            query.Condition.ItemType = (string)this.ItemTypeTxt.SelectedValue;
-            query.Condition.OrderNo = this.OrderNoTxt.Text.Trim();
-            query.Condition.Association = (string)this.AssociationTxt.SelectedValue;
-            QueryObject<FinDetails> result = finOrderManager.GetFinDetails(query);
-            if (result.Result != null && result.Result.Count > 0)
+            this.BeginInvoke(new Action(() =>
             {
-                FinDetailPager.PageIndex = result.Page;
-                FinDetailPager.PageSize = result.PageSize;
-                FinDetailPager.RecordCount = result.RecordCount;
-                this.BeginInvoke(new Action(() =>
+                QueryObject<FinDetails> query = new QueryObject<FinDetails>();
+                query.Page = Page;
+                query.PageSize = FinDetailPager.PageSize;
+                query.Condition = new FinDetails();
+                query.Condition.BeginTime = this.BeginDateTxt.Value.ToString(Constants.DateFormat);
+                query.Condition.EndTime = this.EndDateTxt.Value.ToString(Constants.DateFormat);
+                query.Condition.Description = this.EventNameTxt.Text.Trim();
+                query.Condition.EventType = (string)this.EventTypeTxt.SelectedValue;
+                query.Condition.ItemType = (string)this.ItemTypeTxt.SelectedValue;
+                query.Condition.OrderNo = this.OrderNoTxt.Text.Trim();
+                query.Condition.Association = (string)this.AssociationTxt.SelectedValue;
+                QueryObject<FinDetails> result = finOrderManager.GetFinDetails(query);
+                if (result.Result != null && result.Result.Count > 0)
                 {
+                    FinDetailPager.PageIndex = result.Page;
+                    FinDetailPager.PageSize = result.PageSize;
+                    FinDetailPager.RecordCount = result.RecordCount;
                     BindDateTable(result.Result);
-                }));
-            }
-            else
-            {
-                FinDetailPager.PageIndex = Page;
-                FinDetailPager.PageSize = 100;
-                FinDetailPager.RecordCount = 0;
-                this.BeginInvoke(new Action(() =>
+                }
+                else
                 {
+                    FinDetailPager.PageIndex = Page;
+                    FinDetailPager.PageSize = 100;
+                    FinDetailPager.RecordCount = 0;
                     BindDateTable(null);
-                }));
-            }
+                }
+            }));
         }
         private void FinDetailPager_PageIndexChanged(object sender, EventArgs e)
         {
