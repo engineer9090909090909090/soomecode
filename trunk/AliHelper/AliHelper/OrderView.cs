@@ -85,21 +85,28 @@ namespace AliHelper
 
         public void DoFill(List<Order> list)
         {
-            OrderGrid.EnableSort = false;
-            OrderGrid.Redim(list.Count + 1, 15);
+            OrderGrid.Redim(0, 0);
             OrderGrid.FixedRows = 1;
+            OrderGrid.EnableSort = true;
+            OrderGrid.Redim(list.Count + 1, 15);
             OrderGrid[0, 0] = new MyHeader("开始日期");
             OrderGrid[0, 0].Column.Width = 100;
+            OrderGrid[0, 0].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
             OrderGrid[0, 1] = new MyHeader("结束日期");
             OrderGrid[0, 1].Column.Width = 100;
+            OrderGrid[0, 1].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
             OrderGrid[0, 2] = new MyHeader("订单编号");
             OrderGrid[0, 2].Column.Width = 150;
+            OrderGrid[0, 2].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
             OrderGrid[0, 3] = new MyHeader("订单描述");
             OrderGrid[0, 3].Column.Width = 300;
+            OrderGrid[0, 3].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
             OrderGrid[0, 4] = new MyHeader("业务员");
             OrderGrid[0, 4].Column.Width = 100;
+            OrderGrid[0, 4].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
             OrderGrid[0, 5] = new MyHeader("订单状态");
             OrderGrid[0, 5].Column.Width = 150;
+            OrderGrid[0, 5].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
             if (!IsFinOrderView)
             {
                 OrderGrid[0, 6] = new MyHeader("备注");
@@ -109,30 +116,32 @@ namespace AliHelper
             {
                 OrderGrid[0, 6] = new MyHeader("业务总金额");
                 OrderGrid[0, 6].Column.Width = 150;
+                OrderGrid[0, 6].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
             }
             SourceGrid.Cells.Controllers.CustomEvents clickEvent = new SourceGrid.Cells.Controllers.CustomEvents();
             clickEvent.DoubleClick += new EventHandler(clickEvent_Click);
             int r = 1;
             foreach (Order order in list)
             {
-                OrderGrid[r, 0] = new SourceGrid.Cells.Cell(order.BeginDate, typeof(string));
+                OrderGrid.Rows[r].Tag = order.Id;
+                OrderGrid[r, 0] = new SourceGrid.Cells.Cell(order.BeginDate);
                 OrderGrid[r, 0].AddController(clickEvent);
-                OrderGrid[r, 1] = new SourceGrid.Cells.Cell(order.EndDate, typeof(string));
+                OrderGrid[r, 1] = new SourceGrid.Cells.Cell(order.EndDate);
                 OrderGrid[r, 1].AddController(clickEvent);
-                OrderGrid[r, 2] = new SourceGrid.Cells.Cell(order.OrderNo, typeof(string));
+                OrderGrid[r, 2] = new SourceGrid.Cells.Cell(order.OrderNo);
                 OrderGrid[r, 2].AddController(clickEvent);
-                OrderGrid[r, 3] = new SourceGrid.Cells.Cell(order.Description, typeof(string));
+                OrderGrid[r, 3] = new SourceGrid.Cells.Cell(order.Description);
                 OrderGrid[r, 3].AddController(clickEvent);
-                OrderGrid[r, 4] = new SourceGrid.Cells.Cell(order.SalesMan, typeof(string));
-                OrderGrid[r, 5] = new SourceGrid.Cells.Cell(order.Status, typeof(string));
+                OrderGrid[r, 4] = new SourceGrid.Cells.Cell(order.SalesMan);
+                OrderGrid[r, 5] = new SourceGrid.Cells.Cell(order.Status);
                 if (!IsFinOrderView)
                 {
-                    OrderGrid[r, 6] = new SourceGrid.Cells.Cell(order.Remark, typeof(string));
+                    OrderGrid[r, 6] = new SourceGrid.Cells.Cell(order.Remark);
                 }
                 else
                 {
                     string totalAmount = "￥" + order.TotalAmount.ToString("#,##0.00");
-                    OrderGrid[r, 6] = new SourceGrid.Cells.Cell(totalAmount, typeof(string));
+                    OrderGrid[r, 6] = new SourceGrid.Cells.Cell(totalAmount);
                     SourceGrid.Cells.Views.Cell view = new SourceGrid.Cells.Views.Cell();
                     view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleRight;
                     view.ForeColor = (order.TotalAmount > 0) ? Color.Red : Color.Blue;
@@ -162,8 +171,7 @@ namespace AliHelper
         private void clickEvent_Click(object sender, EventArgs e)
         {
             SourceGrid.CellContext context = (SourceGrid.CellContext)sender;
-            int index = context.Position.Row - 1;
-            int id = this.list[index].Id; ;
+            int id = (int)OrderGrid.Rows[context.Position.Row].Tag;
             NewOrderForm f = new NewOrderForm();
             f.UpdateOrder = finOrderManager.GetOrderById(id);
             f.ShowDialog(this);
