@@ -49,8 +49,10 @@ namespace AliHelper
             FinDetailDataView.Rows.Clear();
             if (list == null) return;
             int i = 0;
+            double TotalAmount = 0;
             foreach (FinDetails item in list)
             {
+                TotalAmount = TotalAmount + item.TotalAmount;
                 object[] item01 = new object[] { 
                     item.DetailId,
                     1 + i,
@@ -68,6 +70,10 @@ namespace AliHelper
                     (item.TotalAmount > 0)? Color.Red : Color.Blue;
                 i++;
             }
+            object[] summer = new object[] { null,null,null,"合计","￥" + TotalAmount.ToString("#,##0.00"),
+                    null,null,null,null, null };
+            FinDetailDataView.Rows.Add(summer);
+            FinDetailDataView.Rows[i].Cells[4].Style.ForeColor = (TotalAmount > 0) ? Color.Red : Color.Blue;
         }
 
         private void BindDataWithPage(int Page)
@@ -157,6 +163,7 @@ namespace AliHelper
         private void FinDetailDataView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             int id = Convert.ToInt32(this.FinDetailDataView.Rows[e.RowIndex].Cells[0].Value);
+            if (id == 0) return;
             EditFinDetail f = new EditFinDetail();
             f.UpdateDetail = finOrderManager.GetFinDetail(id);
             f.ShowDialog(this);

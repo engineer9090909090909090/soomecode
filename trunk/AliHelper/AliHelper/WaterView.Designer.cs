@@ -259,7 +259,7 @@ namespace AliHelper
             this.FinGrid.Margin = new System.Windows.Forms.Padding(0);
             this.FinGrid.Name = "FinGrid";
             this.FinGrid.OptimizeMode = SourceGrid.CellOptimizeMode.ForRows;
-            this.FinGrid.SelectionMode = SourceGrid.GridSelectionMode.Cell;
+            this.FinGrid.SelectionMode = SourceGrid.GridSelectionMode.Row;
             this.FinGrid.Size = new System.Drawing.Size(796, 322);
             this.FinGrid.TabIndex = 3;
             this.FinGrid.TabStop = true;
