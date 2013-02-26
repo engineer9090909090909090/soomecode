@@ -202,7 +202,7 @@ namespace AliHelper.DAO
         {
             string sql = "SELECT p.id FROM AliProducts p left join AliProductDetail d on p.id = d.pid  "
                          + "where p.id = " + id + "  and ( p.GmtModified >  d.gmtModified or d.pid is null ) ";
-            return Convert.IsDBNull(dbHelper.ExecuteScalar(sql, null));
+            return !Convert.IsDBNull(dbHelper.ExecuteScalar(sql, null));
         }
     }
 }

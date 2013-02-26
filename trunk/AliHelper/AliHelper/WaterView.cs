@@ -78,6 +78,7 @@ namespace AliHelper
             }
             FinGrid.Redim(0, 0);
             FinGrid.FixedRows = 2;
+            FinGrid.FixedColumns = 3;
             FinGrid.EnableSort = true;
             FinGrid.Redim(rowCount, 15);
             FinGrid[0, 0] = new MyHeader("日期");
