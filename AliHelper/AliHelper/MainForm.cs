@@ -60,7 +60,7 @@ namespace AliHelper
         {
             if (this.WindowState == FormWindowState.Minimized)
             {
-                this.Hide();
+                //this.Hide();
             }
         }
 
@@ -73,8 +73,8 @@ namespace AliHelper
             }
             else
             {
-                this.WindowState = FormWindowState.Minimized;
-                this.Hide();
+                //this.WindowState = FormWindowState.Minimized;
+                //this.Hide();
             }
         }
 
@@ -226,19 +226,6 @@ namespace AliHelper
                 }
             }
         }
-        void UpdateGroupItem_Click(object sender, EventArgs e)
-        {
-            this.BeginInvoke(new Action(() =>
-            {
-                AliGroup group = (AliGroup)this.treeView1.ContextMenuStrip.Tag;
-                if (group != null)
-                {
-                    List<AliGroup> groups = new List<AliGroup>();
-                    groups.Add(group);
-                    GetGroupProduct(groups, DataCache.Instance.CsrfToken);
-                }
-            }));
-        }
         #endregion
         
 
@@ -355,8 +342,20 @@ namespace AliHelper
         #endregion
 
         #region 更新产品
+
+        private AliGroup NeedUpdGroup;
+        void UpdateGroupItem_Click(object sender, EventArgs e)
+        {
+            NeedUpdGroup = (AliGroup)this.treeView1.ContextMenuStrip.Tag;
+            BackgroundWorker bgWorker = new BackgroundWorker();
+            bgWorker.DoWork += new DoWorkEventHandler(bgWorker_DoWork);
+            bgWorker.RunWorkerAsync();
+            bgWorker.Dispose();
+        }
+        
         private void updateAllProduct_Click(object sender, EventArgs e)
         {
+            NeedUpdGroup = null;
             BackgroundWorker bgWorker = new BackgroundWorker();
             bgWorker.DoWork += new DoWorkEventHandler(bgWorker_DoWork);
             bgWorker.RunWorkerAsync();
@@ -369,14 +368,23 @@ namespace AliHelper
             {
                 return;
             }
-            List<AliGroup> groups = HttpClient.GetGroups(-1, 0, DataCache.Instance.CsrfToken);
-            productsManager.UpdateGroups(groups);
-            GetGroupProduct(groups, DataCache.Instance.CsrfToken);
-            this.BeginInvoke(new Action(() =>
+            if (NeedUpdGroup == null)
             {
-                UpdateGroupUI(groups);
-            }));
-            
+                List<AliGroup> groups = HttpClient.GetGroups(-1, 0, DataCache.Instance.CsrfToken);
+                productsManager.UpdateGroups(groups);
+                GetGroupProduct(groups, DataCache.Instance.CsrfToken);
+                this.BeginInvoke(new Action(() =>
+                {
+                    UpdateGroupUI(groups);
+
+                }));
+            }
+            else 
+            {
+                List<AliGroup> groups = new List<AliGroup>();
+                groups.Add(NeedUpdGroup);
+                GetGroupProduct(groups, DataCache.Instance.CsrfToken);
+            }
         }
         #endregion
 
@@ -438,35 +446,21 @@ namespace AliHelper
             WebClient webClient = new WebClient();
             foreach (AliGroup group in groups)
             {
-                if (group.Level == 1)
+                List<AliProduct> products = HttpClient.GetProducts(groupDic, group.Id, group.Level, csrfToken);
+                productsManager.UpdateGroupProdcuts(group.Id, products);
+                foreach (AliProduct item in products)
                 {
-                    List<AliProduct> products = HttpClient.GetProducts(groupDic, group.Id, group.Level, csrfToken);
-                    productsManager.UpdateGroupProdcuts(group.Id, products);
-                    foreach (AliProduct item in products)
+                    FileUtils.DownloadProductImage(webClient, item.AbsImageUrl, item.Id);
+                    if (productsManager.IsNeedUpdateDetail(item.Id))
                     {
-                        FileUtils.DownloadProductImage(webClient, item.AbsImageUrl, item.Id);
-                        if (productsManager.IsNeedUpdateDetail(item.Id))
-                        {
-                            ProductDetail detail = impProductDetail.GetEditFormElements(item);
-                            productsManager.InsertOrUpdateProdcutDetail(detail);
-                            productList.Add(item);
-                        }
+                        ProductDetail detail = impProductDetail.GetEditFormElements(item);
+                        productsManager.InsertOrUpdateProdcutDetail(detail);
+                        productList.Add(item);
                     }
                 }
             }
             webClient.Dispose();
             webClient = null;
-        }
-        
-        public void GetGroupProduct(List<AliGroup> groups, AliGroup currGroup, string csrfToken)
-        {
-            Hashtable groupDic = new Hashtable();
-            foreach (AliGroup group in groups)
-            {
-                groupDic.Add(group.Name, group.Id);
-            }
-            List<AliProduct> products = HttpClient.GetProducts(groupDic, currGroup.Id, currGroup.Level, csrfToken);
-            productsManager.UpdateGroupProdcuts(currGroup.Id, products);
         }
 
         private void newProductBtn_Click(object sender, EventArgs e)

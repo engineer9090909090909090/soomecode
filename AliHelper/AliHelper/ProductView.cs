@@ -10,6 +10,7 @@ using Soomes;
 using System.Web;
 using System.Net;
 using System.IO;
+using System.Threading;
 
 namespace AliHelper
 {
@@ -20,6 +21,7 @@ namespace AliHelper
         private ProductsManager productsManager;
         private ImpProductDetail impProductDetail;
         private DataTable dataTable;
+        private int CurrentGroupId = 0;
         private int PrevSelectedId = 0;
         [DefaultValue(1), Category("自定义属性"), Description("产品详情")]
         public ProductDetail AliProductDetail { set; get; }
@@ -32,95 +34,66 @@ namespace AliHelper
             this.webBrowser1.ObjectForScripting = this;
             this.staticImage.Image = ImageUtils.ResizeImage(global::AliHelper.Properties.Resources.no_image, 150, 150);
             this.webBrowser1.Navigate(Application.StartupPath + "\\KindEditor\\Editor.htm");
-            productsManager.OnAddOrUpdateItemEvent += new NewEditItemEvent(productsManager_OnAddOrUpdateItemEvent);
-            InitDataGridview();
         }
-
-        void productsManager_OnAddOrUpdateItemEvent(object sender, ItemEventArgs e)
-        {
-            this.AliProductDetail = productsManager.GetProductDetail((int)e.Item);
-            this.LoadProductIamges();
-            this.LoadProductDetailValue();
-        }
-
 
         #region Load DataGridView
 
-        public void InitDataGridview()
-        {
-            this.dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-            dataTable = new DataTable();
-            dataTable.Columns.Add("Id", typeof(Int32));
-            dataTable.Columns.Add("Check", typeof(Boolean));
-            dataTable.Columns.Add("Image", typeof(Image));
-            dataTable.Columns.Add("Subject", typeof(string));
-            dataTable.Columns.Add("RedModel", typeof(string));
-            dataTable.Columns.Add("IsWindowProduct", typeof(string));
-            dataTable.Columns.Add("Status", typeof(string));
-            dataTable.Columns.Add("OwnerMemberName", typeof(string));
-            dataTable.Columns.Add("GmtModified", typeof(string));
-            
-            this.dataGridView1.DataSource = dataTable;
-            DataGridViewColumn column7 = this.dataGridView1.Columns[0];
-            column7.HeaderText = "Id";
-            column7.Width = 10;
-            column7.Visible = false;
-            DataGridViewColumn column0 = this.dataGridView1.Columns[1];
-            column0.HeaderText = "选中";
-            column0.Width = 40;
-            DataGridViewColumn column = this.dataGridView1.Columns[2];
-            column.HeaderText = "产品图片";
-            column.Width = 80;
-
-            DataGridViewColumn column1 = this.dataGridView1.Columns[3];
-            column1.HeaderText = "产品名称";
-            column1.Width = 450;
-
-            DataGridViewColumn column11 = this.dataGridView1.Columns[4];
-            column11.HeaderText = "型号";
-            column11.Width = 120;
-
-            DataGridViewColumn column2 = this.dataGridView1.Columns[5];
-            column2.HeaderText = "橱窗产品";
-            column2.Width = 80;
-
-            DataGridViewColumn column3 = this.dataGridView1.Columns[6];
-            column3.HeaderText = "产品状态";
-            column3.Width = 80;
-
-            DataGridViewColumn column4 = this.dataGridView1.Columns[7];
-            column4.HeaderText = "所属成员";
-            column4.Width = 100;
-
-            DataGridViewColumn column6 = this.dataGridView1.Columns[8];
-            column6.HeaderText = "更新时间";
-            column6.Width = 100;
-           
-        }
-
         public void LoadDataGridView(int GroupId)
         {
-            this.dataTable.Clear();
+            CurrentGroupId = GroupId;
+            this.dataGridView1.Rows.Clear();
+            ThreadPool.SetMinThreads(6, 40);
+            ThreadPool.SetMaxThreads(10, 200);
             List<AliProduct> productList = productsManager.GetProductList(GroupId);
-            if (productList.Count > 0)
+            for (int i = 0; i < productList.Count; i++)
             {
-                foreach (AliProduct item in productList)
+                AliProduct item = productList[i];
+                string imageFile = FileUtils.GetProductImagesFolder() 
+                                 + Path.DirectorySeparatorChar + item.Id + ".jpg";
+                object[] item01 = new object[] { 
+                    item.Id,
+                    ImageUtils.ResizeImage(imageFile, 50, 50),
+                    item.Subject,
+                    item.RedModel,
+                    item.IsWindowProduct?"是":"",
+                    item.Keywords,
+                    item.Status,
+                    item.OwnerMemberName,
+                    item.GmtModified,
+                };
+                this.dataGridView1.Rows.Add(item01);
+
+                if (!File.Exists(imageFile))
                 {
-                    DataRow row = this.dataTable.NewRow();
-                    row["Id"] = item.Id;
-                    row["Check"] = false;
-                    string imageFile = FileUtils.GetProductImagesFolder() + Path.DirectorySeparatorChar + item.Id + ".jpg";
-                    row["Image"] = ImageUtils.ResizeImage(imageFile, 50, 50);
-                    row["Subject"] = item.Subject;
-                    row["RedModel"] = item.RedModel;
-                    row["IsWindowProduct"] = item.IsWindowProduct?"是":"";
-                    row["Status"] = item.Status;
-                    row["OwnerMemberName"] = item.OwnerMemberName;
-                    row["GmtModified"] = item.GmtModified;
-                    this.dataTable.Rows.Add(row);
+                    ThreadPool.QueueUserWorkItem(new WaitCallback(DoWork), new object[] { item, i, GroupId });
                 }
             }
         }
+
+        private void DoWork(object obj)
+        {
+            object[] arg = (object[])obj;
+            AliProduct item = (AliProduct)arg[0];
+            int rowIndex = (int)arg[1];
+            int groupId =  (int)arg[2];
+            WebClient webClient = new WebClient();
+            FileUtils.DownloadProductImage(webClient, item.AbsImageUrl, item.Id);
+            webClient.Dispose();
+            webClient = null;
+            if (groupId != CurrentGroupId)
+            {
+                return;
+            }
+            this.BeginInvoke(new Action(() =>
+            {
+                string imageFile = FileUtils.GetProductImagesFolder()
+                        + Path.DirectorySeparatorChar + item.Id + ".jpg";
+                this.dataGridView1.Rows[rowIndex].Cells[1].Value = 
+                        ImageUtils.ResizeImage(imageFile, 50, 50);
+
+            }));
+        }
+
         #endregion
 
         #region RadioBox ChangeEvent
@@ -216,6 +189,11 @@ namespace AliHelper
         
         public void LoadProductDetailValue()
         {
+            if (AliProductDetail == null)
+            {
+                return;
+            }
+
             if (AliProductDetail.productName != null)
             {
                 this.productName.Tag = AliProductDetail.productName;
@@ -557,6 +535,10 @@ namespace AliHelper
 
         public void LoadProductIamges()
         {
+            if (AliProductDetail == null)
+            {
+                return;
+            }
             List<ImageJson> imageJsons = JsonConvert.FromJson<List<ImageJson>>(AliProductDetail.imageFiles.Value);
             if (imageJsons == null || imageJsons.Count == 0)
             {
@@ -747,7 +729,7 @@ namespace AliHelper
             }
         }
 
-        void ComputeLink_Click(object sender, System.EventArgs e)
+        private void ComputeLink_Click(object sender, System.EventArgs e)
         {
             OpenFileDialog open = new OpenFileDialog();
             open.Title = "请选择要上传的图片";
@@ -781,25 +763,33 @@ namespace AliHelper
                 if (id != PrevSelectedId)
                 {
                     PrevSelectedId = id;
-                    ProductDetail detail = productsManager.GetProductDetail(id);
-                    this.AliProductDetail = detail;
-                    if (detail == null)
+                    this.AliProductDetail = productsManager.GetProductDetail(PrevSelectedId);
+                    this.LoadProductIamges();
+                    this.LoadProductDetailValue();
+                    this.dataGridView1.Focus();
+                    if (AliProductDetail == null)
                     {
-                        this.BeginInvoke(new Action(() =>
-                        {
-                            AliProduct product = productsManager.GetAliProduct(id);
-                            detail = impProductDetail.GetEditFormElements(product);
-                            productsManager.InsertOrUpdateProdcutDetail(detail);
-                        }));
+                        BackgroundWorker backgroundWorker = new BackgroundWorker();
+                        backgroundWorker.DoWork += new DoWorkEventHandler(DownProductDetail_DoWork);
+                        backgroundWorker.RunWorkerAsync();
+                        backgroundWorker.Dispose();
                     }
-                    else 
-                    {
-                        this.LoadProductIamges();
-                        this.LoadProductDetailValue();
-                    }
-                    
                 }
             }
+        }
+
+        private void DownProductDetail_DoWork(object sender, DoWorkEventArgs e)
+        {
+            AliProduct product = productsManager.GetAliProduct(PrevSelectedId);
+            ProductDetail detail = impProductDetail.GetEditFormElements(product);
+            productsManager.InsertOrUpdateProdcutDetail(detail);
+            this.AliProductDetail = productsManager.GetProductDetail(PrevSelectedId);
+            this.BeginInvoke(new Action(() =>
+            {
+                this.LoadProductIamges();
+                this.LoadProductDetailValue();
+                this.dataGridView1.Focus();
+            }));
         }
 
         public void ShowPhotobank()

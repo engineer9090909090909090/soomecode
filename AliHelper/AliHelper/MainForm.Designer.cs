@@ -466,7 +466,7 @@
             // AppNotifyIcon
             // 
             this.AppNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("AppNotifyIcon.Icon")));
-            this.AppNotifyIcon.Text = "notifyIcon1";
+            this.AppNotifyIcon.Text = "外贸助手";
             this.AppNotifyIcon.Visible = true;
             this.AppNotifyIcon.DoubleClick += new System.EventHandler(this.AppNotifyIcon_DoubleClick);
             // 
