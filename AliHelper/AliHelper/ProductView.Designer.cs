@@ -29,9 +29,6 @@ namespace AliHelper
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.ProductInfoControl = new System.Windows.Forms.TabControl();
             this.BaseInfoTab = new System.Windows.Forms.TabPage();
             this.staticImagePanel = new System.Windows.Forms.Panel();
@@ -138,16 +135,7 @@ namespace AliHelper
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Image = new System.Windows.Forms.DataGridViewImageColumn();
-            this.Subject = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RedModel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sWindowProduct = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Keywords = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OwnerMemberName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GmtModified = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.ProductGrid = new SourceGrid.Grid();
             this.ProductInfoControl.SuspendLayout();
             this.BaseInfoTab.SuspendLayout();
             this.staticImagePanel.SuspendLayout();
@@ -171,57 +159,6 @@ namespace AliHelper
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToOrderColumns = true;
-            this.dataGridView1.AllowUserToResizeColumns = false;
-            this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ControlDark;
-            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.dataGridView1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SunkenHorizontal;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridView1.ColumnHeadersHeight = 22;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Id,
-            this.Image,
-            this.Subject,
-            this.RedModel,
-            this.sWindowProduct,
-            this.Keywords,
-            this.Status,
-            this.OwnerMemberName,
-            this.GmtModified});
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.ControlDark;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.RowTemplate.Height = 50;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.ShowEditingIcon = false;
-            this.dataGridView1.ShowRowErrors = false;
-            this.dataGridView1.Size = new System.Drawing.Size(1047, 320);
-            this.dataGridView1.TabIndex = 1;
-            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // ProductInfoControl
             // 
@@ -1256,7 +1193,8 @@ namespace AliHelper
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.dataGridView1);
+            this.splitContainer1.Panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.splitContainer1.Panel1.Controls.Add(this.ProductGrid);
             // 
             // splitContainer1.Panel2
             // 
@@ -1265,65 +1203,22 @@ namespace AliHelper
             this.splitContainer1.SplitterDistance = 320;
             this.splitContainer1.TabIndex = 0;
             // 
-            // Id
+            // ProductGrid
             // 
-            this.Id.HeaderText = "Id";
-            this.Id.Name = "Id";
-            this.Id.ReadOnly = true;
-            this.Id.Visible = false;
-            // 
-            // Image
-            // 
-            this.Image.HeaderText = "产品图片";
-            this.Image.Name = "Image";
-            this.Image.ReadOnly = true;
-            // 
-            // Subject
-            // 
-            this.Subject.HeaderText = "产品名称";
-            this.Subject.Name = "Subject";
-            this.Subject.ReadOnly = true;
-            this.Subject.Width = 450;
-            // 
-            // RedModel
-            // 
-            this.RedModel.HeaderText = "型号";
-            this.RedModel.Name = "RedModel";
-            this.RedModel.ReadOnly = true;
-            this.RedModel.Width = 150;
-            // 
-            // sWindowProduct
-            // 
-            this.sWindowProduct.HeaderText = "橱窗产品";
-            this.sWindowProduct.Name = "sWindowProduct";
-            this.sWindowProduct.ReadOnly = true;
-            this.sWindowProduct.Width = 80;
-            // 
-            // Keywords
-            // 
-            this.Keywords.HeaderText = "关键词";
-            this.Keywords.Name = "Keywords";
-            this.Keywords.ReadOnly = true;
-            this.Keywords.Width = 250;
-            // 
-            // Status
-            // 
-            this.Status.HeaderText = "产品状态";
-            this.Status.Name = "Status";
-            this.Status.ReadOnly = true;
-            this.Status.Width = 80;
-            // 
-            // OwnerMemberName
-            // 
-            this.OwnerMemberName.HeaderText = "所属成员";
-            this.OwnerMemberName.Name = "OwnerMemberName";
-            this.OwnerMemberName.ReadOnly = true;
-            // 
-            // GmtModified
-            // 
-            this.GmtModified.HeaderText = "更新时间";
-            this.GmtModified.Name = "GmtModified";
-            this.GmtModified.ReadOnly = true;
+            this.ProductGrid.AutoSize = true;
+            this.ProductGrid.BackColor = System.Drawing.SystemColors.Control;
+            this.ProductGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ProductGrid.EnableSort = true;
+            this.ProductGrid.Location = new System.Drawing.Point(0, 0);
+            this.ProductGrid.Margin = new System.Windows.Forms.Padding(0);
+            this.ProductGrid.Name = "ProductGrid";
+            this.ProductGrid.OptimizeMode = SourceGrid.CellOptimizeMode.ForRows;
+            this.ProductGrid.Padding = new System.Windows.Forms.Padding(1);
+            this.ProductGrid.SelectionMode = SourceGrid.GridSelectionMode.Row;
+            this.ProductGrid.Size = new System.Drawing.Size(1047, 320);
+            this.ProductGrid.TabIndex = 0;
+            this.ProductGrid.TabStop = true;
+            this.ProductGrid.ToolTipText = "";
             // 
             // ProductView
             // 
@@ -1334,7 +1229,6 @@ namespace AliHelper
             this.Name = "ProductView";
             this.Size = new System.Drawing.Size(1047, 721);
             this.Load += new System.EventHandler(this.ProductView_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ProductInfoControl.ResumeLayout(false);
             this.BaseInfoTab.ResumeLayout(false);
             this.BaseInfoTab.PerformLayout();
@@ -1365,6 +1259,7 @@ namespace AliHelper
             this.TransTab.ResumeLayout(false);
             this.TransTab.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -1374,7 +1269,6 @@ namespace AliHelper
         
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.TabControl ProductInfoControl;
         private System.Windows.Forms.TabPage BaseInfoTab;
         private System.Windows.Forms.TabPage AttrTab;
@@ -1481,14 +1375,6 @@ namespace AliHelper
         private Label label22;
         private CheckBox dynamicImageWaterMarkId;
         private SplitContainer splitContainer1;
-        private DataGridViewTextBoxColumn Id;
-        private DataGridViewImageColumn Image;
-        private DataGridViewTextBoxColumn Subject;
-        private DataGridViewTextBoxColumn RedModel;
-        private DataGridViewTextBoxColumn sWindowProduct;
-        private DataGridViewTextBoxColumn Keywords;
-        private DataGridViewTextBoxColumn Status;
-        private DataGridViewTextBoxColumn OwnerMemberName;
-        private DataGridViewTextBoxColumn GmtModified;
+        private SourceGrid.Grid ProductGrid;
     }
 }
