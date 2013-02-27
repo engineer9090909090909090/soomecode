@@ -20,11 +20,12 @@ namespace AliHelper
 
         private ProductsManager productsManager;
         private ImpProductDetail impProductDetail;
-        private DataTable dataTable;
         private int CurrentGroupId = 0;
         private int PrevSelectedId = 0;
         [DefaultValue(1), Category("自定义属性"), Description("产品详情")]
         public ProductDetail AliProductDetail { set; get; }
+
+        #region Load ProductView
         
         public ProductView()
         {
@@ -35,140 +36,6 @@ namespace AliHelper
             this.staticImage.Image = ImageUtils.ResizeImage(global::AliHelper.Properties.Resources.no_image, 150, 150);
             this.webBrowser1.Navigate(Application.StartupPath + "\\KindEditor\\Editor.htm");
         }
-
-        #region Load DataGridView
-
-        public void LoadDataGridView(int GroupId)
-        {
-            CurrentGroupId = GroupId;
-            ThreadPool.SetMinThreads(6, 40);
-            ThreadPool.SetMaxThreads(10, 200);
-            List<AliProduct> productList = productsManager.GetProductList(GroupId);
-            DoFill(GroupId, productList);
-        }
-
-
-        public void DoFill(int GroupId, List<AliProduct> list)
-        {
-            ProductGrid.Redim(0, 0);
-            ProductGrid.FixedRows = 1;
-            ProductGrid.EnableSort = true;
-            ProductGrid.Redim(list.Count + 1, 8);
-            ProductGrid[0, 0] = new MyHeader("产品图片");
-            ProductGrid[0, 0].Column.Width = 80;
-            ProductGrid[0, 0].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
-            ProductGrid[0, 1] = new MyHeader("产品名称");
-            ProductGrid[0, 1].Column.Width = 450;
-            ProductGrid[0, 1].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
-            ProductGrid[0, 2] = new MyHeader("型号");
-            ProductGrid[0, 2].Column.Width = 150;
-            ProductGrid[0, 2].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
-            ProductGrid[0, 3] = new MyHeader("橱窗产品");
-            ProductGrid[0, 3].Column.Width = 80;
-            ProductGrid[0, 3].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
-            ProductGrid[0, 4] = new MyHeader("关键词");
-            ProductGrid[0, 4].Column.Width = 250;
-            ProductGrid[0, 4].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
-            ProductGrid[0, 5] = new MyHeader("产品状态");
-            ProductGrid[0, 5].Column.Width = 100;
-            ProductGrid[0, 5].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
-            ProductGrid[0, 6] = new MyHeader("所属成员");
-            ProductGrid[0, 6].Column.Width = 100;
-            ProductGrid[0, 6].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
-            ProductGrid[0, 7] = new MyHeader("更新时间");
-            ProductGrid[0, 7].Column.Width = 100;
-            ProductGrid[0, 7].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
-            SourceGrid.Cells.Controllers.CustomEvents clickEvent = new SourceGrid.Cells.Controllers.CustomEvents();
-            clickEvent.DoubleClick += new EventHandler(clickEvent_Click);
-            int r = 1;
-            foreach (AliProduct item in list)
-            {
-                string imageFile = FileUtils.GetProductImagesFolder()
-                                 + Path.DirectorySeparatorChar + item.Id + ".jpg";
-                Image image = ImageUtils.ResizeImage(imageFile, 50, 50);
-                ProductGrid.Rows[r].Tag = item.Id;
-                ProductGrid.Rows[r].Height = 80;
-                ProductGrid[r, 0] = new SourceGrid.Cells.Image(image);
-                ProductGrid[r, 0].AddController(clickEvent);
-                ProductGrid[r, 1] = new SourceGrid.Cells.Cell(item.Subject);
-                ProductGrid[r, 1].AddController(clickEvent);
-                ProductGrid[r, 2] = new SourceGrid.Cells.Cell(item.RedModel);
-                ProductGrid[r, 2].AddController(clickEvent);
-                ProductGrid[r, 3] = new SourceGrid.Cells.Cell(item.IsWindowProduct?"是":"");
-                ProductGrid[r, 3].AddController(clickEvent);
-                ProductGrid[r, 4] = new SourceGrid.Cells.Cell(item.Keywords);
-                ProductGrid[r, 4].AddController(clickEvent);
-                ProductGrid[r, 5] = new SourceGrid.Cells.Cell(item.Status);
-                ProductGrid[r, 5].AddController(clickEvent);
-                ProductGrid[r, 6] = new SourceGrid.Cells.Cell(item.OwnerMemberName);
-                ProductGrid[r, 6].AddController(clickEvent);
-                ProductGrid[r, 7] = new SourceGrid.Cells.Cell(item.GmtModified);
-                ProductGrid[r, 7].AddController(clickEvent);
-                if (!File.Exists(imageFile))
-                {
-                    ThreadPool.QueueUserWorkItem(new WaitCallback(DoWork), new object[] { item, r, GroupId });
-                }
-                r++;
-            }
-            ProductGrid.ClipboardMode = SourceGrid.ClipboardMode.All;
-        }
-
-        private class MyHeader : SourceGrid.Cells.ColumnHeader
-        {
-            public MyHeader(object value)
-                : base(value)
-            {
-                SourceGrid.Cells.Views.ColumnHeader view = new SourceGrid.Cells.Views.ColumnHeader();
-                view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleCenter;
-                View = view;
-                AutomaticSortEnabled = false;
-            }
-        }
-
-        private void DoWork(object obj)
-        {
-            object[] arg = (object[])obj;
-            AliProduct item = (AliProduct)arg[0];
-            int rowIndex = (int)arg[1];
-            int groupId =  (int)arg[2];
-            WebClient webClient = new WebClient();
-            FileUtils.DownloadProductImage(webClient, item.AbsImageUrl, item.Id);
-            webClient.Dispose();
-            webClient = null;
-            if (groupId != CurrentGroupId)
-            {
-                return;
-            }
-            this.BeginInvoke(new Action(() =>
-            {
-                string imageFile = FileUtils.GetProductImagesFolder()
-                        + Path.DirectorySeparatorChar + item.Id + ".jpg";
-                ProductGrid[rowIndex, 0].Value = 
-                        ImageUtils.ResizeImage(imageFile, 50, 50);
-
-            }));
-        }
-
-        #endregion
-
-        #region RadioBox ChangeEvent
-        private void staticImageWaterMarkId_CheckedChanged(object sender, EventArgs e)
-        {
-            this.staticImageWaterMarkIdGroup.Visible = 
-                this.staticImageWaterMarkId.Enabled && this.staticImageWaterMarkId.Checked;
-        }
-
-        private void dynamicImageWaterMarkId_CheckedChanged(object sender, EventArgs e)
-        {
-            this.dynamicImageWaterMarkIdGroup.Visible = 
-                this.dynamicImageWaterMarkId.Enabled && this.dynamicImageWaterMarkId.Checked;
-        }
-        private void static_and_dyn0_CheckedChanged(object sender, EventArgs e)
-        {
-            this.staticImagePanel.Visible = static_and_dyn0.Checked;
-            this.dynamicImagePanel.Visible = !static_and_dyn0.Checked;
-        }
-        #endregion
 
         private void ProductView_Load(object sender, EventArgs e)
         {
@@ -240,7 +107,181 @@ namespace AliHelper
             }
             this.staticImagePanel.Visible = true;
             this.dynamicImagePanel.Visible = false;
+            DoFill(-1, new List<AliProduct>());
         }
+        
+        #endregion
+
+        #region Load ProductGridView
+
+        public void LoadDataGridView(int GroupId)
+        {
+            CurrentGroupId = GroupId;
+            ThreadPool.SetMinThreads(6, 40);
+            ThreadPool.SetMaxThreads(10, 200);
+            List<AliProduct> productList = productsManager.GetProductList(GroupId);
+            DoFill(GroupId, productList);
+        }
+
+        public void DoFill(int GroupId, List<AliProduct> list)
+        {
+            ProductGrid.Redim(0, 0);
+            ProductGrid.FixedRows = 1;
+            ProductGrid.EnableSort = true;
+            ProductGrid.Redim(list.Count + 1, 8);
+            ProductGrid[0, 0] = new MyHeader("产品图片");
+            ProductGrid[0, 0].Column.Width = 80;
+            ProductGrid[0, 0].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
+            ProductGrid[0, 1] = new MyHeader("产品名称");
+            ProductGrid[0, 1].Column.Width = 450;
+            ProductGrid[0, 1].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
+            ProductGrid[0, 2] = new MyHeader("型号");
+            ProductGrid[0, 2].Column.Width = 150;
+            ProductGrid[0, 2].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
+            ProductGrid[0, 3] = new MyHeader("橱窗产品");
+            ProductGrid[0, 3].Column.Width = 80;
+            ProductGrid[0, 3].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
+            ProductGrid[0, 4] = new MyHeader("关键词");
+            ProductGrid[0, 4].Column.Width = 250;
+            ProductGrid[0, 4].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
+            ProductGrid[0, 5] = new MyHeader("产品状态");
+            ProductGrid[0, 5].Column.Width = 100;
+            ProductGrid[0, 5].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
+            ProductGrid[0, 6] = new MyHeader("所属成员");
+            ProductGrid[0, 6].Column.Width = 100;
+            ProductGrid[0, 6].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
+            ProductGrid[0, 7] = new MyHeader("更新时间");
+            ProductGrid[0, 7].Column.Width = 100;
+            ProductGrid[0, 7].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
+            SourceGrid.Cells.Controllers.CustomEvents clickEvent = new SourceGrid.Cells.Controllers.CustomEvents();
+            clickEvent.Click += new EventHandler(clickEvent_Click);
+            int r = 1;
+            foreach (AliProduct item in list)
+            {
+                string imageFile = FileUtils.GetProductImagesFolder()
+                                 + Path.DirectorySeparatorChar + item.Id + ".jpg";
+                Image image = ImageUtils.ResizeImage(imageFile, 50, 50);
+                ProductGrid.Rows[r].Tag = item.Id;
+                ProductGrid.Rows[r].Height = 80;
+                ProductGrid[r, 0] = new SourceGrid.Cells.Image(image);
+                ProductGrid[r, 0].AddController(clickEvent);
+                ProductGrid[r, 1] = new SourceGrid.Cells.Cell(item.Subject);
+                ProductGrid[r, 1].AddController(clickEvent);
+                ProductGrid[r, 2] = new SourceGrid.Cells.Cell(item.RedModel);
+                ProductGrid[r, 2].AddController(clickEvent);
+                ProductGrid[r, 3] = new SourceGrid.Cells.Cell(item.IsWindowProduct?"是":"");
+                ProductGrid[r, 3].AddController(clickEvent);
+                ProductGrid[r, 4] = new SourceGrid.Cells.Cell(item.Keywords);
+                ProductGrid[r, 4].AddController(clickEvent);
+                ProductGrid[r, 5] = new SourceGrid.Cells.Cell(item.Status);
+                ProductGrid[r, 5].AddController(clickEvent);
+                ProductGrid[r, 6] = new SourceGrid.Cells.Cell(item.OwnerMemberName);
+                ProductGrid[r, 6].AddController(clickEvent);
+                ProductGrid[r, 7] = new SourceGrid.Cells.Cell(item.GmtModified);
+                ProductGrid[r, 7].AddController(clickEvent);
+                if (!File.Exists(imageFile))
+                {
+                    ThreadPool.QueueUserWorkItem(new WaitCallback(LoadingProductImage), 
+                        new object[] { item, r, GroupId });
+                }
+                r++;
+            }
+            ProductGrid.ClipboardMode = SourceGrid.ClipboardMode.All;
+        }
+
+        private class MyHeader : SourceGrid.Cells.ColumnHeader
+        {
+            public MyHeader(object value)
+                : base(value)
+            {
+                SourceGrid.Cells.Views.ColumnHeader view = new SourceGrid.Cells.Views.ColumnHeader();
+                view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleCenter;
+                View = view;
+                AutomaticSortEnabled = false;
+            }
+        }
+
+        private void LoadingProductImage(object obj)
+        {
+            object[] arg = (object[])obj;
+            AliProduct item = (AliProduct)arg[0];
+            int rowIndex = (int)arg[1];
+            int groupId =  (int)arg[2];
+            WebClient webClient = new WebClient();
+            FileUtils.DownloadProductImage(webClient, item.AbsImageUrl, item.Id);
+            webClient.Dispose();
+            webClient = null;
+            if (groupId != CurrentGroupId)
+            {
+                return;
+            }
+            this.BeginInvoke(new Action(() =>
+            {
+                string imageFile = FileUtils.GetProductImagesFolder()
+                        + Path.DirectorySeparatorChar + item.Id + ".jpg";
+                ProductGrid[rowIndex, 0].Value = 
+                        ImageUtils.ResizeImage(imageFile, 50, 50);
+
+            }));
+        }
+
+        private void clickEvent_Click(object sender, EventArgs e)
+        {
+            SourceGrid.CellContext context = (SourceGrid.CellContext)sender;
+            int id = (int)ProductGrid.Rows[context.Position.Row].Tag;
+            if (id != PrevSelectedId)
+            {
+                PrevSelectedId = id;
+                this.AliProductDetail = productsManager.GetProductDetail(PrevSelectedId);
+                this.LoadProductIamges();
+                this.LoadProductDetailValue();
+                this.ProductGrid.Focus();
+                if (AliProductDetail == null)
+                {
+                    BackgroundWorker backgroundWorker = new BackgroundWorker();
+                    backgroundWorker.DoWork += new DoWorkEventHandler(DownProductDetail_DoWork);
+                    backgroundWorker.RunWorkerAsync();
+                    backgroundWorker.Dispose();
+                }
+            }
+        }
+
+        private void DownProductDetail_DoWork(object sender, DoWorkEventArgs e)
+        {
+            AliProduct product = productsManager.GetAliProduct(PrevSelectedId);
+            ProductDetail detail = impProductDetail.GetEditFormElements(product);
+            productsManager.InsertOrUpdateProdcutDetail(detail);
+            this.AliProductDetail = productsManager.GetProductDetail(PrevSelectedId);
+            this.BeginInvoke(new Action(() =>
+            {
+                this.LoadProductIamges();
+                this.LoadProductDetailValue();
+                this.ProductGrid.Focus();
+            }));
+        }
+
+
+        #endregion
+
+        #region RadioBox ChangeEvent
+        private void staticImageWaterMarkId_CheckedChanged(object sender, EventArgs e)
+        {
+            this.staticImageWaterMarkIdGroup.Visible = 
+                this.staticImageWaterMarkId.Enabled && this.staticImageWaterMarkId.Checked;
+        }
+
+        private void dynamicImageWaterMarkId_CheckedChanged(object sender, EventArgs e)
+        {
+            this.dynamicImageWaterMarkIdGroup.Visible = 
+                this.dynamicImageWaterMarkId.Enabled && this.dynamicImageWaterMarkId.Checked;
+        }
+        private void static_and_dyn0_CheckedChanged(object sender, EventArgs e)
+        {
+            this.staticImagePanel.Visible = static_and_dyn0.Checked;
+            this.dynamicImagePanel.Visible = !static_and_dyn0.Checked;
+        }
+        #endregion
+
         
         public void LoadProductDetailValue()
         {
@@ -808,42 +849,6 @@ namespace AliHelper
 
         private void ImageBankLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-        }
-
-        private void clickEvent_Click(object sender, EventArgs e)
-        {
-            SourceGrid.CellContext context = (SourceGrid.CellContext)sender;
-            int id = (int)ProductGrid.Rows[context.Position.Row].Tag;
-            if (id != PrevSelectedId)
-            {
-                PrevSelectedId = id;
-                this.AliProductDetail = productsManager.GetProductDetail(PrevSelectedId);
-                this.LoadProductIamges();
-                this.LoadProductDetailValue();
-                this.ProductGrid.Focus();
-                if (AliProductDetail == null)
-                {
-                    BackgroundWorker backgroundWorker = new BackgroundWorker();
-                    backgroundWorker.DoWork += new DoWorkEventHandler(DownProductDetail_DoWork);
-                    backgroundWorker.RunWorkerAsync();
-                    backgroundWorker.Dispose();
-                }
-            }
-        }
-
-
-        private void DownProductDetail_DoWork(object sender, DoWorkEventArgs e)
-        {
-            AliProduct product = productsManager.GetAliProduct(PrevSelectedId);
-            ProductDetail detail = impProductDetail.GetEditFormElements(product);
-            productsManager.InsertOrUpdateProdcutDetail(detail);
-            this.AliProductDetail = productsManager.GetProductDetail(PrevSelectedId);
-            this.BeginInvoke(new Action(() =>
-            {
-                this.LoadProductIamges();
-                this.LoadProductDetailValue();
-                this.ProductGrid.Focus();
-            }));
         }
 
         public void ShowPhotobank()
