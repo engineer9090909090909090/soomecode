@@ -21,18 +21,11 @@ namespace AliHelper
 
         public event EventHandler PageIndexChanged;
 
-        public Pager()
-        {
-            InitializeComponent();
-            ShowPageSizeList();
-            this.cmbPageSize.SelectedIndex = 0;
-        }
-
 
         [Category("自定义属性"), Description("是否显示每页显示记录数")]
         public bool ShowPageSizeDropdown { set; get; }
 
-        
+
 
         private int PageCount
         {
@@ -81,14 +74,35 @@ namespace AliHelper
             }
             set
             {
-                if (value != this._RecordCount)
-                {
-                    this._RecordCount = value;
-                    UpdateUI();
-                }
+                this._RecordCount = value;
+                UpdateUI();
             }
         }
         
+
+        public Pager()
+        {
+            InitializeComponent();
+            ShowPageSizeList();
+        }
+        private void WinFormPager_Load(object sender, EventArgs e)
+        {
+            this.ShowPageSizeList();
+            if (this.ShowPageSizeDropdown)
+            {
+                foreach (object item in cmbPageSize.Items)
+                {
+                    if (Convert.ToInt32(item) == PageSize)
+                    {
+                        cmbPageSize.SelectedItem = item;
+                    }
+                }
+            }
+            this.cmbPageSize.SelectedIndexChanged += new System.EventHandler(this.cmbPageSize_SelectedIndexChanged);
+            this.SetPagerText();
+            this.SetBtnEnabled();
+        }
+
         protected int GetPageCount(int RecordCounts, int PageSizes)
         {
             int num = 0;
@@ -230,13 +244,6 @@ namespace AliHelper
             this.CustomEvent(sender, e);
         }
 
-        private void WinFormPager_Load(object sender, EventArgs e)
-        {
-            this.ShowPageSizeList();
-            this.SetPagerText();
-            this.SetBtnEnabled();
-        }
-
         private void UpdateUI()
         {
             int pageCount = this.GetPageCount(this._RecordCount, this._PageSize);
@@ -270,7 +277,8 @@ namespace AliHelper
             { 
                 string text = this.cmbPageSize.SelectedItem.ToString();
                 this._PageSize = Convert.ToInt32(text);
-                btnGo_Click(sender, e);
+                this.PageIndex = 1;
+                this.CustomEvent(sender, e);
             }
         }
     }
