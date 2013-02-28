@@ -96,6 +96,7 @@
     <Compile Include="Controls\DateTimePickerX.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Passporter2.cs" />
     <Compile Include="DAO\AliGroupDao.cs" />
     <Compile Include="DAO\AliProductDao.cs" />
     <Compile Include="DAO\AliImageDao.cs" />
@@ -236,9 +237,11 @@
     </Compile>
     <EmbeddedResource Include="CheckCodeForm.resx">
       <DependentUpon>CheckCodeForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="DicForm.resx">
       <DependentUpon>DicForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="EditCategory.resx">
       <DependentUpon>EditCategory.cs</DependentUpon>
@@ -292,6 +295,7 @@
     </Compile>
     <EmbeddedResource Include="Controls\Pager.resx">
       <DependentUpon>Pager.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\TreeViewImages.resx">
       <Generator>ResXFileCodeGenerator</Generator>

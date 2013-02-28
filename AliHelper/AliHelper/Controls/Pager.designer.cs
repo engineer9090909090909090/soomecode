@@ -63,12 +63,12 @@
             this.lab2PageSize,
             this.cmbPageSize,
             this.lab1PageSize,
-            this.lab3PageSize,
-            this.btnFirst,
-            this.btnPrev,
-            this.txtCurrentPage,
-            this.btnNext,
             this.btnLast,
+            this.btnNext,
+            this.lab3PageSize,
+            this.txtCurrentPage,
+            this.btnPrev,
+            this.btnFirst,
             this.toolStripSeparator1,
             this.lblPager});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
@@ -97,7 +97,7 @@
             // toolStripLabel1
             // 
             this.toolStripLabel1.AutoSize = false;
-            this.toolStripLabel1.Font = new System.Drawing.Font("宋体", 9F);
+            this.toolStripLabel1.Font = new System.Drawing.Font("SimSun", 9F);
             this.toolStripLabel1.Name = "toolStripLabel1";
             this.toolStripLabel1.Size = new System.Drawing.Size(20, 20);
             this.toolStripLabel1.Text = "页";
@@ -109,12 +109,12 @@
             this.cmbCurrentPage.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.cmbCurrentPage.Name = "cmbCurrentPage";
             this.cmbCurrentPage.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.cmbCurrentPage.Size = new System.Drawing.Size(45, 20);
+            this.cmbCurrentPage.Size = new System.Drawing.Size(45, 21);
             // 
             // toolStripLabel3
             // 
             this.toolStripLabel3.AutoSize = false;
-            this.toolStripLabel3.Font = new System.Drawing.Font("宋体", 9F);
+            this.toolStripLabel3.Font = new System.Drawing.Font("SimSun", 9F);
             this.toolStripLabel3.Name = "toolStripLabel3";
             this.toolStripLabel3.Size = new System.Drawing.Size(20, 20);
             this.toolStripLabel3.Text = "第";
@@ -127,7 +127,7 @@
             // lab2PageSize
             // 
             this.lab2PageSize.AutoSize = false;
-            this.lab2PageSize.Font = new System.Drawing.Font("宋体", 9F);
+            this.lab2PageSize.Font = new System.Drawing.Font("SimSun", 9F);
             this.lab2PageSize.Name = "lab2PageSize";
             this.lab2PageSize.Size = new System.Drawing.Size(20, 20);
             this.lab2PageSize.Text = "条";
@@ -145,14 +145,13 @@
             "200"});
             this.cmbPageSize.Name = "cmbPageSize";
             this.cmbPageSize.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.cmbPageSize.Size = new System.Drawing.Size(45, 20);
+            this.cmbPageSize.Size = new System.Drawing.Size(45, 21);
             this.cmbPageSize.Visible = false;
-            this.cmbPageSize.SelectedIndexChanged += new System.EventHandler(this.cmbPageSize_SelectedIndexChanged);
             // 
             // lab1PageSize
             // 
             this.lab1PageSize.AutoSize = false;
-            this.lab1PageSize.Font = new System.Drawing.Font("宋体", 9F);
+            this.lab1PageSize.Font = new System.Drawing.Font("SimSun", 9F);
             this.lab1PageSize.Name = "lab1PageSize";
             this.lab1PageSize.Size = new System.Drawing.Size(31, 20);
             this.lab1PageSize.Text = "每页";
@@ -168,6 +167,7 @@
             this.btnFirst.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnFirst.Image = ((System.Drawing.Image)(resources.GetObject("btnFirst.Image")));
             this.btnFirst.Name = "btnFirst";
+            this.btnFirst.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.btnFirst.RightToLeftAutoMirrorImage = true;
             this.btnFirst.Size = new System.Drawing.Size(25, 24);
             this.btnFirst.Text = "Moved to the first page";
@@ -179,6 +179,7 @@
             this.btnPrev.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnPrev.Image = ((System.Drawing.Image)(resources.GetObject("btnPrev.Image")));
             this.btnPrev.Name = "btnPrev";
+            this.btnPrev.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.btnPrev.RightToLeftAutoMirrorImage = true;
             this.btnPrev.Size = new System.Drawing.Size(25, 24);
             this.btnPrev.Text = "Move to previous page";
@@ -199,6 +200,7 @@
             this.btnNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnNext.Image = ((System.Drawing.Image)(resources.GetObject("btnNext.Image")));
             this.btnNext.Name = "btnNext";
+            this.btnNext.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.btnNext.RightToLeftAutoMirrorImage = true;
             this.btnNext.Size = new System.Drawing.Size(23, 22);
             this.btnNext.Text = "Move to next page";
@@ -210,6 +212,7 @@
             this.btnLast.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnLast.Image = ((System.Drawing.Image)(resources.GetObject("btnLast.Image")));
             this.btnLast.Name = "btnLast";
+            this.btnLast.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.btnLast.RightToLeftAutoMirrorImage = true;
             this.btnLast.Size = new System.Drawing.Size(25, 24);
             this.btnLast.Text = "Moved to the last page";
@@ -224,7 +227,7 @@
             // 
             this.lblPager.Name = "lblPager";
             this.lblPager.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblPager.Size = new System.Drawing.Size(227, 22);
+            this.lblPager.Size = new System.Drawing.Size(215, 22);
             this.lblPager.Text = "当前{1}/{2}页,每页{3}条,总共{0}条记录";
             this.lblPager.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
