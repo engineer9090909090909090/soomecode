@@ -89,6 +89,7 @@ namespace AliHelper
             OrderGrid.FixedRows = 1;
             OrderGrid.EnableSort = true;
             OrderGrid.Redim(list.Count + 1, 15);
+            OrderGrid.Rows[0].Height = 25;
             OrderGrid[0, 0] = new MyHeader("开始日期");
             OrderGrid[0, 0].Column.Width = 100;
             OrderGrid[0, 0].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
@@ -124,6 +125,7 @@ namespace AliHelper
             foreach (Order order in list)
             {
                 OrderGrid.Rows[r].Tag = order.Id;
+                OrderGrid.Rows[r].Height = 22;
                 OrderGrid[r, 0] = new SourceGrid.Cells.Cell(order.BeginDate);
                 OrderGrid[r, 0].AddController(clickEvent);
                 OrderGrid[r, 1] = new SourceGrid.Cells.Cell(order.EndDate);
@@ -172,9 +174,20 @@ namespace AliHelper
         {
             SourceGrid.CellContext context = (SourceGrid.CellContext)sender;
             int id = (int)OrderGrid.Rows[context.Position.Row].Tag;
-            NewOrderForm f = new NewOrderForm();
-            f.UpdateOrder = finOrderManager.GetOrderById(id);
-            f.ShowDialog(this);
+            Order o = finOrderManager.GetOrderById(id);
+            
+            if (this.IsFinOrderView)
+            {
+                OrderFinDetailForm f = new OrderFinDetailForm();
+                f.OrderNo = o.OrderNo;
+                f.ShowDialog(this);
+            }
+            else {
+                NewOrderForm f = new NewOrderForm();
+                f.UpdateOrder = finOrderManager.GetOrderById(id);
+                f.ShowDialog(this);
+            
+            }
         }
 
         private void ExpBtn_Click(object sender, EventArgs e)

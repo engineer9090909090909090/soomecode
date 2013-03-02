@@ -100,8 +100,20 @@ namespace AliHelper.Bussness
 
         public void InsertOrUpdateOrder(Order o)
         {
-            orderDao.InsertOrUpdateOrder(o);
+            string tracker = o.SalesMan;
+            orderDao.InsertOrUpdateOrder(o, tracker);
             FireEditOrderEvent(o);
         }
+
+        public void InsertOrUpdateTracking(OrderTracking o)
+        {
+            orderDao.InsertOrUpdateTracking(o);
+        }
+
+        public List<OrderTracking> GetOrderTrackingList(int orderId)
+        {
+            return orderDao.GetOrderTrackingList(orderId);
+        }
+        
     }
 }

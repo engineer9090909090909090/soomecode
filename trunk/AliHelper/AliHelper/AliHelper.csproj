@@ -96,6 +96,12 @@
     <Compile Include="Controls\DateTimePickerX.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="OrderFinDetailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrderFinDetailForm.Designer.cs">
+      <DependentUpon>OrderFinDetailForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Passporter2.cs" />
     <Compile Include="DAO\AliGroupDao.cs" />
     <Compile Include="DAO\AliProductDao.cs" />
@@ -238,6 +244,9 @@
     <EmbeddedResource Include="CheckCodeForm.resx">
       <DependentUpon>CheckCodeForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderFinDetailForm.resx">
+      <DependentUpon>OrderFinDetailForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DicForm.resx">
       <DependentUpon>DicForm.cs</DependentUpon>

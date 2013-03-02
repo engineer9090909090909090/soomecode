@@ -132,6 +132,7 @@ namespace AliHelper
             foreach (Finance finance in list)
             {
                 int detailCount = finance.Details.Count();
+                FinGrid.Rows[r].Height = 22;
                 FinGrid[r, 0] = new SourceGrid.Cells.Cell(finance.FinDate);
                 FinGrid[r, 0].AddController(clickEvent);
                 FinGrid[r, 1] = new SourceGrid.Cells.Cell(finance.EventType);
@@ -175,6 +176,7 @@ namespace AliHelper
                 foreach (FinDetails detail in finance.Details)
                 {
                     FinGrid.Rows[r].Tag = finance.FinId;
+                    FinGrid.Rows[r].Height = 22;
                     FinGrid[r, 10] = new SourceGrid.Cells.Cell(detail.Description);
                     FinGrid[r, 11] = new SourceGrid.Cells.Cell(detail.OrderNo);
                     string detailAmount = "(" + finance.Currency + ")" + detail.Amount.ToString("#,##0.00");
@@ -198,6 +200,7 @@ namespace AliHelper
             {
                 FinGrid[r, i] = new SourceGrid.Cells.Cell("");
             }
+            FinGrid.Rows[r].Height = 22;
             FinGrid[r, 2] = new SourceGrid.Cells.Cell("合计");
             FinGrid[r, 5] = new SourceGrid.Cells.Cell("￥" + SumTotalAmount.ToString("#,##0.00"));
             FinGrid[r, 13] = new SourceGrid.Cells.Cell("￥" + DetailSumTotalAmount.ToString("#,##0.00"));

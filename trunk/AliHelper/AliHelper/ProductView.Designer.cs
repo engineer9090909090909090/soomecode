@@ -136,6 +136,7 @@ namespace AliHelper
             this.label8 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.ProductGrid = new SourceGrid.Grid();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.ProductInfoControl.SuspendLayout();
             this.BaseInfoTab.SuspendLayout();
             this.staticImagePanel.SuspendLayout();
@@ -158,6 +159,7 @@ namespace AliHelper
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // ProductInfoControl
@@ -1194,7 +1196,7 @@ namespace AliHelper
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.BackColor = System.Drawing.SystemColors.Control;
-            this.splitContainer1.Panel1.Controls.Add(this.ProductGrid);
+            this.splitContainer1.Panel1.Controls.Add(this.tableLayoutPanel1);
             // 
             // splitContainer1.Panel2
             // 
@@ -1206,19 +1208,32 @@ namespace AliHelper
             // ProductGrid
             // 
             this.ProductGrid.AutoSize = true;
-            this.ProductGrid.BackColor = System.Drawing.SystemColors.Control;
+            this.ProductGrid.BackColor = System.Drawing.Color.White;
             this.ProductGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ProductGrid.EnableSort = true;
-            this.ProductGrid.Location = new System.Drawing.Point(0, 0);
+            this.ProductGrid.Location = new System.Drawing.Point(1, 1);
             this.ProductGrid.Margin = new System.Windows.Forms.Padding(0);
             this.ProductGrid.Name = "ProductGrid";
             this.ProductGrid.OptimizeMode = SourceGrid.CellOptimizeMode.ForRows;
-            this.ProductGrid.Padding = new System.Windows.Forms.Padding(1);
             this.ProductGrid.SelectionMode = SourceGrid.GridSelectionMode.Row;
-            this.ProductGrid.Size = new System.Drawing.Size(1047, 320);
+            this.ProductGrid.Size = new System.Drawing.Size(1045, 318);
             this.ProductGrid.TabIndex = 0;
             this.ProductGrid.TabStop = true;
             this.ProductGrid.ToolTipText = "";
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.ProductGrid, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1047, 320);
+            this.tableLayoutPanel1.TabIndex = 1;
             // 
             // ProductView
             // 
@@ -1259,9 +1274,10 @@ namespace AliHelper
             this.TransTab.ResumeLayout(false);
             this.TransTab.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1376,5 +1392,6 @@ namespace AliHelper
         private CheckBox dynamicImageWaterMarkId;
         private SplitContainer splitContainer1;
         private SourceGrid.Grid ProductGrid;
+        private TableLayoutPanel tableLayoutPanel1;
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using Soomes;
 using System.Data.SQLite;
 using System.Data;
+using System.Data.Common;
 
 namespace AliHelper.DAO
 {
@@ -33,7 +34,18 @@ namespace AliHelper.DAO
             + "CreatedTime datetime,"
             + "ModifiedTime datetime)");
 
-            dbHelper.ExecuteNonQuery("Create Index IF NOT EXISTS Index_key on Orders(OrderNo);");
+            dbHelper.ExecuteNonQuery(
+              "CREATE TABLE IF NOT EXISTS OrderTracking("
+            + "Id integer NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
+            + "OrderId integer not null,"
+            + "TrackingDate varchar(10),"
+            + "Description varchar(2000) not null,"
+            + "Tracker varchar(20) not null,"
+            + "Status varchar(10) not null,"
+            + "CreatedTime datetime,"
+            + "ModifiedTime datetime)");
+
+            dbHelper.ExecuteNonQuery("Create Index IF NOT EXISTS Index_key on OrderTracking(OrderId);");
         }
 
         public QueryObject<Order> GetOrders(QueryObject<Order> query)
@@ -121,7 +133,7 @@ namespace AliHelper.DAO
             return list;
         }
 
-        public void InsertOrUpdateOrder(Order order)
+        public void InsertOrUpdateOrder(Order order, string tracker)
         {
             string InsSql = @"INSERT INTO Orders(BeginDate,EndDate,Description,OrderNo,SalesMan,Status,Remark,CreatedTime,ModifiedTime) "
                             + "values(@BeginDate,@EndDate,@Description,@OrderNo,@SalesMan,@Status,@Remark,@CreatedTime,@ModifiedTime) ";
@@ -130,9 +142,6 @@ namespace AliHelper.DAO
                             + "where Id = @Id";
 
             string ExistRecordSql = "SELECT count(1) FROM Orders WHERE Id = ";
-
-            List<SQLiteParameter[]> InsertParameters = new List<SQLiteParameter[]>();
-            List<SQLiteParameter[]> UpdateParameters = new List<SQLiteParameter[]>();
             DateTime CurrentTime = DateTime.Now;
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {
@@ -147,15 +156,35 @@ namespace AliHelper.DAO
                 new SQLiteParameter("@CreatedTime", CurrentTime),
                 new SQLiteParameter("@ModifiedTime",CurrentTime)
             };
-            int record = Convert.ToInt32(dbHelper.ExecuteScalar(ExistRecordSql + order.Id, null));
-            if (record == 0)
+
+            using (SQLiteConnection connection = dbHelper.GetConnection())
             {
-                dbHelper.ExecuteNonQuery(InsSql, parameter);
+                connection.Open();
+                using (DbTransaction transaction = connection.BeginTransaction())
+                {
+                    int record = Convert.ToInt32(dbHelper.ExecuteScalar(ExistRecordSql + order.Id, null));
+                    if (record == 0)
+                    {
+                        dbHelper.ExecuteNonQuery(InsSql, parameter);
+                        int LasertInsertId = dbHelper.GetLastInsertId(connection);
+                        OrderTracking tracking = new OrderTracking();
+                        tracking.OrderId = LasertInsertId;
+                        tracking.Status = order.Status;
+                        tracking.TrackingDate = order.BeginDate;
+                        tracking.Description = order.Description + " - " + order.Status;
+                        tracking.Tracker = tracker;
+                        InsertOrUpdateTracking(tracking);
+                    }
+                    else
+                    {
+                        dbHelper.ExecuteNonQuery(UpdSql, parameter);
+                    }
+                    transaction.Commit();
+                }
             }
-            else
-            {
-                dbHelper.ExecuteNonQuery(UpdSql, parameter);
-            }
+
+
+            
         }
 
         public Order GetOrderById(int id)
@@ -167,6 +196,82 @@ namespace AliHelper.DAO
                 return list[0];
             else 
                 return null;
+        }
+
+        
+        public void InsertOrUpdateTracking(OrderTracking tracking)
+        {
+            string InsSql = @"INSERT INTO OrderTracking(OrderId, TrackingDate, Description, Tracker, Status, CreatedTime, ModifiedTime) "
+                            + "values(@OrderId, @TrackingDate, @Description, @Tracker, @Status, @CreatedTime, @ModifiedTime) ";
+            string UpdSql = @"update OrderTracking set OrderId=@OrderId, TrackingDate=@TrackingDate, Description=@Description,"
+                            + " Tracker=@Tracker, Status=@Status, ModifiedTime=@ModifiedTime "
+                            + "where Id = @Id";
+
+            string ExistRecordSql = "SELECT count(1) FROM OrderTracking WHERE Id = " + tracking.Id;
+            
+            DateTime CurrentTime = DateTime.Now;
+            SQLiteParameter[] parameter = new SQLiteParameter[]
+            {
+                new SQLiteParameter("@Id",tracking.Id),
+                new SQLiteParameter("@OrderId",tracking.OrderId),
+                new SQLiteParameter("@TrackingDate",tracking.TrackingDate),
+                new SQLiteParameter("@Description",tracking.Description),
+                new SQLiteParameter("@Tracker",tracking.Tracker),
+                new SQLiteParameter("@Status",tracking.Status),
+                new SQLiteParameter("@CreatedTime", CurrentTime),
+                new SQLiteParameter("@ModifiedTime",CurrentTime)
+            };
+            int ExistTrackingId = Convert.ToInt32(dbHelper.ExecuteScalar(ExistRecordSql, null));
+            if (ExistTrackingId == 0)
+            {
+                dbHelper.ExecuteNonQuery(InsSql, parameter);
+            }
+            else
+            {
+                dbHelper.ExecuteNonQuery(UpdSql, parameter);
+            }
+        }
+
+        public int TrackingCount(int OrderId)
+        {
+            string ExistTrackingSql = "SELECT count(1) FROM OrderTracking WHERE OrderId = " + OrderId;
+            return Convert.ToInt32(dbHelper.ExecuteScalar(ExistTrackingSql, null));
+        }
+
+
+        public void UpdateOrderStatus(Order order)
+        {
+            string UpdSql = @"update Orders set EndDate=@EndDate, Status = @Status, ModifiedTime=@ModifiedTime where Id = @Id";
+            DateTime CurrentTime = DateTime.Now;
+            SQLiteParameter[] parameter = new SQLiteParameter[]
+            {
+                new SQLiteParameter("@Id",order.Id),
+                new SQLiteParameter("@EndDate",order.EndDate),
+                new SQLiteParameter("@Status",order.Status),
+                new SQLiteParameter("@ModifiedTime",CurrentTime)
+            };
+            dbHelper.ExecuteNonQuery(UpdSql, parameter);
+        }
+
+        public List<OrderTracking> GetOrderTrackingList(int orderId)
+        {
+            string sql = "select * FROM OrderTracking t where OrderId = " + orderId;
+            DataTable dt = dbHelper.ExecuteDataTable(sql, null);
+            List<OrderTracking> list = new List<OrderTracking>();
+            foreach (DataRow row in dt.Rows)
+            {
+                OrderTracking info = new OrderTracking();
+                info.Id = Convert.ToInt32(row["Id"]);
+                info.OrderId = Convert.ToInt32(row["OrderId"]);
+                info.TrackingDate = (string)row["TrackingDate"];
+                info.Description = (string)row["Description"];
+                info.Tracker = (string)row["Tracker"];
+                info.Status = (string)row["Status"];
+                info.CreatedTime = Convert.ToDateTime(row["CreatedTime"]);
+                info.ModifiedTime = Convert.ToDateTime(row["ModifiedTime"]);
+                list.Add(info);
+            }
+            return list;
         }
     }
 }

@@ -40,6 +40,7 @@ namespace AliHelper
             this.Remark.Text = order.Remark;
             AliHelperUtils.LoadAppDicComboBoxValue(this.SalesMan, order.SalesMan);
             AliHelperUtils.LoadAppDicComboBoxValue(this.Status, order.Status);
+            this.Status.Enabled = false;
         }
 
         private void Confirm_Click(object sender, EventArgs e)
@@ -48,6 +49,7 @@ namespace AliHelper
             if (this.Tag == null)
             {
                 order = new Order();
+                order.Status = ((AppDic)this.Status.SelectedItem).Key;
             }
             else {
                 order = (Order)this.Tag;
@@ -55,9 +57,8 @@ namespace AliHelper
             order.BeginDate = this.BeginDate.Value.ToString(Constants.DateFormat);
             order.OrderNo = this.OrderNo.Text.Trim();
             order.Description = this.Description.Text.Trim();
-            order.SalesMan = ((AppDic)this.SalesMan.SelectedItem).Key;
-            order.Status = ((AppDic)this.Status.SelectedItem).Key;
             order.Remark = this.Remark.Text.Trim();
+            order.SalesMan = ((AppDic)this.SalesMan.SelectedItem).Key;
             if (string.IsNullOrEmpty(order.OrderNo))
             {
                 return;
