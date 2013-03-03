@@ -60,6 +60,7 @@ namespace AliHelper
             tracking.TrackingDate = this.TrackingDate.Value.ToString(Constants.DateFormat);
             tracking.Description = this.Description.Text.Trim();
             tracking.Tracker = ((AppDic)this.Tracker.SelectedItem).Key;
+            tracking.IsClosed = this.IsClosed.Checked;
             if (string.IsNullOrEmpty(tracking.Description))
             {
                 return;
