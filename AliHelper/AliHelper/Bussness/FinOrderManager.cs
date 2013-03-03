@@ -14,6 +14,8 @@ namespace AliHelper.Bussness
         static public event NewEditItemEvent OnEditFinDetailEvent;
         static public event NewEditItemEvent OnEditFinanceEvent;
         static public event NewEditItemEvent OnEditOrderEvent;
+        static public event NewEditItemEvent OnEditTrackingEvent;
+
         public virtual void FireEditFinDetailEvent(object o)
         {
             if (FinOrderManager.OnEditFinDetailEvent != null)
@@ -37,6 +39,15 @@ namespace AliHelper.Bussness
             {
                 ItemEventArgs e = new ItemEventArgs(o);
                 OnEditOrderEvent(this, e);
+            }
+        }
+
+        public virtual void FireEditTrackingEvent(object o)
+        {
+            if (FinOrderManager.OnEditTrackingEvent != null)
+            {
+                ItemEventArgs e = new ItemEventArgs(o);
+                OnEditTrackingEvent(this, e);
             }
         }
 
@@ -108,12 +119,17 @@ namespace AliHelper.Bussness
         public void InsertOrUpdateTracking(OrderTracking o)
         {
             orderDao.InsertOrUpdateTracking(o);
+            FireEditTrackingEvent(o);
         }
 
         public List<OrderTracking> GetOrderTrackingList(int orderId)
         {
             return orderDao.GetOrderTrackingList(orderId);
         }
-        
+
+        public OrderTracking GetOrderTrackingById(int id)
+        {
+            return orderDao.GetOrderTrackingById(id);
+        }
     }
 }

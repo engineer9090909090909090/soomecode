@@ -162,30 +162,37 @@ namespace AliHelper.DAO
                 connection.Open();
                 using (DbTransaction transaction = connection.BeginTransaction())
                 {
-                    int record = Convert.ToInt32(dbHelper.ExecuteScalar(ExistRecordSql + order.Id, null));
+                    int record = Convert.ToInt32(dbHelper.ExecuteScalar(connection, ExistRecordSql + order.Id, null));
+                    int orderId = 0;
                     if (record == 0)
                     {
-                        dbHelper.ExecuteNonQuery(InsSql, parameter);
-                        int LasertInsertId = dbHelper.GetLastInsertId(connection);
+                        dbHelper.ExecuteNonQuery(connection, InsSql, parameter);
+                        orderId = dbHelper.GetLastInsertId(connection);
+                        
+                    }
+                    else
+                    {
+                        dbHelper.ExecuteNonQuery(connection, UpdSql, parameter);
+                        orderId = order.Id;
+                    }
+                    string TrackingCountSql = "SELECT count(1) FROM OrderTracking WHERE Id = " + orderId;
+                    int rrackingCount = Convert.ToInt32(dbHelper.ExecuteScalar(connection, TrackingCountSql, null));
+                    if (rrackingCount == 0)
+                    {
                         OrderTracking tracking = new OrderTracking();
-                        tracking.OrderId = LasertInsertId;
+                        tracking.OrderId = orderId;
                         tracking.Status = order.Status;
                         tracking.TrackingDate = order.BeginDate;
                         tracking.Description = order.Description + " - " + order.Status;
                         tracking.Tracker = tracker;
-                        InsertOrUpdateTracking(tracking);
-                    }
-                    else
-                    {
-                        dbHelper.ExecuteNonQuery(UpdSql, parameter);
+                        InsertOrUpdateTracking(connection, tracking);
                     }
                     transaction.Commit();
                 }
             }
-
-
-            
         }
+        
+
 
         public Order GetOrderById(int id)
         {
@@ -198,8 +205,35 @@ namespace AliHelper.DAO
                 return null;
         }
 
-        
+        public OrderTracking GetOrderTrackingById(int id)
+        {
+            string sql = "select t.* FROM OrderTracking t where id = " + id;
+            DataTable dt = dbHelper.ExecuteDataTable(sql, null);
+            List<OrderTracking> list = new List<OrderTracking>();
+            foreach (DataRow row in dt.Rows)
+            {
+                OrderTracking info = new OrderTracking();
+                info.Id = Convert.ToInt32(row["Id"]);
+                info.TrackingDate = (string)row["TrackingDate"];
+                info.Description = (string)row["Description"];
+                info.Tracker = (string)row["Tracker"];
+                info.Status = (string)row["Status"];
+                info.CreatedTime = Convert.ToDateTime(row["CreatedTime"]);
+                info.ModifiedTime = Convert.ToDateTime(row["ModifiedTime"]);
+                list.Add(info);
+            }
+            if (list.Count > 0)
+                return list[0];
+            else
+                return null;
+        }
+
         public void InsertOrUpdateTracking(OrderTracking tracking)
+        {
+            InsertOrUpdateTracking(null, tracking);
+        }
+        
+        public void InsertOrUpdateTracking(SQLiteConnection connection, OrderTracking tracking)
         {
             string InsSql = @"INSERT INTO OrderTracking(OrderId, TrackingDate, Description, Tracker, Status, CreatedTime, ModifiedTime) "
                             + "values(@OrderId, @TrackingDate, @Description, @Tracker, @Status, @CreatedTime, @ModifiedTime) ";
@@ -221,16 +255,46 @@ namespace AliHelper.DAO
                 new SQLiteParameter("@CreatedTime", CurrentTime),
                 new SQLiteParameter("@ModifiedTime",CurrentTime)
             };
-            int ExistTrackingId = Convert.ToInt32(dbHelper.ExecuteScalar(ExistRecordSql, null));
-            if (ExistTrackingId == 0)
+            if (connection == null)
             {
-                dbHelper.ExecuteNonQuery(InsSql, parameter);
+                using (connection = dbHelper.GetConnection())
+                {
+                    connection.Open();
+                    using (DbTransaction transaction = connection.BeginTransaction())
+                    {
+
+                        int ExistTrackingId = Convert.ToInt32(dbHelper.ExecuteScalar(ExistRecordSql, null));
+                        if (ExistTrackingId == 0)
+                        {
+                            dbHelper.ExecuteNonQuery(connection, InsSql, parameter);
+                        }
+                        else
+                        {
+                            dbHelper.ExecuteNonQuery(connection, UpdSql, parameter);
+                        }
+                        Order order = new Order();
+                        order.Id = tracking.OrderId;
+                        order.Status = tracking.Status;
+                        order.EndDate = tracking.TrackingDate;
+                        UpdateOrderStatus(connection, order);
+                        transaction.Commit();
+                    }
+                }
             }
-            else
+            else 
             {
-                dbHelper.ExecuteNonQuery(UpdSql, parameter);
+                int ExistTrackingId = Convert.ToInt32(dbHelper.ExecuteScalar(connection, ExistRecordSql, null));
+                if (ExistTrackingId == 0)
+                {
+                    dbHelper.ExecuteNonQuery(connection, InsSql, parameter);
+                }
+                else
+                {
+                    dbHelper.ExecuteNonQuery(connection, UpdSql, parameter);
+                }
             }
         }
+
 
         public int TrackingCount(int OrderId)
         {
@@ -239,7 +303,7 @@ namespace AliHelper.DAO
         }
 
 
-        public void UpdateOrderStatus(Order order)
+        public void UpdateOrderStatus(SQLiteConnection connection, Order order)
         {
             string UpdSql = @"update Orders set EndDate=@EndDate, Status = @Status, ModifiedTime=@ModifiedTime where Id = @Id";
             DateTime CurrentTime = DateTime.Now;
@@ -250,7 +314,7 @@ namespace AliHelper.DAO
                 new SQLiteParameter("@Status",order.Status),
                 new SQLiteParameter("@ModifiedTime",CurrentTime)
             };
-            dbHelper.ExecuteNonQuery(UpdSql, parameter);
+            dbHelper.ExecuteNonQuery(connection, UpdSql, parameter);
         }
 
         public List<OrderTracking> GetOrderTrackingList(int orderId)
