@@ -112,7 +112,7 @@ namespace AliHelper
             {
                 OrderGrid.Rows[r].Tag = order.Id;
                 OrderGrid.Rows[r].Height = 25;
-                if (order.EndDate != null)
+                if (string.IsNullOrEmpty(order.EndDate))
                 {
                     OrderGrid[r, 0] = new SourceGrid.Cells.Button("跟进");
                     SourceGrid.Cells.Controllers.Button buttonClickEvent = new SourceGrid.Cells.Controllers.Button();
@@ -202,7 +202,7 @@ namespace AliHelper
             foreach (OrderTracking tracking in list)
             {
                 TrackGrid.Rows[r].Tag = tracking.Id;
-                TrackGrid.Rows[r].Height = 22;
+                TrackGrid.Rows[r].Height = 25;
                 TrackGrid[r, 0] = new SourceGrid.Cells.Cell(tracking.TrackingDate);
                 TrackGrid[r, 0].AddController(trackEvents);
                 TrackGrid[r, 1] = new SourceGrid.Cells.Cell(tracking.Description);

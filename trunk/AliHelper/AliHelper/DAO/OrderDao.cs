@@ -275,7 +275,7 @@ namespace AliHelper.DAO
                         Order order = new Order();
                         order.Id = tracking.OrderId;
                         order.Status = tracking.Status;
-                        order.EndDate = tracking.TrackingDate;
+                        order.EndDate = tracking.IsClosed?tracking.TrackingDate:string.Empty;
                         UpdateOrderStatus(connection, order);
                         transaction.Commit();
                     }

@@ -31,7 +31,7 @@
             this.Canncel = new System.Windows.Forms.Button();
             this.Confirm = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.IsClosed = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -65,7 +65,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.checkBox1);
+            this.groupBox1.Controls.Add(this.IsClosed);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label6);
@@ -80,15 +80,15 @@
             this.groupBox1.TabIndex = 40;
             this.groupBox1.TabStop = false;
             // 
-            // checkBox1
+            // IsClosed
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(514, 246);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(96, 16);
-            this.checkBox1.TabIndex = 36;
-            this.checkBox1.Text = "是否关闭订单";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.IsClosed.AutoSize = true;
+            this.IsClosed.Location = new System.Drawing.Point(514, 246);
+            this.IsClosed.Name = "IsClosed";
+            this.IsClosed.Size = new System.Drawing.Size(96, 16);
+            this.IsClosed.TabIndex = 36;
+            this.IsClosed.Text = "是否关闭订单";
+            this.IsClosed.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -200,6 +200,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox Description;
         private System.Windows.Forms.ComboBox Tracker;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox IsClosed;
     }
 }
