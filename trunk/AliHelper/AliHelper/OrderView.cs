@@ -88,7 +88,7 @@ namespace AliHelper
             OrderGrid.Redim(0, 0);
             OrderGrid.FixedRows = 1;
             OrderGrid.EnableSort = true;
-            OrderGrid.Redim(list.Count + 1, 15);
+            OrderGrid.Redim(list.Count + 1, 7);
             OrderGrid.Rows[0].Height = 25;
             OrderGrid[0, 0] = new MyHeader("开始日期");
             OrderGrid[0, 0].Column.Width = 100;
@@ -97,7 +97,7 @@ namespace AliHelper
             OrderGrid[0, 1].Column.Width = 100;
             OrderGrid[0, 1].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
             OrderGrid[0, 2] = new MyHeader("订单编号");
-            OrderGrid[0, 2].Column.Width = 150;
+            OrderGrid[0, 2].Column.Width = 100;
             OrderGrid[0, 2].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
             OrderGrid[0, 3] = new MyHeader("订单描述");
             OrderGrid[0, 3].Column.Width = 300;
@@ -111,7 +111,7 @@ namespace AliHelper
             if (!IsFinOrderView)
             {
                 OrderGrid[0, 6] = new MyHeader("备注");
-                OrderGrid[0, 6].Column.Width = 300;
+                OrderGrid[0, 6].Column.Width = 200;
             }
             else
             {
@@ -125,7 +125,7 @@ namespace AliHelper
             foreach (Order order in list)
             {
                 OrderGrid.Rows[r].Tag = order.Id;
-                OrderGrid.Rows[r].Height = 22;
+                OrderGrid.Rows[r].Height = 25;
                 OrderGrid[r, 0] = new SourceGrid.Cells.Cell(order.BeginDate);
                 OrderGrid[r, 0].AddController(clickEvent);
                 OrderGrid[r, 1] = new SourceGrid.Cells.Cell(order.EndDate);

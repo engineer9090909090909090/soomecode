@@ -129,6 +129,7 @@ namespace AliHelper
             ProductGrid.FixedRows = 1;
             ProductGrid.EnableSort = true;
             ProductGrid.Redim(list.Count + 1, 8);
+            ProductGrid.Rows[0].Height = 25;
             ProductGrid[0, 0] = new MyHeader("产品图片");
             ProductGrid[0, 0].Column.Width = 80;
             ProductGrid[0, 0].AddController(new SourceGrid.Cells.Controllers.SortableHeader());

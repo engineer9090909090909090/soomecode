@@ -102,6 +102,18 @@
     <Compile Include="OrderFinDetailForm.Designer.cs">
       <DependentUpon>OrderFinDetailForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="OrderTrackForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrderTrackForm.Designer.cs">
+      <DependentUpon>OrderTrackForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OrderTrackView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OrderTrackView.Designer.cs">
+      <DependentUpon>OrderTrackView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Passporter2.cs" />
     <Compile Include="DAO\AliGroupDao.cs" />
     <Compile Include="DAO\AliProductDao.cs" />
@@ -257,6 +269,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditFinDetail.resx">
       <DependentUpon>EditFinDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderTrackForm.resx">
+      <DependentUpon>OrderTrackForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderTrackView.resx">
+      <DependentUpon>OrderTrackView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WaterView.resx">
       <DependentUpon>WaterView.cs</DependentUpon>

@@ -15,11 +15,13 @@ namespace AliHelper
     {
         FinOrderManager finOrderManager;
         public Order UpdateOrder { set; get; }
+        
         public NewOrderForm()
         {
             InitializeComponent();
             finOrderManager = new FinOrderManager();
         }
+        
         private void NewOrderForm_Load(object sender, EventArgs e)
         {
             this.SalesMan.DisplayMember = "Label";
@@ -30,6 +32,7 @@ namespace AliHelper
             this.SalesMan.DataSource = finOrderManager.GetAppDicOptions(Constants.Employee);
             LoadUpdateOrder(UpdateOrder);
         }
+        
         private void LoadUpdateOrder(Order order)
         {
             if (order == null) return;

@@ -163,7 +163,7 @@ namespace AliHelper
             ListViewItem orderlistViewItem1 = new ListViewItem("订单列表", 1);
             orderlistViewItem1.Name = Constants.OrderBaseView;
             ListViewItem orderlistViewItem2 = new ListViewItem("订单跟踪", 3);
-            listViewItem2.Name = Constants.OrderTrackView;
+            orderlistViewItem2.Name = Constants.OrderTrackView;
             ListView OrderListView = new System.Windows.Forms.ListView();
             OrderListView.Name = "OrderListView";
             OrderListView.BorderStyle = BorderStyle.None;
@@ -240,7 +240,7 @@ namespace AliHelper
                 }
                 else if (e.Item.Name == Constants.OrderTrackView)
                 {
-                   
+                    LoadOrderTrackViewPanel();
                 }
             }
         }
@@ -538,6 +538,19 @@ namespace AliHelper
             FinorderView.Size = new System.Drawing.Size(this.Explorer.Width, this.Explorer.Height);
             FinorderView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Explorer.Controls.Add(FinorderView);
+            this.Explorer.ResumeLayout(false);
+        }
+
+        private void LoadOrderTrackViewPanel()
+        {
+            OrderTrackView OrderTrackView = new AliHelper.OrderTrackView();
+            this.Explorer.SuspendLayout();
+            OrderTrackView.Location = new System.Drawing.Point(0, 0);
+            OrderTrackView.Name = "OrderTrackView";
+            OrderTrackView.AutoSize = true;
+            OrderTrackView.Size = new System.Drawing.Size(this.Explorer.Width, this.Explorer.Height);
+            OrderTrackView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Explorer.Controls.Add(OrderTrackView);
             this.Explorer.ResumeLayout(false);
         }
 
