@@ -214,6 +214,7 @@ namespace AliHelper.DAO
             {
                 OrderTracking info = new OrderTracking();
                 info.Id = Convert.ToInt32(row["Id"]);
+                info.OrderId = Convert.ToInt32(row["OrderId"]);
                 info.TrackingDate = (string)row["TrackingDate"];
                 info.Description = (string)row["Description"];
                 info.Tracker = (string)row["Tracker"];
