@@ -56,7 +56,14 @@ namespace AliHelper
             {
                 return imageFile;
             }
-            webClient.DownloadFile(url, imageFile);
+            try
+            {
+                webClient.DownloadFile(url, imageFile);
+            }
+            catch
+            {
+                imageFile = "";
+            }
             return imageFile;
         }
 
@@ -67,7 +74,14 @@ namespace AliHelper
             {
                 return imageFile;
             }
-            webClient.DownloadFile(url, imageFile);
+            try
+            {
+                webClient.DownloadFile(url, imageFile);
+            }
+            catch
+            {
+                imageFile = "";
+            }
             return imageFile;
         }
 
@@ -78,7 +92,14 @@ namespace AliHelper
             {
                 return imageFile;
             }
-            webClient.DownloadFile(url, imageFile);
+            try
+            {
+                webClient.DownloadFile(url, imageFile);
+            }
+            catch
+            {
+                imageFile = "";
+            }
             return imageFile;
         }
 
