@@ -131,7 +131,7 @@ namespace AliHelper
             ProductGrid.Redim(list.Count + 1, 8);
             ProductGrid.Rows[0].Height = 25;
             ProductGrid[0, 0] = new MyHeader("产品图片");
-            ProductGrid[0, 0].Column.Width = 80;
+            ProductGrid[0, 0].Column.Width = 50;
             ProductGrid[0, 0].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
             ProductGrid[0, 1] = new MyHeader("产品名称");
             ProductGrid[0, 1].Column.Width = 350;
@@ -163,7 +163,7 @@ namespace AliHelper
                                  + Path.DirectorySeparatorChar + item.Id + ".jpg";
                 Image image = ImageUtils.ResizeImage(imageFile, 50, 50);
                 ProductGrid.Rows[r].Tag = item.Id;
-                ProductGrid.Rows[r].Height = 80;
+                ProductGrid.Rows[r].Height = 50;
                 ProductGrid[r, 0] = new SourceGrid.Cells.Image(image);
                 ProductGrid[r, 0].AddController(clickEvent);
                 ProductGrid[r, 1] = new SourceGrid.Cells.Cell(item.Subject);
@@ -236,7 +236,7 @@ namespace AliHelper
                 this.AliProductDetail = productsManager.GetProductDetail(PrevSelectedId);
                 this.LoadProductIamges();
                 this.LoadProductDetailValue();
-                this.ProductGrid.Focus();
+                //this.ProductGrid.Focus();
                 if (AliProductDetail == null)
                 {
                     BackgroundWorker backgroundWorker = new BackgroundWorker();
@@ -257,7 +257,7 @@ namespace AliHelper
             {
                 this.LoadProductIamges();
                 this.LoadProductDetailValue();
-                this.ProductGrid.Focus();
+                //this.ProductGrid.Focus();
             }));
         }
 
@@ -597,27 +597,14 @@ namespace AliHelper
                 this.supplyPeriod.SelectedItem = selected;
             }
 
-            // 
-            // SysAttrPanel
-            // 
-            if (this.SysAttrPanel != null)
+
+            if (this.AttrTab.Controls.Count > 0)
             {
-                if (this.SysAttrPanel.Controls.Count > 0)
+                foreach (Control c in this.AttrTab.Controls)
                 {
-                    foreach (Control c in this.SysAttrPanel.Controls)
-                    {
-                        this.SysAttrPanel.Controls.Remove(c);
-                    }
+                    this.AttrTab.Controls.Remove(c);
                 }
-                this.AttrTab.Controls.Remove(this.SysAttrPanel);
-                this.SysAttrPanel.Dispose();
-                this.SysAttrPanel = null;
             }
-            this.SysAttrPanel = new System.Windows.Forms.Panel();
-            this.SysAttrPanel.Location = new System.Drawing.Point(0, 0);
-            this.SysAttrPanel.Name = "SysAttrPanel";
-            this.SysAttrPanel.Size = new System.Drawing.Size(550, 342);
-            this.AttrTab.Controls.Add(this.SysAttrPanel);
 
             int height = 20;
             int tabIndex = 1;
@@ -678,7 +665,7 @@ namespace AliHelper
             label.Size = new System.Drawing.Size(65, 12);
             label.TabIndex = 22;
             label.Text = attrNode.Data.Value;
-            this.SysAttrPanel.Controls.Add(label);
+            this.AttrTab.Controls.Add(label);
             if (attrNode.Data.ShowType == ShowType.InputString)
             {
                 TextBox textBox = new TextBox();
@@ -691,7 +678,7 @@ namespace AliHelper
                 {
                     textBox.Text = attrNode.Nodes[0].Data.Value;
                 }
-                this.SysAttrPanel.Controls.Add(textBox);
+                this.AttrTab.Controls.Add(textBox);
             }
             else if (attrNode.Data.ShowType == ShowType.ListBox)
             {
@@ -705,7 +692,7 @@ namespace AliHelper
                 comboBox.Size = new System.Drawing.Size(150, 22);
                 loc = loc + 150 + 10;
                 comboBox.TabIndex = tabIndex;
-                this.SysAttrPanel.Controls.Add(comboBox);
+                this.AttrTab.Controls.Add(comboBox);
                 comboBox.DisplayMember = "Value";
                 comboBox.ValueMember = "Id";
                 Soomes.Attribute selNode = null;
@@ -729,7 +716,7 @@ namespace AliHelper
                         {
                             textBox.Text = attr.Nodes[0].Nodes[0].Data.Value;
                         }
-                        this.SysAttrPanel.Controls.Add(textBox);
+                        this.AttrTab.Controls.Add(textBox);
                     }
                 }
                 comboBox.SelectedItem = selNode;
@@ -749,7 +736,7 @@ namespace AliHelper
                     checkBox.Checked = attr.Data.Selected;
                     checkBox.Size = new System.Drawing.Size(70, 22);
                     checkBox.TabIndex = tabIndex;
-                    this.SysAttrPanel.Controls.Add(checkBox);
+                    this.AttrTab.Controls.Add(checkBox);
                     loc = loc + 70;
                     if (attr.Nodes != null && attr.Nodes.Count > 0)
                     {
@@ -763,7 +750,7 @@ namespace AliHelper
                         {
                             textBox.Text = attr.Nodes[0].Nodes[0].Data.Value;
                         }
-                        this.SysAttrPanel.Controls.Add(textBox);
+                        this.AttrTab.Controls.Add(textBox);
                     }
                     controlCount++;
                    
@@ -782,7 +769,7 @@ namespace AliHelper
                 comboBox.Size = new System.Drawing.Size(150, 22);
                 loc = loc + 150 + 10;
                 comboBox.TabIndex = tabIndex;
-                this.SysAttrPanel.Controls.Add(comboBox);
+                this.AttrTab.Controls.Add(comboBox);
                 comboBox.DisplayMember = "Value";
                 comboBox.ValueMember = "Id";
                 Soomes.Attribute selNode = null;
@@ -806,7 +793,7 @@ namespace AliHelper
                             loc = loc + 150 + 10;
                             subComboBox.Tag = attr.Nodes[0].Data;
                             subComboBox.TabIndex = tabIndex;
-                            this.SysAttrPanel.Controls.Add(subComboBox);
+                            this.AttrTab.Controls.Add(subComboBox);
                             subComboBox.DisplayMember = "Value";
                             subComboBox.ValueMember = "Id";
                             Soomes.Attribute subSelNode = null;

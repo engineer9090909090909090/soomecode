@@ -117,12 +117,11 @@
             // 
             // pager1
             // 
-            this.pager1.Location = new System.Drawing.Point(252, 459);
+            this.pager1.Location = new System.Drawing.Point(8, 459);
             this.pager1.Name = "pager1";
-            this.pager1.PageSize = 20;
             this.pager1.RecordCount = 0;
             this.pager1.ShowPageSizeDropdown = false;
-            this.pager1.Size = new System.Drawing.Size(530, 25);
+            this.pager1.Size = new System.Drawing.Size(774, 25);
             this.pager1.TabIndex = 9;
             this.pager1.PageIndexChanged += new System.EventHandler(this.pager1_PageIndexChanged);
             // 

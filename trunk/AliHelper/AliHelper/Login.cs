@@ -16,7 +16,7 @@ namespace AliHelper
 
         private bool IsIELoginModel = false;
         BackgroundWorker bgWorker = new BackgroundWorker();
-        private Passporter passporter;
+        private Passporter2 passporter;
         public LoginForm()
         {
             IEHandleUtils.ClearIECookie();
@@ -26,7 +26,7 @@ namespace AliHelper
         private void LoginForm_Load(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false;
-            passporter = new Passporter(this.webBrowser1);
+            passporter = new Passporter2(this.webBrowser1);
         }
 
         void loginPageLoadCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)

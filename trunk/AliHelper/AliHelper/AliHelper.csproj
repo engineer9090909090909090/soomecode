@@ -142,6 +142,12 @@
     <Compile Include="EditFinDetail.Designer.cs">
       <DependentUpon>EditFinDetail.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProductListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProductListView.Designer.cs">
+      <DependentUpon>ProductListView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utils\AliHelperUtils.cs" />
     <Compile Include="Utils\ExportExcel.cs" />
     <Compile Include="WaterView.cs">
@@ -275,6 +281,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="OrderTrackView.resx">
       <DependentUpon>OrderTrackView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProductListView.resx">
+      <DependentUpon>ProductListView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WaterView.resx">
       <DependentUpon>WaterView.cs</DependentUpon>
