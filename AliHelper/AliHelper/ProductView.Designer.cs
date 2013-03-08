@@ -78,29 +78,6 @@ namespace AliHelper
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.AttrTab = new System.Windows.Forms.TabPage();
-            this.SysAttrPanel = new System.Windows.Forms.Panel();
-            this.customAttrVal10 = new System.Windows.Forms.TextBox();
-            this.customAttrKey10 = new System.Windows.Forms.TextBox();
-            this.customAttrVal9 = new System.Windows.Forms.TextBox();
-            this.customAttrKey9 = new System.Windows.Forms.TextBox();
-            this.customAttrVal8 = new System.Windows.Forms.TextBox();
-            this.customAttrKey8 = new System.Windows.Forms.TextBox();
-            this.customAttrVal7 = new System.Windows.Forms.TextBox();
-            this.customAttrKey7 = new System.Windows.Forms.TextBox();
-            this.customAttrVal6 = new System.Windows.Forms.TextBox();
-            this.customAttrKey6 = new System.Windows.Forms.TextBox();
-            this.customAttrVal5 = new System.Windows.Forms.TextBox();
-            this.customAttrKey5 = new System.Windows.Forms.TextBox();
-            this.customAttrVal4 = new System.Windows.Forms.TextBox();
-            this.customAttrKey4 = new System.Windows.Forms.TextBox();
-            this.customAttrVal3 = new System.Windows.Forms.TextBox();
-            this.customAttrKey3 = new System.Windows.Forms.TextBox();
-            this.customAttrVal2 = new System.Windows.Forms.TextBox();
-            this.customAttrKey2 = new System.Windows.Forms.TextBox();
-            this.customAttrVal1 = new System.Windows.Forms.TextBox();
-            this.customAttrKey1 = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.DescTab = new System.Windows.Forms.TabPage();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.TransTab = new System.Windows.Forms.TabPage();
@@ -135,8 +112,31 @@ namespace AliHelper
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.ProductGrid = new SourceGrid.Grid();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.ProductGrid = new SourceGrid.Grid();
+            this.CustomTab = new System.Windows.Forms.TabPage();
+            this.customAttrVal10 = new System.Windows.Forms.TextBox();
+            this.customAttrKey10 = new System.Windows.Forms.TextBox();
+            this.customAttrVal9 = new System.Windows.Forms.TextBox();
+            this.customAttrKey9 = new System.Windows.Forms.TextBox();
+            this.customAttrVal8 = new System.Windows.Forms.TextBox();
+            this.customAttrKey8 = new System.Windows.Forms.TextBox();
+            this.customAttrVal7 = new System.Windows.Forms.TextBox();
+            this.customAttrKey7 = new System.Windows.Forms.TextBox();
+            this.customAttrVal6 = new System.Windows.Forms.TextBox();
+            this.customAttrKey6 = new System.Windows.Forms.TextBox();
+            this.customAttrVal5 = new System.Windows.Forms.TextBox();
+            this.customAttrKey5 = new System.Windows.Forms.TextBox();
+            this.customAttrVal4 = new System.Windows.Forms.TextBox();
+            this.customAttrKey4 = new System.Windows.Forms.TextBox();
+            this.customAttrVal3 = new System.Windows.Forms.TextBox();
+            this.customAttrKey3 = new System.Windows.Forms.TextBox();
+            this.customAttrVal2 = new System.Windows.Forms.TextBox();
+            this.customAttrKey2 = new System.Windows.Forms.TextBox();
+            this.customAttrVal1 = new System.Windows.Forms.TextBox();
+            this.customAttrKey1 = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.ProductInfoControl.SuspendLayout();
             this.BaseInfoTab.SuspendLayout();
             this.staticImagePanel.SuspendLayout();
@@ -153,19 +153,20 @@ namespace AliHelper
             ((System.ComponentModel.ISupportInitialize)(this.dnImage2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dnImage1)).BeginInit();
             this.panel2.SuspendLayout();
-            this.AttrTab.SuspendLayout();
             this.DescTab.SuspendLayout();
             this.TransTab.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.CustomTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // ProductInfoControl
             // 
             this.ProductInfoControl.Controls.Add(this.BaseInfoTab);
             this.ProductInfoControl.Controls.Add(this.AttrTab);
+            this.ProductInfoControl.Controls.Add(this.CustomTab);
             this.ProductInfoControl.Controls.Add(this.DescTab);
             this.ProductInfoControl.Controls.Add(this.TransTab);
             this.ProductInfoControl.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -178,6 +179,7 @@ namespace AliHelper
             // 
             // BaseInfoTab
             // 
+            this.BaseInfoTab.AutoScroll = true;
             this.BaseInfoTab.Controls.Add(this.staticImagePanel);
             this.BaseInfoTab.Controls.Add(this.dynamicImagePanel);
             this.BaseInfoTab.Controls.Add(this.panel2);
@@ -662,202 +664,14 @@ namespace AliHelper
             // 
             // AttrTab
             // 
-            this.AttrTab.Controls.Add(this.SysAttrPanel);
-            this.AttrTab.Controls.Add(this.customAttrVal10);
-            this.AttrTab.Controls.Add(this.customAttrKey10);
-            this.AttrTab.Controls.Add(this.customAttrVal9);
-            this.AttrTab.Controls.Add(this.customAttrKey9);
-            this.AttrTab.Controls.Add(this.customAttrVal8);
-            this.AttrTab.Controls.Add(this.customAttrKey8);
-            this.AttrTab.Controls.Add(this.customAttrVal7);
-            this.AttrTab.Controls.Add(this.customAttrKey7);
-            this.AttrTab.Controls.Add(this.customAttrVal6);
-            this.AttrTab.Controls.Add(this.customAttrKey6);
-            this.AttrTab.Controls.Add(this.customAttrVal5);
-            this.AttrTab.Controls.Add(this.customAttrKey5);
-            this.AttrTab.Controls.Add(this.customAttrVal4);
-            this.AttrTab.Controls.Add(this.customAttrKey4);
-            this.AttrTab.Controls.Add(this.customAttrVal3);
-            this.AttrTab.Controls.Add(this.customAttrKey3);
-            this.AttrTab.Controls.Add(this.customAttrVal2);
-            this.AttrTab.Controls.Add(this.customAttrKey2);
-            this.AttrTab.Controls.Add(this.customAttrVal1);
-            this.AttrTab.Controls.Add(this.customAttrKey1);
-            this.AttrTab.Controls.Add(this.label12);
-            this.AttrTab.Controls.Add(this.label6);
+            this.AttrTab.AutoScroll = true;
             this.AttrTab.Location = new System.Drawing.Point(4, 24);
+            this.AttrTab.Margin = new System.Windows.Forms.Padding(0);
             this.AttrTab.Name = "AttrTab";
-            this.AttrTab.Padding = new System.Windows.Forms.Padding(3);
             this.AttrTab.Size = new System.Drawing.Size(1039, 369);
             this.AttrTab.TabIndex = 1;
             this.AttrTab.Text = "产品属性";
             this.AttrTab.UseVisualStyleBackColor = true;
-            // 
-            // SysAttrPanel
-            // 
-            this.SysAttrPanel.Location = new System.Drawing.Point(0, 0);
-            this.SysAttrPanel.Name = "SysAttrPanel";
-            this.SysAttrPanel.Size = new System.Drawing.Size(550, 342);
-            this.SysAttrPanel.TabIndex = 50;
-            // 
-            // customAttrVal10
-            // 
-            this.customAttrVal10.Location = new System.Drawing.Point(692, 287);
-            this.customAttrVal10.Name = "customAttrVal10";
-            this.customAttrVal10.Size = new System.Drawing.Size(233, 21);
-            this.customAttrVal10.TabIndex = 49;
-            // 
-            // customAttrKey10
-            // 
-            this.customAttrKey10.Location = new System.Drawing.Point(559, 287);
-            this.customAttrKey10.Name = "customAttrKey10";
-            this.customAttrKey10.Size = new System.Drawing.Size(100, 21);
-            this.customAttrKey10.TabIndex = 48;
-            // 
-            // customAttrVal9
-            // 
-            this.customAttrVal9.Location = new System.Drawing.Point(692, 260);
-            this.customAttrVal9.Name = "customAttrVal9";
-            this.customAttrVal9.Size = new System.Drawing.Size(233, 21);
-            this.customAttrVal9.TabIndex = 47;
-            // 
-            // customAttrKey9
-            // 
-            this.customAttrKey9.Location = new System.Drawing.Point(559, 260);
-            this.customAttrKey9.Name = "customAttrKey9";
-            this.customAttrKey9.Size = new System.Drawing.Size(100, 21);
-            this.customAttrKey9.TabIndex = 46;
-            // 
-            // customAttrVal8
-            // 
-            this.customAttrVal8.Location = new System.Drawing.Point(692, 233);
-            this.customAttrVal8.Name = "customAttrVal8";
-            this.customAttrVal8.Size = new System.Drawing.Size(233, 21);
-            this.customAttrVal8.TabIndex = 45;
-            // 
-            // customAttrKey8
-            // 
-            this.customAttrKey8.Location = new System.Drawing.Point(559, 233);
-            this.customAttrKey8.Name = "customAttrKey8";
-            this.customAttrKey8.Size = new System.Drawing.Size(100, 21);
-            this.customAttrKey8.TabIndex = 44;
-            // 
-            // customAttrVal7
-            // 
-            this.customAttrVal7.Location = new System.Drawing.Point(692, 204);
-            this.customAttrVal7.Name = "customAttrVal7";
-            this.customAttrVal7.Size = new System.Drawing.Size(233, 21);
-            this.customAttrVal7.TabIndex = 43;
-            // 
-            // customAttrKey7
-            // 
-            this.customAttrKey7.Location = new System.Drawing.Point(559, 205);
-            this.customAttrKey7.Name = "customAttrKey7";
-            this.customAttrKey7.Size = new System.Drawing.Size(100, 21);
-            this.customAttrKey7.TabIndex = 42;
-            // 
-            // customAttrVal6
-            // 
-            this.customAttrVal6.Location = new System.Drawing.Point(692, 176);
-            this.customAttrVal6.Name = "customAttrVal6";
-            this.customAttrVal6.Size = new System.Drawing.Size(233, 21);
-            this.customAttrVal6.TabIndex = 41;
-            // 
-            // customAttrKey6
-            // 
-            this.customAttrKey6.Location = new System.Drawing.Point(559, 176);
-            this.customAttrKey6.Name = "customAttrKey6";
-            this.customAttrKey6.Size = new System.Drawing.Size(100, 21);
-            this.customAttrKey6.TabIndex = 40;
-            // 
-            // customAttrVal5
-            // 
-            this.customAttrVal5.Location = new System.Drawing.Point(692, 148);
-            this.customAttrVal5.Name = "customAttrVal5";
-            this.customAttrVal5.Size = new System.Drawing.Size(233, 21);
-            this.customAttrVal5.TabIndex = 39;
-            // 
-            // customAttrKey5
-            // 
-            this.customAttrKey5.Location = new System.Drawing.Point(559, 148);
-            this.customAttrKey5.Name = "customAttrKey5";
-            this.customAttrKey5.Size = new System.Drawing.Size(100, 21);
-            this.customAttrKey5.TabIndex = 38;
-            // 
-            // customAttrVal4
-            // 
-            this.customAttrVal4.Location = new System.Drawing.Point(692, 120);
-            this.customAttrVal4.Name = "customAttrVal4";
-            this.customAttrVal4.Size = new System.Drawing.Size(233, 21);
-            this.customAttrVal4.TabIndex = 37;
-            // 
-            // customAttrKey4
-            // 
-            this.customAttrKey4.Location = new System.Drawing.Point(559, 119);
-            this.customAttrKey4.Name = "customAttrKey4";
-            this.customAttrKey4.Size = new System.Drawing.Size(100, 21);
-            this.customAttrKey4.TabIndex = 36;
-            // 
-            // customAttrVal3
-            // 
-            this.customAttrVal3.Location = new System.Drawing.Point(692, 92);
-            this.customAttrVal3.Name = "customAttrVal3";
-            this.customAttrVal3.Size = new System.Drawing.Size(233, 21);
-            this.customAttrVal3.TabIndex = 35;
-            // 
-            // customAttrKey3
-            // 
-            this.customAttrKey3.Location = new System.Drawing.Point(559, 91);
-            this.customAttrKey3.Name = "customAttrKey3";
-            this.customAttrKey3.Size = new System.Drawing.Size(100, 21);
-            this.customAttrKey3.TabIndex = 34;
-            // 
-            // customAttrVal2
-            // 
-            this.customAttrVal2.Location = new System.Drawing.Point(692, 63);
-            this.customAttrVal2.Name = "customAttrVal2";
-            this.customAttrVal2.Size = new System.Drawing.Size(233, 21);
-            this.customAttrVal2.TabIndex = 33;
-            // 
-            // customAttrKey2
-            // 
-            this.customAttrKey2.Location = new System.Drawing.Point(559, 63);
-            this.customAttrKey2.Name = "customAttrKey2";
-            this.customAttrKey2.Size = new System.Drawing.Size(100, 21);
-            this.customAttrKey2.TabIndex = 32;
-            // 
-            // customAttrVal1
-            // 
-            this.customAttrVal1.Location = new System.Drawing.Point(692, 35);
-            this.customAttrVal1.Name = "customAttrVal1";
-            this.customAttrVal1.Size = new System.Drawing.Size(233, 21);
-            this.customAttrVal1.TabIndex = 31;
-            // 
-            // customAttrKey1
-            // 
-            this.customAttrKey1.Location = new System.Drawing.Point(559, 35);
-            this.customAttrKey1.Name = "customAttrKey1";
-            this.customAttrKey1.Size = new System.Drawing.Size(100, 21);
-            this.customAttrKey1.TabIndex = 30;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.ForeColor = System.Drawing.SystemColors.ButtonShadow;
-            this.label12.Location = new System.Drawing.Point(622, 16);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(173, 12);
-            this.label12.TabIndex = 29;
-            this.label12.Text = "属性名         \t       属性值";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(556, 16);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(65, 12);
-            this.label6.TabIndex = 28;
-            this.label6.Text = "自定义属性";
             // 
             // DescTab
             // 
@@ -886,6 +700,7 @@ namespace AliHelper
             // 
             // TransTab
             // 
+            this.TransTab.AutoScroll = true;
             this.TransTab.Controls.Add(this.minOrderUnit);
             this.TransTab.Controls.Add(this.paymentMethodOtherDesc);
             this.TransTab.Controls.Add(this.paymentMethodOther);
@@ -1205,6 +1020,20 @@ namespace AliHelper
             this.splitContainer1.SplitterDistance = 320;
             this.splitContainer1.TabIndex = 0;
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.ProductGrid, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1047, 320);
+            this.tableLayoutPanel1.TabIndex = 1;
+            // 
             // ProductGrid
             // 
             this.ProductGrid.AutoSize = true;
@@ -1221,19 +1050,197 @@ namespace AliHelper
             this.ProductGrid.TabStop = true;
             this.ProductGrid.ToolTipText = "";
             // 
-            // tableLayoutPanel1
+            // CustomTab
             // 
-            this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.ProductGrid, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1047, 320);
-            this.tableLayoutPanel1.TabIndex = 1;
+            this.CustomTab.AutoScroll = true;
+            this.CustomTab.Controls.Add(this.customAttrVal10);
+            this.CustomTab.Controls.Add(this.customAttrKey10);
+            this.CustomTab.Controls.Add(this.customAttrVal9);
+            this.CustomTab.Controls.Add(this.customAttrKey9);
+            this.CustomTab.Controls.Add(this.customAttrVal8);
+            this.CustomTab.Controls.Add(this.customAttrKey8);
+            this.CustomTab.Controls.Add(this.customAttrVal7);
+            this.CustomTab.Controls.Add(this.customAttrKey7);
+            this.CustomTab.Controls.Add(this.customAttrVal6);
+            this.CustomTab.Controls.Add(this.customAttrKey6);
+            this.CustomTab.Controls.Add(this.customAttrVal5);
+            this.CustomTab.Controls.Add(this.customAttrKey5);
+            this.CustomTab.Controls.Add(this.customAttrVal4);
+            this.CustomTab.Controls.Add(this.customAttrKey4);
+            this.CustomTab.Controls.Add(this.customAttrVal3);
+            this.CustomTab.Controls.Add(this.customAttrKey3);
+            this.CustomTab.Controls.Add(this.customAttrVal2);
+            this.CustomTab.Controls.Add(this.customAttrKey2);
+            this.CustomTab.Controls.Add(this.customAttrVal1);
+            this.CustomTab.Controls.Add(this.customAttrKey1);
+            this.CustomTab.Controls.Add(this.label12);
+            this.CustomTab.Controls.Add(this.label6);
+            this.CustomTab.Location = new System.Drawing.Point(4, 24);
+            this.CustomTab.Name = "CustomTab";
+            this.CustomTab.Padding = new System.Windows.Forms.Padding(3);
+            this.CustomTab.Size = new System.Drawing.Size(1039, 369);
+            this.CustomTab.TabIndex = 4;
+            this.CustomTab.Text = "自定义属性";
+            this.CustomTab.UseVisualStyleBackColor = true;
+            // 
+            // customAttrVal10
+            // 
+            this.customAttrVal10.Location = new System.Drawing.Point(353, 289);
+            this.customAttrVal10.Name = "customAttrVal10";
+            this.customAttrVal10.Size = new System.Drawing.Size(322, 21);
+            this.customAttrVal10.TabIndex = 71;
+            // 
+            // customAttrKey10
+            // 
+            this.customAttrKey10.Location = new System.Drawing.Point(46, 290);
+            this.customAttrKey10.Name = "customAttrKey10";
+            this.customAttrKey10.Size = new System.Drawing.Size(255, 21);
+            this.customAttrKey10.TabIndex = 70;
+            // 
+            // customAttrVal9
+            // 
+            this.customAttrVal9.Location = new System.Drawing.Point(353, 262);
+            this.customAttrVal9.Name = "customAttrVal9";
+            this.customAttrVal9.Size = new System.Drawing.Size(322, 21);
+            this.customAttrVal9.TabIndex = 69;
+            // 
+            // customAttrKey9
+            // 
+            this.customAttrKey9.Location = new System.Drawing.Point(46, 263);
+            this.customAttrKey9.Name = "customAttrKey9";
+            this.customAttrKey9.Size = new System.Drawing.Size(255, 21);
+            this.customAttrKey9.TabIndex = 68;
+            // 
+            // customAttrVal8
+            // 
+            this.customAttrVal8.Location = new System.Drawing.Point(353, 235);
+            this.customAttrVal8.Name = "customAttrVal8";
+            this.customAttrVal8.Size = new System.Drawing.Size(322, 21);
+            this.customAttrVal8.TabIndex = 67;
+            // 
+            // customAttrKey8
+            // 
+            this.customAttrKey8.Location = new System.Drawing.Point(46, 236);
+            this.customAttrKey8.Name = "customAttrKey8";
+            this.customAttrKey8.Size = new System.Drawing.Size(255, 21);
+            this.customAttrKey8.TabIndex = 66;
+            // 
+            // customAttrVal7
+            // 
+            this.customAttrVal7.Location = new System.Drawing.Point(353, 206);
+            this.customAttrVal7.Name = "customAttrVal7";
+            this.customAttrVal7.Size = new System.Drawing.Size(322, 21);
+            this.customAttrVal7.TabIndex = 65;
+            // 
+            // customAttrKey7
+            // 
+            this.customAttrKey7.Location = new System.Drawing.Point(46, 208);
+            this.customAttrKey7.Name = "customAttrKey7";
+            this.customAttrKey7.Size = new System.Drawing.Size(255, 21);
+            this.customAttrKey7.TabIndex = 64;
+            // 
+            // customAttrVal6
+            // 
+            this.customAttrVal6.Location = new System.Drawing.Point(353, 178);
+            this.customAttrVal6.Name = "customAttrVal6";
+            this.customAttrVal6.Size = new System.Drawing.Size(322, 21);
+            this.customAttrVal6.TabIndex = 63;
+            // 
+            // customAttrKey6
+            // 
+            this.customAttrKey6.Location = new System.Drawing.Point(46, 179);
+            this.customAttrKey6.Name = "customAttrKey6";
+            this.customAttrKey6.Size = new System.Drawing.Size(255, 21);
+            this.customAttrKey6.TabIndex = 62;
+            // 
+            // customAttrVal5
+            // 
+            this.customAttrVal5.Location = new System.Drawing.Point(353, 150);
+            this.customAttrVal5.Name = "customAttrVal5";
+            this.customAttrVal5.Size = new System.Drawing.Size(322, 21);
+            this.customAttrVal5.TabIndex = 61;
+            // 
+            // customAttrKey5
+            // 
+            this.customAttrKey5.Location = new System.Drawing.Point(46, 151);
+            this.customAttrKey5.Name = "customAttrKey5";
+            this.customAttrKey5.Size = new System.Drawing.Size(255, 21);
+            this.customAttrKey5.TabIndex = 60;
+            // 
+            // customAttrVal4
+            // 
+            this.customAttrVal4.Location = new System.Drawing.Point(353, 122);
+            this.customAttrVal4.Name = "customAttrVal4";
+            this.customAttrVal4.Size = new System.Drawing.Size(322, 21);
+            this.customAttrVal4.TabIndex = 59;
+            // 
+            // customAttrKey4
+            // 
+            this.customAttrKey4.Location = new System.Drawing.Point(46, 122);
+            this.customAttrKey4.Name = "customAttrKey4";
+            this.customAttrKey4.Size = new System.Drawing.Size(255, 21);
+            this.customAttrKey4.TabIndex = 58;
+            // 
+            // customAttrVal3
+            // 
+            this.customAttrVal3.Location = new System.Drawing.Point(353, 94);
+            this.customAttrVal3.Name = "customAttrVal3";
+            this.customAttrVal3.Size = new System.Drawing.Size(322, 21);
+            this.customAttrVal3.TabIndex = 57;
+            // 
+            // customAttrKey3
+            // 
+            this.customAttrKey3.Location = new System.Drawing.Point(46, 94);
+            this.customAttrKey3.Name = "customAttrKey3";
+            this.customAttrKey3.Size = new System.Drawing.Size(255, 21);
+            this.customAttrKey3.TabIndex = 56;
+            // 
+            // customAttrVal2
+            // 
+            this.customAttrVal2.Location = new System.Drawing.Point(353, 65);
+            this.customAttrVal2.Name = "customAttrVal2";
+            this.customAttrVal2.Size = new System.Drawing.Size(322, 21);
+            this.customAttrVal2.TabIndex = 55;
+            // 
+            // customAttrKey2
+            // 
+            this.customAttrKey2.Location = new System.Drawing.Point(46, 66);
+            this.customAttrKey2.Name = "customAttrKey2";
+            this.customAttrKey2.Size = new System.Drawing.Size(255, 21);
+            this.customAttrKey2.TabIndex = 54;
+            // 
+            // customAttrVal1
+            // 
+            this.customAttrVal1.Location = new System.Drawing.Point(353, 37);
+            this.customAttrVal1.Name = "customAttrVal1";
+            this.customAttrVal1.Size = new System.Drawing.Size(322, 21);
+            this.customAttrVal1.TabIndex = 53;
+            // 
+            // customAttrKey1
+            // 
+            this.customAttrKey1.Location = new System.Drawing.Point(46, 38);
+            this.customAttrKey1.Name = "customAttrKey1";
+            this.customAttrKey1.Size = new System.Drawing.Size(255, 21);
+            this.customAttrKey1.TabIndex = 52;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.ForeColor = System.Drawing.SystemColors.ButtonShadow;
+            this.label12.Location = new System.Drawing.Point(128, 19);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(263, 12);
+            this.label12.TabIndex = 51;
+            this.label12.Text = "属性名                        \t       属性值";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(43, 19);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(65, 12);
+            this.label6.TabIndex = 50;
+            this.label6.Text = "自定义属性";
             // 
             // ProductView
             // 
@@ -1268,8 +1275,6 @@ namespace AliHelper
             ((System.ComponentModel.ISupportInitialize)(this.dnImage1)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.AttrTab.ResumeLayout(false);
-            this.AttrTab.PerformLayout();
             this.DescTab.ResumeLayout(false);
             this.TransTab.ResumeLayout(false);
             this.TransTab.PerformLayout();
@@ -1278,6 +1283,8 @@ namespace AliHelper
             this.splitContainer1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.CustomTab.ResumeLayout(false);
+            this.CustomTab.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1338,28 +1345,6 @@ namespace AliHelper
         private TextBox keywords2;
         private TextBox keywords3;
         private TextBox summary;
-        private Label label6;
-        private Label label12;
-        private TextBox customAttrVal1;
-        private TextBox customAttrKey1;
-        private TextBox customAttrVal8;
-        private TextBox customAttrKey8;
-        private TextBox customAttrVal7;
-        private TextBox customAttrKey7;
-        private TextBox customAttrVal6;
-        private TextBox customAttrKey6;
-        private TextBox customAttrVal5;
-        private TextBox customAttrKey5;
-        private TextBox customAttrVal4;
-        private TextBox customAttrKey4;
-        private TextBox customAttrVal3;
-        private TextBox customAttrKey3;
-        private TextBox customAttrVal2;
-        private TextBox customAttrKey2;
-        private TextBox customAttrVal10;
-        private TextBox customAttrKey10;
-        private TextBox customAttrVal9;
-        private TextBox customAttrKey9;
         private CheckBox staticImageWaterMarkId;
         private GroupBox staticImageWaterMarkIdGroup;
         private Panel panel1;
@@ -1372,7 +1357,6 @@ namespace AliHelper
         private Panel panel2;
         private RadioButton static_and_dyn1;
         private RadioButton static_and_dyn0;
-        private Panel SysAttrPanel;
         private Panel dynamicImagePanel;
         private PictureBox dnImage6;
         private PictureBox dnImage5;
@@ -1393,5 +1377,28 @@ namespace AliHelper
         private SplitContainer splitContainer1;
         private SourceGrid.Grid ProductGrid;
         private TableLayoutPanel tableLayoutPanel1;
+        private TabPage CustomTab;
+        private TextBox customAttrVal10;
+        private TextBox customAttrKey10;
+        private TextBox customAttrVal9;
+        private TextBox customAttrKey9;
+        private TextBox customAttrVal8;
+        private TextBox customAttrKey8;
+        private TextBox customAttrVal7;
+        private TextBox customAttrKey7;
+        private TextBox customAttrVal6;
+        private TextBox customAttrKey6;
+        private TextBox customAttrVal5;
+        private TextBox customAttrKey5;
+        private TextBox customAttrVal4;
+        private TextBox customAttrKey4;
+        private TextBox customAttrVal3;
+        private TextBox customAttrKey3;
+        private TextBox customAttrVal2;
+        private TextBox customAttrKey2;
+        private TextBox customAttrVal1;
+        private TextBox customAttrKey1;
+        private Label label12;
+        private Label label6;
     }
 }

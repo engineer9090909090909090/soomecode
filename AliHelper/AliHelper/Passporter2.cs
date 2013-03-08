@@ -7,8 +7,6 @@ using System.Threading;
 using System.Text.RegularExpressions;
 using System.Net;
 using Soomes;
-using System.Web;
-using HtmlAgilityPack;
 
 namespace AliHelper
 {
@@ -22,7 +20,7 @@ namespace AliHelper
         private string UserName;
         private string Password;
         //private bool LoginSuccess = true;
-        public Passporter2(WebBrowser b) 
+        public Passporter2(WebBrowser b)
         {
             browser = b;
         }
@@ -31,42 +29,25 @@ namespace AliHelper
         {
             this.UserName = Account;
             this.Password = Password;
-            CookieContainer cookieContainer = new CookieContainer();
-            string html = HttpHelper.GetHtml(loginUrl, cookieContainer);
+
+            string html = HttpHelper.GetHtml(loginUrl);
             string dmtrackPageid = GetDmtrackPageid(html);
             if (string.IsNullOrEmpty(dmtrackPageid))
             {
                 return false;
             }
-            
-            string littleLoginUrl = "https://passport.alipay.com/littleLogin/littleLogin.htm?params="
-            + HttpUtility.UrlEncode("{\"lang\":\"en_US\",\"fromSite\":\"4\",\"styleType\":\"vertical\",\"pageId\":\"" + dmtrackPageid + "\"}")
-            + "&rnd=" + new Random().NextDouble().ToString();
-            html = HttpHelper.GetHtml(littleLoginUrl, cookieContainer);
-            HtmlAgilityPack.HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
-            document.LoadHtml(html);
-            string cid = document.GetElementbyId("fm-cid").Attributes["value"].Value;
-            string umidToken = document.GetElementbyId("fm-umid-token").Attributes["value"].Value;
-            string pageId = document.GetElementbyId("fm-pageId").Attributes["value"].Value;
-            string _csrf_token = document.GetElementbyId("fm-csrf-tk").Attributes["value"].Value;
-            string site = document.GetElementbyId("fm-site").Attributes["value"].Value;
-            string littleLoginRpcUrl = "https://passport.alipay.com/littleLogin/littleLoginRpc/doLogin.json";
-            string postString =  "loginId="+ this.UserName;
-            postString= postString + "&password="+this.Password;
-            postString= postString + "&checkCode=";
-            postString= postString + "&site=" + site;
-            postString= postString + "&ua=undefined";
-            postString= postString + "&cid="+ cid;
-            postString= postString + "&rdsToken=";
-            postString= postString + "&umidToken="+umidToken;
-            postString= postString + "&lang=en_US";
-            postString= postString + "&pageId=" + pageId;
-            postString = postString + "&screenPixel=1280x800&navUserAgent=" + HttpHelper.UserAgent;
-            postString= postString + "&navAppVersion=&navPlatform=Win32";
-            postString= postString + "&_csrf_token=" + _csrf_token;
-            html = HttpHelper.GetHtml(littleLoginRpcUrl, postString, cookieContainer);
-            System.Diagnostics.Trace.WriteLine(html);
-            return true;
+            string token = GetToken(this.UserName, this.Password, dmtrackPageid);
+            if (string.IsNullOrEmpty(token))
+            {
+                return false;
+            }
+            string st = GetST(token);
+            if (string.IsNullOrEmpty(st))
+            {
+                return false;
+            }
+            CookieContainer cookieContainer = new CookieContainer();
+            return GetLoginUrl(this.UserName, this.Password, dmtrackPageid, st, ref cookieContainer);
         }
 
 
@@ -98,7 +79,7 @@ namespace AliHelper
 
         public string GetST(string token)
         {
-            string preUrl = "https://passport.alibaba.com/mini_apply_st.js?site=4&callback=window.xmanDealTokenCallback&token={0}";
+            string preUrl = "https://passport.alipay.com/mini_apply_st.js?site=4&callback=window.xmanDealTokenCallback&token={0}";
             string url = string.Format(preUrl, token);
             string html = HttpHelper.GetHtml(url);
             //System.Diagnostics.Trace.WriteLine("GetST = " + html);
@@ -117,7 +98,8 @@ namespace AliHelper
 
         public bool GetLoginUrl(string userId, string password, string dmtrackPageid, string st, ref CookieContainer cookieContainer)
         {
-            string preUrl = "https://login.alibaba.com/validateST.htm?pd=alibaba&pageFrom=standardlogin&u_token=&xloginPassport={0}&xloginPassword={1}&xloginCheckToken=&rememberme=rememberme&runatm=runatm&dmtrack_pageid={2}&st={3}";
+            string preUrl = "https://login.alibaba.com/validateST.htm?pd=alibaba&pageFrom=standardlogin&u_token=&xloginPassport={0}&xloginPassword={1}&dmtrack_pageid={2}&st={3}";
+            //string preUrl = "https://login.alibaba.com/validateST.htm?pd=alibaba&pageFrom=standardlogin&u_token=&xloginPassport={0}&xloginPassword={1}&xloginCheckToken=&rememberme=rememberme&runatm=runatm&dmtrack_pageid={2}&st={3}";
             string url = string.Format(preUrl, userId, password, dmtrackPageid, st);
             string html = HttpHelper.GetHtml(url);
             string xloginCallBackForRisUrl = "https://login.alibaba.com/xloginCallBackForRisk.do";
