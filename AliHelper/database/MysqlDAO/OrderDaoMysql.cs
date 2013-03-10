@@ -7,13 +7,13 @@ using System.Data.SQLite;
 using System.Data;
 using System.Data.Common;
 
-namespace AliHelper.DAO
+namespace Database
 {
-    public class OrderDao
+    public class OrderDaoMysql
     {
         private SQLiteDBHelper dbHelper;
 
-        public OrderDao(SQLiteDBHelper dbHelper)
+        public OrderDaoMysql(SQLiteDBHelper dbHelper)
         { 
             this.dbHelper = dbHelper;
             CreateTable();

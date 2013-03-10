@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AliHelper
+namespace Soomes
 {
-    class Constants
+    public class Constants
     {
         public const string LoginUrl = "https://login.alibaba.com/";
 

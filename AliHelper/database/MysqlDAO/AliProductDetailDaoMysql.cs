@@ -7,13 +7,13 @@ using System.Reflection;
 using System.Data.SQLite;
 using System.Data;
 
-namespace AliHelper.DAO
+namespace Database
 {
-    public class AliProductDetailDao
+    public class AliProductDetailDaoMysql
     {
         private SQLiteDBHelper dbHelper;
 
-        public AliProductDetailDao(SQLiteDBHelper dbHelper)
+        public AliProductDetailDaoMysql(SQLiteDBHelper dbHelper)
         { 
             this.dbHelper = dbHelper;
             CreateTable();

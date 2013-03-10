@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Soomes;
-using AliHelper.DAO;
+using Database;
 
 namespace AliHelper
 {
     public class ProductsManager : BaseManager
     {
         public event NewEditItemEvent OnAddOrUpdateItemEvent;
-        public AliGroupDao groupDao;
-        public AliProductDao productDao;
-        public AliImageDao aliImageDao;
-        public AliProductDetailDao detailDao;
+        public IAliGroupDao groupDao;
+        public IAliProductDao productDao;
+        public IAliImageDao aliImageDao;
+        public IAliProductDetailDao detailDao;
         public ProductsManager()
         {
             groupDao = DAOFactory.Instance.GetAliGroupDao();

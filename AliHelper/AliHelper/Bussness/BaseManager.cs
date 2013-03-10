@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AliHelper.DAO;
+using Database;
 using Soomes;
 
 namespace AliHelper
 {
     public class BaseManager
     {
-        private AppDicDAO appDicDAO;
+        private IAppDicDAO appDicDAO;
         public BaseManager()
         {
             appDicDAO = DAOFactory.Instance.GetAppDicDAO();

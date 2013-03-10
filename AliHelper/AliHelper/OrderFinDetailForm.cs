@@ -77,7 +77,7 @@ namespace AliHelper
                 FinGrid[r, 0] = new SourceGrid.Cells.Cell(r.ToString());
                 FinGrid[r, 1] = new SourceGrid.Cells.Cell(detail.FinDate);
                 FinGrid[r, 2] = new SourceGrid.Cells.Cell(detail.Description);
-                FinGrid[r, 3] = new SourceGrid.Cells.Cell( "￥" + detail.TotalAmount.ToString("#,##0.00"));
+                FinGrid[r, 3] = new SourceGrid.Cells.Cell(detail.TotalAmount.ToString("#,##0.00"));
                 view = new SourceGrid.Cells.Views.Cell();
                 view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleRight;
                 view.ForeColor = (detail.TotalAmount > 0) ? Color.Red : Color.Blue;
@@ -91,7 +91,7 @@ namespace AliHelper
                 FinGrid[r, i] = new SourceGrid.Cells.Cell("");
             }
             FinGrid[r, 2] = new SourceGrid.Cells.Cell("合计");
-            FinGrid[r, 3] = new SourceGrid.Cells.Cell("￥" + TotalAmount.ToString("#,##0.00"));
+            FinGrid[r, 3] = new SourceGrid.Cells.Cell(TotalAmount.ToString("#,##0.00"));
             view = new SourceGrid.Cells.Views.Cell();
             view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleRight;
             view.ForeColor = (TotalAmount > 0) ? Color.Red : Color.Blue;

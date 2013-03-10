@@ -7,13 +7,13 @@ using System.Data.SQLite;
 using System.Data;
 using System.Data.Common;
 
-namespace AliHelper.DAO
+namespace Database
 {
-    public class FinanceDao
+    public class FinanceDaoMysql
     {
         private SQLiteDBHelper dbHelper;
 
-        public FinanceDao(SQLiteDBHelper dbHelper)
+        public FinanceDaoMysql(SQLiteDBHelper dbHelper)
         { 
             this.dbHelper = dbHelper;
             CreateTable();

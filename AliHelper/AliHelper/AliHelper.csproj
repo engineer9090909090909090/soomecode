@@ -92,10 +92,10 @@
     <Compile Include="CheckCodeForm.Designer.cs">
       <DependentUpon>CheckCodeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Constants.cs" />
     <Compile Include="Controls\DateTimePickerX.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="FileUtils.cs" />
     <Compile Include="OrderFinDetailForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,15 +115,6 @@
       <DependentUpon>OrderTrackView.cs</DependentUpon>
     </Compile>
     <Compile Include="Passporter2.cs" />
-    <Compile Include="DAO\AliGroupDao.cs" />
-    <Compile Include="DAO\AliProductDao.cs" />
-    <Compile Include="DAO\AliImageDao.cs" />
-    <Compile Include="DAO\AliProductDetailDao.cs" />
-    <Compile Include="DAO\DAOFactory.cs" />
-    <Compile Include="DAO\FinanceDao.cs" />
-    <Compile Include="DAO\AppDicDAO.cs" />
-    <Compile Include="DAO\SQLiteDBHelper.cs" />
-    <Compile Include="DAO\OrderDao.cs" />
     <Compile Include="DicForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -219,16 +210,13 @@
     <Compile Include="TestForm.Designer.cs">
       <DependentUpon>TestForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Bussness\DataCache.cs" />
     <Compile Include="Utils\DateUtils.cs" />
-    <Compile Include="Utils\FileUtils.cs" />
     <Compile Include="Utils\FullWebBrowserCookie.cs" />
     <Compile Include="Utils\HttpHelper.cs" />
     <Compile Include="Http\HttpClient.cs" />
     <Compile Include="Utils\IEHandleUtils.cs" />
     <Compile Include="Utils\ImageCodeCracker.cs" />
     <Compile Include="Utils\ImageUtils.cs" />
-    <Compile Include="Utils\JsonConvert.cs" />
     <Compile Include="LoadCode.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
@@ -354,6 +342,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\database\Database.csproj">
+      <Project>{A753AC34-83B3-477F-987D-7A3D27E627FC}</Project>
+      <Name>Database</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Soomes\Soomes.csproj">
       <Project>{FD2D6EDA-FF47-4012-B9D6-1F01FF6413B2}</Project>
       <Name>Soomes</Name>

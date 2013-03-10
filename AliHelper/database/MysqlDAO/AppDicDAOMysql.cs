@@ -6,13 +6,13 @@ using System.Data.SQLite;
 using System.Data;
 using Soomes;
 
-namespace AliHelper.DAO
+namespace Database
 {
-    class AppDicDAO
+    public class AppDicDAOMysql
     {
          private SQLiteDBHelper dbHelper;
 
-         public AppDicDAO(SQLiteDBHelper dbHelper)
+         public AppDicDAOMysql(SQLiteDBHelper dbHelper)
         { 
             this.dbHelper = dbHelper;
             CreateTable();

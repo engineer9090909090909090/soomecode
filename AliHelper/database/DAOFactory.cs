@@ -4,26 +4,26 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Data.SQLite;
+using Soomes;
 
-namespace AliHelper.DAO
+namespace Database
 {
-    class DAOFactory
+    public class DAOFactory
     {
         public static DAOFactory Instance =  new DAOFactory();
-
         private SQLiteDBHelper dbHelper;
-        private AliProductDao aliProductDao;
-        private AliGroupDao aliGroupDao;
-        private AliImageDao aliImageDao;
-        private AliProductDetailDao aliProductDetailDao;
-        private AppDicDAO appDicDAO;
-        private FinanceDao financeDao;
-        private OrderDao orderDao;
+        private MySqlHelper mySqlHelper;
+        private IAliProductDao aliProductDao;
+        private IAliGroupDao aliGroupDao;
+        private IAliImageDao aliImageDao;
+        private IAliProductDetailDao aliProductDetailDao;
+        private IAppDicDAO appDicDAO;
+        private IFinanceDao financeDao;
+        private IOrderDao orderDao;
 
         private DAOFactory()
         {
-            string DataBasePath = FileUtils.GetUserDataFolder() + Path.DirectorySeparatorChar + Constants.DB_FILE;
-            //File.Delete(DataBasePath);
+            string DataBasePath = GetUserDataFolder() + Path.DirectorySeparatorChar + Constants.DB_FILE;
             if (!File.Exists(DataBasePath))
             {
                 SQLiteConnection.CreateFile(DataBasePath);
@@ -31,7 +31,17 @@ namespace AliHelper.DAO
             dbHelper = new SQLiteDBHelper(DataBasePath);
         }
 
-        public AliProductDao GetAliProductDao()
+        public static string GetUserDataFolder()
+        {
+            string AppDataFolder = Environment.CurrentDirectory + Path.DirectorySeparatorChar + DataCache.Instance.AliID;
+            if (!Directory.Exists(AppDataFolder))
+            {
+                Directory.CreateDirectory(AppDataFolder);
+            }
+            return AppDataFolder;
+        }
+
+        public IAliProductDao GetAliProductDao()
         {
             if (aliProductDao == null)
             {
@@ -40,7 +50,7 @@ namespace AliHelper.DAO
             return aliProductDao;
         }
 
-        public AliGroupDao GetAliGroupDao()
+        public IAliGroupDao GetAliGroupDao()
         {
             if (aliGroupDao == null)
             {
@@ -50,7 +60,7 @@ namespace AliHelper.DAO
         }
 
 
-        public AliImageDao GetAliImageDao()
+        public IAliImageDao GetAliImageDao()
         {
             if (aliImageDao == null)
             {
@@ -59,7 +69,7 @@ namespace AliHelper.DAO
             return aliImageDao;
         }
 
-        public AliProductDetailDao GetAliProductDetailDao()
+        public IAliProductDetailDao GetAliProductDetailDao()
         {
             if (aliProductDetailDao == null)
             {
@@ -68,7 +78,7 @@ namespace AliHelper.DAO
             return aliProductDetailDao;
         }
 
-        public AppDicDAO GetAppDicDAO()
+        public IAppDicDAO GetAppDicDAO()
         {
             if (appDicDAO == null)
             {
@@ -77,7 +87,7 @@ namespace AliHelper.DAO
             return appDicDAO;
         }
 
-        public FinanceDao GetFinanceDao()
+        public IFinanceDao GetFinanceDao()
         {
             if (financeDao == null)
             {
@@ -86,7 +96,7 @@ namespace AliHelper.DAO
             return financeDao;
         }
 
-        public OrderDao GetOrderDao()
+        public IOrderDao GetOrderDao()
         {
             if (orderDao == null)
             {

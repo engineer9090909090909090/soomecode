@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using System.Net;
+using Database;
+using Soomes;
 
 namespace AliHelper
 {

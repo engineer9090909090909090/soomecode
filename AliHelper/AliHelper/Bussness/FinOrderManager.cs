@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AliHelper.DAO;
 using Soomes;
+using Database;
 
 namespace AliHelper.Bussness
 {
     public class FinOrderManager : BaseManager
     {
-        public FinanceDao financeDao;
-        public OrderDao orderDao;
+        public IFinanceDao financeDao;
+        public IOrderDao orderDao;
         static public event NewEditItemEvent OnEditFinDetailEvent;
         static public event NewEditItemEvent OnEditFinanceEvent;
         static public event NewEditItemEvent OnEditOrderEvent;
