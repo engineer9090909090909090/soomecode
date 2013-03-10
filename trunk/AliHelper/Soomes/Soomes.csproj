@@ -31,13 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SQLite">
-      <HintPath>..\..\lib\System.Data.SQLite.DLL</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -51,11 +50,14 @@
     <Compile Include="Category.cs" />
     <Compile Include="AliProduct.cs" />
     <Compile Include="CategroyNode.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="DataCache.cs" />
     <Compile Include="Finance.cs" />
     <Compile Include="FormElement.cs" />
     <Compile Include="ImageGroupNode.cs" />
     <Compile Include="ImageInfo.cs" />
     <Compile Include="ImageJson.cs" />
+    <Compile Include="JsonConvert.cs" />
     <Compile Include="MailQuery.cs" />
     <Compile Include="MailResult.cs" />
     <Compile Include="Order.cs" />

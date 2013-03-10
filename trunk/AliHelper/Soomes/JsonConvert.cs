@@ -6,9 +6,9 @@ using System.IO;
 using System.Xml;
 using Newtonsoft.Json;
 
-namespace AliHelper
+namespace Soomes
 {
-    static class JsonConvert
+    public static class JsonConvert
     {
         /// <summary>
         /// 序列化数据为Json数据格式.

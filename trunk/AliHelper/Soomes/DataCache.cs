@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using Soomes;
 
-namespace AliHelper
+namespace Soomes
 {
-    class DataCache
+    public class DataCache
     {
         
         public static DataCache Instance = new DataCache();
@@ -23,7 +23,7 @@ namespace AliHelper
         }
         public string AliID { get; set; }
         public string CsrfToken { get; set; }
-        public string CheckCodeUrl;
+        public string CheckCodeUrl { get; set; }
 
         public Dictionary<string, string> DicTypeOptions { set; get; }
 

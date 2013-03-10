@@ -6,9 +6,9 @@ using Soomes;
 using System.Data.SQLite;
 using System.Data;
 
-namespace AliHelper.DAO
+namespace Database
 {
-    public class AliGroupDao
+    public class AliGroupDao : IAliGroupDao
     {
         private SQLiteDBHelper dbHelper;
 
@@ -19,7 +19,7 @@ namespace AliHelper.DAO
             UpdateTable();
         }
 
-        private void CreateTable()
+        protected void CreateTable()
         {
 
             dbHelper.ExecuteNonQuery(
@@ -34,7 +34,7 @@ namespace AliHelper.DAO
             dbHelper.ExecuteNonQuery("Create Index  IF NOT EXISTS Index_key on AliGroups(ParentId);");
         }
 
-        private void UpdateTable()
+        protected void UpdateTable()
         {
 
         }

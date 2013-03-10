@@ -6,9 +6,9 @@ using Soomes;
 using System.Data.SQLite;
 using System.Data;
 
-namespace AliHelper.DAO
+namespace Database
 {
-    public class AliImageDao
+    public class AliImageDao : IAliImageDao
     {
         private SQLiteDBHelper dbHelper;
 

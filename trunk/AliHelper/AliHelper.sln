@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AliHelper", "AliHelper\AliH
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Soomes", "Soomes\Soomes.csproj", "{FD2D6EDA-FF47-4012-B9D6-1F01FF6413B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "database\Database.csproj", "{A753AC34-83B3-477F-987D-7A3D27E627FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,16 @@ Global
 		{FD2D6EDA-FF47-4012-B9D6-1F01FF6413B2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{FD2D6EDA-FF47-4012-B9D6-1F01FF6413B2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{FD2D6EDA-FF47-4012-B9D6-1F01FF6413B2}.Release|x86.ActiveCfg = Release|Any CPU
+		{A753AC34-83B3-477F-987D-7A3D27E627FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A753AC34-83B3-477F-987D-7A3D27E627FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A753AC34-83B3-477F-987D-7A3D27E627FC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A753AC34-83B3-477F-987D-7A3D27E627FC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A753AC34-83B3-477F-987D-7A3D27E627FC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A753AC34-83B3-477F-987D-7A3D27E627FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A753AC34-83B3-477F-987D-7A3D27E627FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A753AC34-83B3-477F-987D-7A3D27E627FC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A753AC34-83B3-477F-987D-7A3D27E627FC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A753AC34-83B3-477F-987D-7A3D27E627FC}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
