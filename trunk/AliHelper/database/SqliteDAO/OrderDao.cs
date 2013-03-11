@@ -162,21 +162,21 @@ namespace Database
                 connection.Open();
                 using (DbTransaction transaction = connection.BeginTransaction())
                 {
-                    int record = Convert.ToInt32(dbHelper.ExecuteScalar(connection, ExistRecordSql + order.Id, null));
+                    int record = Convert.ToInt32(dbHelper.ExecuteScalar(transaction, ExistRecordSql + order.Id, null));
                     int orderId = 0;
                     if (record == 0)
                     {
-                        dbHelper.ExecuteNonQuery(connection, InsSql, parameter);
-                        orderId = dbHelper.GetLastInsertId(connection);
+                        dbHelper.ExecuteNonQuery(transaction, InsSql, parameter);
+                        orderId = dbHelper.GetLastInsertId(transaction);
                         
                     }
                     else
                     {
-                        dbHelper.ExecuteNonQuery(connection, UpdSql, parameter);
+                        dbHelper.ExecuteNonQuery(transaction, UpdSql, parameter);
                         orderId = order.Id;
                     }
                     string TrackingCountSql = "SELECT count(1) FROM OrderTracking WHERE Id = " + orderId;
-                    int rrackingCount = Convert.ToInt32(dbHelper.ExecuteScalar(connection, TrackingCountSql, null));
+                    int rrackingCount = Convert.ToInt32(dbHelper.ExecuteScalar(transaction, TrackingCountSql, null));
                     if (rrackingCount == 0)
                     {
                         OrderTracking tracking = new OrderTracking();
@@ -185,7 +185,7 @@ namespace Database
                         tracking.TrackingDate = order.BeginDate;
                         tracking.Description = order.Description + " - " + order.Status;
                         tracking.Tracker = tracker;
-                        InsertOrUpdateTracking(connection, tracking);
+                        InsertOrUpdateTracking(transaction, tracking);
                     }
                     transaction.Commit();
                 }
@@ -233,8 +233,8 @@ namespace Database
         {
             InsertOrUpdateTracking(null, tracking);
         }
-        
-        public void InsertOrUpdateTracking(SQLiteConnection connection, OrderTracking tracking)
+
+        public void InsertOrUpdateTracking(DbTransaction trans, OrderTracking tracking)
         {
             string InsSql = @"INSERT INTO OrderTracking(OrderId, TrackingDate, Description, Tracker, Status, CreatedTime, ModifiedTime) "
                             + "values(@OrderId, @TrackingDate, @Description, @Tracker, @Status, @CreatedTime, @ModifiedTime) ";
@@ -256,9 +256,9 @@ namespace Database
                 new SQLiteParameter("@CreatedTime", CurrentTime),
                 new SQLiteParameter("@ModifiedTime",CurrentTime)
             };
-            if (connection == null)
+            if (trans == null)
             {
-                using (connection = dbHelper.GetConnection())
+                using (SQLiteConnection connection = dbHelper.GetConnection())
                 {
                     connection.Open();
                     using (DbTransaction transaction = connection.BeginTransaction())
@@ -267,31 +267,31 @@ namespace Database
                         int ExistTrackingId = Convert.ToInt32(dbHelper.ExecuteScalar(ExistRecordSql, null));
                         if (ExistTrackingId == 0)
                         {
-                            dbHelper.ExecuteNonQuery(connection, InsSql, parameter);
+                            dbHelper.ExecuteNonQuery(transaction, InsSql, parameter);
                         }
                         else
                         {
-                            dbHelper.ExecuteNonQuery(connection, UpdSql, parameter);
+                            dbHelper.ExecuteNonQuery(transaction, UpdSql, parameter);
                         }
                         Order order = new Order();
                         order.Id = tracking.OrderId;
                         order.Status = tracking.Status;
                         order.EndDate = tracking.IsClosed?tracking.TrackingDate:string.Empty;
-                        UpdateOrderStatus(connection, order);
+                        UpdateOrderStatus(transaction, order);
                         transaction.Commit();
                     }
                 }
             }
             else 
             {
-                int ExistTrackingId = Convert.ToInt32(dbHelper.ExecuteScalar(connection, ExistRecordSql, null));
+                int ExistTrackingId = Convert.ToInt32(dbHelper.ExecuteScalar(trans, ExistRecordSql, null));
                 if (ExistTrackingId == 0)
                 {
-                    dbHelper.ExecuteNonQuery(connection, InsSql, parameter);
+                    dbHelper.ExecuteNonQuery(trans, InsSql, parameter);
                 }
                 else
                 {
-                    dbHelper.ExecuteNonQuery(connection, UpdSql, parameter);
+                    dbHelper.ExecuteNonQuery(trans, UpdSql, parameter);
                 }
             }
         }
@@ -304,7 +304,7 @@ namespace Database
         }
 
 
-        public void UpdateOrderStatus(SQLiteConnection connection, Order order)
+        public void UpdateOrderStatus(DbTransaction trans, Order order)
         {
             string UpdSql = @"update Orders set EndDate=@EndDate, Status = @Status, ModifiedTime=@ModifiedTime where Id = @Id";
             DateTime CurrentTime = DateTime.Now;
@@ -315,7 +315,7 @@ namespace Database
                 new SQLiteParameter("@Status",order.Status),
                 new SQLiteParameter("@ModifiedTime",CurrentTime)
             };
-            dbHelper.ExecuteNonQuery(connection, UpdSql, parameter);
+            dbHelper.ExecuteNonQuery(trans, UpdSql, parameter);
         }
 
         public List<OrderTracking> GetOrderTrackingList(int orderId)

@@ -12,7 +12,7 @@ namespace Database
     {
         public static DAOFactory Instance =  new DAOFactory();
         private SQLiteDBHelper dbHelper;
-        private MySqlHelper mySqlHelper;
+        private MysqlDBHelper mysqlDbHelper;
         private IAliProductDao aliProductDao;
         private IAliGroupDao aliGroupDao;
         private IAliImageDao aliImageDao;
@@ -29,9 +29,15 @@ namespace Database
                 SQLiteConnection.CreateFile(DataBasePath);
             }
             dbHelper = new SQLiteDBHelper(DataBasePath);
+
+            string connection_str = "server=localhost;uid=root;pwd=;database=AliHelper;Charset=utf8;Allow Zero Datetime=true";
+            if (!string.IsNullOrEmpty(connection_str))
+            {
+                mysqlDbHelper = new MysqlDBHelper(connection_str);
+            }
         }
 
-        public static string GetUserDataFolder()
+        private static string GetUserDataFolder()
         {
             string AppDataFolder = Environment.CurrentDirectory + Path.DirectorySeparatorChar + DataCache.Instance.AliID;
             if (!Directory.Exists(AppDataFolder))
@@ -82,7 +88,14 @@ namespace Database
         {
             if (appDicDAO == null)
             {
-                this.appDicDAO = new AppDicDAO(dbHelper);
+                if (this.mysqlDbHelper == null)
+                {
+                    this.appDicDAO = new AppDicDAO(dbHelper);
+                }
+                else 
+                {
+                    this.appDicDAO = new AppDicDAOMysql(mysqlDbHelper);
+                }
             }
             return appDicDAO;
         }
@@ -91,7 +104,14 @@ namespace Database
         {
             if (financeDao == null)
             {
-                this.financeDao = new FinanceDao(dbHelper);
+                if (this.mysqlDbHelper == null)
+                {
+                    this.financeDao = new FinanceDao(dbHelper);
+                }
+                else
+                {
+                    this.financeDao = new FinanceDaoMysql(mysqlDbHelper);
+                }
             }
             return financeDao;
         }
@@ -100,7 +120,14 @@ namespace Database
         {
             if (orderDao == null)
             {
-                orderDao = new OrderDao(dbHelper);
+                if (this.mysqlDbHelper == null)
+                {
+                    this.orderDao = new OrderDao(dbHelper);
+                }
+                else
+                {
+                    this.orderDao = new OrderDaoMysql(mysqlDbHelper);
+                }
             }
             return orderDao;
         }
