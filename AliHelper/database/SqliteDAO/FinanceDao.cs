@@ -145,13 +145,13 @@ namespace Database
                 connection.Open();
                 using (DbTransaction transaction = connection.BeginTransaction())
                 {
-                    InsertOrUpdateDetails(connection, list);
+                    InsertOrUpdateDetails(transaction, list);
                     transaction.Commit();
                 }
             }
         }
 
-        public void InsertOrUpdateDetails(SQLiteConnection connection, List<FinDetails> list)
+        public void InsertOrUpdateDetails(DbTransaction trans, List<FinDetails> list)
         {
             string InsSql = @"INSERT INTO FinDetails(FinDate,FinId,Description,EventType,Amount,Association,OrderNo,ItemType,Remark,Currency, Rate, CreatedTime,ModifiedTime)"
                             + "values(@FinDate,@FinId,@Description,@EventType,@Amount,@Association,@OrderNo,@ItemType, @Remark, @Currency, @Rate, @CreatedTime, @ModifiedTime)";
@@ -184,7 +184,7 @@ namespace Database
                     new SQLiteParameter("@CreatedTime", CurrentTime),
                     new SQLiteParameter("@ModifiedTime",CurrentTime)
                 };
-                int record = Convert.ToInt32(dbHelper.ExecuteScalar(connection, ExistRecordSql + item.DetailId, null));
+                int record = Convert.ToInt32(dbHelper.ExecuteScalar(trans, ExistRecordSql + item.DetailId, null));
                 if (record == 0)
                 {
                     InsertParameters.Add(parameter);
@@ -196,11 +196,11 @@ namespace Database
             }
             if (InsertParameters.Count > 0)
             {
-                dbHelper.ExecuteNonQuery(connection, InsSql, InsertParameters);
+                dbHelper.ExecuteNonQuery(trans, InsSql, InsertParameters);
             }
             if (UpdateParameters.Count > 0)
             {
-                dbHelper.ExecuteNonQuery(connection, UpdSql, UpdateParameters);
+                dbHelper.ExecuteNonQuery(trans, UpdSql, UpdateParameters);
             }
         }
 
@@ -271,8 +271,8 @@ namespace Database
                 {
                     if (record == 0)
                     {
-                        dbHelper.ExecuteNonQuery(connection, InsSql, parameter);
-                        int LasertInsertId = dbHelper.GetLastInsertId(connection);
+                        dbHelper.ExecuteNonQuery(transaction, InsSql, parameter);
+                        int LasertInsertId = dbHelper.GetLastInsertId(transaction);
                         foreach (FinDetails detail in finance.Details)
                         {
                             detail.FinId = LasertInsertId;
@@ -280,10 +280,10 @@ namespace Database
                     }
                     else
                     {
-                        dbHelper.ExecuteNonQuery(connection, UpdSql, parameter);
-                        dbHelper.ExecuteNonQuery(connection, "delete from FinDetails where FinId =" + finance.FinId);
+                        dbHelper.ExecuteNonQuery(transaction, UpdSql, parameter);
+                        dbHelper.ExecuteNonQuery(transaction, "delete from FinDetails where FinId =" + finance.FinId);
                     }
-                    InsertOrUpdateDetails(connection, finance.Details);
+                    InsertOrUpdateDetails(transaction, finance.Details);
                     transaction.Commit();
                 }
             }

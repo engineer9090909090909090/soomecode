@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Soomes;
-using System.Data.SQLite;
 using System.Data;
 using System.Data.Common;
+using MySql.Data.MySqlClient;
 
 namespace Database
 {
-    public class OrderDaoMysql
+    public class OrderDaoMysql : IOrderDao
     {
-        private SQLiteDBHelper dbHelper;
+        private MysqlDBHelper dbHelper;
 
-        public OrderDaoMysql(SQLiteDBHelper dbHelper)
+        public OrderDaoMysql(MysqlDBHelper dbHelper)
         { 
             this.dbHelper = dbHelper;
             CreateTable();
@@ -23,29 +23,28 @@ namespace Database
         {
             dbHelper.ExecuteNonQuery(
               "CREATE TABLE IF NOT EXISTS Orders("
-            + "Id integer NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
-            + "BeginDate varchar(10) not null,"
-            + "EndDate varchar(10),"
-            + "Description varchar(150) not null,"
-            + "OrderNo varchar(10) not null,"
-            + "SalesMan varchar(20) not null,"
-            + "Status varchar(10) not null,"
-            + "Remark varchar(500),"
-            + "CreatedTime datetime,"
-            + "ModifiedTime datetime)");
+            + "`Id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,"
+            + "`BeginDate` varchar(10) not null,"
+            + "`EndDate` varchar(10),"
+            + "`Description` varchar(150) not null,"
+            + "`OrderNo` varchar(10) not null,"
+            + "`SalesMan` varchar(20) not null,"
+            + "`Status` varchar(10) not null,"
+            + "`Remark` varchar(500),"
+            + "`CreatedTime` datetime,"
+            + "`ModifiedTime` datetime) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ");
 
             dbHelper.ExecuteNonQuery(
               "CREATE TABLE IF NOT EXISTS OrderTracking("
-            + "Id integer NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
-            + "OrderId integer not null,"
-            + "TrackingDate varchar(10),"
-            + "Description varchar(2000) not null,"
-            + "Tracker varchar(20) not null,"
-            + "Status varchar(10) not null,"
-            + "CreatedTime datetime,"
-            + "ModifiedTime datetime)");
-
-            dbHelper.ExecuteNonQuery("Create Index IF NOT EXISTS Index_key on OrderTracking(OrderId);");
+            + "`Id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,"
+            + "`OrderId` integer not null,"
+            + "`TrackingDate` varchar(10),"
+            + "`Description` varchar(2000) not null,"
+            + "`Tracker` varchar(20) not null,"
+            + "`Status` varchar(10) not null,"
+            + "`CreatedTime` datetime,"
+            + "`ModifiedTime` datetime,"
+            + " Index Index_OrderId (`OrderId`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ");
         }
 
         public QueryObject<Order> GetOrders(QueryObject<Order> query)
@@ -59,28 +58,28 @@ namespace Database
                 sql = "SELECT t.*, sum(d.Amount * d.Rate) TotalAmount FROM orders t left join findetails d on t.OrderNo = d.OrderNo where 1 = 1 ";
             }
 
-            List<SQLiteParameter> QueryParameters = new List<SQLiteParameter>();
+            List<MySqlParameter> QueryParameters = new List<MySqlParameter>();
             if (query.Condition != null)
             {
                 if (!string.IsNullOrEmpty(query.Condition.BeginDateForm))
                 {
                     sql = sql + "and t.BeginDate >= @BeginDateForm ";
-                    QueryParameters.Add(new SQLiteParameter("@BeginDateForm", query.Condition.BeginDateForm));
+                    QueryParameters.Add(new MySqlParameter("@BeginDateForm", query.Condition.BeginDateForm));
                 }
                 if (!string.IsNullOrEmpty(query.Condition.BeginDateTo))
                 {
                     sql = sql + "and t.BeginDate <= @BeginDateTo ";
-                    QueryParameters.Add(new SQLiteParameter("@BeginDateTo", query.Condition.BeginDateTo));
+                    QueryParameters.Add(new MySqlParameter("@BeginDateTo", query.Condition.BeginDateTo));
                 }
                 if (!string.IsNullOrEmpty(query.Condition.EndDateForm))
                 {
                     sql = sql + "and t.EndDate >= @EndDateForm ";
-                    QueryParameters.Add(new SQLiteParameter("@EndDateForm", query.Condition.EndDateForm));
+                    QueryParameters.Add(new MySqlParameter("@EndDateForm", query.Condition.EndDateForm));
                 }
                 if (!string.IsNullOrEmpty(query.Condition.EndDateTo))
                 {
                     sql = sql + "and t.EndDate <= @EndDateTo ";
-                    QueryParameters.Add(new SQLiteParameter("@EndDateTo", query.Condition.EndDateTo));
+                    QueryParameters.Add(new MySqlParameter("@EndDateTo", query.Condition.EndDateTo));
                 }
                 if (!string.IsNullOrEmpty(query.Condition.Description))
                 {
@@ -89,7 +88,7 @@ namespace Database
                 if (!string.IsNullOrEmpty(query.Condition.Status))
                 {
                     sql = sql + "and t.Status = @Status ";
-                    QueryParameters.Add(new SQLiteParameter("@Status", query.Condition.Status));
+                    QueryParameters.Add(new MySqlParameter("@Status", query.Condition.Status));
                 }
                 if (!string.IsNullOrEmpty(query.Condition.Remark))
                 {
@@ -98,7 +97,7 @@ namespace Database
                 if (!string.IsNullOrEmpty(query.Condition.SalesMan))
                 {
                     sql = sql + "and t.SalesMan = @SalesMan ";
-                    QueryParameters.Add(new SQLiteParameter("@SalesMan", query.Condition.SalesMan));
+                    QueryParameters.Add(new MySqlParameter("@SalesMan", query.Condition.SalesMan));
                 }
             }
             if (query.Condition.IsFinOrderView)
@@ -143,40 +142,40 @@ namespace Database
 
             string ExistRecordSql = "SELECT count(1) FROM Orders WHERE Id = ";
             DateTime CurrentTime = DateTime.Now;
-            SQLiteParameter[] parameter = new SQLiteParameter[]
+            MySqlParameter[] parameter = new MySqlParameter[]
             {
-                new SQLiteParameter("@Id",order.Id),
-                new SQLiteParameter("@BeginDate",order.BeginDate),
-                new SQLiteParameter("@EndDate",order.EndDate),
-                new SQLiteParameter("@Description",order.Description),
-                new SQLiteParameter("@OrderNo",order.OrderNo),
-                new SQLiteParameter("@SalesMan",order.SalesMan),
-                new SQLiteParameter("@Status",order.Status),
-                new SQLiteParameter("@Remark",order.Remark),
-                new SQLiteParameter("@CreatedTime", CurrentTime),
-                new SQLiteParameter("@ModifiedTime",CurrentTime)
+                new MySqlParameter("@Id",order.Id),
+                new MySqlParameter("@BeginDate",order.BeginDate),
+                new MySqlParameter("@EndDate",order.EndDate),
+                new MySqlParameter("@Description",order.Description),
+                new MySqlParameter("@OrderNo",order.OrderNo),
+                new MySqlParameter("@SalesMan",order.SalesMan),
+                new MySqlParameter("@Status",order.Status),
+                new MySqlParameter("@Remark",order.Remark),
+                new MySqlParameter("@CreatedTime", CurrentTime),
+                new MySqlParameter("@ModifiedTime",CurrentTime)
             };
 
-            using (SQLiteConnection connection = dbHelper.GetConnection())
+            using (MySqlConnection connection = dbHelper.GetConnection())
             {
                 connection.Open();
                 using (DbTransaction transaction = connection.BeginTransaction())
                 {
-                    int record = Convert.ToInt32(dbHelper.ExecuteScalar(connection, ExistRecordSql + order.Id, null));
+                    int record = Convert.ToInt32(dbHelper.ExecuteScalar(transaction, ExistRecordSql + order.Id, null));
                     int orderId = 0;
                     if (record == 0)
                     {
-                        dbHelper.ExecuteNonQuery(connection, InsSql, parameter);
-                        orderId = dbHelper.GetLastInsertId(connection);
+                        dbHelper.ExecuteNonQuery(transaction, InsSql, parameter);
+                        orderId = dbHelper.GetLastInsertId(transaction);
                         
                     }
                     else
                     {
-                        dbHelper.ExecuteNonQuery(connection, UpdSql, parameter);
+                        dbHelper.ExecuteNonQuery(transaction, UpdSql, parameter);
                         orderId = order.Id;
                     }
                     string TrackingCountSql = "SELECT count(1) FROM OrderTracking WHERE Id = " + orderId;
-                    int rrackingCount = Convert.ToInt32(dbHelper.ExecuteScalar(connection, TrackingCountSql, null));
+                    int rrackingCount = Convert.ToInt32(dbHelper.ExecuteScalar(transaction, TrackingCountSql, null));
                     if (rrackingCount == 0)
                     {
                         OrderTracking tracking = new OrderTracking();
@@ -185,7 +184,7 @@ namespace Database
                         tracking.TrackingDate = order.BeginDate;
                         tracking.Description = order.Description + " - " + order.Status;
                         tracking.Tracker = tracker;
-                        InsertOrUpdateTracking(connection, tracking);
+                        InsertOrUpdateTracking(transaction, tracking);
                     }
                     transaction.Commit();
                 }
@@ -233,8 +232,8 @@ namespace Database
         {
             InsertOrUpdateTracking(null, tracking);
         }
-        
-        public void InsertOrUpdateTracking(SQLiteConnection connection, OrderTracking tracking)
+
+        public void InsertOrUpdateTracking(DbTransaction trans, OrderTracking tracking)
         {
             string InsSql = @"INSERT INTO OrderTracking(OrderId, TrackingDate, Description, Tracker, Status, CreatedTime, ModifiedTime) "
                             + "values(@OrderId, @TrackingDate, @Description, @Tracker, @Status, @CreatedTime, @ModifiedTime) ";
@@ -245,20 +244,20 @@ namespace Database
             string ExistRecordSql = "SELECT count(1) FROM OrderTracking WHERE Id = " + tracking.Id;
             
             DateTime CurrentTime = DateTime.Now;
-            SQLiteParameter[] parameter = new SQLiteParameter[]
+            MySqlParameter[] parameter = new MySqlParameter[]
             {
-                new SQLiteParameter("@Id",tracking.Id),
-                new SQLiteParameter("@OrderId",tracking.OrderId),
-                new SQLiteParameter("@TrackingDate",tracking.TrackingDate),
-                new SQLiteParameter("@Description",tracking.Description),
-                new SQLiteParameter("@Tracker",tracking.Tracker),
-                new SQLiteParameter("@Status",tracking.Status),
-                new SQLiteParameter("@CreatedTime", CurrentTime),
-                new SQLiteParameter("@ModifiedTime",CurrentTime)
+                new MySqlParameter("@Id",tracking.Id),
+                new MySqlParameter("@OrderId",tracking.OrderId),
+                new MySqlParameter("@TrackingDate",tracking.TrackingDate),
+                new MySqlParameter("@Description",tracking.Description),
+                new MySqlParameter("@Tracker",tracking.Tracker),
+                new MySqlParameter("@Status",tracking.Status),
+                new MySqlParameter("@CreatedTime", CurrentTime),
+                new MySqlParameter("@ModifiedTime",CurrentTime)
             };
-            if (connection == null)
+            if (trans == null)
             {
-                using (connection = dbHelper.GetConnection())
+                using (MySqlConnection connection = dbHelper.GetConnection())
                 {
                     connection.Open();
                     using (DbTransaction transaction = connection.BeginTransaction())
@@ -267,31 +266,31 @@ namespace Database
                         int ExistTrackingId = Convert.ToInt32(dbHelper.ExecuteScalar(ExistRecordSql, null));
                         if (ExistTrackingId == 0)
                         {
-                            dbHelper.ExecuteNonQuery(connection, InsSql, parameter);
+                            dbHelper.ExecuteNonQuery(transaction, InsSql, parameter);
                         }
                         else
                         {
-                            dbHelper.ExecuteNonQuery(connection, UpdSql, parameter);
+                            dbHelper.ExecuteNonQuery(transaction, UpdSql, parameter);
                         }
                         Order order = new Order();
                         order.Id = tracking.OrderId;
                         order.Status = tracking.Status;
                         order.EndDate = tracking.IsClosed?tracking.TrackingDate:string.Empty;
-                        UpdateOrderStatus(connection, order);
+                        UpdateOrderStatus(transaction, order);
                         transaction.Commit();
                     }
                 }
             }
             else 
             {
-                int ExistTrackingId = Convert.ToInt32(dbHelper.ExecuteScalar(connection, ExistRecordSql, null));
+                int ExistTrackingId = Convert.ToInt32(dbHelper.ExecuteScalar(trans, ExistRecordSql, null));
                 if (ExistTrackingId == 0)
                 {
-                    dbHelper.ExecuteNonQuery(connection, InsSql, parameter);
+                    dbHelper.ExecuteNonQuery(trans, InsSql, parameter);
                 }
                 else
                 {
-                    dbHelper.ExecuteNonQuery(connection, UpdSql, parameter);
+                    dbHelper.ExecuteNonQuery(trans, UpdSql, parameter);
                 }
             }
         }
@@ -304,18 +303,18 @@ namespace Database
         }
 
 
-        public void UpdateOrderStatus(SQLiteConnection connection, Order order)
+        public void UpdateOrderStatus(DbTransaction trans, Order order)
         {
             string UpdSql = @"update Orders set EndDate=@EndDate, Status = @Status, ModifiedTime=@ModifiedTime where Id = @Id";
             DateTime CurrentTime = DateTime.Now;
-            SQLiteParameter[] parameter = new SQLiteParameter[]
+            MySqlParameter[] parameter = new MySqlParameter[]
             {
-                new SQLiteParameter("@Id",order.Id),
-                new SQLiteParameter("@EndDate",order.EndDate),
-                new SQLiteParameter("@Status",order.Status),
-                new SQLiteParameter("@ModifiedTime",CurrentTime)
+                new MySqlParameter("@Id",order.Id),
+                new MySqlParameter("@EndDate",order.EndDate),
+                new MySqlParameter("@Status",order.Status),
+                new MySqlParameter("@ModifiedTime",CurrentTime)
             };
-            dbHelper.ExecuteNonQuery(connection, UpdSql, parameter);
+            dbHelper.ExecuteNonQuery(trans, UpdSql, parameter);
         }
 
         public List<OrderTracking> GetOrderTrackingList(int orderId)

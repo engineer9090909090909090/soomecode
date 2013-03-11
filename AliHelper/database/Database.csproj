@@ -48,20 +48,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Inteface\AliGroupDao.cs" />
-    <Compile Include="Inteface\AliImageDao.cs" />
-    <Compile Include="Inteface\AliProductDao.cs" />
-    <Compile Include="Inteface\AliProductDetailDao.cs" />
-    <Compile Include="Inteface\AppDicDAO.cs" />
-    <Compile Include="Inteface\FinanceDao.cs" />
-    <Compile Include="Inteface\OrderDao.cs" />
-    <Compile Include="MysqlDAO\AliGroupDaoMysql.cs" />
-    <Compile Include="MysqlDAO\AliImageDaoMysql.cs" />
-    <Compile Include="MysqlDAO\AliProductDaoMysql.cs" />
-    <Compile Include="MysqlDAO\AliProductDetailDaoMysql.cs" />
+    <Compile Include="HelperBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MysqlDBHelper.cs" />
+    <Compile Include="Inteface\IAliGroupDao.cs" />
+    <Compile Include="Inteface\IAliImageDao.cs" />
+    <Compile Include="Inteface\IAliProductDao.cs" />
+    <Compile Include="Inteface\IAliProductDetailDao.cs" />
+    <Compile Include="Inteface\IAppDicDAO.cs" />
+    <Compile Include="Inteface\IFinanceDao.cs" />
+    <Compile Include="Inteface\IOrderDao.cs" />
     <Compile Include="MysqlDAO\AppDicDAOMysql.cs" />
     <Compile Include="MysqlDAO\FinanceDaoMysql.cs" />
     <Compile Include="MysqlDAO\OrderDaoMysql.cs" />
+    <Compile Include="MySqlHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MySqlHelper_static.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="SqliteDAO\AliGroupDao.cs" />
     <Compile Include="SqliteDAO\AliImageDao.cs" />
     <Compile Include="SqliteDAO\AliProductDao.cs" />
@@ -70,9 +76,6 @@
     <Compile Include="DAOFactory.cs" />
     <Compile Include="SqliteDAO\FinanceDao.cs" />
     <Compile Include="SqliteDAO\OrderDao.cs" />
-    <Compile Include="HelperBase.cs" />
-    <Compile Include="MySqlHelper.cs" />
-    <Compile Include="MySqlHelper_static.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLiteDBHelper.cs" />
   </ItemGroup>

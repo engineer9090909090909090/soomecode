@@ -2,87 +2,78 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Data.SQLite;
 using System.Data.Common;
 using System.Data;
 using System.IO;
+using MySql.Data.MySqlClient;
 namespace Database
 {
-    public class SQLiteDBHelper
+    public class MysqlDBHelper
     {
 
         private string connectionString = string.Empty;
-        private string dbPath = string.Empty;
-        /// <summary> 
 
-        /// 构造函数 
-
-        /// </summary> 
-
-        /// <param name="dbPath">SQLite数据库文件路径</param> 
-
-        public SQLiteDBHelper(string dbPath)
-        {
-            this.dbPath = dbPath;            
-            this.connectionString = "Data Source=" + dbPath;
+        public MysqlDBHelper(string connectionString)
+        {         
+            this.connectionString = connectionString;
         }
 
         public void ExecuteNonQuery(string sql)
         {
-            using (SQLiteConnection connection = new SQLiteConnection(this.connectionString))
+            using (MySqlConnection connection = new MySqlConnection(this.connectionString))
             {
                 connection.Open();
-                using (SQLiteCommand command = new SQLiteCommand(connection))
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
-                    command.CommandText = sql;
+                    command.CommandType = CommandType.Text;
                     command.ExecuteNonQuery();
                 }
             }
         }
 
 
-        public SQLiteConnection GetConnection()
+        public MySqlConnection GetConnection()
         {
-            return new SQLiteConnection(connectionString);
+            return new MySqlConnection(connectionString);
         }
 
         public void ExecuteNonQuery(DbTransaction trans, string sql)
         {
-            SQLiteConnection connection = (SQLiteConnection)trans.Connection;
-            using (SQLiteCommand command = new SQLiteCommand(connection))
+            MySqlConnection connection = (MySqlConnection)trans.Connection;
+            using (MySqlCommand command = new MySqlCommand(sql, connection))
             {
-                command.CommandText = sql;
                 command.ExecuteNonQuery();
             }
         }
 
-        public int ExecuteNonQuery(DbTransaction trans, string sql, SQLiteParameter[] parameters)
+        public int ExecuteNonQuery(DbTransaction trans, string sql, MySqlParameter[] parameters)
         {
             int affectedRows = 0;
-            SQLiteConnection connection = (SQLiteConnection)trans.Connection;
-            using (SQLiteCommand command = new SQLiteCommand(sql, connection))
+            MySqlConnection connection = (MySqlConnection)trans.Connection;
+            using (MySqlCommand command = new MySqlCommand(sql, connection))
             {
                 if (parameters != null)
                 {
                     command.Parameters.AddRange(parameters);
                 }
                 affectedRows = command.ExecuteNonQuery();
+                command.Parameters.Clear();
             }
             return affectedRows;
         }
 
-        public void ExecuteNonQuery(DbTransaction trans, string sql, List<SQLiteParameter[]> parametersList)
+        public void ExecuteNonQuery(DbTransaction trans, string sql, List<MySqlParameter[]> parametersList)
         {
-            SQLiteConnection connection = (SQLiteConnection)trans.Connection;
-            using (SQLiteCommand command = new SQLiteCommand(connection))
+            MySqlConnection connection = (MySqlConnection)trans.Connection;
+            using (MySqlCommand command = new MySqlCommand(sql, connection))
             {
-                command.CommandText = sql;
-                foreach (SQLiteParameter[] parameters in parametersList)
+                foreach (MySqlParameter[] parameters in parametersList)
                 {
                     if (parameters != null)
                     {
                         command.Parameters.AddRange(parameters);
                         command.ExecuteNonQuery();
+                        command.Parameters.Clear();
                     }
                 }
             }
@@ -96,22 +87,22 @@ namespace Database
         /// <param name="sql">要执行的增删改的SQL语句</param> 
         /// <param name="parameters">执行增删改语句所需要的参数，参数必须以它们在SQL语句中的顺序为准</param> 
         /// <returns></returns> 
-        public int ExecuteNonQuery(string sql, SQLiteParameter[] parameters)
+        public int ExecuteNonQuery(string sql, MySqlParameter[] parameters)
         {
             int affectedRows = 0;
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
                 using (DbTransaction transaction = connection.BeginTransaction())
                 {
-                    using (SQLiteCommand command = new SQLiteCommand(connection))
+                    using (MySqlCommand command = new MySqlCommand(sql, connection))
                     {
-                        command.CommandText = sql;
                         if (parameters != null)
                         {
                             command.Parameters.AddRange(parameters);
                         }
                         affectedRows = command.ExecuteNonQuery();
+                        command.Parameters.Clear();
                     }
                     transaction.Commit();
                 }
@@ -119,22 +110,22 @@ namespace Database
             return affectedRows;
         }
 
-        public void ExecuteNonQuery(string sql, List<SQLiteParameter[]> parametersList)
+        public void ExecuteNonQuery(string sql, List<MySqlParameter[]> parametersList)
         {
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
                 using (DbTransaction transaction = connection.BeginTransaction())
                 {
-                    using (SQLiteCommand command = new SQLiteCommand(connection))
+                    using (MySqlCommand command = new MySqlCommand(sql, connection))
                     {
-                        command.CommandText = sql;
-                        foreach (SQLiteParameter[] parameters in parametersList)
+                        foreach (MySqlParameter[] parameters in parametersList)
                         {
                             if (parameters != null)
                             {
                                 command.Parameters.AddRange(parameters);
                                 command.ExecuteNonQuery();
+                                command.Parameters.Clear();
                             }
                         }                       
                     }
@@ -143,54 +134,26 @@ namespace Database
             }
         }
 
-        /// <summary> 
-        /// 执行一个查询语句，返回一个关联的SQLiteDataReader实例 
-        /// </summary> 
-        /// <param name="sql">要执行的查询语句</param> 
-        /// <param name="parameters">执行SQL查询语句所需要的参数，参数必须以它们在SQL语句中的顺序为准</param> 
-        /// <returns></returns> 
-        public SQLiteDataReader ExecuteReader(string sql, SQLiteParameter[] parameters)
+       
+        public DataTable ExecuteDataTable(string sql, MySqlParameter[] parameters)
         {
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
-                using (SQLiteCommand command = new SQLiteCommand(sql, connection))
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     if (parameters != null)
                     {
                         command.Parameters.AddRange(parameters);
                     }
-                    return command.ExecuteReader(CommandBehavior.CloseConnection);
+                    DataTable dataTable = ReadTable(command);
+                    command.Parameters.Clear();
+                    return dataTable;
                 }
             }
         }
 
-        /// <summary> 
-        /// 执行一个查询语句，返回一个包含查询结果的DataTable 
-        /// </summary> 
-        /// <param name="sql">要执行的查询语句</param> 
-        /// <param name="parameters">执行SQL查询语句所需要的参数，参数必须以它们在SQL语句中的顺序为准</param> 
-        /// <returns></returns> 
-        public DataTable ExecuteDataTable(string sql, SQLiteParameter[] parameters)
-        {
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
-            {
-                connection.Open();
-                using (SQLiteCommand command = new SQLiteCommand(sql, connection))
-                {
-                    if (parameters != null)
-                    {
-                        command.Parameters.AddRange(parameters);
-                    }
-                    SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
-                    DataTable data = new DataTable();
-                    adapter.Fill(data);
-                    return data;
-                }
-            }
-        }
-
-        public int GetItemCount(string sql, SQLiteParameter[] parameters)
+        public int GetItemCount(string sql, MySqlParameter[] parameters)
         {
             object count = ExecuteScalar("select count(1) from (" + sql + ") ItemCountTemp", parameters);
             if (Convert.IsDBNull(count))
@@ -204,7 +167,7 @@ namespace Database
 
         public int GetLastInsertId(DbTransaction trans)
         {
-            object id = ExecuteScalar(trans, "SELECT last_insert_rowid();", null);
+            object id = ExecuteScalar(trans, "SELECT last_insert_id();", null);
             return Convert.IsDBNull(id) ? 0: Convert.ToInt32(id);
         }
 
@@ -214,12 +177,12 @@ namespace Database
         /// <param name="sql">要执行的查询语句</param> 
         /// <param name="parameters">执行SQL查询语句所需要的参数，参数必须以它们在SQL语句中的顺序为准</param> 
         /// <returns></returns> 
-        public Object ExecuteScalar(string sql, SQLiteParameter[] parameters)
+        public Object ExecuteScalar(string sql, MySqlParameter[] parameters)
         {
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
-                using (SQLiteCommand command = new SQLiteCommand(sql, connection))
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     if (parameters != null)
                     {
@@ -234,16 +197,10 @@ namespace Database
 
         }
 
-        /// <summary> 
-        /// 执行一个查询语句，返回查询结果的第一行第一列 
-        /// </summary> 
-        /// <param name="sql">要执行的查询语句</param> 
-        /// <param name="parameters">执行SQL查询语句所需要的参数，参数必须以它们在SQL语句中的顺序为准</param> 
-        /// <returns></returns> 
-        public object ExecuteScalar(DbTransaction trans, string sql, SQLiteParameter[] parameters)
+        public Object ExecuteScalar(DbTransaction trans, string sql, MySqlParameter[] parameters)
         {
-            SQLiteConnection connection = (SQLiteConnection)trans.Connection;
-            using (SQLiteCommand command = new SQLiteCommand(sql, connection))
+            MySqlConnection connection = (MySqlConnection)trans.Connection;
+            using (MySqlCommand command = new MySqlCommand(sql, connection))
             {
                 if (parameters != null)
                 {
@@ -271,15 +228,63 @@ namespace Database
         /// <returns></returns> 
         public DataTable GetSchema()
         {
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
-                DataTable data = connection.GetSchema("TABLES");
+                DataTable data = connection.GetSchema("TABLES", new string[0]);
                 connection.Close();
                 return data;
             }
         }
 
+        public DataTable ReadTable(DbCommand cmd)
+        {
+            DataTable dt = new DataTable();
+            DbDataReader reader = null;
+            try
+            {
+                reader = cmd.ExecuteReader();
+                int fieldc = reader.FieldCount;
+                for (int i = 0; i < fieldc; i++)
+                {
+                    DataColumn dc = new DataColumn(reader.GetName(i), reader.GetFieldType(i));
+                    dt.Columns.Add(dc);
+                }
+                while (reader.Read())
+                {
+                    DataRow dr = dt.NewRow();
+                    for (int i = 0; i < fieldc; i++)
+                    {
+                        dr[i] = reader[i];
+                    }
+                    dt.Rows.Add(dr);
+                }
+                return dt;
+            }
+            finally
+            {
+                if (reader != null) reader.Close();
+            }
+        }
+
+        private void PrepareCommand(MySqlCommand cmd, MySqlConnection conn, MySqlTransaction trans, CommandType cmdType, string cmdText, MySqlParameter[] cmdParms)
+        {
+            if (conn.State != ConnectionState.Open)
+            {
+                conn.Open();
+            }
+            cmd.Connection = conn;
+            cmd.CommandText = cmdText;
+            if (trans != null)
+            {
+                cmd.Transaction = trans;
+            }
+            cmd.CommandType = cmdType;
+            if (cmdParms != null)
+            {
+                cmd.Parameters.AddRange(cmdParms);
+            }
+        }
 
     }
 }

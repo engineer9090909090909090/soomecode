@@ -15,7 +15,7 @@ namespace Database
 
         void InsertOrUpdateDetails(List<FinDetails> list);
 
-        void InsertOrUpdateDetails(SQLiteConnection connection, List<FinDetails> list);
+        void InsertOrUpdateDetails(DbTransaction trans, List<FinDetails> list);
 
         FinDetails GetFinDetail(int id);
 
