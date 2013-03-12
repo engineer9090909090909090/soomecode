@@ -13,6 +13,22 @@ namespace Soomes
 
         public const string DB_FILE = "data.db";
 
+        public const string DbType_Sqlite = "Sqlite";
+
+        public const string DbType_MySql = "MySql";
+
+        public const string Db_Config = "Db_Config";
+
+        public const string Db_Type = "Db_Type";
+
+        public const string Db_Url = "Db_Url";
+
+        public const string Db_Name = "Db_Name";
+
+        public const string Db_User = "Db_User";
+
+        public const string Db_Pass = "Db_Pass";
+
         public const string PhtotBank = "PhtotBank";
 
         public const string ProductImages = "ProductImages";

@@ -148,6 +148,7 @@ namespace Database
                     InsertOrUpdateDetails(transaction, list);
                     transaction.Commit();
                 }
+                connection.Close();
             }
         }
 
@@ -286,6 +287,7 @@ namespace Database
                     InsertOrUpdateDetails(transaction, finance.Details);
                     transaction.Commit();
                 }
+                connection.Close();
             }
         }
 

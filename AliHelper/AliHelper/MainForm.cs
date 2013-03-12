@@ -28,6 +28,7 @@ namespace AliHelper
         {
             productsManager = new ProductsManager();
             impProductDetail = new ImpProductDetail();
+            productsManager.InitDbConfig();
             InitializeComponent();
             List<AliGroup> groups = productsManager.GetGroupList();
             if (groups.Count == 0)
@@ -645,6 +646,13 @@ namespace AliHelper
         private void NewOrderBtn_Click(object sender, EventArgs e)
         {
             NewOrderForm f = new NewOrderForm();
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
+        }
+
+        private void DbsetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DbsetForm f = new DbsetForm();
             f.StartPosition = FormStartPosition.CenterParent;
             f.ShowDialog(this);
         }
