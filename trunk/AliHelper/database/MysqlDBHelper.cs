@@ -8,7 +8,7 @@ using System.IO;
 using MySql.Data.MySqlClient;
 namespace Database
 {
-    public class MysqlDBHelper
+    public class MysqlDBHelper : IDisposable
     {
 
         private string connectionString = string.Empty;
@@ -27,7 +27,9 @@ namespace Database
                 {
                     command.CommandType = CommandType.Text;
                     command.ExecuteNonQuery();
+                    command.Dispose();
                 }
+                connection.Close();
             }
         }
 
@@ -43,6 +45,7 @@ namespace Database
             using (MySqlCommand command = new MySqlCommand(sql, connection))
             {
                 command.ExecuteNonQuery();
+                command.Dispose();
             }
         }
 
@@ -58,6 +61,7 @@ namespace Database
                 }
                 affectedRows = command.ExecuteNonQuery();
                 command.Parameters.Clear();
+                command.Dispose();
             }
             return affectedRows;
         }
@@ -76,6 +80,7 @@ namespace Database
                         command.Parameters.Clear();
                     }
                 }
+                command.Dispose();
             }
         }
 
@@ -103,9 +108,11 @@ namespace Database
                         }
                         affectedRows = command.ExecuteNonQuery();
                         command.Parameters.Clear();
+                        command.Dispose();
                     }
                     transaction.Commit();
                 }
+                connection.Close();
             }
             return affectedRows;
         }
@@ -127,16 +134,19 @@ namespace Database
                                 command.ExecuteNonQuery();
                                 command.Parameters.Clear();
                             }
-                        }                       
+                        }
+                        command.Dispose();
                     }
                     transaction.Commit();
                 }
+                connection.Close();
             }
         }
 
        
         public DataTable ExecuteDataTable(string sql, MySqlParameter[] parameters)
         {
+            DataTable dataTable = null;
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
@@ -146,11 +156,12 @@ namespace Database
                     {
                         command.Parameters.AddRange(parameters);
                     }
-                    DataTable dataTable = ReadTable(command);
+                    dataTable = ReadTable(command);
                     command.Parameters.Clear();
-                    return dataTable;
                 }
+                connection.Close();
             }
+            return dataTable;
         }
 
         public int GetItemCount(string sql, MySqlParameter[] parameters)
@@ -179,6 +190,7 @@ namespace Database
         /// <returns></returns> 
         public Object ExecuteScalar(string sql, MySqlParameter[] parameters)
         {
+            object rev = Convert.DBNull;
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
@@ -188,12 +200,13 @@ namespace Database
                     {
                         command.Parameters.AddRange(parameters);
                     }
-                    object rev = command.ExecuteScalar();
+                    rev = command.ExecuteScalar();
                     command.Parameters.Clear();
-                    return rev;
+                    command.Dispose();
                 }
-
+                connection.Close();
             }
+            return rev;
 
         }
 
@@ -208,6 +221,7 @@ namespace Database
                 }
                 object rev = command.ExecuteScalar();
                 command.Parameters.Clear();
+                command.Dispose();
                 return rev;
             }
         }
@@ -284,6 +298,30 @@ namespace Database
             {
                 cmd.Parameters.AddRange(cmdParms);
             }
+        }
+
+        public bool ConnectionTest()
+        {
+            bool Success = true;
+            MySqlConnection connection = this.GetConnection();
+            try
+            {
+                connection.Open();
+            }
+            catch
+            {
+                Success = false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return Success;
+        }
+
+        public void Dispose()
+        { 
+            
         }
 
     }

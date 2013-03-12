@@ -21,6 +21,9 @@ namespace Soomes
             DicTypeOptions.Add(Constants.CurrencyType, "币种");
             DicTypeOptions.Add(Constants.RecivePaymentAccounts, "收付款账户");
         }
+
+        public bool OpenMySqlDb { get; set; }
+        public string MySqlConnection { get; set; }
         public string AliID { get; set; }
         public string CsrfToken { get; set; }
         public string CheckCodeUrl { get; set; }

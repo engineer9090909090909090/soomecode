@@ -74,6 +74,7 @@
     <Compile Include="SqliteDAO\AliProductDetailDao.cs" />
     <Compile Include="SqliteDAO\AppDicDAO.cs" />
     <Compile Include="DAOFactory.cs" />
+    <Compile Include="SqliteDAO\AppConfigDAO.cs" />
     <Compile Include="SqliteDAO\FinanceDao.cs" />
     <Compile Include="SqliteDAO\OrderDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

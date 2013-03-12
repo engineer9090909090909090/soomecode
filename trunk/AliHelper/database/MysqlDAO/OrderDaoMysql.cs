@@ -188,6 +188,7 @@ namespace Database
                     }
                     transaction.Commit();
                 }
+                connection.Close();
             }
         }
         
@@ -279,6 +280,7 @@ namespace Database
                         UpdateOrderStatus(transaction, order);
                         transaction.Commit();
                     }
+                    connection.Close();
                 }
             }
             else 

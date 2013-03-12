@@ -36,6 +36,7 @@
             this.MainMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SettingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DataDicMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DbsetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ProductsStrip = new System.Windows.Forms.ToolStrip();
             this.updateGroup = new System.Windows.Forms.ToolStripButton();
             this.updateAllProduct = new System.Windows.Forms.ToolStripButton();
@@ -120,7 +121,8 @@
             // SettingMenuItem
             // 
             this.SettingMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.DataDicMenuItem});
+            this.DataDicMenuItem,
+            this.DbsetToolStripMenuItem});
             this.SettingMenuItem.Name = "SettingMenuItem";
             this.SettingMenuItem.Size = new System.Drawing.Size(43, 20);
             this.SettingMenuItem.Text = "设置";
@@ -128,9 +130,16 @@
             // DataDicMenuItem
             // 
             this.DataDicMenuItem.Name = "DataDicMenuItem";
-            this.DataDicMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.DataDicMenuItem.Size = new System.Drawing.Size(152, 22);
             this.DataDicMenuItem.Text = "数据字典(&D)";
             this.DataDicMenuItem.Click += new System.EventHandler(this.DataDicMenuItem_Click);
+            // 
+            // DbsetToolStripMenuItem
+            // 
+            this.DbsetToolStripMenuItem.Name = "DbsetToolStripMenuItem";
+            this.DbsetToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.DbsetToolStripMenuItem.Text = "数据库设置(&S)";
+            this.DbsetToolStripMenuItem.Click += new System.EventHandler(this.DbsetToolStripMenuItem_Click);
             // 
             // ProductsStrip
             // 
@@ -554,5 +563,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton NewOrderBtn;
         private System.Windows.Forms.ToolStripButton NewOrder;
+        private System.Windows.Forms.ToolStripMenuItem DbsetToolStripMenuItem;
     }
 }

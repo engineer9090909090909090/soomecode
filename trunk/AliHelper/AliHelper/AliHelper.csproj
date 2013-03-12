@@ -95,6 +95,12 @@
     <Compile Include="Controls\DateTimePickerX.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="DbsetForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DbsetForm.Designer.cs">
+      <DependentUpon>DbsetForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FileUtils.cs" />
     <Compile Include="OrderFinDetailForm.cs">
       <SubType>Form</SubType>
@@ -250,6 +256,9 @@
     <EmbeddedResource Include="CheckCodeForm.resx">
       <DependentUpon>CheckCodeForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DbsetForm.resx">
+      <DependentUpon>DbsetForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderFinDetailForm.resx">
       <DependentUpon>OrderFinDetailForm.cs</DependentUpon>

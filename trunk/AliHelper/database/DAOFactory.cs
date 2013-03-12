@@ -13,6 +13,7 @@ namespace Database
         public static DAOFactory Instance =  new DAOFactory();
         private SQLiteDBHelper dbHelper;
         private MysqlDBHelper mysqlDbHelper;
+        private AppConfigDAO appConfigDAO;
         private IAliProductDao aliProductDao;
         private IAliGroupDao aliGroupDao;
         private IAliImageDao aliImageDao;
@@ -30,10 +31,9 @@ namespace Database
             }
             dbHelper = new SQLiteDBHelper(DataBasePath);
 
-            string connection_str = "server=localhost;uid=root;pwd=;database=AliHelper;Charset=utf8;Allow Zero Datetime=true";
-            if (!string.IsNullOrEmpty(connection_str))
+            if (!string.IsNullOrEmpty(DataCache.Instance.MySqlConnection))
             {
-                mysqlDbHelper = new MysqlDBHelper(connection_str);
+                mysqlDbHelper = new MysqlDBHelper(DataCache.Instance.MySqlConnection);
             }
         }
 
@@ -47,6 +47,15 @@ namespace Database
             return AppDataFolder;
         }
 
+        public AppConfigDAO GetAppConfigDAO()
+        {
+            if (appConfigDAO == null)
+            {
+                this.appConfigDAO = new AppConfigDAO(dbHelper);
+            }
+            return appConfigDAO;
+        }
+        
         public IAliProductDao GetAliProductDao()
         {
             if (aliProductDao == null)
