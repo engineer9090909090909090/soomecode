@@ -59,6 +59,7 @@ namespace AliHelper
             this.ReferenceNo.Text = finance.ReferenceNo;
             this.TotalAmount.Text = "￥" + finance.TotalAmount.ToString("#,##0.00");
             this.Amount.Text = finance.Amount.ToString("#,##0.00");
+            this.Rate.Text = finance.Rate.ToString("#,##0.0000");
             AliHelperUtils.LoadAppDicComboBoxValue(this.ItemType, finance.ItemType);
             AliHelperUtils.LoadAppDicComboBoxValue(this.EventType, finance.EventType);
             AliHelperUtils.LoadAppDicComboBoxValue(this.Curreny, finance.Currency);

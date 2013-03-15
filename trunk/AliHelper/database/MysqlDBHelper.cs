@@ -27,7 +27,6 @@ namespace Database
                 {
                     command.CommandType = CommandType.Text;
                     command.ExecuteNonQuery();
-                    command.Dispose();
                 }
                 connection.Close();
             }
@@ -45,7 +44,6 @@ namespace Database
             using (MySqlCommand command = new MySqlCommand(sql, connection))
             {
                 command.ExecuteNonQuery();
-                command.Dispose();
             }
         }
 
@@ -61,7 +59,6 @@ namespace Database
                 }
                 affectedRows = command.ExecuteNonQuery();
                 command.Parameters.Clear();
-                command.Dispose();
             }
             return affectedRows;
         }
@@ -80,7 +77,6 @@ namespace Database
                         command.Parameters.Clear();
                     }
                 }
-                command.Dispose();
             }
         }
 
@@ -108,7 +104,6 @@ namespace Database
                         }
                         affectedRows = command.ExecuteNonQuery();
                         command.Parameters.Clear();
-                        command.Dispose();
                     }
                     transaction.Commit();
                 }
@@ -135,7 +130,6 @@ namespace Database
                                 command.Parameters.Clear();
                             }
                         }
-                        command.Dispose();
                     }
                     transaction.Commit();
                 }
@@ -202,7 +196,6 @@ namespace Database
                     }
                     rev = command.ExecuteScalar();
                     command.Parameters.Clear();
-                    command.Dispose();
                 }
                 connection.Close();
             }
@@ -221,7 +214,6 @@ namespace Database
                 }
                 object rev = command.ExecuteScalar();
                 command.Parameters.Clear();
-                command.Dispose();
                 return rev;
             }
         }

@@ -48,9 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HelperBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="MysqlDBHelper.cs" />
     <Compile Include="Inteface\IAliGroupDao.cs" />
     <Compile Include="Inteface\IAliImageDao.cs" />
@@ -62,12 +59,6 @@
     <Compile Include="MysqlDAO\AppDicDAOMysql.cs" />
     <Compile Include="MysqlDAO\FinanceDaoMysql.cs" />
     <Compile Include="MysqlDAO\OrderDaoMysql.cs" />
-    <Compile Include="MySqlHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MySqlHelper_static.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="SqliteDAO\AliGroupDao.cs" />
     <Compile Include="SqliteDAO\AliImageDao.cs" />
     <Compile Include="SqliteDAO\AliProductDao.cs" />
