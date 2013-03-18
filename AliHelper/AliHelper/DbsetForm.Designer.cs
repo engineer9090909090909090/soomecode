@@ -42,7 +42,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.SaveButton = new System.Windows.Forms.Button();
-            this.CancelButton = new System.Windows.Forms.Button();
+            this.CancelBtn = new System.Windows.Forms.Button();
             this.MySqlSetGroup.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -185,15 +185,15 @@
             this.SaveButton.UseVisualStyleBackColor = true;
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
-            // CancelButton
+            // CancelBtn
             // 
-            this.CancelButton.Location = new System.Drawing.Point(270, 301);
-            this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(75, 23);
-            this.CancelButton.TabIndex = 11;
-            this.CancelButton.Text = "取消(&C)";
-            this.CancelButton.UseVisualStyleBackColor = true;
-            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
+            this.CancelBtn.Location = new System.Drawing.Point(270, 301);
+            this.CancelBtn.Name = "CancelBtn";
+            this.CancelBtn.Size = new System.Drawing.Size(75, 23);
+            this.CancelBtn.TabIndex = 11;
+            this.CancelBtn.Text = "取消(&C)";
+            this.CancelBtn.UseVisualStyleBackColor = true;
+            this.CancelBtn.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // DbsetForm
             // 
@@ -202,7 +202,7 @@
             this.ClientSize = new System.Drawing.Size(495, 333);
             this.Controls.Add(this.RemoteDbCheck);
             this.Controls.Add(this.LocalDbCheck);
-            this.Controls.Add(this.CancelButton);
+            this.Controls.Add(this.CancelBtn);
             this.Controls.Add(this.MySqlSetGroup);
             this.Controls.Add(this.SaveButton);
             this.MaximizeBox = false;
@@ -235,6 +235,6 @@
         private System.Windows.Forms.Button ConnTestButton;
         private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.Label ErrorMsg;
-        private System.Windows.Forms.Button CancelButton;
+        private System.Windows.Forms.Button CancelBtn;
     }
 }

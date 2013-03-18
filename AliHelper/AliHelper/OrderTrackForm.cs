@@ -56,6 +56,7 @@ namespace AliHelper
             else
             {
                 tracking = (OrderTracking)this.Tag;
+                tracking.Status = ((AppDic)this.Status.SelectedItem).Key;
             }
             tracking.TrackingDate = this.TrackingDate.Value.ToString(Constants.DateFormat);
             tracking.Description = this.Description.Text.Trim();

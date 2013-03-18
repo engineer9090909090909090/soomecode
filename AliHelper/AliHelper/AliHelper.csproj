@@ -68,12 +68,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SQLite">
-      <HintPath>..\..\lib\System.Data.SQLite.DLL</HintPath>
-    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
@@ -101,7 +97,7 @@
     <Compile Include="DbsetForm.Designer.cs">
       <DependentUpon>DbsetForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FileUtils.cs" />
+    <Compile Include="Utils\FileUtils.cs" />
     <Compile Include="OrderFinDetailForm.cs">
       <SubType>Form</SubType>
     </Compile>
