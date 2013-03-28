@@ -41,11 +41,13 @@ namespace Database
             + "`Model` varchar(50) not null,"
             + "`Image` BLOB not null,"
             + "`Price` double default 0.0,"
+            + "`PriceCate` integer not null default 0,"
             + "`Minimum` integer,"
             + "`Size` varchar(50),"
             + "`Weight` varchar(50),"
             + "`Packing` varchar(500),"
             + "`Sort` integer,"
+            + "`Status` varchar(50),"
             + "`CreatedTime` datetime,"
             + "`ModifiedTime` datetime,"
             + "Index Index_CateId (`CateId`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ");
