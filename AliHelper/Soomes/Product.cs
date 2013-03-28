@@ -23,11 +23,13 @@ namespace soomes
         public string Model { set; get; }
         public Byte[] Image { set; get; }
         public double Price { set; get; }
+        public int PriceCate { set; get; }
         public string Size { set; get; }
         public string Weight { set; get; }
         public int Minimum { set; get; }
         public string Packing { set; get; }
         public int Sort { set; get; }
+        public string Status { set; get; }
     }
     public class ProductImage
     {
