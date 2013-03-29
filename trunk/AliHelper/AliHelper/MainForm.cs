@@ -318,7 +318,9 @@ namespace AliHelper
 
         #endregion
 
+        
         #region 更新产品目录
+        /*
         private void updateGroup_Click(object sender, EventArgs e)
         {
             BackgroundWorker bgWorker = new BackgroundWorker();
@@ -340,6 +342,7 @@ namespace AliHelper
                 UpdateGroupUI(groups);
             }));
         }
+         * */
         #endregion
 
         #region 更新产品
@@ -655,6 +658,16 @@ namespace AliHelper
             DbsetForm f = new DbsetForm();
             f.StartPosition = FormStartPosition.CenterParent;
             f.ShowDialog(this);
+        }
+
+        private void SupplierListButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PriceCateButton_Click(object sender, EventArgs e)
+        {
+
         }
 
 
