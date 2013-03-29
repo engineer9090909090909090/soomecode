@@ -60,9 +60,37 @@ namespace AliHelper.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap account_b {
+            get {
+                object obj = ResourceManager.GetObject("account_b", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap account_s {
+            get {
+                object obj = ResourceManager.GetObject("account_s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap bookmark {
             get {
                 object obj = ResourceManager.GetObject("bookmark", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap category_b {
+            get {
+                object obj = ResourceManager.GetObject("category_b", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap category_s {
+            get {
+                object obj = ResourceManager.GetObject("category_s", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -74,9 +102,30 @@ namespace AliHelper.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap contents {
+        internal static System.Drawing.Bitmap customer_b {
             get {
-                object obj = ResourceManager.GetObject("contents", resourceCulture);
+                object obj = ResourceManager.GetObject("customer_b", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap customer_s {
+            get {
+                object obj = ResourceManager.GetObject("customer_s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap dirctionary_b {
+            get {
+                object obj = ResourceManager.GetObject("dirctionary_b", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap dirctionary_s {
+            get {
+                object obj = ResourceManager.GetObject("dirctionary_s", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -92,6 +141,34 @@ namespace AliHelper.Properties {
             get {
                 object obj = ResourceManager.GetObject("Dollars1", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap fan_b {
+            get {
+                object obj = ResourceManager.GetObject("fan_b", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap fan_s {
+            get {
+                object obj = ResourceManager.GetObject("fan_s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap fan1_b {
+            get {
+                object obj = ResourceManager.GetObject("fan1_b", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap fan1_s {
+            get {
+                object obj = ResourceManager.GetObject("fan1_s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -116,9 +193,93 @@ namespace AliHelper.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap mail_b {
+            get {
+                object obj = ResourceManager.GetObject("mail_b", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap mail_s {
+            get {
+                object obj = ResourceManager.GetObject("mail_s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap no_image {
             get {
                 object obj = ResourceManager.GetObject("no_image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap order_b {
+            get {
+                object obj = ResourceManager.GetObject("order_b", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap order_s {
+            get {
+                object obj = ResourceManager.GetObject("order_s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap product_b {
+            get {
+                object obj = ResourceManager.GetObject("product_b", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap product_s {
+            get {
+                object obj = ResourceManager.GetObject("product_s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap product1_b {
+            get {
+                object obj = ResourceManager.GetObject("product1_b", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap product1_s {
+            get {
+                object obj = ResourceManager.GetObject("product1_s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap reflash_b {
+            get {
+                object obj = ResourceManager.GetObject("reflash_b", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap reflash_s {
+            get {
+                object obj = ResourceManager.GetObject("reflash_s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap reflash1_b {
+            get {
+                object obj = ResourceManager.GetObject("reflash1_b", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap reflash1_s {
+            get {
+                object obj = ResourceManager.GetObject("reflash1_s", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -151,16 +312,37 @@ namespace AliHelper.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap s_klipper_dock {
+        internal static System.Drawing.Bitmap s_wizard {
             get {
-                object obj = ResourceManager.GetObject("s_klipper_dock", resourceCulture);
+                object obj = ResourceManager.GetObject("s_wizard", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap s_wizard {
+        internal static System.Drawing.Bitmap setting_b {
             get {
-                object obj = ResourceManager.GetObject("s_wizard", resourceCulture);
+                object obj = ResourceManager.GetObject("setting_b", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap setting_s {
+            get {
+                object obj = ResourceManager.GetObject("setting_s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap supplier_b {
+            get {
+                object obj = ResourceManager.GetObject("supplier_b", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap supplier_s {
+            get {
+                object obj = ResourceManager.GetObject("supplier_s", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
