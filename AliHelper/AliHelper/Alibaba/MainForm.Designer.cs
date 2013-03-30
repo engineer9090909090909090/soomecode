@@ -1,4 +1,5 @@
-﻿namespace AliHelper
+﻿using AliHelper.Controls;
+namespace AliHelper
 {
     partial class MainForm
     {
@@ -38,16 +39,22 @@
             this.DataDicMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DbsetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ProductsStrip = new System.Windows.Forms.ToolStrip();
-            this.updateAllProduct = new System.Windows.Forms.ToolStripButton();
-            this.updateAllImages = new System.Windows.Forms.ToolStripButton();
+            this.UpdateAllProduct = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.UpdateAllImages = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.NewProductBtn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.RankProductBtn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.Top10QueryBtn = new System.Windows.Forms.ToolStripButton();
             this.NavigatorBar = new Guifreaks.NavigationBar.NaviBar(this.components);
+            this.ProductBand = new Guifreaks.NavigationBar.NaviBand(this.components);
             this.MyItemBand = new Guifreaks.NavigationBar.NaviBand(this.components);
             this.ItemTreeNaviGroup = new Guifreaks.NavigationBar.NaviGroup(this.components);
             this.ItemNaviGroup = new Guifreaks.NavigationBar.NaviGroup(this.components);
-            this.PriceCateButton = new System.Windows.Forms.Button();
-            this.SupplierListButton = new System.Windows.Forms.Button();
-            this.ProductBand = new Guifreaks.NavigationBar.NaviBand(this.components);
+            this.PriceCateButton = new AliHelper.Controls.ListButton();
+            this.SupplierListButton = new AliHelper.Controls.ListButton();
             this.ClientBand = new Guifreaks.NavigationBar.NaviBand(this.components);
             this.InquiryBand = new Guifreaks.NavigationBar.NaviBand(this.components);
             this.OrderBand = new Guifreaks.NavigationBar.NaviBand(this.components);
@@ -62,23 +69,28 @@
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.FinToolStrip = new System.Windows.Forms.ToolStrip();
             this.NewWater = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.NewOrderBtn = new System.Windows.Forms.ToolStripButton();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.NewItem = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.MyItemStrip = new System.Windows.Forms.ToolStrip();
             this.NewSuplier = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.NewItem = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.AppNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.StatusStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.ProductsStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NavigatorBar)).BeginInit();
             this.NavigatorBar.SuspendLayout();
+            this.ProductBand.SuspendLayout();
             this.MyItemBand.ClientArea.SuspendLayout();
             this.MyItemBand.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ItemTreeNaviGroup)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemNaviGroup)).BeginInit();
             this.ItemNaviGroup.SuspendLayout();
-            this.ProductBand.SuspendLayout();
             this.ClientBand.SuspendLayout();
             this.InquiryBand.SuspendLayout();
             this.OrderBand.SuspendLayout();
@@ -90,7 +102,7 @@
             this.toolStripContainer.SuspendLayout();
             this.tableLayoutPanel.SuspendLayout();
             this.FinToolStrip.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
+            this.MyItemStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // StatusStrip
@@ -155,34 +167,50 @@
             // 
             this.ProductsStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.ProductsStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.updateAllProduct,
-            this.updateAllImages,
-            this.NewProductBtn});
-            this.ProductsStrip.Location = new System.Drawing.Point(3, 25);
+            this.UpdateAllProduct,
+            this.toolStripSeparator4,
+            this.UpdateAllImages,
+            this.toolStripSeparator5,
+            this.NewProductBtn,
+            this.toolStripSeparator6,
+            this.RankProductBtn,
+            this.toolStripSeparator7,
+            this.Top10QueryBtn});
+            this.ProductsStrip.Location = new System.Drawing.Point(3, 50);
             this.ProductsStrip.Name = "ProductsStrip";
-            this.ProductsStrip.Size = new System.Drawing.Size(240, 25);
+            this.ProductsStrip.Size = new System.Drawing.Size(496, 25);
             this.ProductsStrip.TabIndex = 2;
             this.ProductsStrip.Text = "v";
             // 
-            // updateAllProduct
+            // UpdateAllProduct
             // 
-            this.updateAllProduct.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.updateAllProduct.Image = global::AliHelper.Properties.Resources.reflash_b;
-            this.updateAllProduct.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.updateAllProduct.Name = "updateAllProduct";
-            this.updateAllProduct.Size = new System.Drawing.Size(76, 22);
-            this.updateAllProduct.Text = "同步产品";
-            this.updateAllProduct.Click += new System.EventHandler(this.updateAllProduct_Click);
+            this.UpdateAllProduct.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.UpdateAllProduct.Image = global::AliHelper.Properties.Resources.reflash_b;
+            this.UpdateAllProduct.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.UpdateAllProduct.Name = "UpdateAllProduct";
+            this.UpdateAllProduct.Size = new System.Drawing.Size(76, 22);
+            this.UpdateAllProduct.Text = "同步产品";
+            this.UpdateAllProduct.Click += new System.EventHandler(this.updateAllProduct_Click);
             // 
-            // updateAllImages
+            // toolStripSeparator4
             // 
-            this.updateAllImages.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.updateAllImages.Image = global::AliHelper.Properties.Resources.reflash1_b;
-            this.updateAllImages.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.updateAllImages.Name = "updateAllImages";
-            this.updateAllImages.Size = new System.Drawing.Size(76, 22);
-            this.updateAllImages.Text = "同步图片";
-            this.updateAllImages.Click += new System.EventHandler(this.updateAllImages_Click);
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // UpdateAllImages
+            // 
+            this.UpdateAllImages.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.UpdateAllImages.Image = global::AliHelper.Properties.Resources.reflash1_b;
+            this.UpdateAllImages.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.UpdateAllImages.Name = "UpdateAllImages";
+            this.UpdateAllImages.Size = new System.Drawing.Size(76, 22);
+            this.UpdateAllImages.Text = "同步图片";
+            this.UpdateAllImages.Click += new System.EventHandler(this.updateAllImages_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
             // NewProductBtn
             // 
@@ -194,13 +222,42 @@
             this.NewProductBtn.Text = "新增产品";
             this.NewProductBtn.Click += new System.EventHandler(this.newProductBtn_Click);
             // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
+            // 
+            // RankProductBtn
+            // 
+            this.RankProductBtn.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RankProductBtn.Image = global::AliHelper.Properties.Resources.search;
+            this.RankProductBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.RankProductBtn.Name = "RankProductBtn";
+            this.RankProductBtn.Size = new System.Drawing.Size(76, 22);
+            this.RankProductBtn.Text = "排名查询";
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
+            // 
+            // Top10QueryBtn
+            // 
+            this.Top10QueryBtn.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Top10QueryBtn.Image = ((System.Drawing.Image)(resources.GetObject("Top10QueryBtn.Image")));
+            this.Top10QueryBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Top10QueryBtn.Name = "Top10QueryBtn";
+            this.Top10QueryBtn.Size = new System.Drawing.Size(125, 22);
+            this.Top10QueryBtn.Text = "关键词Top10分析";
+            this.Top10QueryBtn.Click += new System.EventHandler(this.Top10QueryBtn_Click);
+            // 
             // NavigatorBar
             // 
             this.NavigatorBar.ActiveBand = this.ProductBand;
             this.NavigatorBar.Controls.Add(this.ProductBand);
+            this.NavigatorBar.Controls.Add(this.MyItemBand);
             this.NavigatorBar.Controls.Add(this.ClientBand);
             this.NavigatorBar.Controls.Add(this.InquiryBand);
-            this.NavigatorBar.Controls.Add(this.MyItemBand);
             this.NavigatorBar.Controls.Add(this.OrderBand);
             this.NavigatorBar.Controls.Add(this.UpdateBand);
             this.NavigatorBar.Controls.Add(this.FinanceBand);
@@ -214,6 +271,24 @@
             this.NavigatorBar.Text = "naviBar1";
             this.NavigatorBar.VisibleLargeButtons = 2;
             this.NavigatorBar.ActiveBandChanged += new System.EventHandler(this.NavigatorBar_ActiveBandChanged);
+            // 
+            // ProductBand
+            // 
+            // 
+            // ProductBand.ClientArea
+            // 
+            this.ProductBand.ClientArea.Location = new System.Drawing.Point(0, 0);
+            this.ProductBand.ClientArea.Name = "ClientArea";
+            this.ProductBand.ClientArea.Size = new System.Drawing.Size(178, 260);
+            this.ProductBand.ClientArea.TabIndex = 0;
+            this.ProductBand.LargeImage = global::AliHelper.Properties.Resources.product1_b;
+            this.ProductBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
+            this.ProductBand.Location = new System.Drawing.Point(1, 27);
+            this.ProductBand.Name = "ProductBand";
+            this.ProductBand.Size = new System.Drawing.Size(178, 260);
+            this.ProductBand.SmallImage = global::AliHelper.Properties.Resources.product1_s;
+            this.ProductBand.TabIndex = 0;
+            this.ProductBand.Text = "国际站产品";
             // 
             // MyItemBand
             // 
@@ -267,9 +342,10 @@
             // 
             // PriceCateButton
             // 
-            this.PriceCateButton.BackColor = System.Drawing.Color.Transparent;
+            this.PriceCateButton.BackColor = System.Drawing.Color.White;
             this.PriceCateButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.PriceCateButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.PriceCateButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveBorder;
             this.PriceCateButton.FlatAppearance.BorderSize = 0;
             this.PriceCateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.PriceCateButton.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -281,16 +357,17 @@
             this.PriceCateButton.TabIndex = 1;
             this.PriceCateButton.Text = "价格种类列表";
             this.PriceCateButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.PriceCateButton.UseMnemonic = false;
             this.PriceCateButton.UseVisualStyleBackColor = false;
             this.PriceCateButton.Click += new System.EventHandler(this.PriceCateButton_Click);
             // 
             // SupplierListButton
             // 
-            this.SupplierListButton.BackColor = System.Drawing.Color.Transparent;
+            this.SupplierListButton.BackColor = System.Drawing.Color.White;
             this.SupplierListButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.SupplierListButton.Dock = System.Windows.Forms.DockStyle.Top;
             this.SupplierListButton.FlatAppearance.BorderSize = 0;
-            this.SupplierListButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.SupplierListButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ActiveBorder;
             this.SupplierListButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.SupplierListButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SupplierListButton.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -305,24 +382,6 @@
             this.SupplierListButton.UseMnemonic = false;
             this.SupplierListButton.UseVisualStyleBackColor = false;
             this.SupplierListButton.Click += new System.EventHandler(this.SupplierListButton_Click);
-            // 
-            // ProductBand
-            // 
-            // 
-            // ProductBand.ClientArea
-            // 
-            this.ProductBand.ClientArea.Location = new System.Drawing.Point(0, 0);
-            this.ProductBand.ClientArea.Name = "ClientArea";
-            this.ProductBand.ClientArea.Size = new System.Drawing.Size(178, 260);
-            this.ProductBand.ClientArea.TabIndex = 0;
-            this.ProductBand.LargeImage = global::AliHelper.Properties.Resources.product1_b;
-            this.ProductBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
-            this.ProductBand.Location = new System.Drawing.Point(1, 27);
-            this.ProductBand.Name = "ProductBand";
-            this.ProductBand.Size = new System.Drawing.Size(178, 260);
-            this.ProductBand.SmallImage = global::AliHelper.Properties.Resources.product1_s;
-            this.ProductBand.TabIndex = 0;
-            this.ProductBand.Text = "国际站产品";
             // 
             // ClientBand
             // 
@@ -475,9 +534,11 @@
             // 
             // toolStripContainer.TopToolStripPanel
             // 
+            this.toolStripContainer.TopToolStripPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.toolStripContainer.TopToolStripPanel.Controls.Add(this.FinToolStrip);
+            this.toolStripContainer.TopToolStripPanel.Controls.Add(this.MyItemStrip);
             this.toolStripContainer.TopToolStripPanel.Controls.Add(this.ProductsStrip);
-            this.toolStripContainer.TopToolStripPanel.Controls.Add(this.toolStrip1);
+            this.toolStripContainer.TopToolStripPanel.RightToLeft = System.Windows.Forms.RightToLeft.No;
             // 
             // tableLayoutPanel
             // 
@@ -500,10 +561,11 @@
             this.FinToolStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.FinToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.NewWater,
+            this.toolStripSeparator8,
             this.NewOrderBtn});
             this.FinToolStrip.Location = new System.Drawing.Point(3, 0);
             this.FinToolStrip.Name = "FinToolStrip";
-            this.FinToolStrip.Size = new System.Drawing.Size(164, 25);
+            this.FinToolStrip.Size = new System.Drawing.Size(170, 25);
             this.FinToolStrip.TabIndex = 3;
             // 
             // NewWater
@@ -516,6 +578,11 @@
             this.NewWater.Text = "新增流水";
             this.NewWater.Click += new System.EventHandler(this.NewWater_Click);
             // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
+            // 
             // NewOrderBtn
             // 
             this.NewOrderBtn.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -526,17 +593,48 @@
             this.NewOrderBtn.Text = "新增订单";
             this.NewOrderBtn.Click += new System.EventHandler(this.NewOrderBtn_Click);
             // 
-            // toolStrip1
+            // MyItemStrip
             // 
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MyItemStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.MyItemStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.NewSuplier,
+            this.toolStripSeparator1,
+            this.toolStripButton2,
+            this.toolStripSeparator2,
             this.NewItem,
-            this.toolStripButton1,
-            this.NewSuplier});
-            this.toolStrip1.Location = new System.Drawing.Point(3, 50);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(252, 25);
-            this.toolStrip1.TabIndex = 4;
+            this.toolStripSeparator3,
+            this.toolStripButton1});
+            this.MyItemStrip.Location = new System.Drawing.Point(3, 25);
+            this.MyItemStrip.Name = "MyItemStrip";
+            this.MyItemStrip.Size = new System.Drawing.Size(405, 25);
+            this.MyItemStrip.TabIndex = 4;
+            // 
+            // NewSuplier
+            // 
+            this.NewSuplier.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NewSuplier.Image = global::AliHelper.Properties.Resources.category_b;
+            this.NewSuplier.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.NewSuplier.Name = "NewSuplier";
+            this.NewSuplier.Size = new System.Drawing.Size(112, 22);
+            this.NewSuplier.Text = "自定义类别管理";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.Image = global::AliHelper.Properties.Resources.price_b;
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(99, 22);
+            this.toolStripButton2.Text = "价格种类管理";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // NewItem
             // 
@@ -547,6 +645,11 @@
             this.NewItem.Size = new System.Drawing.Size(76, 22);
             this.NewItem.Text = "新增产品";
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
             // toolStripButton1
             // 
             this.toolStripButton1.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -555,15 +658,6 @@
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(88, 22);
             this.toolStripButton1.Text = "新增供应商";
-            // 
-            // NewSuplier
-            // 
-            this.NewSuplier.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NewSuplier.Image = global::AliHelper.Properties.Resources.category_b;
-            this.NewSuplier.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.NewSuplier.Name = "NewSuplier";
-            this.NewSuplier.Size = new System.Drawing.Size(76, 22);
-            this.NewSuplier.Text = "类别管理";
             // 
             // AppNotifyIcon
             // 
@@ -597,12 +691,12 @@
             this.ProductsStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NavigatorBar)).EndInit();
             this.NavigatorBar.ResumeLayout(false);
+            this.ProductBand.ResumeLayout(false);
             this.MyItemBand.ClientArea.ResumeLayout(false);
             this.MyItemBand.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ItemTreeNaviGroup)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemNaviGroup)).EndInit();
             this.ItemNaviGroup.ResumeLayout(false);
-            this.ProductBand.ResumeLayout(false);
             this.ClientBand.ResumeLayout(false);
             this.InquiryBand.ResumeLayout(false);
             this.OrderBand.ResumeLayout(false);
@@ -617,8 +711,8 @@
             this.tableLayoutPanel.ResumeLayout(false);
             this.FinToolStrip.ResumeLayout(false);
             this.FinToolStrip.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.MyItemStrip.ResumeLayout(false);
+            this.MyItemStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -633,9 +727,9 @@
         private System.Windows.Forms.ToolStripMenuItem SettingMenuItem;
         private System.Windows.Forms.ToolStrip ProductsStrip;
         private System.Windows.Forms.TreeView treeView1;
-        private System.Windows.Forms.ToolStripButton updateAllProduct;
+        private System.Windows.Forms.ToolStripButton UpdateAllProduct;
         private System.Windows.Forms.ToolStripButton NewProductBtn;
-        private System.Windows.Forms.ToolStripButton updateAllImages;
+        private System.Windows.Forms.ToolStripButton UpdateAllImages;
         private System.Windows.Forms.ContextMenuStrip CfContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem NewPlanMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ModifyPlanMenuItem;
@@ -654,7 +748,7 @@
         private System.Windows.Forms.ToolStripMenuItem DataDicMenuItem;
         private System.Windows.Forms.ToolStrip FinToolStrip;
         private System.Windows.Forms.ToolStripButton NewWater;
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStrip MyItemStrip;
         private System.Windows.Forms.ToolStripButton NewSuplier;
         private System.Windows.Forms.ToolStripButton NewOrderBtn;
         private System.Windows.Forms.ToolStripButton NewItem;
@@ -663,7 +757,18 @@
         private Guifreaks.NavigationBar.NaviGroup ItemTreeNaviGroup;
         private Guifreaks.NavigationBar.NaviGroup ItemNaviGroup;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.Button SupplierListButton;
-        private System.Windows.Forms.Button PriceCateButton;
+        private ListButton SupplierListButton;
+        private ListButton PriceCateButton;
+        private System.Windows.Forms.ToolStripButton RankProductBtn;
+        private System.Windows.Forms.ToolStripButton Top10QueryBtn;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }
