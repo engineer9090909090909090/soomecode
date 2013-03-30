@@ -670,6 +670,13 @@ namespace AliHelper
 
         }
 
+        private void Top10QueryBtn_Click(object sender, EventArgs e)
+        {
+            TopFiveQueryForm f = new TopFiveQueryForm();
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
+        }
+
 
     }
 }

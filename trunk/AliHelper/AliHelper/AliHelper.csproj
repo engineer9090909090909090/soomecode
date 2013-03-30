@@ -77,115 +77,139 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alibaba\RankEvent.cs" />
+    <Compile Include="Alibaba\TopFiveInfo.cs" />
+    <Compile Include="Alibaba\TopFiveQueryer.cs" />
+    <Compile Include="Alibaba\TopFiveQueryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Alibaba\TopFiveQueryForm.designer.cs">
+      <DependentUpon>TopFiveQueryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="AliHelperEvent.cs" />
     <Compile Include="Bussness\BaseManager.cs" />
     <Compile Include="Bussness\FinOrderManager.cs" />
     <Compile Include="Bussness\ImpProductDetail.cs" />
     <Compile Include="Bussness\ProductsManager.cs" />
-    <Compile Include="CheckCodeForm.cs">
+    <Compile Include="Alibaba\CheckCodeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CheckCodeForm.Designer.cs">
+    <Compile Include="Alibaba\CheckCodeForm.Designer.cs">
       <DependentUpon>CheckCodeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\DateTimePickerX.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="DbsetForm.cs">
+    <Compile Include="Controls\MyButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyItem\MyItemList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MyItem\MyItemList.Designer.cs">
+      <DependentUpon>MyItemList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyItem\NewItemForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DbsetForm.Designer.cs">
+    <Compile Include="MyItem\NewItemForm.Designer.cs">
+      <DependentUpon>NewItemForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\DbsetForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setup\DbsetForm.Designer.cs">
       <DependentUpon>DbsetForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\FileUtils.cs" />
-    <Compile Include="OrderFinDetailForm.cs">
+    <Compile Include="FinOrder\OrderFinDetailForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OrderFinDetailForm.Designer.cs">
+    <Compile Include="FinOrder\OrderFinDetailForm.Designer.cs">
       <DependentUpon>OrderFinDetailForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="OrderTrackForm.cs">
+    <Compile Include="FinOrder\OrderTrackForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OrderTrackForm.Designer.cs">
+    <Compile Include="FinOrder\OrderTrackForm.Designer.cs">
       <DependentUpon>OrderTrackForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="OrderTrackView.cs">
+    <Compile Include="FinOrder\OrderTrackView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="OrderTrackView.Designer.cs">
+    <Compile Include="FinOrder\OrderTrackView.Designer.cs">
       <DependentUpon>OrderTrackView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Passporter2.cs" />
-    <Compile Include="DicForm.cs">
+    <Compile Include="Alibaba\Passporter2.cs" />
+    <Compile Include="Setup\DicForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DicForm.Designer.cs">
+    <Compile Include="Setup\DicForm.Designer.cs">
       <DependentUpon>DicForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="EditCategory.cs">
+    <Compile Include="Alibaba\EditCategory.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditCategory.Designer.cs">
+    <Compile Include="Alibaba\EditCategory.Designer.cs">
       <DependentUpon>EditCategory.cs</DependentUpon>
     </Compile>
-    <Compile Include="EditFinDetail.cs">
+    <Compile Include="FinOrder\EditFinDetail.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditFinDetail.Designer.cs">
+    <Compile Include="FinOrder\EditFinDetail.Designer.cs">
       <DependentUpon>EditFinDetail.cs</DependentUpon>
     </Compile>
-    <Compile Include="ProductListView.cs">
+    <Compile Include="Alibaba\ProductListView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ProductListView.Designer.cs">
+    <Compile Include="Alibaba\ProductListView.Designer.cs">
       <DependentUpon>ProductListView.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\AliHelperUtils.cs" />
     <Compile Include="Utils\ExportExcel.cs" />
-    <Compile Include="WaterView.cs">
+    <Compile Include="FinOrder\WaterView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="WaterView.Designer.cs">
+    <Compile Include="FinOrder\WaterView.Designer.cs">
       <DependentUpon>WaterView.cs</DependentUpon>
     </Compile>
-    <Compile Include="FinView.cs">
+    <Compile Include="FinOrder\FinView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="FinView.Designer.cs">
+    <Compile Include="FinOrder\FinView.Designer.cs">
       <DependentUpon>FinView.cs</DependentUpon>
     </Compile>
-    <Compile Include="MailView.cs">
+    <Compile Include="Alibaba\MailView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MailView.Designer.cs">
+    <Compile Include="Alibaba\MailView.Designer.cs">
       <DependentUpon>MailView.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewOrderForm.cs">
+    <Compile Include="FinOrder\NewOrderForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewOrderForm.Designer.cs">
+    <Compile Include="FinOrder\NewOrderForm.Designer.cs">
       <DependentUpon>NewOrderForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewPlanForm.cs">
+    <Compile Include="Alibaba\NewPlanForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewPlanForm.Designer.cs">
+    <Compile Include="Alibaba\NewPlanForm.Designer.cs">
       <DependentUpon>NewPlanForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\NumericTextbox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="OrderView.cs">
+    <Compile Include="FinOrder\OrderView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="OrderView.Designer.cs">
+    <Compile Include="FinOrder\OrderView.Designer.cs">
       <DependentUpon>OrderView.cs</DependentUpon>
     </Compile>
-    <Compile Include="ProductView.cs">
+    <Compile Include="Alibaba\ProductView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ProductView.Designer.cs">
+    <Compile Include="Alibaba\ProductView.Designer.cs">
       <DependentUpon>ProductView.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\IconImages.Designer.cs">
@@ -193,13 +217,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>IconImages.resx</DependentUpon>
     </Compile>
-    <Compile Include="ImageForm.cs">
+    <Compile Include="Alibaba\ImageForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ImageForm.Designer.cs">
+    <Compile Include="Alibaba\ImageForm.Designer.cs">
       <DependentUpon>ImageForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Passporter.cs" />
+    <Compile Include="Alibaba\Passporter.cs" />
     <Compile Include="Utils\RegUtil.cs" />
     <Compile Include="Properties\TreeViewImages.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -219,17 +243,17 @@
     <Compile Include="Utils\IEHandleUtils.cs" />
     <Compile Include="Utils\ImageCodeCracker.cs" />
     <Compile Include="Utils\ImageUtils.cs" />
-    <Compile Include="LoadCode.cs" />
-    <Compile Include="Login.cs">
+    <Compile Include="Alibaba\LoadCode.cs" />
+    <Compile Include="Setup\Login.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Login.Designer.cs">
+    <Compile Include="Setup\Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="Alibaba\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Alibaba\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -243,73 +267,82 @@
       <DependentUpon>Pager.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\VerifyCode.cs" />
-    <Compile Include="EditFinWater.cs">
+    <Compile Include="FinOrder\EditFinWater.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditFinWater.Designer.cs">
+    <Compile Include="FinOrder\EditFinWater.Designer.cs">
       <DependentUpon>EditFinWater.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="CheckCodeForm.resx">
+    <EmbeddedResource Include="Alibaba\CheckCodeForm.resx">
       <DependentUpon>CheckCodeForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="DbsetForm.resx">
+    <EmbeddedResource Include="Alibaba\TopFiveQueryForm.resx">
+      <DependentUpon>TopFiveQueryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyItem\MyItemList.resx">
+      <DependentUpon>MyItemList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyItem\NewItemForm.resx">
+      <DependentUpon>NewItemForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setup\DbsetForm.resx">
       <DependentUpon>DbsetForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OrderFinDetailForm.resx">
+    <EmbeddedResource Include="FinOrder\OrderFinDetailForm.resx">
       <DependentUpon>OrderFinDetailForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DicForm.resx">
+    <EmbeddedResource Include="Setup\DicForm.resx">
       <DependentUpon>DicForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="EditCategory.resx">
+    <EmbeddedResource Include="Alibaba\EditCategory.resx">
       <DependentUpon>EditCategory.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EditFinDetail.resx">
+    <EmbeddedResource Include="FinOrder\EditFinDetail.resx">
       <DependentUpon>EditFinDetail.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OrderTrackForm.resx">
+    <EmbeddedResource Include="FinOrder\OrderTrackForm.resx">
       <DependentUpon>OrderTrackForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OrderTrackView.resx">
+    <EmbeddedResource Include="FinOrder\OrderTrackView.resx">
       <DependentUpon>OrderTrackView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProductListView.resx">
+    <EmbeddedResource Include="Alibaba\ProductListView.resx">
       <DependentUpon>ProductListView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WaterView.resx">
+    <EmbeddedResource Include="FinOrder\WaterView.resx">
       <DependentUpon>WaterView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FinView.resx">
+    <EmbeddedResource Include="FinOrder\FinView.resx">
       <DependentUpon>FinView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MailView.resx">
+    <EmbeddedResource Include="Alibaba\MailView.resx">
       <DependentUpon>MailView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewOrderForm.resx">
+    <EmbeddedResource Include="FinOrder\NewOrderForm.resx">
       <DependentUpon>NewOrderForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewPlanForm.resx">
+    <EmbeddedResource Include="Alibaba\NewPlanForm.resx">
       <DependentUpon>NewPlanForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OrderView.resx">
+    <EmbeddedResource Include="FinOrder\OrderView.resx">
       <DependentUpon>OrderView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProductView.resx">
+    <EmbeddedResource Include="Alibaba\ProductView.resx">
       <DependentUpon>ProductView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\IconImages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>IconImages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ImageForm.resx">
+    <EmbeddedResource Include="Alibaba\ImageForm.resx">
       <DependentUpon>ImageForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Login.resx">
+    <EmbeddedResource Include="Setup\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Alibaba\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -333,7 +366,7 @@
     <EmbeddedResource Include="TestForm.resx">
       <DependentUpon>TestForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EditFinWater.resx">
+    <EmbeddedResource Include="FinOrder\EditFinWater.resx">
       <DependentUpon>EditFinWater.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -532,6 +565,13 @@
     <Content Include="KindEditor\skins\common\rm.gif" />
     <Content Include="KindEditor\skins\default.css" />
     <Content Include="KindEditor\skins\default\default.gif" />
+    <None Include="Resources\open.png" />
+    <None Include="Resources\price_b.png" />
+    <None Include="Resources\price_s.png" />
+    <None Include="Resources\Top.png" />
+    <None Include="Resources\calendar.png" />
+    <None Include="Resources\top10.png" />
+    <None Include="Resources\search.png" />
     <None Include="Resources\dirctionary_s.png" />
     <None Include="Resources\setting_b.png" />
     <None Include="Resources\setting_s.png" />

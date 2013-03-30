@@ -81,6 +81,13 @@ namespace AliHelper.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap calendar {
+            get {
+                object obj = ResourceManager.GetObject("calendar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap category_b {
             get {
                 object obj = ResourceManager.GetObject("category_b", resourceCulture);
@@ -214,6 +221,13 @@ namespace AliHelper.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap open {
+            get {
+                object obj = ResourceManager.GetObject("open", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap order_b {
             get {
                 object obj = ResourceManager.GetObject("order_b", resourceCulture);
@@ -224,6 +238,20 @@ namespace AliHelper.Properties {
         internal static System.Drawing.Bitmap order_s {
             get {
                 object obj = ResourceManager.GetObject("order_s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap price_b {
+            get {
+                object obj = ResourceManager.GetObject("price_b", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap price_s {
+            get {
+                object obj = ResourceManager.GetObject("price_s", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -319,6 +347,13 @@ namespace AliHelper.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap search {
+            get {
+                object obj = ResourceManager.GetObject("search", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap setting_b {
             get {
                 object obj = ResourceManager.GetObject("setting_b", resourceCulture);
@@ -343,6 +378,13 @@ namespace AliHelper.Properties {
         internal static System.Drawing.Bitmap supplier_s {
             get {
                 object obj = ResourceManager.GetObject("supplier_s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap top10 {
+            get {
+                object obj = ResourceManager.GetObject("top10", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
