@@ -49,17 +49,17 @@ namespace AliHelper
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.Top10QueryBtn = new System.Windows.Forms.ToolStripButton();
             this.NavigatorBar = new Guifreaks.NavigationBar.NaviBar(this.components);
-            this.ProductBand = new Guifreaks.NavigationBar.NaviBand(this.components);
             this.MyItemBand = new Guifreaks.NavigationBar.NaviBand(this.components);
             this.ItemTreeNaviGroup = new Guifreaks.NavigationBar.NaviGroup(this.components);
             this.ItemNaviGroup = new Guifreaks.NavigationBar.NaviGroup(this.components);
-            this.PriceCateButton = new AliHelper.Controls.ListButton();
-            this.SupplierListButton = new AliHelper.Controls.ListButton();
-            this.ClientBand = new Guifreaks.NavigationBar.NaviBand(this.components);
-            this.InquiryBand = new Guifreaks.NavigationBar.NaviBand(this.components);
-            this.OrderBand = new Guifreaks.NavigationBar.NaviBand(this.components);
-            this.UpdateBand = new Guifreaks.NavigationBar.NaviBand(this.components);
+            this.ProductBand = new Guifreaks.NavigationBar.NaviBand(this.components);
+            this.ApTreeNaviGroup = new Guifreaks.NavigationBar.NaviGroup(this.components);
+            this.ApListNaviGroup = new Guifreaks.NavigationBar.NaviGroup(this.components);
             this.FinanceBand = new Guifreaks.NavigationBar.NaviBand(this.components);
+            this.UpdateBand = new Guifreaks.NavigationBar.NaviBand(this.components);
+            this.OrderBand = new Guifreaks.NavigationBar.NaviBand(this.components);
+            this.InquiryBand = new Guifreaks.NavigationBar.NaviBand(this.components);
+            this.ClientBand = new Guifreaks.NavigationBar.NaviBand(this.components);
             this.CfContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.NewPlanMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ModifyPlanMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,22 +80,30 @@ namespace AliHelper
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.AppNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.PriceCateButton = new AliHelper.Controls.ListButton();
+            this.SupplierListButton = new AliHelper.Controls.ListButton();
+            this.ImagesButton = new AliHelper.Controls.ListButton();
+            this.BatchAddButton = new AliHelper.Controls.ListButton();
             this.StatusStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.ProductsStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NavigatorBar)).BeginInit();
             this.NavigatorBar.SuspendLayout();
-            this.ProductBand.SuspendLayout();
             this.MyItemBand.ClientArea.SuspendLayout();
             this.MyItemBand.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ItemTreeNaviGroup)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemNaviGroup)).BeginInit();
             this.ItemNaviGroup.SuspendLayout();
-            this.ClientBand.SuspendLayout();
-            this.InquiryBand.SuspendLayout();
-            this.OrderBand.SuspendLayout();
-            this.UpdateBand.SuspendLayout();
+            this.ProductBand.ClientArea.SuspendLayout();
+            this.ProductBand.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ApTreeNaviGroup)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ApListNaviGroup)).BeginInit();
+            this.ApListNaviGroup.SuspendLayout();
             this.FinanceBand.SuspendLayout();
+            this.UpdateBand.SuspendLayout();
+            this.OrderBand.SuspendLayout();
+            this.InquiryBand.SuspendLayout();
+            this.ClientBand.SuspendLayout();
             this.CfContextMenuStrip.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -178,7 +186,7 @@ namespace AliHelper
             this.Top10QueryBtn});
             this.ProductsStrip.Location = new System.Drawing.Point(3, 50);
             this.ProductsStrip.Name = "ProductsStrip";
-            this.ProductsStrip.Size = new System.Drawing.Size(496, 25);
+            this.ProductsStrip.Size = new System.Drawing.Size(465, 25);
             this.ProductsStrip.TabIndex = 2;
             this.ProductsStrip.Text = "v";
             // 
@@ -253,16 +261,16 @@ namespace AliHelper
             // 
             // NavigatorBar
             // 
-            this.NavigatorBar.ActiveBand = this.ProductBand;
-            this.NavigatorBar.Controls.Add(this.ProductBand);
+            this.NavigatorBar.ActiveBand = this.MyItemBand;
             this.NavigatorBar.Controls.Add(this.MyItemBand);
-            this.NavigatorBar.Controls.Add(this.ClientBand);
-            this.NavigatorBar.Controls.Add(this.InquiryBand);
-            this.NavigatorBar.Controls.Add(this.OrderBand);
-            this.NavigatorBar.Controls.Add(this.UpdateBand);
+            this.NavigatorBar.Controls.Add(this.ProductBand);
             this.NavigatorBar.Controls.Add(this.FinanceBand);
+            this.NavigatorBar.Controls.Add(this.UpdateBand);
+            this.NavigatorBar.Controls.Add(this.OrderBand);
+            this.NavigatorBar.Controls.Add(this.InquiryBand);
+            this.NavigatorBar.Controls.Add(this.ClientBand);
             this.NavigatorBar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.NavigatorBar.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
+            this.NavigatorBar.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Silver;
             this.NavigatorBar.Location = new System.Drawing.Point(3, 3);
             this.NavigatorBar.Margin = new System.Windows.Forms.Padding(3, 3, 1, 3);
             this.NavigatorBar.Name = "NavigatorBar";
@@ -271,24 +279,6 @@ namespace AliHelper
             this.NavigatorBar.Text = "naviBar1";
             this.NavigatorBar.VisibleLargeButtons = 2;
             this.NavigatorBar.ActiveBandChanged += new System.EventHandler(this.NavigatorBar_ActiveBandChanged);
-            // 
-            // ProductBand
-            // 
-            // 
-            // ProductBand.ClientArea
-            // 
-            this.ProductBand.ClientArea.Location = new System.Drawing.Point(0, 0);
-            this.ProductBand.ClientArea.Name = "ClientArea";
-            this.ProductBand.ClientArea.Size = new System.Drawing.Size(178, 260);
-            this.ProductBand.ClientArea.TabIndex = 0;
-            this.ProductBand.LargeImage = global::AliHelper.Properties.Resources.product1_b;
-            this.ProductBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
-            this.ProductBand.Location = new System.Drawing.Point(1, 27);
-            this.ProductBand.Name = "ProductBand";
-            this.ProductBand.Size = new System.Drawing.Size(178, 260);
-            this.ProductBand.SmallImage = global::AliHelper.Properties.Resources.product1_s;
-            this.ProductBand.TabIndex = 0;
-            this.ProductBand.Text = "国际站产品";
             // 
             // MyItemBand
             // 
@@ -302,7 +292,7 @@ namespace AliHelper
             this.MyItemBand.ClientArea.Size = new System.Drawing.Size(178, 260);
             this.MyItemBand.ClientArea.TabIndex = 0;
             this.MyItemBand.LargeImage = global::AliHelper.Properties.Resources.product_b;
-            this.MyItemBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
+            this.MyItemBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Silver;
             this.MyItemBand.Location = new System.Drawing.Point(1, 27);
             this.MyItemBand.Name = "MyItemBand";
             this.MyItemBand.Size = new System.Drawing.Size(178, 260);
@@ -316,7 +306,7 @@ namespace AliHelper
             this.ItemTreeNaviGroup.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ItemTreeNaviGroup.Expanded = false;
             this.ItemTreeNaviGroup.HeaderContextMenuStrip = null;
-            this.ItemTreeNaviGroup.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
+            this.ItemTreeNaviGroup.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Silver;
             this.ItemTreeNaviGroup.Location = new System.Drawing.Point(0, 70);
             this.ItemTreeNaviGroup.Name = "ItemTreeNaviGroup";
             this.ItemTreeNaviGroup.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
@@ -332,7 +322,7 @@ namespace AliHelper
             this.ItemNaviGroup.Dock = System.Windows.Forms.DockStyle.Top;
             this.ItemNaviGroup.ExpandedHeight = 70;
             this.ItemNaviGroup.HeaderContextMenuStrip = null;
-            this.ItemNaviGroup.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
+            this.ItemNaviGroup.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Silver;
             this.ItemNaviGroup.Location = new System.Drawing.Point(0, 0);
             this.ItemNaviGroup.Name = "ItemNaviGroup";
             this.ItemNaviGroup.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
@@ -340,105 +330,71 @@ namespace AliHelper
             this.ItemNaviGroup.TabIndex = 0;
             this.ItemNaviGroup.Text = "naviGroup1";
             // 
-            // PriceCateButton
+            // ProductBand
             // 
-            this.PriceCateButton.BackColor = System.Drawing.Color.White;
-            this.PriceCateButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.PriceCateButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.PriceCateButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveBorder;
-            this.PriceCateButton.FlatAppearance.BorderSize = 0;
-            this.PriceCateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.PriceCateButton.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.PriceCateButton.Image = global::AliHelper.Properties.Resources.s_dollars;
-            this.PriceCateButton.Location = new System.Drawing.Point(1, 44);
-            this.PriceCateButton.Margin = new System.Windows.Forms.Padding(0);
-            this.PriceCateButton.Name = "PriceCateButton";
-            this.PriceCateButton.Size = new System.Drawing.Size(176, 22);
-            this.PriceCateButton.TabIndex = 1;
-            this.PriceCateButton.Text = "价格种类列表";
-            this.PriceCateButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.PriceCateButton.UseMnemonic = false;
-            this.PriceCateButton.UseVisualStyleBackColor = false;
-            this.PriceCateButton.Click += new System.EventHandler(this.PriceCateButton_Click);
             // 
-            // SupplierListButton
+            // ProductBand.ClientArea
             // 
-            this.SupplierListButton.BackColor = System.Drawing.Color.White;
-            this.SupplierListButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.SupplierListButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.SupplierListButton.FlatAppearance.BorderSize = 0;
-            this.SupplierListButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.SupplierListButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.SupplierListButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SupplierListButton.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.SupplierListButton.Image = global::AliHelper.Properties.Resources.supplier_s;
-            this.SupplierListButton.Location = new System.Drawing.Point(1, 22);
-            this.SupplierListButton.Margin = new System.Windows.Forms.Padding(0);
-            this.SupplierListButton.Name = "SupplierListButton";
-            this.SupplierListButton.Size = new System.Drawing.Size(176, 22);
-            this.SupplierListButton.TabIndex = 0;
-            this.SupplierListButton.Text = "供应商列表    ";
-            this.SupplierListButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.SupplierListButton.UseMnemonic = false;
-            this.SupplierListButton.UseVisualStyleBackColor = false;
-            this.SupplierListButton.Click += new System.EventHandler(this.SupplierListButton_Click);
+            this.ProductBand.ClientArea.Controls.Add(this.ApTreeNaviGroup);
+            this.ProductBand.ClientArea.Controls.Add(this.ApListNaviGroup);
+            this.ProductBand.ClientArea.Location = new System.Drawing.Point(0, 0);
+            this.ProductBand.ClientArea.Name = "ClientArea";
+            this.ProductBand.ClientArea.Size = new System.Drawing.Size(178, 260);
+            this.ProductBand.ClientArea.TabIndex = 0;
+            this.ProductBand.LargeImage = global::AliHelper.Properties.Resources.product1_b;
+            this.ProductBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Silver;
+            this.ProductBand.Location = new System.Drawing.Point(1, 27);
+            this.ProductBand.Name = "ProductBand";
+            this.ProductBand.Size = new System.Drawing.Size(178, 260);
+            this.ProductBand.SmallImage = global::AliHelper.Properties.Resources.product1_s;
+            this.ProductBand.TabIndex = 0;
+            this.ProductBand.Text = "国际站产品";
             // 
-            // ClientBand
+            // ApTreeNaviGroup
             // 
-            this.ClientBand.AllowDrop = true;
+            this.ApTreeNaviGroup.Caption = null;
+            this.ApTreeNaviGroup.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ApTreeNaviGroup.HeaderContextMenuStrip = null;
+            this.ApTreeNaviGroup.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Silver;
+            this.ApTreeNaviGroup.Location = new System.Drawing.Point(0, 70);
+            this.ApTreeNaviGroup.Name = "ApTreeNaviGroup";
+            this.ApTreeNaviGroup.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+            this.ApTreeNaviGroup.Size = new System.Drawing.Size(178, 190);
+            this.ApTreeNaviGroup.TabIndex = 1;
+            this.ApTreeNaviGroup.Text = "naviGroup2";
             // 
-            // ClientBand.ClientArea
+            // ApListNaviGroup
             // 
-            this.ClientBand.ClientArea.Location = new System.Drawing.Point(0, 0);
-            this.ClientBand.ClientArea.Name = "ClientArea";
-            this.ClientBand.ClientArea.Size = new System.Drawing.Size(178, 260);
-            this.ClientBand.ClientArea.TabIndex = 0;
-            this.ClientBand.LargeImage = global::AliHelper.Properties.Resources.customer_b;
-            this.ClientBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
-            this.ClientBand.Location = new System.Drawing.Point(1, 27);
-            this.ClientBand.Name = "ClientBand";
-            this.ClientBand.Size = new System.Drawing.Size(178, 260);
-            this.ClientBand.SmallImage = global::AliHelper.Properties.Resources.customer_s;
-            this.ClientBand.TabIndex = 3;
-            this.ClientBand.Text = "客户管理";
+            this.ApListNaviGroup.Caption = null;
+            this.ApListNaviGroup.Controls.Add(this.ImagesButton);
+            this.ApListNaviGroup.Controls.Add(this.BatchAddButton);
+            this.ApListNaviGroup.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ApListNaviGroup.HeaderContextMenuStrip = null;
+            this.ApListNaviGroup.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Silver;
+            this.ApListNaviGroup.Location = new System.Drawing.Point(0, 0);
+            this.ApListNaviGroup.Name = "ApListNaviGroup";
+            this.ApListNaviGroup.Padding = new System.Windows.Forms.Padding(1, 22, 1, 1);
+            this.ApListNaviGroup.Size = new System.Drawing.Size(178, 70);
+            this.ApListNaviGroup.TabIndex = 0;
+            this.ApListNaviGroup.Text = "naviGroup1";
             // 
-            // InquiryBand
+            // FinanceBand
             // 
-            this.InquiryBand.AllowDrop = true;
             // 
-            // InquiryBand.ClientArea
+            // FinanceBand.ClientArea
             // 
-            this.InquiryBand.ClientArea.Location = new System.Drawing.Point(0, 0);
-            this.InquiryBand.ClientArea.Name = "ClientArea";
-            this.InquiryBand.ClientArea.Size = new System.Drawing.Size(178, 260);
-            this.InquiryBand.ClientArea.TabIndex = 0;
-            this.InquiryBand.LargeImage = global::AliHelper.Properties.Resources.mail_b;
-            this.InquiryBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
-            this.InquiryBand.Location = new System.Drawing.Point(1, 27);
-            this.InquiryBand.Name = "InquiryBand";
-            this.InquiryBand.Size = new System.Drawing.Size(178, 260);
-            this.InquiryBand.SmallImage = global::AliHelper.Properties.Resources.mail_s;
-            this.InquiryBand.TabIndex = 1;
-            this.InquiryBand.Text = "国际站询盘";
-            // 
-            // OrderBand
-            // 
-            this.OrderBand.AllowDrop = true;
-            // 
-            // OrderBand.ClientArea
-            // 
-            this.OrderBand.ClientArea.Location = new System.Drawing.Point(0, 0);
-            this.OrderBand.ClientArea.Name = "ClientArea";
-            this.OrderBand.ClientArea.Size = new System.Drawing.Size(178, 260);
-            this.OrderBand.ClientArea.TabIndex = 0;
-            this.OrderBand.LargeImage = global::AliHelper.Properties.Resources.order_b;
-            this.OrderBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
-            this.OrderBand.Location = new System.Drawing.Point(1, 27);
-            this.OrderBand.Name = "OrderBand";
-            this.OrderBand.Size = new System.Drawing.Size(178, 260);
-            this.OrderBand.SmallImage = global::AliHelper.Properties.Resources.order_s;
-            this.OrderBand.TabIndex = 5;
-            this.OrderBand.Text = "订单管理";
+            this.FinanceBand.ClientArea.Location = new System.Drawing.Point(0, 0);
+            this.FinanceBand.ClientArea.Name = "ClientArea";
+            this.FinanceBand.ClientArea.Size = new System.Drawing.Size(178, 260);
+            this.FinanceBand.ClientArea.TabIndex = 0;
+            this.FinanceBand.LargeImage = global::AliHelper.Properties.Resources.fan1_b;
+            this.FinanceBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Silver;
+            this.FinanceBand.Location = new System.Drawing.Point(1, 27);
+            this.FinanceBand.Name = "FinanceBand";
+            this.FinanceBand.Size = new System.Drawing.Size(178, 260);
+            this.FinanceBand.SmallImage = global::AliHelper.Properties.Resources.fan1_s;
+            this.FinanceBand.TabIndex = 6;
+            this.FinanceBand.Text = "财务管理";
             // 
             // UpdateBand
             // 
@@ -451,7 +407,7 @@ namespace AliHelper
             this.UpdateBand.ClientArea.Size = new System.Drawing.Size(178, 260);
             this.UpdateBand.ClientArea.TabIndex = 0;
             this.UpdateBand.LargeImage = global::AliHelper.Properties.Resources.history;
-            this.UpdateBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
+            this.UpdateBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Silver;
             this.UpdateBand.Location = new System.Drawing.Point(1, 27);
             this.UpdateBand.Name = "UpdateBand";
             this.UpdateBand.Size = new System.Drawing.Size(178, 260);
@@ -459,23 +415,62 @@ namespace AliHelper
             this.UpdateBand.TabIndex = 2;
             this.UpdateBand.Text = "重发计划";
             // 
-            // FinanceBand
+            // OrderBand
             // 
+            this.OrderBand.AllowDrop = true;
             // 
-            // FinanceBand.ClientArea
+            // OrderBand.ClientArea
             // 
-            this.FinanceBand.ClientArea.Location = new System.Drawing.Point(0, 0);
-            this.FinanceBand.ClientArea.Name = "ClientArea";
-            this.FinanceBand.ClientArea.Size = new System.Drawing.Size(178, 260);
-            this.FinanceBand.ClientArea.TabIndex = 0;
-            this.FinanceBand.LargeImage = global::AliHelper.Properties.Resources.fan1_b;
-            this.FinanceBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Black;
-            this.FinanceBand.Location = new System.Drawing.Point(1, 27);
-            this.FinanceBand.Name = "FinanceBand";
-            this.FinanceBand.Size = new System.Drawing.Size(178, 260);
-            this.FinanceBand.SmallImage = global::AliHelper.Properties.Resources.fan1_s;
-            this.FinanceBand.TabIndex = 6;
-            this.FinanceBand.Text = "财务管理";
+            this.OrderBand.ClientArea.Location = new System.Drawing.Point(0, 0);
+            this.OrderBand.ClientArea.Name = "ClientArea";
+            this.OrderBand.ClientArea.Size = new System.Drawing.Size(178, 260);
+            this.OrderBand.ClientArea.TabIndex = 0;
+            this.OrderBand.LargeImage = global::AliHelper.Properties.Resources.order_b;
+            this.OrderBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Silver;
+            this.OrderBand.Location = new System.Drawing.Point(1, 27);
+            this.OrderBand.Name = "OrderBand";
+            this.OrderBand.Size = new System.Drawing.Size(178, 260);
+            this.OrderBand.SmallImage = global::AliHelper.Properties.Resources.order_s;
+            this.OrderBand.TabIndex = 5;
+            this.OrderBand.Text = "订单管理";
+            // 
+            // InquiryBand
+            // 
+            this.InquiryBand.AllowDrop = true;
+            // 
+            // InquiryBand.ClientArea
+            // 
+            this.InquiryBand.ClientArea.Location = new System.Drawing.Point(0, 0);
+            this.InquiryBand.ClientArea.Name = "ClientArea";
+            this.InquiryBand.ClientArea.Size = new System.Drawing.Size(178, 260);
+            this.InquiryBand.ClientArea.TabIndex = 0;
+            this.InquiryBand.LargeImage = global::AliHelper.Properties.Resources.mail_b;
+            this.InquiryBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Silver;
+            this.InquiryBand.Location = new System.Drawing.Point(1, 27);
+            this.InquiryBand.Name = "InquiryBand";
+            this.InquiryBand.Size = new System.Drawing.Size(178, 260);
+            this.InquiryBand.SmallImage = global::AliHelper.Properties.Resources.mail_s;
+            this.InquiryBand.TabIndex = 1;
+            this.InquiryBand.Text = "国际站询盘";
+            // 
+            // ClientBand
+            // 
+            this.ClientBand.AllowDrop = true;
+            // 
+            // ClientBand.ClientArea
+            // 
+            this.ClientBand.ClientArea.Location = new System.Drawing.Point(0, 0);
+            this.ClientBand.ClientArea.Name = "ClientArea";
+            this.ClientBand.ClientArea.Size = new System.Drawing.Size(178, 260);
+            this.ClientBand.ClientArea.TabIndex = 0;
+            this.ClientBand.LargeImage = global::AliHelper.Properties.Resources.customer_b;
+            this.ClientBand.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2007Silver;
+            this.ClientBand.Location = new System.Drawing.Point(1, 27);
+            this.ClientBand.Name = "ClientBand";
+            this.ClientBand.Size = new System.Drawing.Size(178, 260);
+            this.ClientBand.SmallImage = global::AliHelper.Properties.Resources.customer_s;
+            this.ClientBand.TabIndex = 3;
+            this.ClientBand.Text = "客户管理";
             // 
             // CfContextMenuStrip
             // 
@@ -666,6 +661,85 @@ namespace AliHelper
             this.AppNotifyIcon.Visible = true;
             this.AppNotifyIcon.DoubleClick += new System.EventHandler(this.AppNotifyIcon_DoubleClick);
             // 
+            // PriceCateButton
+            // 
+            this.PriceCateButton.BackColor = System.Drawing.Color.White;
+            this.PriceCateButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.PriceCateButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.PriceCateButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveBorder;
+            this.PriceCateButton.FlatAppearance.BorderSize = 0;
+            this.PriceCateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.PriceCateButton.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.PriceCateButton.Image = global::AliHelper.Properties.Resources.s_dollars;
+            this.PriceCateButton.Location = new System.Drawing.Point(1, 44);
+            this.PriceCateButton.Margin = new System.Windows.Forms.Padding(0);
+            this.PriceCateButton.Name = "PriceCateButton";
+            this.PriceCateButton.Size = new System.Drawing.Size(176, 22);
+            this.PriceCateButton.TabIndex = 1;
+            this.PriceCateButton.Text = " 价格种类列表";
+            this.PriceCateButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.PriceCateButton.UseMnemonic = false;
+            this.PriceCateButton.UseVisualStyleBackColor = false;
+            this.PriceCateButton.Click += new System.EventHandler(this.PriceCateButton_Click);
+            // 
+            // SupplierListButton
+            // 
+            this.SupplierListButton.BackColor = System.Drawing.Color.White;
+            this.SupplierListButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.SupplierListButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.SupplierListButton.FlatAppearance.BorderSize = 0;
+            this.SupplierListButton.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.SupplierListButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.SupplierListButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SupplierListButton.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.SupplierListButton.Image = global::AliHelper.Properties.Resources.supplier_s;
+            this.SupplierListButton.Location = new System.Drawing.Point(1, 22);
+            this.SupplierListButton.Margin = new System.Windows.Forms.Padding(0);
+            this.SupplierListButton.Name = "SupplierListButton";
+            this.SupplierListButton.Size = new System.Drawing.Size(176, 22);
+            this.SupplierListButton.TabIndex = 0;
+            this.SupplierListButton.Text = " 供应商列表    ";
+            this.SupplierListButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.SupplierListButton.UseMnemonic = false;
+            this.SupplierListButton.UseVisualStyleBackColor = false;
+            this.SupplierListButton.Click += new System.EventHandler(this.SupplierListButton_Click);
+            // 
+            // ImagesButton
+            // 
+            this.ImagesButton.BackColor = System.Drawing.Color.Transparent;
+            this.ImagesButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ImagesButton.FlatAppearance.BorderSize = 0;
+            this.ImagesButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ImagesButton.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.ImagesButton.Image = global::AliHelper.Properties.Resources.order_s;
+            this.ImagesButton.Location = new System.Drawing.Point(1, 45);
+            this.ImagesButton.Margin = new System.Windows.Forms.Padding(0);
+            this.ImagesButton.Name = "ImagesButton";
+            this.ImagesButton.Size = new System.Drawing.Size(176, 23);
+            this.ImagesButton.TabIndex = 1;
+            this.ImagesButton.Text = " 图片银行          ";
+            this.ImagesButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.ImagesButton.UseVisualStyleBackColor = false;
+            this.ImagesButton.Click += new System.EventHandler(this.ImagesButton_Click);
+            // 
+            // BatchAddButton
+            // 
+            this.BatchAddButton.BackColor = System.Drawing.Color.Transparent;
+            this.BatchAddButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.BatchAddButton.FlatAppearance.BorderSize = 0;
+            this.BatchAddButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BatchAddButton.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.BatchAddButton.Image = global::AliHelper.Properties.Resources.product_s;
+            this.BatchAddButton.Location = new System.Drawing.Point(1, 22);
+            this.BatchAddButton.Margin = new System.Windows.Forms.Padding(0);
+            this.BatchAddButton.Name = "BatchAddButton";
+            this.BatchAddButton.Size = new System.Drawing.Size(176, 23);
+            this.BatchAddButton.TabIndex = 0;
+            this.BatchAddButton.Text = " 批量新增与修改";
+            this.BatchAddButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.BatchAddButton.UseVisualStyleBackColor = false;
+            this.BatchAddButton.Click += new System.EventHandler(this.BatchAddButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -691,17 +765,21 @@ namespace AliHelper
             this.ProductsStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NavigatorBar)).EndInit();
             this.NavigatorBar.ResumeLayout(false);
-            this.ProductBand.ResumeLayout(false);
             this.MyItemBand.ClientArea.ResumeLayout(false);
             this.MyItemBand.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ItemTreeNaviGroup)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemNaviGroup)).EndInit();
             this.ItemNaviGroup.ResumeLayout(false);
-            this.ClientBand.ResumeLayout(false);
-            this.InquiryBand.ResumeLayout(false);
-            this.OrderBand.ResumeLayout(false);
-            this.UpdateBand.ResumeLayout(false);
+            this.ProductBand.ClientArea.ResumeLayout(false);
+            this.ProductBand.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ApTreeNaviGroup)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ApListNaviGroup)).EndInit();
+            this.ApListNaviGroup.ResumeLayout(false);
             this.FinanceBand.ResumeLayout(false);
+            this.UpdateBand.ResumeLayout(false);
+            this.OrderBand.ResumeLayout(false);
+            this.InquiryBand.ResumeLayout(false);
+            this.ClientBand.ResumeLayout(false);
             this.CfContextMenuStrip.ResumeLayout(false);
             this.toolStripContainer.ContentPanel.ResumeLayout(false);
             this.toolStripContainer.TopToolStripPanel.ResumeLayout(false);
@@ -770,5 +848,9 @@ namespace AliHelper
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private Guifreaks.NavigationBar.NaviGroup ApTreeNaviGroup;
+        private Guifreaks.NavigationBar.NaviGroup ApListNaviGroup;
+        private ListButton BatchAddButton;
+        private ListButton ImagesButton;
     }
 }

@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace AliHelper.MyItem
 {
-    public partial class MyItemList : UserControl
+    public partial class MyItemsList : UserControl
     {
-        public MyItemList()
+        public MyItemsList()
         {
             InitializeComponent();
         }
