@@ -125,15 +125,26 @@ namespace Database
         }
 
 
-        public List<AliProduct> GetAliProductList(int GroupId)
+        public QueryObject<AliProduct> GetAliProductList(QueryObject<AliProduct> query)
         {
             string sql = "SELECT Id,Keywords, IsKeywords, Status, GroupId,"
                 + " GroupName1,GroupName2,GroupName3, Subject, RedModel, DetailUrl,AbsImageUrl,AbsSummImageUrl,IsWindowProduct,  "
                 + "GmtModified, Type, IsDisplay, OwnerMemberId, OwnerMemberName, IsLowScore from AliProducts where 1 = 1";
+            int GroupId = Convert.ToInt32(query.Condition.GroupId);
             if (GroupId > 0)
             {
-                sql = sql + " and GroupId like '%"+ GroupId.ToString() +"%'";
+                sql = sql + " and GroupId like '%" + GroupId.ToString() + "%'";
             }
+            else {
+                bool IsWindowProduct = query.Condition.IsWindowProduct;
+                if (IsWindowProduct)
+                {
+                    sql = sql + " and IsWindowProduct = 1";
+                }
+            }
+
+            query.RecordCount = dbHelper.GetItemCount(sql, null);
+            sql = sql + " order by GmtModified desc limit " + query.Start + ", " + query.PageSize;
             DataTable dt = dbHelper.ExecuteDataTable(sql , null);
             List<AliProduct> list = new List<AliProduct>();
             foreach (DataRow row in dt.Rows)
@@ -160,7 +171,8 @@ namespace Database
                 kw.IsLowScore = (string)row["IsLowScore"];
                 list.Add(kw);
             }
-            return list;
+            query.Result = list;
+            return query;
         }
 
 

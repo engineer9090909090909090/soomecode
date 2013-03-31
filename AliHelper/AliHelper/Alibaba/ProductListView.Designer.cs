@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.pager1 = new AliHelper.Pager();
             this.ProductGrid = new SourceGrid.Grid();
+            this.pager1 = new AliHelper.Pager();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,16 +49,6 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(771, 446);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // pager1
-            // 
-            this.pager1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pager1.Location = new System.Drawing.Point(3, 421);
-            this.pager1.Name = "pager1";
-            this.pager1.RecordCount = 0;
-            this.pager1.ShowPageSizeDropdown = true;
-            this.pager1.Size = new System.Drawing.Size(765, 22);
-            this.pager1.TabIndex = 0;
-            // 
             // ProductGrid
             // 
             this.ProductGrid.AutoSize = true;
@@ -74,6 +64,17 @@
             this.ProductGrid.TabIndex = 1;
             this.ProductGrid.TabStop = true;
             this.ProductGrid.ToolTipText = "";
+            // 
+            // pager1
+            // 
+            this.pager1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pager1.Location = new System.Drawing.Point(3, 421);
+            this.pager1.Name = "pager1";
+            this.pager1.RecordCount = 0;
+            this.pager1.ShowPageSizeDropdown = true;
+            this.pager1.Size = new System.Drawing.Size(765, 22);
+            this.pager1.TabIndex = 0;
+            this.pager1.PageIndexChanged += new System.EventHandler(this.pager1_PageIndexChanged);
             // 
             // ProductListView
             // 
