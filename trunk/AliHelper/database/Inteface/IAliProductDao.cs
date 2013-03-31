@@ -14,7 +14,7 @@ namespace Database
 
         void InsertOrUpdate(List<AliProduct> list);
 
-        List<AliProduct> GetAliProductList(int GroupId);
+        QueryObject<AliProduct> GetAliProductList(QueryObject<AliProduct> query);
 
         AliProduct GetAliProduct(int Id);
 

@@ -58,5 +58,8 @@ namespace Soomes
 
         public const string OrderBaseView = "OrderBaseView";
         public const string OrderTrackView = "OrderTrackView";
+
+        public const string ProductTypeAll = "All_Product";
+        public const string ProductTypeWin = "Windows_Product";
     }
 }

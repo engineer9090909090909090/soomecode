@@ -20,8 +20,8 @@ namespace AliHelper
     {
         private ProductsManager productsManager;
         private ImpProductDetail impProductDetail;
-        private string ExplorerCurrentSubName;
-        ProductView productView1;
+        private string ExplorerCurrentView;
+        private string CurrentToolsStrip;
  
         #region 构造方法
         public MainForm()
@@ -41,14 +41,13 @@ namespace AliHelper
              
             LoadNavigatorBar();
             UpdateGroupUI(groups);
-            LoadProdutPanel();
+            LoadProductListView();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
             //HttpClient.GetMailList();
             CheckForIllegalCrossThreadCalls = false;
-            HideAllToolsStrip();
             ShowToolsStrip("ProductsStrip");
         }
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -212,10 +211,18 @@ namespace AliHelper
             if (e.Button == MouseButtons.Left)
             {
                 TreeNode currentNode = e.Node;
+                LoadProductListView();
+                Control view = this.Explorer.Controls[0];
                 AliGroup group = (AliGroup)currentNode.Tag;
-                if (group != null)
+                if (currentNode.Name == Constants.ProductTypeAll)
                 {
-                    this.productView1.LoadDataGridView(group.Id);
+                    ((ProductListView)view).LoadDataGridView(-1, false);
+                }else if (currentNode.Name == Constants.ProductTypeWin)
+                {
+                    ((ProductListView)view).LoadDataGridView(-1, true);
+                }else if (group != null)
+                {
+                    ((ProductListView)view).LoadDataGridView(group.Id, false);
                 }
             }
             else if (e.Button == MouseButtons.Right)
@@ -280,29 +287,27 @@ namespace AliHelper
         private void NavigatorBar_ActiveBandChanged(object sender, EventArgs e)
         {
             string bandName = NavigatorBar.ActiveBand.Name;
-            if (bandName == ExplorerCurrentSubName)
-            {
-                return;
-            }
-            UnLoadExplorerSubPanel();
-            HideAllToolsStrip();
             if (bandName == "ProductBand")
             {
                 ShowToolsStrip("ProductsStrip");
-                LoadProdutPanel();
+                LoadProductListView();
             }
             else if (bandName == "UpdateBand")
             {
-            }
-            else if (bandName == "ProductBand")
-            {
+                ShowToolsStrip("ProductsStrip");
             }
             else if (bandName == "InquiryBand")
             {
+                ShowToolsStrip("ProductsStrip");
                 LoadMailViewPanel();
+            }
+            else if (bandName == "MyItemBand")
+            {
+                ShowToolsStrip("MyItemStrip");
             }
             else if (bandName == "ClientBand")
             {
+                ShowToolsStrip("MyItemStrip");
             }
             else if (bandName == "OrderBand")
             {
@@ -314,7 +319,6 @@ namespace AliHelper
                 ShowToolsStrip("FinToolStrip");
                 LoadFinViewPanel();
             }
-            ExplorerCurrentSubName = bandName;
             GC.Collect();
         }
 
@@ -415,8 +419,10 @@ namespace AliHelper
         {
             treeView1.Nodes.Clear();
             TreeNode t = new TreeNode("所有产品");//作为根节点
+            t.Name = Constants.ProductTypeAll;
             treeView1.Nodes.Add(t);
             TreeNode st = new TreeNode("橱窗产品");
+            st.Name = Constants.ProductTypeWin;
             treeView1.Nodes.Add(st);
             foreach (AliGroup p in groups)
             {
@@ -457,12 +463,14 @@ namespace AliHelper
                 foreach (AliProduct item in products)
                 {
                     FileUtils.DownloadProductImage(webClient, item.AbsImageUrl, item.Id);
+                    /*
                     if (productsManager.IsNeedUpdateDetail(item.Id))
                     {
                         ProductDetail detail = impProductDetail.GetEditFormElements(item);
                         productsManager.InsertOrUpdateProdcutDetail(detail);
                         productList.Add(item);
                     }
+                     */
                 }
             }
             webClient.Dispose();
@@ -489,22 +497,15 @@ namespace AliHelper
                 SubPanel.Dispose();
                 SubPanel = null;
             }
-            this.productView1 = null;
             GC.Collect();
-        }
-        private void HideAllToolsStrip()
-        {
-            if (this.toolStripContainer.TopToolStripPanel.Controls.Count > 0)
-            {
-                foreach (Control SubPanel in toolStripContainer.TopToolStripPanel.Controls)
-                {
-                    SubPanel.Hide();
-                }
-            }
         }
 
         private void ShowToolsStrip(string name)
         {
+            if (CurrentToolsStrip == name)
+            {
+                return;
+            }
             if (this.toolStripContainer.TopToolStripPanel.Controls.Count > 0)
             {
                 foreach (Control SubPanel in toolStripContainer.TopToolStripPanel.Controls)
@@ -514,16 +515,35 @@ namespace AliHelper
                         SubPanel.Show();
                     }
                 }
+                foreach (Control SubPanel in toolStripContainer.TopToolStripPanel.Controls)
+                {
+                    if (SubPanel.Name != name)
+                    {
+                        SubPanel.Hide();
+                    }
+                }
+                
             }
+            CurrentToolsStrip = name;
         }
-
 
         private void LoadFinViewPanel()
         {
+            string LoadViewName = "FinBaseView";
+            if (this.Explorer.Controls.Count > 0)
+            {
+                Control SubPanel = this.Explorer.Controls[0];
+                if (SubPanel.Name == LoadViewName)
+                {
+                    return;
+                }
+            }
+            UnLoadExplorerSubPanel();
             FinView FinBaseView = new AliHelper.FinView();
             this.Explorer.SuspendLayout();
             FinBaseView.Location = new System.Drawing.Point(0, 0);
-            FinBaseView.Name = "FinBaseView";
+            FinBaseView.Name = LoadViewName;
+            Explorer.Name = LoadViewName;
             FinBaseView.AutoSize = true;
             FinBaseView.TabIndex = 1;
             FinBaseView.Size = new System.Drawing.Size(this.Explorer.Width, this.Explorer.Height);
@@ -534,11 +554,22 @@ namespace AliHelper
 
         private void LoadOrderFanViewPanel(bool IsFinOrderView)
         {
+            string LoadViewName = "FinOrderView";
+            if (this.Explorer.Controls.Count > 0)
+            {
+                Control SubPanel = this.Explorer.Controls[0];
+                if (SubPanel.Name == LoadViewName)
+                {
+                    return;
+                }
+            }
+            UnLoadExplorerSubPanel();
             OrderView FinorderView = new AliHelper.OrderView();
             this.Explorer.SuspendLayout();
             FinorderView.IsFinOrderView = IsFinOrderView;
             FinorderView.Location = new System.Drawing.Point(0, 0);
-            FinorderView.Name = "FinorderView";
+            FinorderView.Name = LoadViewName;
+            Explorer.Name = LoadViewName;
             FinorderView.AutoSize = true;
             FinorderView.TabIndex = 1;
             FinorderView.Size = new System.Drawing.Size(this.Explorer.Width, this.Explorer.Height);
@@ -549,10 +580,21 @@ namespace AliHelper
 
         private void LoadOrderTrackViewPanel()
         {
+            string LoadViewName = "OrderTrackView";
+            if (this.Explorer.Controls.Count > 0)
+            {
+                Control SubPanel = this.Explorer.Controls[0];
+                if (SubPanel.Name == LoadViewName)
+                {
+                    return;
+                }
+            }
+            UnLoadExplorerSubPanel();
             OrderTrackView OrderTrackView = new AliHelper.OrderTrackView();
             this.Explorer.SuspendLayout();
             OrderTrackView.Location = new System.Drawing.Point(0, 0);
-            OrderTrackView.Name = "OrderTrackView";
+            OrderTrackView.Name = LoadViewName;
+            Explorer.Name = LoadViewName;
             OrderTrackView.AutoSize = true;
             OrderTrackView.Size = new System.Drawing.Size(this.Explorer.Width, this.Explorer.Height);
             OrderTrackView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -562,10 +604,21 @@ namespace AliHelper
 
         private void LoadFinWaterViewPanel()
         {
+            string LoadViewName = "FinanceWaterView";
+            if (this.Explorer.Controls.Count > 0)
+            {
+                Control SubPanel = this.Explorer.Controls[0];
+                if (SubPanel.Name == LoadViewName)
+                {
+                    return;
+                }
+            }
+            UnLoadExplorerSubPanel();
             WaterView FinanceWaterView = new AliHelper.WaterView();
             this.Explorer.SuspendLayout();
             FinanceWaterView.Location = new System.Drawing.Point(0, 0);
-            FinanceWaterView.Name = "FinanceWaterView";
+            FinanceWaterView.Name = LoadViewName;
+            Explorer.Name = LoadViewName;
             FinanceWaterView.AutoSize = true;
             FinanceWaterView.TabIndex = 1;
             FinanceWaterView.Size = new System.Drawing.Size(this.Explorer.Width, this.Explorer.Height);
@@ -574,13 +627,23 @@ namespace AliHelper
             this.Explorer.ResumeLayout(false);
         }
 
-
         private void LoadMailViewPanel()
         {
+            string LoadViewName = "MailView";
+            if (this.Explorer.Controls.Count > 0)
+            {
+                Control SubPanel = this.Explorer.Controls[0];
+                if (SubPanel.Name == LoadViewName)
+                {
+                    return;
+                }
+            }
+            UnLoadExplorerSubPanel();
             MailView view = new AliHelper.MailView();
             this.Explorer.SuspendLayout();
             view.Location = new System.Drawing.Point(0, 0);
-            view.Name = "mailView";
+            view.Name = LoadViewName;
+            Explorer.Name = LoadViewName;
             view.AutoSize = true;
             view.TabIndex = 1;
             view.Size = new System.Drawing.Size(this.Explorer.Width, this.Explorer.Height);
@@ -589,23 +652,71 @@ namespace AliHelper
             this.Explorer.ResumeLayout(false);
         }
 
-        private void LoadProdutPanel()
+        private void LoadProductListView()
         {
-            if (this.productView1 != null)
+            string LoadViewName = "ProductListView";
+            if (this.Explorer.Controls.Count > 0)
             {
-                return;
+                Control SubPanel = this.Explorer.Controls[0];
+                if (SubPanel.Name == LoadViewName)
+                {
+                    return;
+                }
             }
-            this.productView1 = new AliHelper.ProductView();
+            UnLoadExplorerSubPanel();
+            ProductListView productView1 = new ProductListView();
             this.Explorer.SuspendLayout();
-            this.productView1.Location = new System.Drawing.Point(0, 0);
-            this.productView1.Name = "productView1";
-            this.productView1.AutoSize = true;
-            this.productView1.TabIndex = 0;
-            this.productView1.Size = new System.Drawing.Size(this.Explorer.Width, this.Explorer.Height);
-            this.productView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            productView1.Location = new System.Drawing.Point(0, 0);
+            productView1.Name = LoadViewName;
+            Explorer.Name = LoadViewName;
+            productView1.AutoSize = true;
+            productView1.TabIndex = 0;
+            productView1.Size = new System.Drawing.Size(this.Explorer.Width, this.Explorer.Height);
+            productView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Explorer.Controls.Add(productView1);
+            this.Explorer.ResumeLayout(false);
+            this.Explorer.Name = productView1.Name;
+        }
+
+        private void LoadAliProductView()
+        {
+            string LoadViewName = "ProductView";
+            if (this.Explorer.Controls.Count > 0)
+            {
+                Control SubPanel = this.Explorer.Controls[0];
+                if (SubPanel.Name == LoadViewName)
+                {
+                    return;
+                }
+            }
+            UnLoadExplorerSubPanel();
+            ProductView productView1 = new ProductView();
+            this.Explorer.SuspendLayout();
+            productView1.Location = new System.Drawing.Point(0, 0);
+            productView1.Name = LoadViewName;
+            Explorer.Name = LoadViewName;
+            productView1.AutoSize = true;
+            productView1.TabIndex = 0;
+            productView1.Size = new System.Drawing.Size(this.Explorer.Width, this.Explorer.Height);
+            productView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Explorer.Controls.Add(productView1);
             this.Explorer.ResumeLayout(false);
         }
+
+        private void LoadPhotoBankViewPanel()
+        {
+            string LoadViewName = "PhotoBankView";
+            if (this.Explorer.Controls.Count > 0)
+            {
+                Control SubPanel = this.Explorer.Controls[0];
+                if (SubPanel.Name == LoadViewName)
+                {
+                    return;
+                }
+            }
+            UnLoadExplorerSubPanel();
+        }
+
         #endregion
 
         #region 重发计划处理
@@ -681,12 +792,12 @@ namespace AliHelper
 
         private void BatchAddButton_Click(object sender, EventArgs e)
         {
-
+            LoadAliProductView();
         }
 
         private void ImagesButton_Click(object sender, EventArgs e)
         {
-
+            LoadPhotoBankViewPanel();
         }
 
 

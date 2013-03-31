@@ -39,6 +39,7 @@ namespace AliHelper
 
         private void ProductView_Load(object sender, EventArgs e)
         {
+            DoFill(-1, new List<AliProduct>());
             if (DataCache.Instance.MinOrderUnitOptions != null)
             {
                 this.minOrderUnit.DisplayMember = "Name";
@@ -114,13 +115,9 @@ namespace AliHelper
 
         #region Load ProductGridView
 
-        public void LoadDataGridView(int GroupId)
+        public void LoadDataGridView()
         {
-            CurrentGroupId = GroupId;
-            ThreadPool.SetMinThreads(6, 40);
-            ThreadPool.SetMaxThreads(10, 200);
-            List<AliProduct> productList = productsManager.GetProductList(GroupId);
-            DoFill(GroupId, productList);
+
         }
 
         public void DoFill(int GroupId, List<AliProduct> list)
@@ -130,7 +127,7 @@ namespace AliHelper
             ProductGrid.EnableSort = true;
             ProductGrid.Redim(list.Count + 1, 8);
             ProductGrid.Rows[0].Height = 25;
-            ProductGrid[0, 0] = new MyHeader("产品图片");
+            ProductGrid[0, 0] = new MyHeader("图片");
             ProductGrid[0, 0].Column.Width = 50;
             ProductGrid[0, 0].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
             ProductGrid[0, 1] = new MyHeader("产品名称");
