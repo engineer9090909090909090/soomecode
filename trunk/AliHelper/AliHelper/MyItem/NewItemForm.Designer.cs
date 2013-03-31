@@ -29,9 +29,10 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.Minimum = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.Price = new AliHelper.NumericTextbox();
             this.AddImageButton = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -46,9 +47,9 @@
             this.Packing = new System.Windows.Forms.TextBox();
             this.Weight = new System.Windows.Forms.TextBox();
             this.Size = new System.Windows.Forms.TextBox();
-            this.Model = new System.Windows.Forms.TextBox();
+            this.ProductModel = new System.Windows.Forms.TextBox();
             this.Category = new System.Windows.Forms.ComboBox();
-            this.Name = new System.Windows.Forms.TextBox();
+            this.ProductName = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -63,8 +64,7 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.CannelButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label14 = new System.Windows.Forms.Label();
+            this.ProductPrice = new AliHelper.NumericTextbox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Image)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -76,11 +76,11 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.ProductPrice);
             this.groupBox1.Controls.Add(this.comboBox1);
             this.groupBox1.Controls.Add(this.label14);
             this.groupBox1.Controls.Add(this.Minimum);
             this.groupBox1.Controls.Add(this.label13);
-            this.groupBox1.Controls.Add(this.Price);
             this.groupBox1.Controls.Add(this.AddImageButton);
             this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.label11);
@@ -95,9 +95,9 @@
             this.groupBox1.Controls.Add(this.Packing);
             this.groupBox1.Controls.Add(this.Weight);
             this.groupBox1.Controls.Add(this.Size);
-            this.groupBox1.Controls.Add(this.Model);
+            this.groupBox1.Controls.Add(this.ProductModel);
             this.groupBox1.Controls.Add(this.Category);
-            this.groupBox1.Controls.Add(this.Name);
+            this.groupBox1.Controls.Add(this.ProductName);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
@@ -109,6 +109,25 @@
             this.groupBox1.Size = new System.Drawing.Size(802, 468);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(98, 432);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.comboBox1.Size = new System.Drawing.Size(426, 20);
+            this.comboBox1.TabIndex = 29;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(24, 436);
+            this.label14.Name = "label14";
+            this.label14.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label14.Size = new System.Drawing.Size(65, 12);
+            this.label14.TabIndex = 28;
+            this.label14.Text = "状　　态：";
             // 
             // Minimum
             // 
@@ -128,19 +147,6 @@
             this.label13.Size = new System.Drawing.Size(65, 12);
             this.label13.TabIndex = 26;
             this.label13.Text = "最小订量：";
-            // 
-            // Price
-            // 
-            this.Price.CommaFormat = false;
-            this.Price.CurrencyFormat = false;
-            this.Price.DecimalPrecision = 0;
-            this.Price.Location = new System.Drawing.Point(99, 140);
-            this.Price.Name = "Price";
-            this.Price.PercentFormat = false;
-            this.Price.ReadOnly = false;
-            this.Price.Size = new System.Drawing.Size(234, 24);
-            this.Price.TabIndex = 25;
-            this.Price.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
             // AddImageButton
             // 
@@ -278,13 +284,13 @@
             this.Size.Size = new System.Drawing.Size(425, 21);
             this.Size.TabIndex = 10;
             // 
-            // Model
+            // ProductModel
             // 
-            this.Model.Location = new System.Drawing.Point(99, 100);
-            this.Model.Name = "Model";
-            this.Model.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.Model.Size = new System.Drawing.Size(250, 21);
-            this.Model.TabIndex = 9;
+            this.ProductModel.Location = new System.Drawing.Point(99, 100);
+            this.ProductModel.Name = "ProductModel";
+            this.ProductModel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.ProductModel.Size = new System.Drawing.Size(250, 21);
+            this.ProductModel.TabIndex = 9;
             // 
             // Category
             // 
@@ -295,13 +301,13 @@
             this.Category.Size = new System.Drawing.Size(250, 20);
             this.Category.TabIndex = 8;
             // 
-            // Name
+            // ProductName
             // 
-            this.Name.Location = new System.Drawing.Point(99, 22);
-            this.Name.Name = "Name";
-            this.Name.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.Name.Size = new System.Drawing.Size(425, 21);
-            this.Name.TabIndex = 7;
+            this.ProductName.Location = new System.Drawing.Point(99, 22);
+            this.ProductName.Name = "ProductName";
+            this.ProductName.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.ProductName.Size = new System.Drawing.Size(425, 21);
+            this.ProductName.TabIndex = 7;
             // 
             // label6
             // 
@@ -459,24 +465,18 @@
             this.SaveButton.UseVisualStyleBackColor = true;
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
-            // comboBox1
+            // ProductPrice
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(98, 432);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.comboBox1.Size = new System.Drawing.Size(426, 20);
-            this.comboBox1.TabIndex = 29;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(24, 436);
-            this.label14.Name = "label14";
-            this.label14.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label14.Size = new System.Drawing.Size(65, 12);
-            this.label14.TabIndex = 28;
-            this.label14.Text = "状　　态：";
+            this.ProductPrice.CommaFormat = false;
+            this.ProductPrice.CurrencyFormat = false;
+            this.ProductPrice.DecimalPrecision = 0;
+            this.ProductPrice.Location = new System.Drawing.Point(98, 137);
+            this.ProductPrice.Name = "ProductPrice";
+            this.ProductPrice.PercentFormat = false;
+            this.ProductPrice.ReadOnly = false;
+            this.ProductPrice.Size = new System.Drawing.Size(227, 24);
+            this.ProductPrice.TabIndex = 30;
+            this.ProductPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
             // NewItemForm
             // 
@@ -508,8 +508,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox Name;
-        private System.Windows.Forms.TextBox Model;
+        private System.Windows.Forms.TextBox ProductName;
+        private System.Windows.Forms.TextBox ProductModel;
         private System.Windows.Forms.ComboBox Category;
         private System.Windows.Forms.TextBox Packing;
         private System.Windows.Forms.TextBox Weight;
@@ -538,5 +538,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label14;
+        private NumericTextbox ProductPrice;
     }
 }

@@ -102,11 +102,13 @@ namespace AliHelper
             this.treeView1.Location = new System.Drawing.Point(0, 23);
             this.treeView1.Name = "treeView1";
             this.treeView1.Dock = DockStyle.Fill;
+            this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.treeView1.ItemHeight = 16;
             this.treeView1.Size = new System.Drawing.Size(130, 423);
             this.treeView1.TabIndex = 4;
             this.treeView1.ContextMenuStrip = TreeNodeContextMenuStrip;
             this.treeView1.NodeMouseClick += new TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
-            ProductBand.ClientArea.Controls.Add(treeView1);
+            ApTreeNaviGroup.Controls.Add(treeView1);
 
             ListView listView1 = new ListView();
             listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -412,15 +414,17 @@ namespace AliHelper
         public void UpdateGroupUI(List<AliGroup> groups)
         {
             treeView1.Nodes.Clear();
-            TreeNode t = new TreeNode("产品分组");//作为根节点
+            TreeNode t = new TreeNode("所有产品");//作为根节点
             treeView1.Nodes.Add(t);
+            TreeNode st = new TreeNode("橱窗产品");
+            treeView1.Nodes.Add(st);
             foreach (AliGroup p in groups)
             {
                 if (p.Level == 1)
                 {
                     TreeNode t1 = new TreeNode(p.Name);
                     t1.Tag = p;
-                    t.Nodes.Add(t1);
+                    treeView1.Nodes.Add(t1);
                     if (p.HasChildren)
                     {
                         foreach (AliGroup c in groups)
@@ -434,9 +438,7 @@ namespace AliHelper
                         }
                     }
                 }
-
             }
-            treeView1.ExpandAll();
         }
 
         public void GetGroupProduct(List<AliGroup> groups, string csrfToken)
@@ -675,6 +677,16 @@ namespace AliHelper
             TopFiveQueryForm f = new TopFiveQueryForm();
             f.StartPosition = FormStartPosition.CenterParent;
             f.ShowDialog(this);
+        }
+
+        private void BatchAddButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ImagesButton_Click(object sender, EventArgs e)
+        {
+
         }
 
 

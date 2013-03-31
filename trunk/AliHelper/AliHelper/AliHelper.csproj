@@ -42,7 +42,13 @@
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
-    <ApplicationIcon>helper.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Helper.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>AliHelper.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Aspose.Cells">
@@ -103,11 +109,11 @@
     <Compile Include="Controls\MyButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="MyItem\MyItemList.cs">
+    <Compile Include="MyItem\MyItemsList.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MyItem\MyItemList.Designer.cs">
-      <DependentUpon>MyItemList.cs</DependentUpon>
+    <Compile Include="MyItem\MyItemsList.Designer.cs">
+      <DependentUpon>MyItemsList.cs</DependentUpon>
     </Compile>
     <Compile Include="MyItem\NewItemForm.cs">
       <SubType>Form</SubType>
@@ -280,8 +286,8 @@
     <EmbeddedResource Include="Alibaba\TopFiveQueryForm.resx">
       <DependentUpon>TopFiveQueryForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MyItem\MyItemList.resx">
-      <DependentUpon>MyItemList.cs</DependentUpon>
+    <EmbeddedResource Include="MyItem\MyItemsList.resx">
+      <DependentUpon>MyItemsList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MyItem\NewItemForm.resx">
       <DependentUpon>NewItemForm.cs</DependentUpon>
