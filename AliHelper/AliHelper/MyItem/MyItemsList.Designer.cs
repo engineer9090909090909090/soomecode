@@ -71,6 +71,7 @@
             this.FinDetailGroup.Controls.Add(this.ProductName);
             this.FinDetailGroup.Controls.Add(this.label6);
             this.FinDetailGroup.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FinDetailGroup.Expanded = false;
             this.FinDetailGroup.ExpandedHeight = 100;
             this.FinDetailGroup.HeaderContextMenuStrip = null;
             this.FinDetailGroup.LayoutStyle = Guifreaks.NavigationBar.NaviLayoutStyle.Office2003Silver;
@@ -125,10 +126,10 @@
             this.FinDetailQueryBtn.Text = "查询(&Q)";
             this.FinDetailQueryBtn.UseVisualStyleBackColor = true;
             // 
-            // Name
+            // ProductName
             // 
             this.ProductName.Location = new System.Drawing.Point(83, 24);
-            this.ProductName.Name = "Name";
+            this.ProductName.Name = "ProductName";
             this.ProductName.Size = new System.Drawing.Size(155, 21);
             this.ProductName.TabIndex = 0;
             // 

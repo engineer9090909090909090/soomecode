@@ -45,7 +45,8 @@ namespace AliHelper
                  login.Dispose();
                  Application.Run(new MainForm());
              }
-            // Application.Run(new MainForm());
+            
+            //Application.Run(new TestForm());
         }
 
 
