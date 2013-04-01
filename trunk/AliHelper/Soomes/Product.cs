@@ -12,8 +12,31 @@ namespace soomes
         public int ChildrenCount { set; get; }
         public int ProductCount { set; get; }
         public int Level { set; get; }
+        public int Sort { set; get; }
         public int ParentId { set; get; }
     }
+
+    public class PriceCate
+    {
+        public int Id { set; get; }
+        public bool UsePrice1 { set; get; }
+        public string Price1Name { set; get; }
+        public double Price1Val { set; get; }
+        public bool UsePrice2 { set; get; }
+        public string Price2Name { set; get; }
+        public double Price2Val { set; get; }
+        public bool UsePrice3 { set; get; }
+        public string Price3Name { set; get; }
+        public double Price3Val { set; get; }
+        public bool UsePrice4 { set; get; }
+        public string Price4Name { set; get; }
+        public double Price4Val { set; get; }
+        public bool UsePrice5 { set; get; }
+        public string Price5Name { set; get; }
+        public double Price5Val { set; get; }
+        public string Status { set; get; }
+    }
+
 
     public class Product
     {

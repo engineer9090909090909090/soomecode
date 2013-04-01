@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Soomes
 {
-    public class Suplier
+    public class Supplier
     {
         public int Id { set; get; }
         public string Name { set; get; }
@@ -14,11 +14,11 @@ namespace Soomes
         public string Address { set; get; }
     }
 
-    public class SuplierItem
+    public class SupplierItem
     {
         public int Id { set; get; }
         public int ProductId { set; get; }
-        public int SuplierId { set; get; }
+        public int SupplierId { set; get; }
         public string Name { set; get; }
         public Byte[] Image { set; get; }
         public double Price { set; get; }

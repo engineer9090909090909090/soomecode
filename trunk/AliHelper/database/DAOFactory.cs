@@ -21,6 +21,8 @@ namespace Database
         private IAppDicDAO appDicDAO;
         private IFinanceDao financeDao;
         private IOrderDao orderDao;
+        private IProductDao productDao;
+        private ISupplierDao supplierDao; 
 
         private DAOFactory()
         {
@@ -139,6 +141,38 @@ namespace Database
                 }
             }
             return orderDao;
+        }
+
+        public IProductDao GetProductDao()
+        {
+            if (orderDao == null)
+            {
+                if (this.mysqlDbHelper == null)
+                {
+                    //this.productDao = new ProductDaoMysql(dbHelper);
+                }
+                else
+                {
+                    this.productDao = new ProductDaoMysql(mysqlDbHelper);
+                }
+            }
+            return productDao;
+        }
+
+        public ISupplierDao GetSupplierDao()
+        {
+            if (supplierDao == null)
+            {
+                if (this.mysqlDbHelper == null)
+                {
+                    //this.productDao = new ProductDaoMysql(dbHelper);
+                }
+                else
+                {
+                    this.supplierDao = new SuplierDaoMysql(mysqlDbHelper);
+                }
+            }
+            return supplierDao;
         }
     }
 }

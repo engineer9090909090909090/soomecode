@@ -20,6 +20,7 @@ namespace Soomes
         }
         public int RecordCount { set; get; }
         public bool IsExport { set; get; }
+        public bool IsPager { set; get; }
         public T Condition { set; get; }
         public List<T> Result { set; get; }
         public DataTable dt { set; get; }

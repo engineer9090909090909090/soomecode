@@ -50,6 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Inteface\ISupplierDao.cs" />
+    <Compile Include="Inteface\IProductrDao.cs" />
     <Compile Include="MysqlDAO\SuplierDaoMysql.cs" />
     <Compile Include="MysqlDAO\ProductDaoMysql.cs" />
     <Compile Include="MysqlDBHelper.cs" />
