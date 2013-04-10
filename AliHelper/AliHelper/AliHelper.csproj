@@ -96,6 +96,7 @@
     <Compile Include="Bussness\BaseManager.cs" />
     <Compile Include="Bussness\FinOrderManager.cs" />
     <Compile Include="Bussness\ImpProductDetail.cs" />
+    <Compile Include="Bussness\MyItemManager.cs" />
     <Compile Include="Bussness\ProductsManager.cs" />
     <Compile Include="Alibaba\CheckCodeForm.cs">
       <SubType>Form</SubType>

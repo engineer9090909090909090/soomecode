@@ -88,7 +88,8 @@ namespace AliHelper
             OrderGrid.Redim(0, 0);
             OrderGrid.FixedRows = 1;
             OrderGrid.EnableSort = true;
-            OrderGrid.Redim(list.Count + 1, 7);
+            int RowNum = IsFinOrderView ? list.Count + 2 : list.Count + 1;
+            OrderGrid.Redim(RowNum, 7);
             OrderGrid.Rows[0].Height = 25;
             OrderGrid[0, 0] = new MyHeader("开始日期");
             OrderGrid[0, 0].Column.Width = 100;
@@ -122,6 +123,7 @@ namespace AliHelper
             SourceGrid.Cells.Controllers.CustomEvents clickEvent = new SourceGrid.Cells.Controllers.CustomEvents();
             clickEvent.DoubleClick += new EventHandler(clickEvent_Click);
             int r = 1;
+            double TotalAmount = 0;
             foreach (Order order in list)
             {
                 OrderGrid.Rows[r].Tag = order.Id;
@@ -142,14 +144,28 @@ namespace AliHelper
                 }
                 else
                 {
+                    TotalAmount = TotalAmount + order.TotalAmount;
                     string totalAmount = "￥" + order.TotalAmount.ToString("#,##0.00");
                     OrderGrid[r, 6] = new SourceGrid.Cells.Cell(totalAmount);
                     SourceGrid.Cells.Views.Cell view = new SourceGrid.Cells.Views.Cell();
                     view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleRight;
-                    view.ForeColor = (order.TotalAmount > 0) ? Color.Red : Color.Blue;
+                    view.ForeColor = FileUtils.GetColor(order.TotalAmount);
                     OrderGrid[r, 6].View = view;
                 }
                 r++;
+            }
+            if (IsFinOrderView)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    OrderGrid[r, i] = new SourceGrid.Cells.Cell("");
+                }
+                OrderGrid[r, 3] = new SourceGrid.Cells.Cell("合计");
+                OrderGrid[r, 6] = new SourceGrid.Cells.Cell("￥" + TotalAmount.ToString("#,##0.00"));
+                SourceGrid.Cells.Views.Cell view = new SourceGrid.Cells.Views.Cell();
+                view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleRight;
+                view.ForeColor = FileUtils.GetColor(TotalAmount);
+                OrderGrid[r, 6].View = view;
             }
             OrderGrid.ClipboardMode = SourceGrid.ClipboardMode.All;
         }

@@ -6,6 +6,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Net;
 using Soomes;
+using System.Drawing;
 
 
 namespace AliHelper
@@ -140,6 +141,11 @@ namespace AliHelper
                 }
             }
             return string.Empty;
+        }
+
+        public static Color GetColor(double amount)
+        {
+            return (amount > 0) ? Color.Blue : Color.Red;
         }
     }
 }

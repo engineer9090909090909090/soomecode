@@ -66,14 +66,13 @@ namespace AliHelper
                     item.Remark,
                 };
                 FinDetailDataView.Rows.Add(item01);
-                FinDetailDataView.Rows[i].Cells[4].Style.ForeColor = 
-                    (item.TotalAmount > 0)? Color.Red : Color.Blue;
+                FinDetailDataView.Rows[i].Cells[4].Style.ForeColor = FileUtils.GetColor(item.TotalAmount);
                 i++;
             }
             object[] summer = new object[] { null,null,null,"合计","￥" + TotalAmount.ToString("#,##0.00"),
                     null,null,null,null, null };
             FinDetailDataView.Rows.Add(summer);
-            FinDetailDataView.Rows[i].Cells[4].Style.ForeColor = (TotalAmount > 0) ? Color.Red : Color.Blue;
+            FinDetailDataView.Rows[i].Cells[4].Style.ForeColor = FileUtils.GetColor(TotalAmount);
         }
 
         private void BindDataWithPage(int Page)
