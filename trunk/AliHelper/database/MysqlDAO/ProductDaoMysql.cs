@@ -60,7 +60,6 @@ namespace Database
             + "`CategoryId` integer not null,"
             + "`Name` varchar(100) not null,"
             + "`Model` varchar(50) not null,"
-            + "`Image` BLOB not null,"
             + "`Price` double default 0.0,"
             + "`PriceCate` integer not null default 0,"
             + "`Minimum` integer,"
@@ -78,6 +77,7 @@ namespace Database
            + "`Id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,"
            + "`ProductId` integer not null,"
            + "`Image` BLOB not null,"
+           + "`IsMain` Boolean not null default false,"
            + "Index Index_ProductId (`ProductId`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ");
             
         }
@@ -122,8 +122,8 @@ namespace Database
 
         public void InsertOrUpdateCategory(Categories item)
         {
-            string InsSql = @"INSERT INTO AliGroups(Id,Name, Sort, ChildrenCount, Level,ParentId)"
-                            + "values(@Id,@Name, @Sort, @ChildrenCount, @Level,@ParentId)";
+            string InsSql = @"INSERT INTO Category(Name, Sort, ChildrenCount, Level,ParentId)"
+                            + "values(@@Name, @Sort, @ChildrenCount, @Level,@ParentId)";
             string UpdSql = @"Update AliGroups SET Name = @Name, Sort = @Sort, ChildrenCount = @ChildrenCount, "
                             + "Level = @Level, ParentId = @ParentId WHERE Id = @Id";
             MySqlParameter[] parameter = new MySqlParameter[]
@@ -220,9 +220,50 @@ namespace Database
             }
         }
 
+        public void DeleteCategory(int Id)
+        {
+            dbHelper.ExecuteNonQuery("delete from Category WHERE Id = " + Id);
+        }
+
         public void DeletePriceCate(int Id)
         {
             dbHelper.ExecuteNonQuery("delete from PriceCate WHERE Id = " + Id);
         }
+
+        public void InsertOrUpdateProduct(Product item)
+        {
+            string InsSql = @"INSERT INTO Product(CategoryId, Name, Model, Price,PriceCate, Minimum,Size, Weight, Packing,Sort,Status,CreatedTime,ModifiedTime)"
+                            + "values(@CategoryId, @Name, @Model, @Price,@PriceCate, @Minimum,@Size, @Weight, @Packing,@Sort,@Status,@CreatedTime,@ModifiedTime)";
+            string UpdSql = @"Update Product SET CategoryId=@CategoryId, Name=@Name, Model=@Model, Price=@Price,PriceCate=@PriceCate,"
+                    + " Minimum=@Minimum,Size=@Size, Weight=@Weight, Packing=@Packing,Sort=@Sort,Status=@Status,ModifiedTime=@ModifiedTime WHERE Id = @Id";
+            DateTime CurrentTime = DateTime.Now;
+            MySqlParameter[] parameter = new MySqlParameter[]
+            {
+                new MySqlParameter("@Id",item.Id),
+                new MySqlParameter("@CategoryId",item.CategoryId), 
+                new MySqlParameter("@Name",item.Name),
+                new MySqlParameter("@Model",item.Model),
+                new MySqlParameter("@Price",item.Price),
+                new MySqlParameter("@PriceCate",item.PriceCate),
+                 new MySqlParameter("@Minimum",item.Minimum), 
+                new MySqlParameter("@Size",item.Size),
+                new MySqlParameter("@Weight",item.Weight),
+                new MySqlParameter("@Packing",item.Packing),
+                new MySqlParameter("@Sort",item.Sort),
+                new MySqlParameter("@Status",item.Status),
+                new MySqlParameter("@CreatedTime",CurrentTime),
+                new MySqlParameter("@ModifiedTime",CurrentTime),
+            };
+            if (item.Id == 0)
+            {
+                dbHelper.ExecuteNonQuery(InsSql, parameter);
+            }
+            else
+            {
+                dbHelper.ExecuteNonQuery(UpdSql, parameter);
+            }
+        }
+
+        
     }
 }

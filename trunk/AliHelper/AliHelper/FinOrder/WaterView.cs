@@ -144,7 +144,7 @@ namespace AliHelper
                 FinGrid[r, 3].AddController(clickEvent);
                 view = new SourceGrid.Cells.Views.Cell();
                 view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleRight;
-                view.ForeColor = (finance.TotalAmount > 0) ? Color.Red : Color.Blue;
+                view.ForeColor = FileUtils.GetColor(finance.TotalAmount);
                 FinGrid[r, 3].View = view;
                 string rate = finance.Rate.ToString("#,##0.0000");
                 FinGrid[r, 4] = new SourceGrid.Cells.Cell(rate);
@@ -156,7 +156,7 @@ namespace AliHelper
                 FinGrid[r, 5] = new SourceGrid.Cells.Cell(totalAmount);
                 view = new SourceGrid.Cells.Views.Cell();
                 view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleRight;
-                view.ForeColor = (finance.TotalAmount > 0) ? Color.Red : Color.Blue;
+                view.ForeColor = FileUtils.GetColor(finance.TotalAmount);
                 FinGrid[r, 5].View = view;
                 FinGrid[r, 6] = new SourceGrid.Cells.Cell(finance.ReferenceNo);
                 FinGrid[r, 7] = new SourceGrid.Cells.Cell(finance.ReceivePaymentor);
@@ -183,14 +183,14 @@ namespace AliHelper
                     FinGrid[r, 12] = new SourceGrid.Cells.Cell(detailAmount);
                     view = new SourceGrid.Cells.Views.Cell();
                     view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleRight;
-                    view.ForeColor = (finance.TotalAmount > 0) ? Color.Red : Color.Blue;
+                    view.ForeColor = FileUtils.GetColor(finance.TotalAmount);
                     FinGrid[r, 12].View = view;
                     string detailTotalAmount = "￥" + detail.TotalAmount.ToString("#,##0.00");
                     DetailSumTotalAmount = DetailSumTotalAmount + detail.TotalAmount;
                     FinGrid[r, 13] = new SourceGrid.Cells.Cell(detailTotalAmount);
                     view = new SourceGrid.Cells.Views.Cell();
                     view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleRight;
-                    view.ForeColor = (finance.TotalAmount > 0) ? Color.Red : Color.Blue;
+                    view.ForeColor = FileUtils.GetColor(finance.TotalAmount);
                     FinGrid[r, 13].View = view;
                     FinGrid[r, 14] = new SourceGrid.Cells.Cell(detail.Remark);
                     r++;
@@ -206,7 +206,7 @@ namespace AliHelper
             FinGrid[r, 13] = new SourceGrid.Cells.Cell("￥" + DetailSumTotalAmount.ToString("#,##0.00"));
             view = new SourceGrid.Cells.Views.Cell();
             view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleRight;
-            view.ForeColor = (SumTotalAmount > 0) ? Color.Red : Color.Blue;
+            view.ForeColor = FileUtils.GetColor(SumTotalAmount);
             FinGrid[r, 5].View =  FinGrid[r, 13].View = view;
             FinGrid.ClipboardMode = SourceGrid.ClipboardMode.All;
         }

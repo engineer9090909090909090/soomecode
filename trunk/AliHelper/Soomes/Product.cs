@@ -44,7 +44,6 @@ namespace soomes
         public int CategoryId { set; get; }
         public string Name { set; get; }
         public string Model { set; get; }
-        public Byte[] Image { set; get; }
         public double Price { set; get; }
         public int PriceCate { set; get; }
         public string Size { set; get; }
@@ -58,6 +57,7 @@ namespace soomes
     {
         public int Id { set; get; }
         public int ProductId { set; get; }
+        public bool IsMain { set; get; }
         public Byte[] Image { set; get; }
     }
 }
