@@ -273,6 +273,39 @@ namespace Database
             }
         }
 
+        public byte[] GetBlogField(string sql)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = sql;
+                cmd.Connection = connection;
+                DbDataReader reader = null;
+                byte[] buffer = null;
+                try
+                {
+                    reader = cmd.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        long len = reader.GetBytes(0, 0, null, 0, 0);//1是picture  
+                        buffer = new byte[len];
+                        len = reader.GetBytes(1, 0, buffer, 0, (int)len);
+                        //System.IO.MemoryStream ms = new System.IO.MemoryStream(buffer);
+                        //System.Drawing.Image iamge = System.Drawing.Image.FromStream(ms);
+                    }
+                }
+                finally
+                {
+                    if (reader != null) reader.Close();
+                }
+                return buffer;
+            }  
+        }
+
         private void PrepareCommand(MySqlCommand cmd, MySqlConnection conn, MySqlTransaction trans, CommandType cmdType, string cmdText, MySqlParameter[] cmdParms)
         {
             if (conn.State != ConnectionState.Open)

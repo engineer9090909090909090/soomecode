@@ -118,6 +118,11 @@ namespace Database
             return DataTableToSupplierItems(dt);
         }
 
+        public byte[] GetSupplierItemImage(int SupplierItemId)
+        {
+            return dbHelper.GetBlogField("select Image FROM Supplier_Item where Id = " + SupplierItemId);
+        }
+
         public List<SupplierItem> DataTableToSupplierItems(DataTable dt)
         {
             List<SupplierItem> list = new List<SupplierItem>();

@@ -15,7 +15,7 @@ namespace Database
         private MysqlDBHelper dbHelper;
 
         public ProductDaoMysql(MysqlDBHelper dbHelper)
-        { 
+        {
             this.dbHelper = dbHelper;
             CreateTable();
         }
@@ -32,25 +32,25 @@ namespace Database
             + "Level integer default 0,"
             + "Sort integer default 0,"
             + "Index Index_ParentId (`ParentId`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ");
-			
-			dbHelper.ExecuteNonQuery(
+
+            dbHelper.ExecuteNonQuery(
               "CREATE TABLE IF NOT EXISTS PriceCate("
             + "Id integer NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,"
-			+ "`UsePrice1` Boolean default false,"
+            + "`UsePrice1` Boolean default false,"
             + "`Price1Name` varchar(100) NOT NULL,"
-			+ "`Price1Val` double default 0.0,"
-			+ "`UsePrice2` Boolean default false,"
+            + "`Price1Val` double default 0.0,"
+            + "`UsePrice2` Boolean default false,"
             + "`Price2Name` varchar(100),"
-			+ "`Price2Val` double default 0.0,"
-			+ "`UsePrice3` Boolean default false,"
+            + "`Price2Val` double default 0.0,"
+            + "`UsePrice3` Boolean default false,"
             + "`Price3Name` varchar(100),"
-			+ "`Price3Val` double default 0.0,"
-			+ "`UsePrice4` Boolean default false,"
+            + "`Price3Val` double default 0.0,"
+            + "`UsePrice4` Boolean default false,"
             + "`Price4Name` varchar(100),"
-			+ "`Price4Val` double default 0.0,"
-			+ "`UsePrice5` Boolean default false,"
+            + "`Price4Val` double default 0.0,"
+            + "`UsePrice5` Boolean default false,"
             + "`Price5Name` varchar(100),"
-			+ "`Price5Val` double default 0.0,"
+            + "`Price5Val` double default 0.0,"
             + "`Status` varchar(10) NOT NULL default 'A') ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ");
 
             /*ID,种类,名称,型号,图片,价格,尺寸,重量,最小订量,排序*/
@@ -78,8 +78,10 @@ namespace Database
            + "`ProductId` integer not null,"
            + "`Image` BLOB not null,"
            + "`IsMain` Boolean not null default false,"
+           + "`CreatedTime` datetime,"
+           + "`ModifiedTime` datetime,"
            + "Index Index_ProductId (`ProductId`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ");
-            
+
         }
 
         public List<Categories> GetAllCategories()
@@ -123,7 +125,7 @@ namespace Database
         public void InsertOrUpdateCategory(Categories item)
         {
             string InsSql = @"INSERT INTO Category(Name, Sort, ChildrenCount, Level,ParentId)"
-                            + "values(@@Name, @Sort, @ChildrenCount, @Level,@ParentId)";
+                            + "values(@Name, @Sort, @ChildrenCount, @Level,@ParentId)";
             string UpdSql = @"Update AliGroups SET Name = @Name, Sort = @Sort, ChildrenCount = @ChildrenCount, "
                             + "Level = @Level, ParentId = @ParentId WHERE Id = @Id";
             MySqlParameter[] parameter = new MySqlParameter[]
@@ -139,7 +141,7 @@ namespace Database
             {
                 dbHelper.ExecuteNonQuery(InsSql, parameter);
             }
-            else 
+            else
             {
                 dbHelper.ExecuteNonQuery(UpdSql, parameter);
             }
@@ -245,7 +247,7 @@ namespace Database
                 new MySqlParameter("@Model",item.Model),
                 new MySqlParameter("@Price",item.Price),
                 new MySqlParameter("@PriceCate",item.PriceCate),
-                 new MySqlParameter("@Minimum",item.Minimum), 
+                new MySqlParameter("@Minimum",item.Minimum), 
                 new MySqlParameter("@Size",item.Size),
                 new MySqlParameter("@Weight",item.Weight),
                 new MySqlParameter("@Packing",item.Packing),
@@ -264,6 +266,135 @@ namespace Database
             }
         }
 
-        
+        public Product GetProductById(int id)
+        {
+            string sql = "select t.* FROM Product t where id = " + id;
+            DataTable dt = dbHelper.ExecuteDataTable(sql, null);
+            List<Product> list = DataTableToList(dt);
+            if (list.Count > 0)
+                return list[0];
+            else
+                return null;
+        }
+
+        public List<Product> DataTableToList(DataTable dt)
+        {
+            List<Product> list = new List<Product>();
+            foreach (DataRow row in dt.Rows)
+            {
+                Product info = new Product();
+                info.Id = Convert.ToInt32(row["Id"]);
+                info.CategoryId = Convert.ToInt32(row["CategoryId"]);
+                info.Name = (string)row["Name"];
+                info.Model = (string)row["Model"];
+                info.Price = Convert.ToDouble(row["Price"]);
+                info.PriceCate = Convert.ToInt32(row["PriceCate"]);
+                info.Minimum = Convert.ToInt32(row["Minimum"]);
+                info.Size = (string)row["Size"];
+                info.Weight = (string)row["Weight"];
+                info.Packing = (string)row["Packing"];
+                info.Sort = Convert.ToInt32(row["Sort"]);
+                info.Status = (string)row["Status"];
+                list.Add(info);
+            }
+            return list;
+        }
+
+        public QueryObject<Product> GetProducts(QueryObject<Product> query)
+        {
+            string sql = "select Id, CategoryId, Name, Model, Price,PriceCate, Minimum,Size, Weight, Packing,Sort,Status FROM Product where 1 = 1 ";
+            List<MySqlParameter> QueryParameters = new List<MySqlParameter>();
+            if (query.Condition != null)
+            {
+                if (!string.IsNullOrEmpty(query.Condition.Name))
+                {
+                    sql = sql + "and Name like '%" + query.Condition.Name.Trim() + "%' ";
+                }
+                if (!string.IsNullOrEmpty(query.Condition.Model))
+                {
+                    sql = sql + "and Model like '%" + query.Condition.Model.Trim() + "%' ";
+                }
+                if (query.Condition.CategoryId != 0)
+                {
+                    sql = sql + "and CategoryId = @CategoryId ";
+                    QueryParameters.Add(new MySqlParameter("@CategoryId", query.Condition.CategoryId));
+                }
+                if (!string.IsNullOrEmpty(query.Condition.Status))
+                {
+                    sql = sql + "and Status = @Status ";
+                    QueryParameters.Add(new MySqlParameter("@Status", query.Condition.Status));
+                }
+            }
+            if (query.IsExport == false)
+            {
+                query.RecordCount = dbHelper.GetItemCount(sql, QueryParameters.ToArray());
+                sql = sql + " order by ModifiedTime desc limit " + query.Start + ", " + query.PageSize;
+            }
+            else
+            {
+                sql = sql + " order by id asc";
+            }
+
+            query.dt = dbHelper.ExecuteDataTable(sql, QueryParameters.ToArray());
+            query.Result = DataTableToList(query.dt);
+            return query;
+        }
+
+        public void UpdateStatus(int productId, string status)
+        {
+            List<MySqlParameter> parameters = new List<MySqlParameter>();
+            parameters.Add(new MySqlParameter("@Id", productId));
+            parameters.Add(new MySqlParameter("@Status", status));
+            dbHelper.ExecuteNonQuery("update Product set Status = @Status  WHERE Id = @Id ", parameters.ToArray());
+        }
+
+        public byte[] GetProductImage(int ProductImageId)
+        {
+            return dbHelper.GetBlogField("select Image FROM Product_Image where Id = " + ProductImageId);
+        }
+
+        public void InsertProductImage(ProductImage item)
+        {
+            string InsSql = @"INSERT INTO Product_Image(ProductId, Image,IsMain,CreatedTime,ModifiedTime)"
+                            + "values(@ProductId, @Image,@IsMain,@CreatedTime,@ModifiedTime)";
+            DateTime CurrentTime = DateTime.Now;
+            MySqlParameter[] parameter = new MySqlParameter[]
+            {
+                new MySqlParameter("@ProductId",item.ProductId),
+                new MySqlParameter("@Image",item.Image), 
+                new MySqlParameter("@IsMain",item.IsMain),
+                new MySqlParameter("@CreatedTime",CurrentTime),
+                new MySqlParameter("@ModifiedTime",CurrentTime)
+            };
+            dbHelper.ExecuteNonQuery(InsSql, parameter);
+        }
+
+        public void DeleteProductImage(int ProductImageId)
+        {
+            dbHelper.ExecuteNonQuery("delete from Product_Image WHERE Id = " + ProductImageId);
+        }
+
+        public List<ProductImage> GetImagesInfoByProductId(int ProductId)
+        {
+            List<MySqlParameter> parameters = new List<MySqlParameter>();
+            parameters.Add(new MySqlParameter("@ProductId", ProductId));
+            string sql = "SELECT Id, ProductId, Image,IsMain,CreatedTime,ModifiedTime "
+                + " FROM Product_Image where ProductId = @ProductId order by IsMain desc CreatedTime asc";
+            DataTable dt = dbHelper.ExecuteDataTable(sql, parameters.ToArray());
+            List<ProductImage> list = new List<ProductImage>();
+            foreach (DataRow row in dt.Rows)
+            {
+                ProductImage kw = new ProductImage();
+                kw.Id = Convert.ToInt32(row["Id"]);
+                kw.ProductId = Convert.ToInt32(row["ProductId"]);
+                kw.IsMain = Convert.ToBoolean(row["IsMain"]);
+                kw.CreatedTime = Convert.ToDateTime(row["CreatedTime"]);
+                kw.ModifiedTime = Convert.ToDateTime(row["ModifiedTime"]);
+                list.Add(kw);
+            }
+            return list;
+        }
+    
     }
+
 }
