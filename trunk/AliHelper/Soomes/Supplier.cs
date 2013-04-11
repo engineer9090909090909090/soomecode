@@ -20,7 +20,7 @@ namespace Soomes
         public int ProductId { set; get; }
         public int SupplierId { set; get; }
         public string Name { set; get; }
-        public Byte[] Image { set; get; }
+        public byte[] Image { set; get; }
         public double Price { set; get; }
         public string PriceDesc { set; get; }
         public string Remark { set; get; }

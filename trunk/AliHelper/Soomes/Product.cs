@@ -52,12 +52,16 @@ namespace soomes
         public string Packing { set; get; }
         public int Sort { set; get; }
         public string Status { set; get; }
+        public DateTime CreatedTime { set; get; }
+        public DateTime ModifiedTime { set; get; }
     }
     public class ProductImage
     {
         public int Id { set; get; }
         public int ProductId { set; get; }
         public bool IsMain { set; get; }
-        public Byte[] Image { set; get; }
+        public byte[] Image { set; get; }
+        public DateTime CreatedTime { set; get; }
+        public DateTime ModifiedTime { set; get; }
     }
 }
