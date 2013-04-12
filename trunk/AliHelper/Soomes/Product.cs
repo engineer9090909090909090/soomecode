@@ -19,6 +19,7 @@ namespace soomes
     public class PriceCate
     {
         public int Id { set; get; }
+        public string CateName { set; get; }
         public bool UsePrice1 { set; get; }
         public string Price1Name { set; get; }
         public double Price1Val { set; get; }
@@ -50,6 +51,7 @@ namespace soomes
         public string Weight { set; get; }
         public int Minimum { set; get; }
         public string Packing { set; get; }
+        public string Description { set; get; }
         public int Sort { set; get; }
         public string Status { set; get; }
         public DateTime CreatedTime { set; get; }

@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace AliHelper.MyItem
 {
-    public partial class MyItemsList : UserControl
+    public partial class SupplierListView : UserControl
     {
-        public MyItemsList()
+        public SupplierListView()
         {
             InitializeComponent();
         }
@@ -20,8 +20,5 @@ namespace AliHelper.MyItem
         {
 
         }
-
-
-
     }
 }

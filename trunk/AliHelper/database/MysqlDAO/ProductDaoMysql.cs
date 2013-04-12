@@ -36,8 +36,9 @@ namespace Database
             dbHelper.ExecuteNonQuery(
               "CREATE TABLE IF NOT EXISTS PriceCate("
             + "Id integer NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,"
+            + "`CateName` varchar(100) NOT NULL,"
             + "`UsePrice1` Boolean default false,"
-            + "`Price1Name` varchar(100) NOT NULL,"
+            + "`Price1Name` varchar(100),"
             + "`Price1Val` double default 0.0,"
             + "`UsePrice2` Boolean default false,"
             + "`Price2Name` varchar(100),"
@@ -66,6 +67,7 @@ namespace Database
             + "`Size` varchar(50),"
             + "`Weight` varchar(50),"
             + "`Packing` varchar(500),"
+            + "`Description` varchar(8000),"
             + "`Sort` integer,"
             + "`Status` varchar(50),"
             + "`CreatedTime` datetime,"
@@ -149,7 +151,7 @@ namespace Database
 
         public List<PriceCate> GetPriceCates()
         {
-            string sql = "SELECT Id, UsePrice1, Price1Name, Price1Val, UsePrice2, Price2Name, Price2Val, UsePrice3, Price3Name, Price3Val";
+            string sql = "SELECT Id,CateName, UsePrice1, Price1Name, Price1Val, UsePrice2, Price2Name, Price2Val, UsePrice3, Price3Name, Price3Val";
             sql = sql = ", UsePrice4, Price4Name, Price4Val, UsePrice5, Price5Name, Price5Val, Status FROM PriceCate";
             DataTable dt = dbHelper.ExecuteDataTable(sql, null);
             List<PriceCate> list = new List<PriceCate>();
@@ -157,6 +159,7 @@ namespace Database
             {
                 PriceCate kw = new PriceCate();
                 kw.Id = Convert.ToInt32(row["Id"]);
+                kw.CateName = (string)row["CateName"];
                 kw.UsePrice1 = Convert.ToBoolean(row["UsePrice1"]);
                 kw.Price1Name = (string)row["Price1Name"];
                 kw.Price1Val = Convert.ToDouble(row["Price1Val"]);
@@ -184,17 +187,18 @@ namespace Database
 
         public void InsertOrUpdatePriceCate(PriceCate item)
         {
-            string InsSql = @"INSERT INTO PriceCate( UsePrice1, Price1Name, Price1Val, UsePrice2, Price2Name, Price2Val, UsePrice3, Price3Name, Price3Val,"
+            string InsSql = @"INSERT INTO PriceCate( CateName,UsePrice1, Price1Name, Price1Val, UsePrice2, Price2Name, Price2Val, UsePrice3, Price3Name, Price3Val,"
                           + "UsePrice4, Price4Name, Price4Val, UsePrice5, Price5Name, Price5Val, Status)"
-                          + "values(@UsePrice1, @Price1Name,@ Price1Val, @UsePrice2, @Price2Name, @Price2Val, @UsePrice3, @Price3Name, @Price3Val,"
+                          + "values(@CateName, @UsePrice1, @Price1Name,@ Price1Val, @UsePrice2, @Price2Name, @Price2Val, @UsePrice3, @Price3Name, @Price3Val,"
                           + "@UsePrice4, @Price4Name, @Price4Val, @UsePrice5, @Price5Name, @Price5Val, @Status)";
-            string UpdSql = @"Update PriceCate SET UsePrice1=@UsePrice1, Price1Name=@Price1Name, Price1Val=@Price1Val, "
+            string UpdSql = @"Update PriceCate SET CateName=@CateName,UsePrice1=@UsePrice1, Price1Name=@Price1Name, Price1Val=@Price1Val, "
                             + "UsePrice2=@UsePrice2, Price2Name=@Price2Name, Price2Val=@Price2Val, UsePrice3=@UsePrice3, Price3Name=@UsePrice3,"
                             + "Price3Val=@Price3Val, UsePrice4=@UsePrice4, Price4Name=@Price4Name, Price4Val=@Price4Val, UsePrice5=@UsePrice5,  "
                             + "Price5Name=@Price5Name,Price5Val=@Price5Val, Status=@Status WHERE Id = @Id";
             MySqlParameter[] parameter = new MySqlParameter[]
             {
                 new MySqlParameter("@Id",item.Id),
+                new MySqlParameter("@CateName",item.CateName), 
                 new MySqlParameter("@UsePrice1",item.UsePrice1), 
                 new MySqlParameter("@Price1Name",item.Price1Name),
                 new MySqlParameter("@Price1Val",item.Price1Val),
@@ -234,10 +238,10 @@ namespace Database
 
         public void InsertOrUpdateProduct(Product item)
         {
-            string InsSql = @"INSERT INTO Product(CategoryId, Name, Model, Price,PriceCate, Minimum,Size, Weight, Packing,Sort,Status,CreatedTime,ModifiedTime)"
-                            + "values(@CategoryId, @Name, @Model, @Price,@PriceCate, @Minimum,@Size, @Weight, @Packing,@Sort,@Status,@CreatedTime,@ModifiedTime)";
+            string InsSql = @"INSERT INTO Product(CategoryId, Name, Model, Price,PriceCate, Minimum,Size, Weight, Packing,Description, Sort,Status,CreatedTime,ModifiedTime)"
+                            + "values(@CategoryId, @Name, @Model, @Price,@PriceCate, @Minimum,@Size, @Weight, @Packing,@Description, @Sort,@Status,@CreatedTime,@ModifiedTime)";
             string UpdSql = @"Update Product SET CategoryId=@CategoryId, Name=@Name, Model=@Model, Price=@Price,PriceCate=@PriceCate,"
-                    + " Minimum=@Minimum,Size=@Size, Weight=@Weight, Packing=@Packing,Sort=@Sort,Status=@Status,ModifiedTime=@ModifiedTime WHERE Id = @Id";
+                    + " Minimum=@Minimum,Size=@Size, Weight=@Weight, Packing=@Packing,Description=@Description, Sort=@Sort,Status=@Status,ModifiedTime=@ModifiedTime WHERE Id = @Id";
             DateTime CurrentTime = DateTime.Now;
             MySqlParameter[] parameter = new MySqlParameter[]
             {
@@ -251,6 +255,7 @@ namespace Database
                 new MySqlParameter("@Size",item.Size),
                 new MySqlParameter("@Weight",item.Weight),
                 new MySqlParameter("@Packing",item.Packing),
+                new MySqlParameter("@Description",item.Description),
                 new MySqlParameter("@Sort",item.Sort),
                 new MySqlParameter("@Status",item.Status),
                 new MySqlParameter("@CreatedTime",CurrentTime),
@@ -295,6 +300,7 @@ namespace Database
                 info.Packing = (string)row["Packing"];
                 info.Sort = Convert.ToInt32(row["Sort"]);
                 info.Status = (string)row["Status"];
+                info.Description = (string)row["Description"];
                 list.Add(info);
             }
             return list;
