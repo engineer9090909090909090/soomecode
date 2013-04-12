@@ -4,27 +4,25 @@ using System.Linq;
 using System.Text;
 using Database;
 using Soomes;
+using System.Windows.Forms;
 
 namespace AliHelper
 {
     public class BaseManager
     {
-        private AppConfigDAO configDAO;
         private IAppDicDAO appDicDAO;
         public BaseManager()
         {
-            appDicDAO = DAOFactory.Instance.GetAppDicDAO();
-            configDAO = DAOFactory.Instance.GetAppConfigDAO();
         }
 
         public string GetConfigValue(string type, string key)
         {
-            return configDAO.GetValue(type, key);
+            return DAOFactory.GetAppConfigDAO().GetValue(type, key);
         }
 
         public void SetConfigValue(string type, string key, string value)
         {
-            configDAO.SetValue(type, key, value);
+            DAOFactory.GetAppConfigDAO().SetValue(type, key, value);
         }
 
         public void SetDbConfig(string dbType, string dbUrl, string dbName, string dbUser, string dbPass)
@@ -43,42 +41,51 @@ namespace AliHelper
             string dbType = GetConfigValue(Constants.Db_Config, Constants.Db_Type);
             if (dbType == Constants.DbType_MySql)
             {
-                DataCache.Instance.OpenMySqlDb = true;
                 string dbUrl = GetConfigValue(Constants.Db_Config, Constants.Db_Url);
                 string dbName = GetConfigValue(Constants.Db_Config, Constants.Db_Name);
                 string dbUser = GetConfigValue(Constants.Db_Config, Constants.Db_User);
                 string dbPass = GetConfigValue(Constants.Db_Config, Constants.Db_Pass);
                 string connection_str = "server=" + dbUrl + ";uid=" + dbUser + ";pwd=" + dbPass
                 + ";database=" + dbName + ";Charset=utf8;Allow Zero Datetime=true";
-                DataCache.Instance.MySqlConnection = connection_str;
+                MysqlDBHelper dbHelper = new MysqlDBHelper(connection_str);
+                bool Success = dbHelper.ConnectionTest();
+                if (Success)
+                {
+                    DataCache.Instance.MySqlConnection = connection_str;
+                    DataCache.Instance.OpenMySqlDb = true;
+                }
+                else 
+                {
+                    MessageBox.Show("不能正常连接到指定的MySql数据库，请检查!");
+                }
             }
         }
 
         public string GetAppDicValue(string type, string key)
         {
-            return appDicDAO.GetValue(type, key);
+            return DAOFactory.Instance.GetAppDicDAO().GetValue(type, key);
         }
 
         public List<AppDic> GetAppDicOptions(string type)
         {
-            return appDicDAO.GetOptions(type);
+            return DAOFactory.Instance.GetAppDicDAO().GetOptions(type);
         }
 
         public List<AppDic> GetQueryAppDicOptions(string type)
         {
-            List<AppDic> list =  appDicDAO.GetOptions(type);
+            List<AppDic> list = DAOFactory.Instance.GetAppDicDAO().GetOptions(type);
             list.Insert(0, new AppDic());
             return list;
         }
 
         public void SetAppDicValue(string type, string key, string value)
         {
-            appDicDAO.SetValue(type, key, value);
+            DAOFactory.Instance.GetAppDicDAO().SetValue(type, key, value);
         }
 
         public void DeleteAppDic(string type, string key)
         {
-            appDicDAO.DeleteAppDic(type, key);
+            DAOFactory.Instance.GetAppDicDAO().DeleteAppDic(type, key);
         }
     }
 }

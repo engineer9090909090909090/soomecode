@@ -11,9 +11,9 @@ namespace Database
     public class DAOFactory
     {
         public static DAOFactory Instance =  new DAOFactory();
-        private SQLiteDBHelper dbHelper;
-        private MysqlDBHelper mysqlDbHelper;
-        private AppConfigDAO appConfigDAO;
+        private static SQLiteDBHelper SQLiteDHelper;
+        private static AppConfigDAO appConfigDAO;
+        private static MysqlDBHelper MySqlDbHelper;
         private IAliProductDao aliProductDao;
         private IAliGroupDao aliGroupDao;
         private IAliImageDao aliImageDao;
@@ -26,17 +26,37 @@ namespace Database
 
         private DAOFactory()
         {
-            string DataBasePath = GetUserDataFolder() + Path.DirectorySeparatorChar + Constants.DB_FILE;
-            if (!File.Exists(DataBasePath))
+            if (SQLiteDHelper == null)
             {
-                SQLiteConnection.CreateFile(DataBasePath);
+                string DataBasePath = GetUserDataFolder() + Path.DirectorySeparatorChar + Constants.DB_FILE;
+                if (!File.Exists(DataBasePath))
+                {
+                    SQLiteConnection.CreateFile(DataBasePath);
+                }
+                SQLiteDHelper = new SQLiteDBHelper(DataBasePath);
             }
-            dbHelper = new SQLiteDBHelper(DataBasePath);
+            if (!string.IsNullOrEmpty(DataCache.Instance.MySqlConnection) && DataCache.Instance.OpenMySqlDb)
+            {
+                MySqlDbHelper = new MysqlDBHelper(DataCache.Instance.MySqlConnection);
+            }
+        }
 
-            if (!string.IsNullOrEmpty(DataCache.Instance.MySqlConnection))
+        public static AppConfigDAO GetAppConfigDAO()
+        {
+            if (SQLiteDHelper == null)
             {
-                mysqlDbHelper = new MysqlDBHelper(DataCache.Instance.MySqlConnection);
+                string DataBasePath = GetUserDataFolder() + Path.DirectorySeparatorChar + Constants.DB_FILE;
+                if (!File.Exists(DataBasePath))
+                {
+                    SQLiteConnection.CreateFile(DataBasePath);
+                }
+                SQLiteDHelper = new SQLiteDBHelper(DataBasePath);
             }
+            if (appConfigDAO == null)
+            {
+                appConfigDAO = new AppConfigDAO(SQLiteDHelper);
+            }
+            return appConfigDAO;
         }
 
         private static string GetUserDataFolder()
@@ -49,20 +69,13 @@ namespace Database
             return AppDataFolder;
         }
 
-        public AppConfigDAO GetAppConfigDAO()
-        {
-            if (appConfigDAO == null)
-            {
-                this.appConfigDAO = new AppConfigDAO(dbHelper);
-            }
-            return appConfigDAO;
-        }
+        
         
         public IAliProductDao GetAliProductDao()
         {
             if (aliProductDao == null)
             {
-                this.aliProductDao = new AliProductDao(dbHelper);
+                this.aliProductDao = new AliProductDao(SQLiteDHelper);
             }
             return aliProductDao;
         }
@@ -71,7 +84,7 @@ namespace Database
         {
             if (aliGroupDao == null)
             {
-                aliGroupDao = new AliGroupDao(dbHelper);
+                aliGroupDao = new AliGroupDao(SQLiteDHelper);
             }
             return aliGroupDao;
         }
@@ -81,7 +94,7 @@ namespace Database
         {
             if (aliImageDao == null)
             {
-                aliImageDao = new AliImageDao(dbHelper);
+                aliImageDao = new AliImageDao(SQLiteDHelper);
             }
             return aliImageDao;
         }
@@ -90,7 +103,7 @@ namespace Database
         {
             if (aliProductDetailDao == null)
             {
-                aliProductDetailDao = new AliProductDetailDao(dbHelper);
+                aliProductDetailDao = new AliProductDetailDao(SQLiteDHelper);
             }
             return aliProductDetailDao;
         }
@@ -99,13 +112,13 @@ namespace Database
         {
             if (appDicDAO == null)
             {
-                if (this.mysqlDbHelper == null)
+                if (!DataCache.Instance.OpenMySqlDb)
                 {
-                    this.appDicDAO = new AppDicDAO(dbHelper);
+                    this.appDicDAO = new AppDicDAO(SQLiteDHelper);
                 }
                 else 
                 {
-                    this.appDicDAO = new AppDicDAOMysql(mysqlDbHelper);
+                    this.appDicDAO = new AppDicDAOMysql(MySqlDbHelper);
                 }
             }
             return appDicDAO;
@@ -115,13 +128,13 @@ namespace Database
         {
             if (financeDao == null)
             {
-                if (this.mysqlDbHelper == null)
+                if (!DataCache.Instance.OpenMySqlDb)
                 {
-                    this.financeDao = new FinanceDao(dbHelper);
+                    this.financeDao = new FinanceDao(SQLiteDHelper);
                 }
                 else
                 {
-                    this.financeDao = new FinanceDaoMysql(mysqlDbHelper);
+                    this.financeDao = new FinanceDaoMysql(MySqlDbHelper);
                 }
             }
             return financeDao;
@@ -131,13 +144,13 @@ namespace Database
         {
             if (orderDao == null)
             {
-                if (this.mysqlDbHelper == null)
+                if (!DataCache.Instance.OpenMySqlDb)
                 {
-                    this.orderDao = new OrderDao(dbHelper);
+                    this.orderDao = new OrderDao(SQLiteDHelper);
                 }
                 else
                 {
-                    this.orderDao = new OrderDaoMysql(mysqlDbHelper);
+                    this.orderDao = new OrderDaoMysql(MySqlDbHelper);
                 }
             }
             return orderDao;
@@ -147,13 +160,13 @@ namespace Database
         {
             if (orderDao == null)
             {
-                if (this.mysqlDbHelper == null)
+                if (!DataCache.Instance.OpenMySqlDb)
                 {
                     //this.productDao = new ProductDaoMysql(dbHelper);
                 }
                 else
                 {
-                    this.productDao = new ProductDaoMysql(mysqlDbHelper);
+                    this.productDao = new ProductDaoMysql(MySqlDbHelper);
                 }
             }
             return productDao;
@@ -163,13 +176,13 @@ namespace Database
         {
             if (supplierDao == null)
             {
-                if (this.mysqlDbHelper == null)
+                if (!DataCache.Instance.OpenMySqlDb)
                 {
                     //this.productDao = new ProductDaoMysql(dbHelper);
                 }
                 else
                 {
-                    this.supplierDao = new SuplierDaoMysql(mysqlDbHelper);
+                    this.supplierDao = new SuplierDaoMysql(MySqlDbHelper);
                 }
             }
             return supplierDao;

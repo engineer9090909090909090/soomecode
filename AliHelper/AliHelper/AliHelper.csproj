@@ -110,6 +110,18 @@
     <Compile Include="Controls\MyButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="MyItem\CategoriesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyItem\CategoriesForm.Designer.cs">
+      <DependentUpon>CategoriesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyItem\SupplierForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyItem\SupplierForm.Designer.cs">
+      <DependentUpon>SupplierForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MyItem\MyItemsList.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -121,6 +133,24 @@
     </Compile>
     <Compile Include="MyItem\NewItemForm.Designer.cs">
       <DependentUpon>NewItemForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyItem\PriceCateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyItem\PriceCateForm.Designer.cs">
+      <DependentUpon>PriceCateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyItem\PriceCateListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MyItem\PriceCateListView.Designer.cs">
+      <DependentUpon>PriceCateListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyItem\SupplierListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MyItem\SupplierListView.Designer.cs">
+      <DependentUpon>SupplierListView.cs</DependentUpon>
     </Compile>
     <Compile Include="Setup\DbsetForm.cs">
       <SubType>Form</SubType>
@@ -287,11 +317,26 @@
     <EmbeddedResource Include="Alibaba\TopFiveQueryForm.resx">
       <DependentUpon>TopFiveQueryForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MyItem\CategoriesForm.resx">
+      <DependentUpon>CategoriesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyItem\SupplierForm.resx">
+      <DependentUpon>SupplierForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MyItem\MyItemsList.resx">
       <DependentUpon>MyItemsList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MyItem\NewItemForm.resx">
       <DependentUpon>NewItemForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyItem\PriceCateForm.resx">
+      <DependentUpon>PriceCateForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyItem\PriceCateListView.resx">
+      <DependentUpon>PriceCateListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyItem\SupplierListView.resx">
+      <DependentUpon>SupplierListView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setup\DbsetForm.resx">
       <DependentUpon>DbsetForm.cs</DependentUpon>

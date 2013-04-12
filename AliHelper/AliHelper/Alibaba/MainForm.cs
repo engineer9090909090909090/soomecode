@@ -18,6 +18,7 @@ namespace AliHelper
 {
     public partial class MainForm : Form
     {
+        private BaseManager configManager;
         private ProductsManager productsManager;
         private ImpProductDetail impProductDetail;
         private string ExplorerCurrentView;
@@ -26,10 +27,11 @@ namespace AliHelper
         #region 构造方法
         public MainForm()
         {
+            configManager = new BaseManager();
+            configManager.InitDbConfig();
+            InitializeComponent();
             productsManager = new ProductsManager();
             impProductDetail = new ImpProductDetail();
-            productsManager.InitDbConfig();
-            InitializeComponent();
             List<AliGroup> groups = productsManager.GetGroupList();
             if (groups.Count == 0)
             {
