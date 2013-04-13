@@ -19,6 +19,7 @@ namespace AliHelper
         ManualResetEvent eventX = new ManualResetEvent(false);
         private string UserName;
         private string Password;
+        private CookieContainer cookieContainer = new CookieContainer();
         //private bool LoginSuccess = true;
         public Passporter2(WebBrowser b)
         {
@@ -29,8 +30,8 @@ namespace AliHelper
         {
             this.UserName = Account;
             this.Password = Password;
-
-            string html = HttpHelper.GetHtml(loginUrl);
+            
+            string html = HttpHelper.GetHtml(loginUrl, cookieContainer);
             string dmtrackPageid = GetDmtrackPageid(html);
             if (string.IsNullOrEmpty(dmtrackPageid))
             {
@@ -46,8 +47,8 @@ namespace AliHelper
             {
                 return false;
             }
-            CookieContainer cookieContainer = new CookieContainer();
-            return GetLoginUrl(this.UserName, this.Password, dmtrackPageid, st, ref cookieContainer);
+            
+            return GetLoginUrl(this.UserName, this.Password, dmtrackPageid, st);
         }
 
 
@@ -66,7 +67,7 @@ namespace AliHelper
         {
             string preUrl = "https://login.alibaba.com/xman/xlogin.js?pd=alibaba&pageFrom=standardlogin&u_token=&xloginPassport={0}&xloginPassword={1}&xloginCheckToken=&rememberme=rememberme&runatm=runatm&dmtrack_pageid={2}";
             string url = string.Format(preUrl, userId, password, dmtrackPageid);
-            string html = HttpHelper.GetHtml(url);
+            string html = HttpHelper.GetHtml(url, cookieContainer);
             //System.Diagnostics.Trace.WriteLine("GetToken = " + html);
             Regex r = new Regex("var xman_login_token={\"token\":\"(.*?)\"}");
             GroupCollection gc = r.Match(html).Groups;
@@ -81,7 +82,7 @@ namespace AliHelper
         {
             string preUrl = "https://passport.alipay.com/mini_apply_st.js?site=4&callback=window.xmanDealTokenCallback&token={0}";
             string url = string.Format(preUrl, token);
-            string html = HttpHelper.GetHtml(url);
+            string html = HttpHelper.GetHtml(url, cookieContainer);
             //System.Diagnostics.Trace.WriteLine("GetST = " + html);
             Regex r = new Regex("{\"data\":{\"st\":\"(.*?)\"}");
             if (string.IsNullOrEmpty(html))
@@ -96,12 +97,12 @@ namespace AliHelper
             return "";
         }
 
-        public bool GetLoginUrl(string userId, string password, string dmtrackPageid, string st, ref CookieContainer cookieContainer)
+        public bool GetLoginUrl(string userId, string password, string dmtrackPageid, string st)
         {
             string preUrl = "https://login.alibaba.com/validateST.htm?pd=alibaba&pageFrom=standardlogin&u_token=&xloginPassport={0}&xloginPassword={1}&dmtrack_pageid={2}&st={3}";
             //string preUrl = "https://login.alibaba.com/validateST.htm?pd=alibaba&pageFrom=standardlogin&u_token=&xloginPassport={0}&xloginPassword={1}&xloginCheckToken=&rememberme=rememberme&runatm=runatm&dmtrack_pageid={2}&st={3}";
             string url = string.Format(preUrl, userId, password, dmtrackPageid, st);
-            string html = HttpHelper.GetHtml(url);
+            string html = HttpHelper.GetHtml(url, cookieContainer);
             string xloginCallBackForRisUrl = "https://login.alibaba.com/xloginCallBackForRisk.do";
             string postString = "dmtrack_pageid_info=" + dmtrackPageid + "&xloginPassport=" + userId + "&xloginPassword=" + password + "&ua=&pd=alibaba";
             HttpHelper.GetHtml(xloginCallBackForRisUrl, postString, cookieContainer);
@@ -115,7 +116,7 @@ namespace AliHelper
             List<string> urls = aliLoginUser.xlogin_urls;
             foreach (string urlstring in urls)
             {
-                HttpHelper.GetHtml(urlstring, cookieContainer);
+                HttpHelper.GetHtml(urlstring + "&moduleKey=common.xman.SetCookie&rnd=1365869799921", cookieContainer);
             }
             string manageHtml = HttpHelper.GetHtml(HttpClient.ManageHtml, cookieContainer);
             DataCache.Instance.CsrfToken = HttpClient.GetCsrfToken(manageHtml);
