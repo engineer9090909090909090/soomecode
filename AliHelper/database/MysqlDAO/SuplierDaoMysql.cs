@@ -38,9 +38,9 @@ namespace Database
            + "`Id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,"
            + "`ProductId` integer not null,"
            + "`SupplierId` integer not null,"
-           + "`Name` varchar(200) not null defult '',"
+           + "`Name` varchar(200) not null default '',"
            + "`Image` BLOB,"
-           + "`Price` double not null defult 0.0,"
+           + "`Price` double not null default 0.0,"
            + "`PriceDesc` varchar(200),"
            + "`Remark` varchar(500),"
            + "`CreatedTime` datetime,"
@@ -83,6 +83,17 @@ namespace Database
             query.dt = dbHelper.ExecuteDataTable(sql, QueryParameters.ToArray());
             query.Result = DataTableToSupplierList(query.dt);
             return query;
+        }
+
+        public Supplier GetSupplierById(int id)
+        {
+            string sql = "select t.* FROM Supplier t where id = " + id;
+            DataTable dt = dbHelper.ExecuteDataTable(sql, null);
+            List<Supplier> list = DataTableToSupplierList(dt);
+            if (list.Count > 0)
+                return list[0];
+            else
+                return null;
         }
 
         public List<Supplier> DataTableToSupplierList(DataTable dt)

@@ -5,7 +5,7 @@ using System.Text;
 using Soomes;
 using Database;
 
-namespace AliHelper.Bussness
+namespace AliHelper
 {
     public class FinOrderManager : BaseManager
     {
@@ -53,8 +53,8 @@ namespace AliHelper.Bussness
 
         public FinOrderManager()
         {
-            financeDao = DAOFactory.Instance.GetFinanceDao();
-            orderDao = DAOFactory.Instance.GetOrderDao();
+            financeDao = DAOFactory.GetInstance().GetFinanceDao();
+            orderDao = DAOFactory.GetInstance().GetOrderDao();
         }
 
         public QueryObject<FinDetails> GetFinDetails(QueryObject<FinDetails> query)

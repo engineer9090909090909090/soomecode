@@ -56,36 +56,36 @@ namespace AliHelper
                 }
                 else 
                 {
-                    MessageBox.Show("不能正常连接到指定的MySql数据库，请检查!");
+                    MessageBox.Show("\r\n不能正常连接到指定的MySql数据库，请检查! \r\n\r\n      系统将进入本地数据库模式。", "错误提示");
                 }
             }
         }
 
         public string GetAppDicValue(string type, string key)
         {
-            return DAOFactory.Instance.GetAppDicDAO().GetValue(type, key);
+            return DAOFactory.GetInstance().GetAppDicDAO().GetValue(type, key);
         }
 
         public List<AppDic> GetAppDicOptions(string type)
         {
-            return DAOFactory.Instance.GetAppDicDAO().GetOptions(type);
+            return DAOFactory.GetInstance().GetAppDicDAO().GetOptions(type);
         }
 
         public List<AppDic> GetQueryAppDicOptions(string type)
         {
-            List<AppDic> list = DAOFactory.Instance.GetAppDicDAO().GetOptions(type);
+            List<AppDic> list = DAOFactory.GetInstance().GetAppDicDAO().GetOptions(type);
             list.Insert(0, new AppDic());
             return list;
         }
 
         public void SetAppDicValue(string type, string key, string value)
         {
-            DAOFactory.Instance.GetAppDicDAO().SetValue(type, key, value);
+            DAOFactory.GetInstance().GetAppDicDAO().SetValue(type, key, value);
         }
 
         public void DeleteAppDic(string type, string key)
         {
-            DAOFactory.Instance.GetAppDicDAO().DeleteAppDic(type, key);
+            DAOFactory.GetInstance().GetAppDicDAO().DeleteAppDic(type, key);
         }
     }
 }

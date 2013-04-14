@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Soomes;
-using AliHelper.Bussness;
 using System.Runtime.InteropServices;
 
 namespace AliHelper

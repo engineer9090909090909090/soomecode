@@ -1,6 +1,6 @@
 ﻿namespace AliHelper.MyItem
 {
-    partial class MyItemsList
+    partial class MyItemsListView
     {
         /// <summary> 
         /// Required designer variable.

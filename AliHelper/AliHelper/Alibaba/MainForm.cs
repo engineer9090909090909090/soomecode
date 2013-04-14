@@ -13,6 +13,7 @@ using Soomes;
 using System.Collections;
 using System.Resources;
 using System.Reflection;
+using AliHelper.MyItem;
 
 namespace AliHelper
 {
@@ -719,6 +720,81 @@ namespace AliHelper
             UnLoadExplorerSubPanel();
         }
 
+        private void LoadPriceCateView()
+        {
+            string LoadViewName = "PriceCateListView";
+            if (this.Explorer.Controls.Count > 0)
+            {
+                Control SubPanel = this.Explorer.Controls[0];
+                if (SubPanel.Name == LoadViewName)
+                {
+                    return;
+                }
+            }
+            UnLoadExplorerSubPanel();
+            PriceCateListView view = new PriceCateListView();
+            this.Explorer.SuspendLayout();
+            view.Location = new System.Drawing.Point(0, 0);
+            view.Name = LoadViewName;
+            Explorer.Name = LoadViewName;
+            view.AutoSize = true;
+            view.TabIndex = 0;
+            view.Size = new System.Drawing.Size(this.Explorer.Width, this.Explorer.Height);
+            view.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Explorer.Controls.Add(view);
+            this.Explorer.ResumeLayout(false);
+        }
+
+        private void LoadSupplierListView()
+        {
+            string LoadViewName = "SupplierListView";
+            if (this.Explorer.Controls.Count > 0)
+            {
+                Control SubPanel = this.Explorer.Controls[0];
+                if (SubPanel.Name == LoadViewName)
+                {
+                    return;
+                }
+            }
+            UnLoadExplorerSubPanel();
+            SupplierListView view = new SupplierListView();
+            this.Explorer.SuspendLayout();
+            view.Location = new System.Drawing.Point(0, 0);
+            view.Name = LoadViewName;
+            Explorer.Name = LoadViewName;
+            view.AutoSize = true;
+            view.TabIndex = 0;
+            view.Size = new System.Drawing.Size(this.Explorer.Width, this.Explorer.Height);
+            view.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Explorer.Controls.Add(view);
+            this.Explorer.ResumeLayout(false);
+        }
+
+        private void LoadMyItemsListView()
+        {
+            string LoadViewName = "MyItemsListView";
+            if (this.Explorer.Controls.Count > 0)
+            {
+                Control SubPanel = this.Explorer.Controls[0];
+                if (SubPanel.Name == LoadViewName)
+                {
+                    return;
+                }
+            }
+            UnLoadExplorerSubPanel();
+            MyItemsListView view = new MyItemsListView();
+            this.Explorer.SuspendLayout();
+            view.Location = new System.Drawing.Point(0, 0);
+            view.Name = LoadViewName;
+            Explorer.Name = LoadViewName;
+            view.AutoSize = true;
+            view.TabIndex = 0;
+            view.Size = new System.Drawing.Size(this.Explorer.Width, this.Explorer.Height);
+            view.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Explorer.Controls.Add(view);
+            this.Explorer.ResumeLayout(false);
+        }
+
         #endregion
 
         #region 重发计划处理
@@ -777,12 +853,12 @@ namespace AliHelper
 
         private void SupplierListButton_Click(object sender, EventArgs e)
         {
-
+            LoadSupplierListView();
         }
 
         private void PriceCateButton_Click(object sender, EventArgs e)
         {
-
+            LoadPriceCateView();
         }
 
         private void Top10QueryBtn_Click(object sender, EventArgs e)
@@ -800,6 +876,34 @@ namespace AliHelper
         private void ImagesButton_Click(object sender, EventArgs e)
         {
             LoadPhotoBankViewPanel();
+        }
+
+        private void NewSupplierButton_Click(object sender, EventArgs e)
+        {
+            SupplierForm f = new SupplierForm();
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
+        }
+
+        private void NewItemButton_Click(object sender, EventArgs e)
+        {
+            NewItemForm f = new NewItemForm();
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
+        }
+
+        private void NewPriceCateButton_Click(object sender, EventArgs e)
+        {
+            PriceCateForm f = new PriceCateForm();
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
+        }
+
+        private void CategoriesButton_Click(object sender, EventArgs e)
+        {
+            CategoriesForm f = new CategoriesForm();
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
         }
 
 

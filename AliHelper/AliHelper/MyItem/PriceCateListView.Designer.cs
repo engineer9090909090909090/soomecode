@@ -83,6 +83,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "PriceCateListView";
             this.Size = new System.Drawing.Size(829, 499);
+            this.Load += new System.EventHandler(this.PriceCateListView_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
