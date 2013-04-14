@@ -6,7 +6,6 @@ using Soomes;
 using System.Data.SQLite;
 using System.Data;
 using System.Data.Common;
-using soomes;
 
 namespace Database
 {
@@ -19,12 +18,30 @@ namespace Database
 
         void InsertOrUpdateCategory(Categories item);
 
-        List<PriceCate> GetPriceCates();
+        void DeleteCategory(int Id);
+
+        QueryObject<PriceCate> GetPriceCates(QueryObject<PriceCate> query);
+
+        PriceCate GetPriceCateById(int id);
 
         void InsertOrUpdatePriceCate(PriceCate item);
 
-        void DeleteCategory(int Id);
-
         void DeletePriceCate(int Id);
+
+        void InsertOrUpdateProduct(Product item);
+
+        Product GetProductById(int id);
+
+        QueryObject<Product> GetProducts(QueryObject<Product> query);
+
+        void UpdateStatus(int productId, string status);
+
+        byte[] GetProductImage(int ProductImageId);
+
+        void InsertProductImage(ProductImage item);
+
+        void DeleteProductImage(int ProductImageId);
+
+        List<ProductImage> GetImagesInfoByProductId(int ProductId);
     }
 }

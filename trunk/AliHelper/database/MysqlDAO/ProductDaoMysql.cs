@@ -6,7 +6,6 @@ using Soomes;
 using System.Data;
 using System.Data.Common;
 using MySql.Data.MySqlClient;
-using soomes;
 
 namespace Database
 {
@@ -72,7 +71,7 @@ namespace Database
             + "`Status` varchar(50),"
             + "`CreatedTime` datetime,"
             + "`ModifiedTime` datetime,"
-            + "Index Index_CateId (`CateId`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ");
+            + "Index Index_CateId (`CategoryId`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ");
 
             dbHelper.ExecuteNonQuery(
              "CREATE TABLE IF NOT EXISTS Product_Image("
@@ -89,6 +88,11 @@ namespace Database
         public List<Categories> GetAllCategories()
         {
             DataTable dt = dbHelper.ExecuteDataTable("SELECT Id, Name, Sort, ChildrenCount, Level, ParentId FROM Category", null);
+            return DataTableToCategoris(dt);
+        }
+
+        private List<Categories> DataTableToCategoris(DataTable dt)
+        {
             List<Categories> list = new List<Categories>();
             foreach (DataRow row in dt.Rows)
             {
@@ -109,19 +113,7 @@ namespace Database
             string sql = "SELECT Id, Name, Sort, ChildrenCount, Level, ParentId FROM Category";
             sql = sql + " where ParentId = " + ParentId;
             DataTable dt = dbHelper.ExecuteDataTable(sql, null);
-            List<Categories> list = new List<Categories>();
-            foreach (DataRow row in dt.Rows)
-            {
-                Categories kw = new Categories();
-                kw.Id = Convert.ToInt32(row["Id"]);
-                kw.Name = (string)row["Name"];
-                kw.Sort = Convert.ToInt32(row["Sort"]);
-                kw.ChildrenCount = Convert.ToInt32(row["ChildrenCount"]);
-                kw.Level = Convert.ToInt32(row["Level"]);
-                kw.ParentId = Convert.ToInt32(row["ParentId"]);
-                list.Add(kw);
-            }
-            return list;
+            return DataTableToCategoris(dt);
         }
 
         public void InsertOrUpdateCategory(Categories item)
@@ -149,11 +141,24 @@ namespace Database
             }
         }
 
-        public List<PriceCate> GetPriceCates()
+        public void DeleteCategory(int Id)
         {
-            string sql = "SELECT Id,CateName, UsePrice1, Price1Name, Price1Val, UsePrice2, Price2Name, Price2Val, UsePrice3, Price3Name, Price3Val";
-            sql = sql = ", UsePrice4, Price4Name, Price4Val, UsePrice5, Price5Name, Price5Val, Status FROM PriceCate";
+            dbHelper.ExecuteNonQuery("delete from Category WHERE Id = " + Id);
+        }
+
+        public QueryObject<PriceCate> GetPriceCates(QueryObject<PriceCate> query)
+        {
+            string sql = "SELECT Id,CateName, UsePrice1, Price1Name, Price1Val, UsePrice2, Price2Name, Price2Val, UsePrice3, Price3Name, Price3Val, ";
+            sql = sql + " UsePrice4, Price4Name, Price4Val, UsePrice5, Price5Name, Price5Val, Status FROM PriceCate";
+            query.RecordCount = dbHelper.GetItemCount(sql, null);
+            sql = sql + " order by id asc limit " + query.Start + ", " + query.PageSize;
             DataTable dt = dbHelper.ExecuteDataTable(sql, null);
+            query.Result = DataTableToPriceCateList(dt);
+            return query;
+        }
+
+        private List<PriceCate> DataTableToPriceCateList(DataTable dt)
+        {
             List<PriceCate> list = new List<PriceCate>();
             foreach (DataRow row in dt.Rows)
             {
@@ -183,6 +188,17 @@ namespace Database
                 list.Add(kw);
             }
             return list;
+        }
+
+        public PriceCate GetPriceCateById(int id)
+        {
+            string sql = "select t.* FROM PriceCate t where Id = " + id;
+            DataTable dt = dbHelper.ExecuteDataTable(sql, null);
+            List<PriceCate> list = DataTableToPriceCateList(dt);
+            if (list.Count > 0)
+                return list[0];
+            else
+                return null;
         }
 
         public void InsertOrUpdatePriceCate(PriceCate item)
@@ -224,11 +240,6 @@ namespace Database
             {
                 dbHelper.ExecuteNonQuery(UpdSql, parameter);
             }
-        }
-
-        public void DeleteCategory(int Id)
-        {
-            dbHelper.ExecuteNonQuery("delete from Category WHERE Id = " + Id);
         }
 
         public void DeletePriceCate(int Id)
@@ -282,7 +293,7 @@ namespace Database
                 return null;
         }
 
-        public List<Product> DataTableToList(DataTable dt)
+        private List<Product> DataTableToList(DataTable dt)
         {
             List<Product> list = new List<Product>();
             foreach (DataRow row in dt.Rows)

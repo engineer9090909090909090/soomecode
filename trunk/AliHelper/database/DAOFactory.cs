@@ -10,7 +10,7 @@ namespace Database
 {
     public class DAOFactory
     {
-        public static DAOFactory Instance =  new DAOFactory();
+        private static DAOFactory Instance;
         private static SQLiteDBHelper SQLiteDHelper;
         private static AppConfigDAO appConfigDAO;
         private static MysqlDBHelper MySqlDbHelper;
@@ -22,7 +22,16 @@ namespace Database
         private IFinanceDao financeDao;
         private IOrderDao orderDao;
         private IProductDao productDao;
-        private ISupplierDao supplierDao; 
+        private ISupplierDao supplierDao;
+
+        public static DAOFactory GetInstance()
+        {
+            if (Instance == null)
+            {
+                Instance = new DAOFactory();
+            }
+            return Instance;
+        }
 
         private DAOFactory()
         {

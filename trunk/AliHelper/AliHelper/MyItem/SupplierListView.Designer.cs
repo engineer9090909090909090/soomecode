@@ -84,16 +84,16 @@
             // 
             // Remark
             // 
-            this.Remark.Location = new System.Drawing.Point(349, 24);
+            this.Remark.Location = new System.Drawing.Point(383, 24);
             this.Remark.Name = "Remark";
-            this.Remark.Size = new System.Drawing.Size(259, 21);
+            this.Remark.Size = new System.Drawing.Size(225, 21);
             this.Remark.TabIndex = 9;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Location = new System.Drawing.Point(317, 28);
+            this.label1.Location = new System.Drawing.Point(348, 28);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(29, 12);
             this.label1.TabIndex = 10;
@@ -107,6 +107,7 @@
             this.QueryBtn.TabIndex = 8;
             this.QueryBtn.Text = "查询(&Q)";
             this.QueryBtn.UseVisualStyleBackColor = true;
+            this.QueryBtn.Click += new System.EventHandler(this.QueryBtn_Click);
             // 
             // SupplierName
             // 
@@ -158,6 +159,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "SupplierListView";
             this.Size = new System.Drawing.Size(795, 543);
+            this.Load += new System.EventHandler(this.SupplierListView_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FinDetailGroup)).EndInit();

@@ -16,10 +16,10 @@ namespace AliHelper
         public IAliProductDetailDao detailDao;
         public ProductsManager()
         {
-            groupDao = DAOFactory.Instance.GetAliGroupDao();
-            productDao = DAOFactory.Instance.GetAliProductDao();
-            aliImageDao = DAOFactory.Instance.GetAliImageDao();
-            detailDao = DAOFactory.Instance.GetAliProductDetailDao();
+            groupDao = DAOFactory.GetInstance().GetAliGroupDao();
+            productDao = DAOFactory.GetInstance().GetAliProductDao();
+            aliImageDao = DAOFactory.GetInstance().GetAliImageDao();
+            detailDao = DAOFactory.GetInstance().GetAliProductDetailDao();
         }
 
         public virtual void FireNewUpdateEvent(object o)
