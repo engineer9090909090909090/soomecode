@@ -18,6 +18,10 @@ namespace Database
 
         void InsertOrUpdateCategory(Categories item);
 
+        int GetCategoryNewSortNo(int parentId, int level);
+
+        void CategoryMoveSort(Categories cate1, Categories cate2);
+
         void DeleteCategory(int Id);
 
         QueryObject<PriceCate> GetPriceCates(QueryObject<PriceCate> query);

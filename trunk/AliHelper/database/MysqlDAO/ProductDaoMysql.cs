@@ -87,7 +87,8 @@ namespace Database
 
         public List<Categories> GetAllCategories()
         {
-            DataTable dt = dbHelper.ExecuteDataTable("SELECT Id, Name, Sort, ChildrenCount, Level, ParentId FROM Category", null);
+            string sql = "SELECT Id, Name, Sort, ChildrenCount, Level, ParentId FROM Category order by ParentId asc, Sort asc";
+            DataTable dt = dbHelper.ExecuteDataTable(sql, null);
             return DataTableToCategoris(dt);
         }
 
@@ -110,7 +111,7 @@ namespace Database
 
         public List<Categories> GetChildCategories(int ParentId)
         {
-            string sql = "SELECT Id, Name, Sort, ChildrenCount, Level, ParentId FROM Category";
+            string sql = "SELECT Id, Name, Sort, ChildrenCount, Level, ParentId FROM Category order by ParentId asc, Sort asc";
             sql = sql + " where ParentId = " + ParentId;
             DataTable dt = dbHelper.ExecuteDataTable(sql, null);
             return DataTableToCategoris(dt);
@@ -120,7 +121,7 @@ namespace Database
         {
             string InsSql = @"INSERT INTO Category(Name, Sort, ChildrenCount, Level,ParentId)"
                             + "values(@Name, @Sort, @ChildrenCount, @Level,@ParentId)";
-            string UpdSql = @"Update AliGroups SET Name = @Name, Sort = @Sort, ChildrenCount = @ChildrenCount, "
+            string UpdSql = @"Update Category SET Name = @Name, Sort = @Sort, ChildrenCount = @ChildrenCount, "
                             + "Level = @Level, ParentId = @ParentId WHERE Id = @Id";
             MySqlParameter[] parameter = new MySqlParameter[]
             {
@@ -138,6 +139,42 @@ namespace Database
             else
             {
                 dbHelper.ExecuteNonQuery(UpdSql, parameter);
+            }
+        }
+
+        public int GetCategoryNewSortNo(int parentId, int level)
+        {
+            string sql = "select ifnull(max(Sort),0) + 1 from Category where ParentId = @ParentId and Level = @Level";
+            MySqlParameter[] parameter = new MySqlParameter[]
+            {
+                new MySqlParameter("@Level",level),
+                new MySqlParameter("@ParentId",parentId)
+            };
+            return Convert.ToInt32(dbHelper.ExecuteScalar(sql, parameter));
+        }
+
+        public void CategoryMoveSort(Categories cate1, Categories cate2)
+        {
+            string UpdSql = @"Update Category SET Sort = @Sort WHERE Id = @Id";
+            using (MySqlConnection conn = dbHelper.GetConnection())
+            {
+                conn.Open();
+                using (DbTransaction transaction = conn.BeginTransaction())
+                {
+                    dbHelper.ExecuteNonQuery(transaction, UpdSql, 
+                        new MySqlParameter[]{
+                            new MySqlParameter("@Id",cate1.Id),
+                            new MySqlParameter("@Sort",cate2.Sort)
+                         }
+                    );
+                    dbHelper.ExecuteNonQuery(transaction, UpdSql,
+                        new MySqlParameter[]{
+                            new MySqlParameter("@Id",cate2.Id),
+                            new MySqlParameter("@Sort",cate1.Sort)
+                         }
+                    );
+                    transaction.Commit();
+                }
             }
         }
 

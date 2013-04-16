@@ -43,6 +43,16 @@ namespace AliHelper
             productDao.InsertOrUpdateCategory(item);
         }
 
+        public int GetCategoryNewSortNo(int parentId, int level)
+        {
+          return productDao.GetCategoryNewSortNo(parentId, level);
+        }
+
+        public void CategoryMoveSort(Categories cate1, Categories cate2)
+        {
+            productDao.CategoryMoveSort(cate1, cate2);
+        }
+
         public void DeleteCategory(int Id)
         {
             productDao.DeleteCategory(Id);
