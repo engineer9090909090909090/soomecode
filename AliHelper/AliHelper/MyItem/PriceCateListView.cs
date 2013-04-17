@@ -66,22 +66,22 @@ namespace AliHelper.MyItem
             PriceCateGrid.Redim(list.Count + 1, 7);
             PriceCateGrid.Rows[0].Height = 25;
             PriceCateGrid[0, 0] = new MyHeader("描述");
-            PriceCateGrid[0, 0].Column.Width = 150;
+            PriceCateGrid[0, 0].Column.Width = 200;
             PriceCateGrid[0, 0].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
             PriceCateGrid[0, 1] = new MyHeader("价格1");
-            PriceCateGrid[0, 1].Column.Width = 100;
+            PriceCateGrid[0, 1].Column.Width = 150;
             PriceCateGrid[0, 1].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
             PriceCateGrid[0, 2] = new MyHeader("价格2");
-            PriceCateGrid[0, 2].Column.Width = 100;
+            PriceCateGrid[0, 2].Column.Width = 150;
             PriceCateGrid[0, 2].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
             PriceCateGrid[0, 3] = new MyHeader("价格3");
-            PriceCateGrid[0, 3].Column.Width = 100;
+            PriceCateGrid[0, 3].Column.Width = 150;
             PriceCateGrid[0, 3].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
             PriceCateGrid[0, 4] = new MyHeader("价格4");
-            PriceCateGrid[0, 4].Column.Width = 100;
+            PriceCateGrid[0, 4].Column.Width = 150;
             PriceCateGrid[0, 4].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
             PriceCateGrid[0, 5] = new MyHeader("价格5");
-            PriceCateGrid[0, 5].Column.Width = 100;
+            PriceCateGrid[0, 5].Column.Width = 150;
             PriceCateGrid[0, 5].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
             PriceCateGrid[0, 6] = new MyHeader("状态");
             PriceCateGrid[0, 6].Column.Width = 80;
@@ -125,6 +125,7 @@ namespace AliHelper.MyItem
             {
                 SourceGrid.Cells.Views.ColumnHeader view = new SourceGrid.Cells.Views.ColumnHeader();
                 view.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleCenter;
+                view.BackColor = Color.Gray;
                 View = view;
                 AutomaticSortEnabled = false;
             }
