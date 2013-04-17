@@ -16,6 +16,8 @@ namespace AliHelper.MyItem
             InitializeComponent();
         }
 
+
+
         private void pager_PageIndexChanged(object sender, EventArgs e)
         {
 

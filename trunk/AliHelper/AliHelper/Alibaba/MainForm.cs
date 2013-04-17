@@ -21,6 +21,7 @@ namespace AliHelper
     {
         private BaseManager configManager;
         private ProductsManager productsManager;
+        private MyItemManager myItemsManager;
         private ImpProductDetail impProductDetail;
         private string ExplorerCurrentView;
         private string CurrentToolsStrip;
@@ -33,6 +34,7 @@ namespace AliHelper
             InitializeComponent();
             productsManager = new ProductsManager();
             impProductDetail = new ImpProductDetail();
+            myItemsManager = new MyItemManager();
             List<AliGroup> groups = productsManager.GetGroupList();
             if (groups.Count == 0)
             {
@@ -307,6 +309,8 @@ namespace AliHelper
             else if (bandName == "MyItemBand")
             {
                 ShowToolsStrip("MyItemStrip");
+                LoadMyItemCategoriesTreeView();
+                LoadMyItemsListView();
             }
             else if (bandName == "ClientBand")
             {
@@ -907,5 +911,70 @@ namespace AliHelper
         }
 
 
+
+        public void LoadMyItemCategoriesTreeView()
+        {
+            TreeView CateTreeView = null;
+            if (ItemTreeNaviGroup.Controls.Count > 0)
+            {
+                CateTreeView = (TreeView)ItemTreeNaviGroup.Controls[0];
+            }
+            else
+            {
+                CateTreeView = new System.Windows.Forms.TreeView();
+                CateTreeView.LineColor = System.Drawing.Color.Empty;
+                CateTreeView.Location = new System.Drawing.Point(0, 23);
+                CateTreeView.Name = "CateTreeView";
+                CateTreeView.Dock = DockStyle.Fill;
+                CateTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+                CateTreeView.ItemHeight = 16;
+                CateTreeView.Size = new System.Drawing.Size(130, 423);
+                CateTreeView.TabIndex = 4;
+                CateTreeView.NodeMouseClick += new TreeNodeMouseClickEventHandler(cateTreeView_NodeMouseClick);
+                ItemTreeNaviGroup.Controls.Add(CateTreeView);
+            }
+            CateTreeView.Nodes.Clear();
+            List<Categories> cates = myItemsManager.GetAllCategories();
+            foreach (Categories p in cates)
+            {
+                if (p.Level == 1)
+                {
+                    TreeNode t1 = new TreeNode(p.Name);
+                    t1.Tag = p;
+                    CateTreeView.Nodes.Add(t1);
+                    foreach (Categories c in cates)
+                    {
+                        if (c.ParentId == p.Id && c.Level == p.Level + 1)
+                        {
+                            TreeNode t2 = new TreeNode(c.Name);
+                            t2.Tag = c;
+                            t1.Nodes.Add(t2);
+
+                            foreach (Categories f in cates)
+                            {
+                                if (f.ParentId == c.Id && f.Level == c.Level + 1)
+                                {
+                                    TreeNode t3 = new TreeNode(f.Name);
+                                    t3.Tag = f;
+                                    t2.Nodes.Add(t3);
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+            CateTreeView.ExpandAll();
+        }
+
+        void cateTreeView_NodeMouseClick(object sender, System.Windows.Forms.TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                LoadMyItemsListView();
+                TreeNode currentNode = e.Node;
+                MyItemsListView view = (MyItemsListView)Explorer.Controls[0];
+            }
+        }
     }
 }

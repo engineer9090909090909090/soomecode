@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.CateName = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label4 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.UsePrice1 = new System.Windows.Forms.CheckBox();
+            this.Price1Name = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -42,21 +42,21 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.numericTextbox1 = new AliHelper.NumericTextbox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.numericTextbox2 = new AliHelper.NumericTextbox();
-            this.numericTextbox3 = new AliHelper.NumericTextbox();
-            this.numericTextbox4 = new AliHelper.NumericTextbox();
-            this.numericTextbox5 = new AliHelper.NumericTextbox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.UsePrice2 = new System.Windows.Forms.CheckBox();
+            this.UsePrice3 = new System.Windows.Forms.CheckBox();
+            this.UsePrice4 = new System.Windows.Forms.CheckBox();
+            this.UsePrice5 = new System.Windows.Forms.CheckBox();
+            this.Price1Val = new AliHelper.NumericTextbox();
+            this.Price2Name = new System.Windows.Forms.TextBox();
+            this.Price3Name = new System.Windows.Forms.TextBox();
+            this.Price4Name = new System.Windows.Forms.TextBox();
+            this.Price5Name = new System.Windows.Forms.TextBox();
+            this.Price2Val = new AliHelper.NumericTextbox();
+            this.Price3Val = new AliHelper.NumericTextbox();
+            this.Price4Val = new AliHelper.NumericTextbox();
+            this.Price5Val = new AliHelper.NumericTextbox();
+            this.ConfirmButton = new System.Windows.Forms.Button();
+            this.CancelButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -70,18 +70,18 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "价格种类名称";
             // 
-            // textBox1
+            // CateName
             // 
-            this.textBox1.Location = new System.Drawing.Point(111, 28);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(244, 21);
-            this.textBox1.TabIndex = 1;
+            this.CateName.Location = new System.Drawing.Point(111, 28);
+            this.CateName.Name = "CateName";
+            this.CateName.Size = new System.Drawing.Size(244, 21);
+            this.CateName.TabIndex = 1;
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.tableLayoutPanel1);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.CateName);
             this.groupBox1.Location = new System.Drawing.Point(8, 6);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(692, 353);
@@ -97,8 +97,8 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
             this.tableLayoutPanel1.Controls.Add(this.label4, 3, 0);
-            this.tableLayoutPanel1.Controls.Add(this.checkBox1, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.textBox2, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.UsePrice1, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.Price1Name, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.label2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.label3, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.label6, 0, 2);
@@ -106,19 +106,19 @@
             this.tableLayoutPanel1.Controls.Add(this.label8, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.label9, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.label5, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.checkBox2, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.checkBox3, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.checkBox4, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.checkBox5, 1, 5);
-            this.tableLayoutPanel1.Controls.Add(this.numericTextbox1, 3, 1);
-            this.tableLayoutPanel1.Controls.Add(this.textBox3, 2, 2);
-            this.tableLayoutPanel1.Controls.Add(this.textBox4, 2, 3);
-            this.tableLayoutPanel1.Controls.Add(this.textBox5, 2, 4);
-            this.tableLayoutPanel1.Controls.Add(this.textBox6, 2, 5);
-            this.tableLayoutPanel1.Controls.Add(this.numericTextbox2, 3, 2);
-            this.tableLayoutPanel1.Controls.Add(this.numericTextbox3, 3, 3);
-            this.tableLayoutPanel1.Controls.Add(this.numericTextbox4, 3, 4);
-            this.tableLayoutPanel1.Controls.Add(this.numericTextbox5, 3, 5);
+            this.tableLayoutPanel1.Controls.Add(this.UsePrice2, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.UsePrice3, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.UsePrice4, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.UsePrice5, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.Price1Val, 3, 1);
+            this.tableLayoutPanel1.Controls.Add(this.Price2Name, 2, 2);
+            this.tableLayoutPanel1.Controls.Add(this.Price3Name, 2, 3);
+            this.tableLayoutPanel1.Controls.Add(this.Price4Name, 2, 4);
+            this.tableLayoutPanel1.Controls.Add(this.Price5Name, 2, 5);
+            this.tableLayoutPanel1.Controls.Add(this.Price2Val, 3, 2);
+            this.tableLayoutPanel1.Controls.Add(this.Price3Val, 3, 3);
+            this.tableLayoutPanel1.Controls.Add(this.Price4Val, 3, 4);
+            this.tableLayoutPanel1.Controls.Add(this.Price5Val, 3, 5);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(25, 66);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 6;
@@ -140,22 +140,22 @@
             this.label4.TabIndex = 6;
             this.label4.Text = "价格值";
             // 
-            // checkBox1
+            // UsePrice1
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(68, 23);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(48, 16);
-            this.checkBox1.TabIndex = 2;
-            this.checkBox1.Text = "启用";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.UsePrice1.AutoSize = true;
+            this.UsePrice1.Location = new System.Drawing.Point(68, 23);
+            this.UsePrice1.Name = "UsePrice1";
+            this.UsePrice1.Size = new System.Drawing.Size(48, 16);
+            this.UsePrice1.TabIndex = 2;
+            this.UsePrice1.Text = "启用";
+            this.UsePrice1.UseVisualStyleBackColor = true;
             // 
-            // textBox2
+            // Price1Name
             // 
-            this.textBox2.Location = new System.Drawing.Point(199, 23);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(197, 21);
-            this.textBox2.TabIndex = 3;
+            this.Price1Name.Location = new System.Drawing.Point(199, 23);
+            this.Price1Name.Name = "Price1Name";
+            this.Price1Name.Size = new System.Drawing.Size(197, 21);
+            this.Price1Name.TabIndex = 3;
             // 
             // label2
             // 
@@ -220,164 +220,166 @@
             this.label5.TabIndex = 7;
             this.label5.Text = "价格1";
             // 
-            // checkBox2
+            // UsePrice2
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(68, 73);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(48, 16);
-            this.checkBox2.TabIndex = 12;
-            this.checkBox2.Text = "启用";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.UsePrice2.AutoSize = true;
+            this.UsePrice2.Location = new System.Drawing.Point(68, 73);
+            this.UsePrice2.Name = "UsePrice2";
+            this.UsePrice2.Size = new System.Drawing.Size(48, 16);
+            this.UsePrice2.TabIndex = 12;
+            this.UsePrice2.Text = "启用";
+            this.UsePrice2.UseVisualStyleBackColor = true;
             // 
-            // checkBox3
+            // UsePrice3
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(68, 123);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(48, 16);
-            this.checkBox3.TabIndex = 13;
-            this.checkBox3.Text = "启用";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.UsePrice3.AutoSize = true;
+            this.UsePrice3.Location = new System.Drawing.Point(68, 123);
+            this.UsePrice3.Name = "UsePrice3";
+            this.UsePrice3.Size = new System.Drawing.Size(48, 16);
+            this.UsePrice3.TabIndex = 13;
+            this.UsePrice3.Text = "启用";
+            this.UsePrice3.UseVisualStyleBackColor = true;
             // 
-            // checkBox4
+            // UsePrice4
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(68, 173);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(48, 16);
-            this.checkBox4.TabIndex = 14;
-            this.checkBox4.Text = "启用";
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.UsePrice4.AutoSize = true;
+            this.UsePrice4.Location = new System.Drawing.Point(68, 173);
+            this.UsePrice4.Name = "UsePrice4";
+            this.UsePrice4.Size = new System.Drawing.Size(48, 16);
+            this.UsePrice4.TabIndex = 14;
+            this.UsePrice4.Text = "启用";
+            this.UsePrice4.UseVisualStyleBackColor = true;
             // 
-            // checkBox5
+            // UsePrice5
             // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Location = new System.Drawing.Point(68, 223);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(48, 16);
-            this.checkBox5.TabIndex = 15;
-            this.checkBox5.Text = "启用";
-            this.checkBox5.UseVisualStyleBackColor = true;
+            this.UsePrice5.AutoSize = true;
+            this.UsePrice5.Location = new System.Drawing.Point(68, 223);
+            this.UsePrice5.Name = "UsePrice5";
+            this.UsePrice5.Size = new System.Drawing.Size(48, 16);
+            this.UsePrice5.TabIndex = 15;
+            this.UsePrice5.Text = "启用";
+            this.UsePrice5.UseVisualStyleBackColor = true;
             // 
-            // numericTextbox1
+            // Price1Val
             // 
-            this.numericTextbox1.CommaFormat = false;
-            this.numericTextbox1.CurrencyFormat = false;
-            this.numericTextbox1.DecimalPrecision = 0;
-            this.numericTextbox1.Location = new System.Drawing.Point(429, 23);
-            this.numericTextbox1.Name = "numericTextbox1";
-            this.numericTextbox1.PercentFormat = false;
-            this.numericTextbox1.ReadOnly = false;
-            this.numericTextbox1.Size = new System.Drawing.Size(153, 24);
-            this.numericTextbox1.TabIndex = 16;
-            this.numericTextbox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.Price1Val.CommaFormat = false;
+            this.Price1Val.CurrencyFormat = false;
+            this.Price1Val.DecimalPrecision = 3;
+            this.Price1Val.Location = new System.Drawing.Point(429, 23);
+            this.Price1Val.Name = "Price1Val";
+            this.Price1Val.PercentFormat = false;
+            this.Price1Val.ReadOnly = false;
+            this.Price1Val.Size = new System.Drawing.Size(153, 24);
+            this.Price1Val.TabIndex = 16;
+            this.Price1Val.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
-            // textBox3
+            // Price2Name
             // 
-            this.textBox3.Location = new System.Drawing.Point(199, 73);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(197, 21);
-            this.textBox3.TabIndex = 17;
+            this.Price2Name.Location = new System.Drawing.Point(199, 73);
+            this.Price2Name.Name = "Price2Name";
+            this.Price2Name.Size = new System.Drawing.Size(197, 21);
+            this.Price2Name.TabIndex = 17;
             // 
-            // textBox4
+            // Price3Name
             // 
-            this.textBox4.Location = new System.Drawing.Point(199, 123);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(197, 21);
-            this.textBox4.TabIndex = 18;
+            this.Price3Name.Location = new System.Drawing.Point(199, 123);
+            this.Price3Name.Name = "Price3Name";
+            this.Price3Name.Size = new System.Drawing.Size(197, 21);
+            this.Price3Name.TabIndex = 18;
             // 
-            // textBox5
+            // Price4Name
             // 
-            this.textBox5.Location = new System.Drawing.Point(199, 173);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(197, 21);
-            this.textBox5.TabIndex = 19;
+            this.Price4Name.Location = new System.Drawing.Point(199, 173);
+            this.Price4Name.Name = "Price4Name";
+            this.Price4Name.Size = new System.Drawing.Size(197, 21);
+            this.Price4Name.TabIndex = 19;
             // 
-            // textBox6
+            // Price5Name
             // 
-            this.textBox6.Location = new System.Drawing.Point(199, 223);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(197, 21);
-            this.textBox6.TabIndex = 20;
+            this.Price5Name.Location = new System.Drawing.Point(199, 223);
+            this.Price5Name.Name = "Price5Name";
+            this.Price5Name.Size = new System.Drawing.Size(197, 21);
+            this.Price5Name.TabIndex = 20;
             // 
-            // numericTextbox2
+            // Price2Val
             // 
-            this.numericTextbox2.CommaFormat = false;
-            this.numericTextbox2.CurrencyFormat = false;
-            this.numericTextbox2.DecimalPrecision = 0;
-            this.numericTextbox2.Location = new System.Drawing.Point(429, 73);
-            this.numericTextbox2.Name = "numericTextbox2";
-            this.numericTextbox2.PercentFormat = false;
-            this.numericTextbox2.ReadOnly = false;
-            this.numericTextbox2.Size = new System.Drawing.Size(153, 24);
-            this.numericTextbox2.TabIndex = 21;
-            this.numericTextbox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.Price2Val.CommaFormat = false;
+            this.Price2Val.CurrencyFormat = false;
+            this.Price2Val.DecimalPrecision = 3;
+            this.Price2Val.Location = new System.Drawing.Point(429, 73);
+            this.Price2Val.Name = "Price2Val";
+            this.Price2Val.PercentFormat = false;
+            this.Price2Val.ReadOnly = false;
+            this.Price2Val.Size = new System.Drawing.Size(153, 24);
+            this.Price2Val.TabIndex = 21;
+            this.Price2Val.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
-            // numericTextbox3
+            // Price3Val
             // 
-            this.numericTextbox3.CommaFormat = false;
-            this.numericTextbox3.CurrencyFormat = false;
-            this.numericTextbox3.DecimalPrecision = 0;
-            this.numericTextbox3.Location = new System.Drawing.Point(429, 123);
-            this.numericTextbox3.Name = "numericTextbox3";
-            this.numericTextbox3.PercentFormat = false;
-            this.numericTextbox3.ReadOnly = false;
-            this.numericTextbox3.Size = new System.Drawing.Size(153, 24);
-            this.numericTextbox3.TabIndex = 22;
-            this.numericTextbox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.Price3Val.CommaFormat = false;
+            this.Price3Val.CurrencyFormat = false;
+            this.Price3Val.DecimalPrecision = 3;
+            this.Price3Val.Location = new System.Drawing.Point(429, 123);
+            this.Price3Val.Name = "Price3Val";
+            this.Price3Val.PercentFormat = false;
+            this.Price3Val.ReadOnly = false;
+            this.Price3Val.Size = new System.Drawing.Size(153, 24);
+            this.Price3Val.TabIndex = 22;
+            this.Price3Val.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
-            // numericTextbox4
+            // Price4Val
             // 
-            this.numericTextbox4.CommaFormat = false;
-            this.numericTextbox4.CurrencyFormat = false;
-            this.numericTextbox4.DecimalPrecision = 0;
-            this.numericTextbox4.Location = new System.Drawing.Point(429, 173);
-            this.numericTextbox4.Name = "numericTextbox4";
-            this.numericTextbox4.PercentFormat = false;
-            this.numericTextbox4.ReadOnly = false;
-            this.numericTextbox4.Size = new System.Drawing.Size(153, 24);
-            this.numericTextbox4.TabIndex = 23;
-            this.numericTextbox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.Price4Val.CommaFormat = false;
+            this.Price4Val.CurrencyFormat = false;
+            this.Price4Val.DecimalPrecision = 3;
+            this.Price4Val.Location = new System.Drawing.Point(429, 173);
+            this.Price4Val.Name = "Price4Val";
+            this.Price4Val.PercentFormat = false;
+            this.Price4Val.ReadOnly = false;
+            this.Price4Val.Size = new System.Drawing.Size(153, 24);
+            this.Price4Val.TabIndex = 23;
+            this.Price4Val.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
-            // numericTextbox5
+            // Price5Val
             // 
-            this.numericTextbox5.CommaFormat = false;
-            this.numericTextbox5.CurrencyFormat = false;
-            this.numericTextbox5.DecimalPrecision = 0;
-            this.numericTextbox5.Location = new System.Drawing.Point(429, 223);
-            this.numericTextbox5.Name = "numericTextbox5";
-            this.numericTextbox5.PercentFormat = false;
-            this.numericTextbox5.ReadOnly = false;
-            this.numericTextbox5.Size = new System.Drawing.Size(153, 24);
-            this.numericTextbox5.TabIndex = 24;
-            this.numericTextbox5.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.Price5Val.CommaFormat = false;
+            this.Price5Val.CurrencyFormat = false;
+            this.Price5Val.DecimalPrecision = 3;
+            this.Price5Val.Location = new System.Drawing.Point(429, 223);
+            this.Price5Val.Name = "Price5Val";
+            this.Price5Val.PercentFormat = false;
+            this.Price5Val.ReadOnly = false;
+            this.Price5Val.Size = new System.Drawing.Size(153, 24);
+            this.Price5Val.TabIndex = 24;
+            this.Price5Val.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
-            // button1
+            // ConfirmButton
             // 
-            this.button1.Location = new System.Drawing.Point(462, 372);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "确定(&S)";
-            this.button1.UseVisualStyleBackColor = true;
+            this.ConfirmButton.Location = new System.Drawing.Point(462, 372);
+            this.ConfirmButton.Name = "ConfirmButton";
+            this.ConfirmButton.Size = new System.Drawing.Size(75, 23);
+            this.ConfirmButton.TabIndex = 3;
+            this.ConfirmButton.Text = "确定(&S)";
+            this.ConfirmButton.UseVisualStyleBackColor = true;
+            this.ConfirmButton.Click += new System.EventHandler(this.ConfirmButton_Click);
             // 
-            // button2
+            // CancelButton
             // 
-            this.button2.Location = new System.Drawing.Point(560, 372);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "取消(&C)";
-            this.button2.UseVisualStyleBackColor = true;
+            this.CancelButton.Location = new System.Drawing.Point(560, 372);
+            this.CancelButton.Name = "CancelButton";
+            this.CancelButton.Size = new System.Drawing.Size(75, 23);
+            this.CancelButton.TabIndex = 4;
+            this.CancelButton.Text = "取消(&C)";
+            this.CancelButton.UseVisualStyleBackColor = true;
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // PriceCateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(709, 407);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.CancelButton);
+            this.Controls.Add(this.ConfirmButton);
             this.Controls.Add(this.groupBox1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -385,6 +387,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "编辑价格种类";
+            this.Load += new System.EventHandler(this.PriceCateForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -396,11 +399,11 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox CateName;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox UsePrice1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox Price1Name;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -409,20 +412,20 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.CheckBox checkBox5;
-        private NumericTextbox numericTextbox1;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox6;
-        private NumericTextbox numericTextbox2;
-        private NumericTextbox numericTextbox3;
-        private NumericTextbox numericTextbox4;
-        private NumericTextbox numericTextbox5;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.CheckBox UsePrice2;
+        private System.Windows.Forms.CheckBox UsePrice3;
+        private System.Windows.Forms.CheckBox UsePrice4;
+        private System.Windows.Forms.CheckBox UsePrice5;
+        private NumericTextbox Price1Val;
+        private System.Windows.Forms.TextBox Price2Name;
+        private System.Windows.Forms.TextBox Price3Name;
+        private System.Windows.Forms.TextBox Price4Name;
+        private System.Windows.Forms.TextBox Price5Name;
+        private NumericTextbox Price2Val;
+        private NumericTextbox Price3Val;
+        private NumericTextbox Price4Val;
+        private NumericTextbox Price5Val;
+        private System.Windows.Forms.Button ConfirmButton;
+        private System.Windows.Forms.Button CancelButton;
     }
 }

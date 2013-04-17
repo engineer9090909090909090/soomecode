@@ -242,7 +242,7 @@ namespace Database
         {
             string InsSql = @"INSERT INTO PriceCate( CateName,UsePrice1, Price1Name, Price1Val, UsePrice2, Price2Name, Price2Val, UsePrice3, Price3Name, Price3Val,"
                           + "UsePrice4, Price4Name, Price4Val, UsePrice5, Price5Name, Price5Val, Status)"
-                          + "values(@CateName, @UsePrice1, @Price1Name,@ Price1Val, @UsePrice2, @Price2Name, @Price2Val, @UsePrice3, @Price3Name, @Price3Val,"
+                          + "values(@CateName, @UsePrice1, @Price1Name,@Price1Val, @UsePrice2, @Price2Name, @Price2Val, @UsePrice3, @Price3Name, @Price3Val,"
                           + "@UsePrice4, @Price4Name, @Price4Val, @UsePrice5, @Price5Name, @Price5Val, @Status)";
             string UpdSql = @"Update PriceCate SET CateName=@CateName,UsePrice1=@UsePrice1, Price1Name=@Price1Name, Price1Val=@Price1Val, "
                             + "UsePrice2=@UsePrice2, Price2Name=@Price2Name, Price2Val=@Price2Val, UsePrice3=@UsePrice3, Price3Name=@UsePrice3,"
