@@ -19,7 +19,16 @@ namespace AliHelper.MyItem
         {
             InitializeComponent();
             myItemManager = new MyItemManager();
+            MyItemManager.OnEditPriceCateEvent += new NewEditItemEvent(MyItemManager_OnEditPriceCateEvent);
             pager.PageSize = 20;
+        }
+
+        void MyItemManager_OnEditPriceCateEvent(object sender, ItemEventArgs e)
+        {
+            this.BeginInvoke(new Action(() =>
+            {
+                BindDataWithPage(pager.PageIndex);
+            }));
         }
 
         private void PriceCateListView_Load(object sender, EventArgs e)
@@ -31,6 +40,8 @@ namespace AliHelper.MyItem
         {
             BindDataWithPage(pager.PageIndex);
         }
+
+        
 
         private void BindDataWithPage(int Page)
         {
@@ -136,12 +147,10 @@ namespace AliHelper.MyItem
             SourceGrid.CellContext context = (SourceGrid.CellContext)sender;
             int id = (int)PriceCateGrid.Rows[context.Position.Row].Tag;
             PriceCate o = myItemManager.GetPriceCateById(id);
-        }
-
-        private void CellButton_Click(object sender, EventArgs e)
-        {
-            SourceGrid.CellContext context = (SourceGrid.CellContext)sender;
-            int id = (int)PriceCateGrid.Rows[context.Position.Row].Tag;
+            PriceCateForm f = new PriceCateForm();
+            f.Text = "编辑分类价格信息";
+            f.UpdatePriceCate = o;
+            f.ShowDialog(this);
         }
     }
 }

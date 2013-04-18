@@ -10,6 +10,26 @@ namespace AliHelper
     public class MyItemManager : BaseManager
     {
         public IProductDao productDao;
+        static public event NewEditItemEvent OnEditCategoryEvent;
+        static public event NewEditItemEvent OnEditPriceCateEvent;
+
+        public virtual void FireEditCategoryEvent(object o)
+        {
+            if (MyItemManager.OnEditCategoryEvent != null)
+            {
+                ItemEventArgs e = new ItemEventArgs(o);
+                OnEditCategoryEvent(this, e);
+            }
+        }
+
+        public virtual void FireEditPriceCateEvent(object o)
+        {
+            if (MyItemManager.OnEditPriceCateEvent != null)
+            {
+                ItemEventArgs e = new ItemEventArgs(o);
+                OnEditPriceCateEvent(this, e);
+            }
+        }
 
         public MyItemManager()
         {
@@ -22,11 +42,11 @@ namespace AliHelper
             if (list.Count == 0)
             {
                 productDao.DeleteCategory(id);
+                FireEditCategoryEvent(null);
                 return;
             }
-            throw new Exception("包含子类，不能删除。");
+            throw new Exception("包含子类，不能被删除，请先删除子类。");
         }
-
 
         public List<Categories> GetAllCategories()
         {
@@ -41,6 +61,7 @@ namespace AliHelper
         public void InsertOrUpdateCategory(Categories item) 
         {
             productDao.InsertOrUpdateCategory(item);
+            FireEditCategoryEvent(item);
         }
 
         public int GetCategoryNewSortNo(int parentId, int level)
@@ -51,11 +72,7 @@ namespace AliHelper
         public void CategoryMoveSort(Categories cate1, Categories cate2)
         {
             productDao.CategoryMoveSort(cate1, cate2);
-        }
-
-        public void DeleteCategory(int Id)
-        {
-            productDao.DeleteCategory(Id);
+            FireEditCategoryEvent(cate1);
         }
 
         public QueryObject<PriceCate> GetPriceCates(QueryObject<PriceCate> query)
@@ -71,11 +88,13 @@ namespace AliHelper
         public void InsertOrUpdatePriceCate(PriceCate item)
         {
             productDao.InsertOrUpdatePriceCate(item);
+            FireEditPriceCateEvent(item);
         }
 
         public void DeletePriceCate(int Id)
         {
             productDao.DeletePriceCate(Id);
+            FireEditPriceCateEvent(Id);
         }
 
         public void InsertOrUpdateProduct(Product item)

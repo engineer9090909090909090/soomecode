@@ -10,6 +10,16 @@ namespace AliHelper
     class SupplierManager : BaseManager
     {
         public ISupplierDao supplierDao;
+        static public event NewEditItemEvent OnEditSupplierEvent;
+
+        public virtual void FireEditSupplierEvent(object o)
+        {
+            if (SupplierManager.OnEditSupplierEvent != null)
+            {
+                ItemEventArgs e = new ItemEventArgs(o);
+                OnEditSupplierEvent(this, e);
+            }
+        }
 
         public SupplierManager()
         {
@@ -24,6 +34,12 @@ namespace AliHelper
         public Supplier GetSupplierById(int id)
         {
             return supplierDao.GetSupplierById(id);
+        }
+
+        public void InsertOrUpdateSupplier(Supplier obj)
+        {
+            supplierDao.InsertOrUpdateSupplier(obj);
+            FireEditSupplierEvent(obj);
         }
     }
 }

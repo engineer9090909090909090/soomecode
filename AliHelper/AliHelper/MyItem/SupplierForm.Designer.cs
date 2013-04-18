@@ -30,10 +30,10 @@
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.RemarkTxt = new System.Windows.Forms.TextBox();
+            this.AddressTxt = new System.Windows.Forms.TextBox();
+            this.ContactTxt = new System.Windows.Forms.TextBox();
+            this.NameTxt = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -46,10 +46,10 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.textBox4);
-            this.groupBox1.Controls.Add(this.textBox3);
-            this.groupBox1.Controls.Add(this.textBox2);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.RemarkTxt);
+            this.groupBox1.Controls.Add(this.AddressTxt);
+            this.groupBox1.Controls.Add(this.ContactTxt);
+            this.groupBox1.Controls.Add(this.NameTxt);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
@@ -70,34 +70,34 @@
             this.label5.TabIndex = 5;
             this.label5.Text = "*";
             // 
-            // textBox4
+            // RemarkTxt
             // 
-            this.textBox4.Location = new System.Drawing.Point(101, 195);
-            this.textBox4.Multiline = true;
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(468, 211);
-            this.textBox4.TabIndex = 4;
+            this.RemarkTxt.Location = new System.Drawing.Point(101, 195);
+            this.RemarkTxt.Multiline = true;
+            this.RemarkTxt.Name = "RemarkTxt";
+            this.RemarkTxt.Size = new System.Drawing.Size(468, 211);
+            this.RemarkTxt.TabIndex = 4;
             // 
-            // textBox3
+            // AddressTxt
             // 
-            this.textBox3.Location = new System.Drawing.Point(101, 136);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(468, 21);
-            this.textBox3.TabIndex = 3;
+            this.AddressTxt.Location = new System.Drawing.Point(101, 136);
+            this.AddressTxt.Name = "AddressTxt";
+            this.AddressTxt.Size = new System.Drawing.Size(468, 21);
+            this.AddressTxt.TabIndex = 3;
             // 
-            // textBox2
+            // ContactTxt
             // 
-            this.textBox2.Location = new System.Drawing.Point(101, 83);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(468, 21);
-            this.textBox2.TabIndex = 2;
+            this.ContactTxt.Location = new System.Drawing.Point(101, 83);
+            this.ContactTxt.Name = "ContactTxt";
+            this.ContactTxt.Size = new System.Drawing.Size(468, 21);
+            this.ContactTxt.TabIndex = 2;
             // 
-            // textBox1
+            // NameTxt
             // 
-            this.textBox1.Location = new System.Drawing.Point(101, 31);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(468, 21);
-            this.textBox1.TabIndex = 1;
+            this.NameTxt.Location = new System.Drawing.Point(101, 31);
+            this.NameTxt.Name = "NameTxt";
+            this.NameTxt.Size = new System.Drawing.Size(468, 21);
+            this.NameTxt.TabIndex = 1;
             // 
             // label4
             // 
@@ -144,6 +144,7 @@
             this.CancelButton.TabIndex = 6;
             this.CancelButton.Text = "取消(&C)";
             this.CancelButton.UseVisualStyleBackColor = true;
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // ConfirmButton
             // 
@@ -154,6 +155,7 @@
             this.ConfirmButton.TabIndex = 5;
             this.ConfirmButton.Text = "确认(&S)";
             this.ConfirmButton.UseVisualStyleBackColor = true;
+            this.ConfirmButton.Click += new System.EventHandler(this.ConfirmButton_Click);
             // 
             // SupplierForm
             // 
@@ -169,6 +171,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "编辑供应商信息";
+            this.Load += new System.EventHandler(this.SupplierForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -182,10 +185,10 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox NameTxt;
+        private System.Windows.Forms.TextBox RemarkTxt;
+        private System.Windows.Forms.TextBox AddressTxt;
+        private System.Windows.Forms.TextBox ContactTxt;
         private System.Windows.Forms.Button CancelButton;
         private System.Windows.Forms.Button ConfirmButton;
         private System.Windows.Forms.Label label5;
