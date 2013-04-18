@@ -20,7 +20,16 @@ namespace AliHelper.MyItem
         {
             InitializeComponent();
             supplierManager = new SupplierManager();
+            SupplierManager.OnEditSupplierEvent += new NewEditItemEvent(SupplierManager_OnEditSupplierEvent);
             pager.PageSize = 20;
+        }
+
+        void SupplierManager_OnEditSupplierEvent(object sender, ItemEventArgs e)
+        {
+            this.BeginInvoke(new Action(() =>
+            {
+                BindDataWithPage(pager.PageIndex);
+            }));
         }
 
         private void pager_PageIndexChanged(object sender, EventArgs e)
@@ -129,6 +138,10 @@ namespace AliHelper.MyItem
             SourceGrid.CellContext context = (SourceGrid.CellContext)sender;
             int id = (int)SupplierGrid.Rows[context.Position.Row].Tag;
             Supplier o = supplierManager.GetSupplierById(id);
+            SupplierForm f = new SupplierForm();
+            f.Text = "编辑供应商信息";
+            f.UpdateSupplier = o;
+            f.ShowDialog(this);
         }
 
         private void CellButton_Click(object sender, EventArgs e)

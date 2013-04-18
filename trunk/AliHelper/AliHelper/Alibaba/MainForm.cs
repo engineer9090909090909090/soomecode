@@ -107,7 +107,8 @@ namespace AliHelper
             this.treeView1.Name = "treeView1";
             this.treeView1.Dock = DockStyle.Fill;
             this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.treeView1.ItemHeight = 16;
+            this.treeView1.ItemHeight = 18;
+            //this.treeView1.Font = new System.Drawing.Font("Microsoft YaHei", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.treeView1.Size = new System.Drawing.Size(130, 423);
             this.treeView1.TabIndex = 4;
             this.treeView1.ContextMenuStrip = TreeNodeContextMenuStrip;
@@ -911,9 +912,10 @@ namespace AliHelper
         }
 
 
-
         public void LoadMyItemCategoriesTreeView()
         {
+            MyItemManager.OnEditCategoryEvent -= new NewEditItemEvent(MyItemManager_OnEditCategoryEvent);
+            MyItemManager.OnEditCategoryEvent += new NewEditItemEvent(MyItemManager_OnEditCategoryEvent);
             TreeView CateTreeView = null;
             if (ItemTreeNaviGroup.Controls.Count > 0)
             {
@@ -927,7 +929,8 @@ namespace AliHelper
                 CateTreeView.Name = "CateTreeView";
                 CateTreeView.Dock = DockStyle.Fill;
                 CateTreeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-                CateTreeView.ItemHeight = 16;
+                CateTreeView.ItemHeight = 18;
+                //CateTreeView.Font = new System.Drawing.Font("Microsoft YaHei", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
                 CateTreeView.Size = new System.Drawing.Size(130, 423);
                 CateTreeView.TabIndex = 4;
                 CateTreeView.NodeMouseClick += new TreeNodeMouseClickEventHandler(cateTreeView_NodeMouseClick);
@@ -965,6 +968,14 @@ namespace AliHelper
                 }
             }
             CateTreeView.ExpandAll();
+        }
+
+        void MyItemManager_OnEditCategoryEvent(object sender, ItemEventArgs e)
+        {
+            this.BeginInvoke(new Action(() =>
+            {
+                LoadMyItemCategoriesTreeView();
+            }));
         }
 
         void cateTreeView_NodeMouseClick(object sender, System.Windows.Forms.TreeNodeMouseClickEventArgs e)

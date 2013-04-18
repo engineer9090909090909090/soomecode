@@ -111,8 +111,8 @@ namespace Database
 
         public List<Categories> GetChildCategories(int ParentId)
         {
-            string sql = "SELECT Id, Name, Sort, ChildrenCount, Level, ParentId FROM Category order by ParentId asc, Sort asc";
-            sql = sql + " where ParentId = " + ParentId;
+            string sql = "SELECT Id, Name, Sort, ChildrenCount, Level, ParentId FROM Category ";
+            sql = sql + " where ParentId = " + ParentId + " order by ParentId asc, Sort asc ";
             DataTable dt = dbHelper.ExecuteDataTable(sql, null);
             return DataTableToCategoris(dt);
         }

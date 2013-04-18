@@ -15,6 +15,7 @@ namespace AliHelper.MyItem
 
         MyItemManager manager;
         TreeNode selectedNode;
+        Categories selectedCategory;
         public CategoriesForm()
         {
             InitializeComponent();
@@ -68,10 +69,17 @@ namespace AliHelper.MyItem
         private void DeleMenuItem_Click(object sender, EventArgs e)
         {
             Categories selected = (Categories)selectedNode.Tag;
-            if (MessageBox.Show("您确定要删除这个分类吗?", "提示信息", MessageBoxButtons.OKCancel, 
-                MessageBoxIcon.Question, MessageBoxDefaultButton.Button2, MessageBoxOptions.RtlReading) == DialogResult.OK)
+            if (MessageBox.Show("您确定要删除这个分类吗?", "提示信息", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
-                manager.DeleteCategory(selected.Id);
+                try
+                {
+                    manager.DelteCategory(selected.Id);
+                    LoadTreeView();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "提示信息", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -115,6 +123,11 @@ namespace AliHelper.MyItem
                     TreeNode t1 = new TreeNode(p.Name);
                     t1.Tag = p;
                     CateTreeView.Nodes.Add(t1);
+                    if (selectedCategory!= null && selectedCategory.Id == p.Id)
+                    {
+                        CateTreeView.SelectedNode = t1;
+                    }
+
                     foreach (Categories c in cates)
                     {
                         if (c.ParentId == p.Id && c.Level == p.Level + 1)
@@ -122,6 +135,10 @@ namespace AliHelper.MyItem
                             TreeNode t2 = new TreeNode(c.Name);
                             t2.Tag = c;
                             t1.Nodes.Add(t2);
+                            if (selectedCategory != null && selectedCategory.Id == c.Id)
+                            {
+                                CateTreeView.SelectedNode = t2;
+                            }
 
                             foreach (Categories f in cates)
                             {
@@ -130,6 +147,10 @@ namespace AliHelper.MyItem
                                     TreeNode t3= new TreeNode(f.Name);
                                     t3.Tag = f;
                                     t2.Nodes.Add(t3);
+                                    if (selectedCategory != null && selectedCategory.Id == f.Id)
+                                    {
+                                        CateTreeView.SelectedNode = t3;
+                                    }
                                 }
                             }
 
@@ -147,6 +168,7 @@ namespace AliHelper.MyItem
             NewChildMenuItem.Enabled = true;
             DeleMenuItem.Enabled = true;
             selectedNode = e.Node;
+            selectedCategory = (Categories)selectedNode.Tag;
             if (e.Button == MouseButtons.Right)
             {
                 if (selectedNode.PrevNode == null)
@@ -157,7 +179,7 @@ namespace AliHelper.MyItem
                 {
                     MoveDownMenuItem.Enabled = false;
                 }
-                if (selectedNode.Level < 3)
+                if (selectedNode.Level > 1)
                 {
                     NewChildMenuItem.Enabled = false;
                 }
@@ -165,6 +187,7 @@ namespace AliHelper.MyItem
                 {
                     DeleMenuItem.Enabled = false;
                 }
+                CateTreeView.SelectedNode = selectedNode;
                 CateTreeView.ContextMenuStrip.Show();
             }
             if (e.Button == MouseButtons.Left)
@@ -173,8 +196,5 @@ namespace AliHelper.MyItem
             }
         }
 
-        
-
-        
     }
 }

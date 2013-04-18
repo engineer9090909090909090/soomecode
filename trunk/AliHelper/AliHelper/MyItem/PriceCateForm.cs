@@ -64,6 +64,11 @@ namespace AliHelper.MyItem
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
+            this.Close();
+        }
+
+        private void ConfirmButton_Click(object sender, EventArgs e)
+        {
             if (string.IsNullOrEmpty(CateName.Text))
             {
                 MessageBox.Show("价格种类名称不能为空。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -119,14 +124,8 @@ namespace AliHelper.MyItem
             UpdatePriceCate.UsePrice5 = this.UsePrice5.Checked;
             UpdatePriceCate.Price5Name = this.Price5Name.Text;
             UpdatePriceCate.Price5Val = Convert.ToDouble(this.Price5Val.Text);
-
+            UpdatePriceCate.Status = "A";
             manager.InsertOrUpdatePriceCate(UpdatePriceCate);
-            this.Close();
-        }
-
-        private void ConfirmButton_Click(object sender, EventArgs e)
-        {
-
             this.Close();
         }
 
