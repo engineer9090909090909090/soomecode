@@ -22,10 +22,10 @@ namespace AliHelper
 
         private void NewItemForm_Load(object sender, EventArgs e)
         {
-            LoadTreeView();
+            //LoadTreeView();
             this.ProductStatus.DisplayMember = "Label";
             this.ProductStatus.ValueMember = "Key";
-            this.ProductStatus.DataSource = manager.GetAppDicOptions(Constants.ProductStatus);
+            //this.ProductStatus.DataSource = manager.GetAppDicOptions(Constants.ProductStatus);
         }
 
         

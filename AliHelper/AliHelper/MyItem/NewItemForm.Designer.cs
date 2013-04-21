@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewItemForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.ProductStatus = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
@@ -42,7 +43,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.ImageListView = new System.Windows.Forms.ListView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.ProductImage = new System.Windows.Forms.PictureBox();
             this.label7 = new System.Windows.Forms.Label();
             this.Packing = new System.Windows.Forms.TextBox();
             this.Weight = new System.Windows.Forms.TextBox();
@@ -63,10 +63,10 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.CannelButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
+            this.imageSelector = new AliHelper.ImageSelector();
             this.CategoryTreeBox = new ComboTreeBox();
             this.ProductPrice = new AliHelper.NumericTextbox();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ProductImage)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.InfoTab.SuspendLayout();
             this.DetailTab.SuspendLayout();
@@ -76,6 +76,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.imageSelector);
             this.groupBox1.Controls.Add(this.CategoryTreeBox);
             this.groupBox1.Controls.Add(this.ProductPrice);
             this.groupBox1.Controls.Add(this.ProductStatus);
@@ -91,7 +92,6 @@
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.ImageListView);
             this.groupBox1.Controls.Add(this.groupBox2);
-            this.groupBox1.Controls.Add(this.ProductImage);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.Packing);
             this.groupBox1.Controls.Add(this.Weight);
@@ -240,17 +240,6 @@
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             // 
-            // ProductImage
-            // 
-            this.ProductImage.Image = global::AliHelper.Properties.Resources.sms_image;
-            this.ProductImage.InitialImage = null;
-            this.ProductImage.Location = new System.Drawing.Point(399, 59);
-            this.ProductImage.Name = "ProductImage";
-            this.ProductImage.Size = new System.Drawing.Size(125, 125);
-            this.ProductImage.TabIndex = 15;
-            this.ProductImage.TabStop = false;
-            this.ProductImage.Click += new System.EventHandler(this.Image_Click);
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -380,6 +369,7 @@
             this.InfoTab.Location = new System.Drawing.Point(4, 21);
             this.InfoTab.Name = "InfoTab";
             this.InfoTab.Padding = new System.Windows.Forms.Padding(3);
+            this.InfoTab.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.InfoTab.Size = new System.Drawing.Size(814, 479);
             this.InfoTab.TabIndex = 0;
             this.InfoTab.Text = "基本信息";
@@ -448,8 +438,8 @@
             // 
             // SaveButton
             // 
-            this.SaveButton.Location = new System.Drawing.Point(579, 3);
-            this.SaveButton.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
+            this.SaveButton.Location = new System.Drawing.Point(569, 3);
+            this.SaveButton.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.SaveButton.Size = new System.Drawing.Size(75, 23);
@@ -457,6 +447,19 @@
             this.SaveButton.Text = "保存(&S)";
             this.SaveButton.UseVisualStyleBackColor = true;
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
+            // 
+            // imageSelector
+            // 
+            this.imageSelector.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("imageSelector.BackgroundImage")));
+            this.imageSelector.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imageSelector.Image = null;
+            this.imageSelector.ImageFile = null;
+            this.imageSelector.Location = new System.Drawing.Point(399, 60);
+            this.imageSelector.Name = "imageSelector";
+            this.imageSelector.OpenFileDirectory = null;
+            this.imageSelector.ShowMenu = true;
+            this.imageSelector.Size = new System.Drawing.Size(125, 125);
+            this.imageSelector.TabIndex = 24;
             // 
             // CategoryTreeBox
             // 
@@ -494,7 +497,6 @@
             this.Load += new System.EventHandler(this.NewItemForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ProductImage)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.InfoTab.ResumeLayout(false);
             this.DetailTab.ResumeLayout(false);
@@ -519,7 +521,6 @@
         private System.Windows.Forms.TextBox Weight;
         private System.Windows.Forms.TextBox Size;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.PictureBox ProductImage;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage InfoTab;
         private System.Windows.Forms.TabPage DetailTab;
@@ -544,5 +545,6 @@
         private System.Windows.Forms.Label label14;
         private NumericTextbox ProductPrice;
         private ComboTreeBox CategoryTreeBox;
+        private ImageSelector imageSelector;
     }
 }
