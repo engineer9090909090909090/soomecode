@@ -368,6 +368,13 @@ namespace AliHelper.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap sms_image {
+            get {
+                object obj = ResourceManager.GetObject("sms_image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap supplier_b {
             get {
                 object obj = ResourceManager.GetObject("supplier_b", resourceCulture);
