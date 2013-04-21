@@ -51,6 +51,7 @@ namespace Soomes
         public const string OrderStatusType = "OrderStatusType";
         public const string CurrencyType = "CurrencyType";
         public const string RecivePaymentAccounts = "RecivePaymentAccounts";
+        public const string ProductStatus = "SOOMES_ProductStatus";
 
         public const string FinanceBaseView = "FinanceBaseView";
         public const string FinanceBizView = "FinanceBizView";
@@ -61,5 +62,7 @@ namespace Soomes
 
         public const string ProductTypeAll = "All_Product";
         public const string ProductTypeWin = "Windows_Product";
+
+        
     }
 }

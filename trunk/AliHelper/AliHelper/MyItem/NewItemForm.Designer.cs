@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.ProductStatus = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
             this.Minimum = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -42,13 +42,12 @@
             this.label8 = new System.Windows.Forms.Label();
             this.ImageListView = new System.Windows.Forms.ListView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.Image = new System.Windows.Forms.PictureBox();
+            this.ProductImage = new System.Windows.Forms.PictureBox();
             this.label7 = new System.Windows.Forms.Label();
             this.Packing = new System.Windows.Forms.TextBox();
             this.Weight = new System.Windows.Forms.TextBox();
             this.Size = new System.Windows.Forms.TextBox();
             this.ProductModel = new System.Windows.Forms.TextBox();
-            this.Category = new System.Windows.Forms.ComboBox();
             this.ProductName = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -64,9 +63,10 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.CannelButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
+            this.CategoryTreeBox = new ComboTreeBox();
             this.ProductPrice = new AliHelper.NumericTextbox();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Image)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ProductImage)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.InfoTab.SuspendLayout();
             this.DetailTab.SuspendLayout();
@@ -76,8 +76,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.CategoryTreeBox);
             this.groupBox1.Controls.Add(this.ProductPrice);
-            this.groupBox1.Controls.Add(this.comboBox1);
+            this.groupBox1.Controls.Add(this.ProductStatus);
             this.groupBox1.Controls.Add(this.label14);
             this.groupBox1.Controls.Add(this.Minimum);
             this.groupBox1.Controls.Add(this.label13);
@@ -90,13 +91,12 @@
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.ImageListView);
             this.groupBox1.Controls.Add(this.groupBox2);
-            this.groupBox1.Controls.Add(this.Image);
+            this.groupBox1.Controls.Add(this.ProductImage);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.Packing);
             this.groupBox1.Controls.Add(this.Weight);
             this.groupBox1.Controls.Add(this.Size);
             this.groupBox1.Controls.Add(this.ProductModel);
-            this.groupBox1.Controls.Add(this.Category);
             this.groupBox1.Controls.Add(this.ProductName);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
@@ -110,14 +110,14 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
-            // comboBox1
+            // ProductStatus
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(98, 432);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.comboBox1.Size = new System.Drawing.Size(426, 20);
-            this.comboBox1.TabIndex = 29;
+            this.ProductStatus.FormattingEnabled = true;
+            this.ProductStatus.Location = new System.Drawing.Point(98, 432);
+            this.ProductStatus.Name = "ProductStatus";
+            this.ProductStatus.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.ProductStatus.Size = new System.Drawing.Size(426, 20);
+            this.ProductStatus.TabIndex = 10;
             // 
             // label14
             // 
@@ -126,7 +126,7 @@
             this.label14.Name = "label14";
             this.label14.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label14.Size = new System.Drawing.Size(65, 12);
-            this.label14.TabIndex = 28;
+            this.label14.TabIndex = 0;
             this.label14.Text = "状　　态：";
             // 
             // Minimum
@@ -135,7 +135,7 @@
             this.Minimum.Name = "Minimum";
             this.Minimum.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Minimum.Size = new System.Drawing.Size(425, 21);
-            this.Minimum.TabIndex = 27;
+            this.Minimum.TabIndex = 7;
             this.Minimum.Text = "100";
             // 
             // label13
@@ -145,7 +145,7 @@
             this.label13.Name = "label13";
             this.label13.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label13.Size = new System.Drawing.Size(65, 12);
-            this.label13.TabIndex = 26;
+            this.label13.TabIndex = 0;
             this.label13.Text = "最小订量：";
             // 
             // AddImageButton
@@ -154,7 +154,7 @@
             this.AddImageButton.Margin = new System.Windows.Forms.Padding(50, 3, 3, 3);
             this.AddImageButton.Name = "AddImageButton";
             this.AddImageButton.Size = new System.Drawing.Size(234, 23);
-            this.AddImageButton.TabIndex = 24;
+            this.AddImageButton.TabIndex = 11;
             this.AddImageButton.Text = "添加更多图片";
             this.AddImageButton.UseVisualStyleBackColor = true;
             this.AddImageButton.Click += new System.EventHandler(this.AddImageButton_Click);
@@ -162,7 +162,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(331, 145);
+            this.label12.Location = new System.Drawing.Point(325, 142);
             this.label12.Name = "label12";
             this.label12.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label12.Size = new System.Drawing.Size(17, 12);
@@ -212,7 +212,7 @@
             this.PriceCate.Name = "PriceCate";
             this.PriceCate.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.PriceCate.Size = new System.Drawing.Size(250, 20);
-            this.PriceCate.TabIndex = 19;
+            this.PriceCate.TabIndex = 5;
             // 
             // label8
             // 
@@ -221,7 +221,7 @@
             this.label8.Name = "label8";
             this.label8.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label8.Size = new System.Drawing.Size(65, 12);
-            this.label8.TabIndex = 18;
+            this.label8.TabIndex = 0;
             this.label8.Text = "价格种类：";
             // 
             // ImageListView
@@ -229,7 +229,7 @@
             this.ImageListView.Location = new System.Drawing.Point(562, 51);
             this.ImageListView.Name = "ImageListView";
             this.ImageListView.Size = new System.Drawing.Size(234, 401);
-            this.ImageListView.TabIndex = 17;
+            this.ImageListView.TabIndex = 12;
             this.ImageListView.UseCompatibleStateImageBehavior = false;
             // 
             // groupBox2
@@ -237,17 +237,19 @@
             this.groupBox2.Location = new System.Drawing.Point(543, 22);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(2, 430);
-            this.groupBox2.TabIndex = 16;
+            this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             // 
-            // Image
+            // ProductImage
             // 
-            this.Image.Location = new System.Drawing.Point(399, 59);
-            this.Image.Name = "Image";
-            this.Image.Size = new System.Drawing.Size(125, 125);
-            this.Image.TabIndex = 15;
-            this.Image.TabStop = false;
-            this.Image.Click += new System.EventHandler(this.Image_Click);
+            this.ProductImage.Image = global::AliHelper.Properties.Resources.sms_image;
+            this.ProductImage.InitialImage = null;
+            this.ProductImage.Location = new System.Drawing.Point(399, 59);
+            this.ProductImage.Name = "ProductImage";
+            this.ProductImage.Size = new System.Drawing.Size(125, 125);
+            this.ProductImage.TabIndex = 15;
+            this.ProductImage.TabStop = false;
+            this.ProductImage.Click += new System.EventHandler(this.Image_Click);
             // 
             // label7
             // 
@@ -256,7 +258,7 @@
             this.label7.Name = "label7";
             this.label7.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label7.Size = new System.Drawing.Size(65, 12);
-            this.label7.TabIndex = 13;
+            this.label7.TabIndex = 0;
             this.label7.Text = "产品价格：";
             // 
             // Packing
@@ -266,7 +268,7 @@
             this.Packing.Name = "Packing";
             this.Packing.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Packing.Size = new System.Drawing.Size(425, 65);
-            this.Packing.TabIndex = 12;
+            this.Packing.TabIndex = 9;
             // 
             // Weight
             // 
@@ -274,7 +276,7 @@
             this.Weight.Name = "Weight";
             this.Weight.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Weight.Size = new System.Drawing.Size(425, 21);
-            this.Weight.TabIndex = 11;
+            this.Weight.TabIndex = 8;
             // 
             // Size
             // 
@@ -282,7 +284,7 @@
             this.Size.Name = "Size";
             this.Size.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Size.Size = new System.Drawing.Size(425, 21);
-            this.Size.TabIndex = 10;
+            this.Size.TabIndex = 6;
             // 
             // ProductModel
             // 
@@ -290,16 +292,7 @@
             this.ProductModel.Name = "ProductModel";
             this.ProductModel.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ProductModel.Size = new System.Drawing.Size(250, 21);
-            this.ProductModel.TabIndex = 9;
-            // 
-            // Category
-            // 
-            this.Category.FormattingEnabled = true;
-            this.Category.Location = new System.Drawing.Point(99, 61);
-            this.Category.Name = "Category";
-            this.Category.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.Category.Size = new System.Drawing.Size(250, 20);
-            this.Category.TabIndex = 8;
+            this.ProductModel.TabIndex = 3;
             // 
             // ProductName
             // 
@@ -307,7 +300,7 @@
             this.ProductName.Name = "ProductName";
             this.ProductName.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ProductName.Size = new System.Drawing.Size(425, 21);
-            this.ProductName.TabIndex = 7;
+            this.ProductName.TabIndex = 1;
             // 
             // label6
             // 
@@ -316,7 +309,7 @@
             this.label6.Name = "label6";
             this.label6.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label6.Size = new System.Drawing.Size(77, 12);
-            this.label6.TabIndex = 5;
+            this.label6.TabIndex = 0;
             this.label6.Text = "自定义分类：";
             // 
             // label5
@@ -326,7 +319,7 @@
             this.label5.Name = "label5";
             this.label5.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label5.Size = new System.Drawing.Size(77, 12);
-            this.label5.TabIndex = 4;
+            this.label5.TabIndex = 0;
             this.label5.Text = "包装与装箱：";
             // 
             // label4
@@ -336,7 +329,7 @@
             this.label4.Name = "label4";
             this.label4.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label4.Size = new System.Drawing.Size(65, 12);
-            this.label4.TabIndex = 3;
+            this.label4.TabIndex = 0;
             this.label4.Text = "产品重量：";
             // 
             // label3
@@ -346,7 +339,7 @@
             this.label3.Name = "label3";
             this.label3.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label3.Size = new System.Drawing.Size(65, 12);
-            this.label3.TabIndex = 2;
+            this.label3.TabIndex = 0;
             this.label3.Text = "产品尺寸：";
             // 
             // label2
@@ -356,7 +349,7 @@
             this.label2.Name = "label2";
             this.label2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label2.Size = new System.Drawing.Size(65, 12);
-            this.label2.TabIndex = 1;
+            this.label2.TabIndex = 0;
             this.label2.Text = "产品型号：";
             // 
             // label1
@@ -465,6 +458,17 @@
             this.SaveButton.UseVisualStyleBackColor = true;
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
+            // CategoryTreeBox
+            // 
+            this.CategoryTreeBox.DroppedDown = false;
+            this.CategoryTreeBox.Location = new System.Drawing.Point(100, 60);
+            this.CategoryTreeBox.Name = "CategoryTreeBox";
+            this.CategoryTreeBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.CategoryTreeBox.SelectedNode = null;
+            this.CategoryTreeBox.Size = new System.Drawing.Size(250, 20);
+            this.CategoryTreeBox.TabIndex = 2;
+            this.CategoryTreeBox.SelectedNodeChanged += new System.EventHandler(this.CategoryTreeBox_SelectedNodeChanged);
+            // 
             // ProductPrice
             // 
             this.ProductPrice.CommaFormat = false;
@@ -475,7 +479,7 @@
             this.ProductPrice.PercentFormat = false;
             this.ProductPrice.ReadOnly = false;
             this.ProductPrice.Size = new System.Drawing.Size(227, 24);
-            this.ProductPrice.TabIndex = 30;
+            this.ProductPrice.TabIndex = 4;
             this.ProductPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
             // NewItemForm
@@ -487,9 +491,10 @@
             this.MaximizeBox = false;
             this.Name = "NewItemForm";
             this.Text = "新增产品";
+            this.Load += new System.EventHandler(this.NewItemForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Image)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ProductImage)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.InfoTab.ResumeLayout(false);
             this.DetailTab.ResumeLayout(false);
@@ -510,12 +515,11 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox ProductName;
         private System.Windows.Forms.TextBox ProductModel;
-        private System.Windows.Forms.ComboBox Category;
         private System.Windows.Forms.TextBox Packing;
         private System.Windows.Forms.TextBox Weight;
         private System.Windows.Forms.TextBox Size;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.PictureBox Image;
+        private System.Windows.Forms.PictureBox ProductImage;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage InfoTab;
         private System.Windows.Forms.TabPage DetailTab;
@@ -536,8 +540,9 @@
         private NumericTextbox Price;
         private System.Windows.Forms.TextBox Minimum;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox ProductStatus;
         private System.Windows.Forms.Label label14;
         private NumericTextbox ProductPrice;
+        private ComboTreeBox CategoryTreeBox;
     }
 }

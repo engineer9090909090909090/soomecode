@@ -20,6 +20,7 @@ namespace Soomes
             DicTypeOptions.Add(Constants.OrderStatusType, "订单状态类型");
             DicTypeOptions.Add(Constants.CurrencyType, "币种");
             DicTypeOptions.Add(Constants.RecivePaymentAccounts, "收付款账户");
+            DicTypeOptions.Add(Constants.ProductStatus, "产品状态");
         }
 
         public bool OpenMySqlDb { get; set; }

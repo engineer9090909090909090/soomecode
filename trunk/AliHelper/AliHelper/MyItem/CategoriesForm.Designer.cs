@@ -1,4 +1,4 @@
-﻿namespace AliHelper.MyItem
+﻿namespace AliHelper
 {
     partial class CategoriesForm
     {
