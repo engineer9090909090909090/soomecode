@@ -45,8 +45,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(821, 497);
             this.Controls.Add(this.myItemsList1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "TestForm";
             this.Text = "TestForm";
+            this.TopMost = true;
             this.ResumeLayout(false);
 
         }

@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Net;
 using Soomes;
 using System.Drawing;
+using System.Windows.Forms;
 
 
 namespace AliHelper
@@ -41,6 +42,23 @@ namespace AliHelper
                 Directory.CreateDirectory(imageDir);
             }
             return imageDir;
+        }
+
+        public static string GetAppDataFolder()
+        {
+            string AppDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
+                + Path.DirectorySeparatorChar + Application.ProductName;
+            if (!Directory.Exists(AppDataFolder))
+            {
+                Directory.CreateDirectory(AppDataFolder);
+            }
+            return AppDataFolder;
+        }
+
+        public static string GetNewTempImagePath()
+        {
+            string temp = System.Environment.GetEnvironmentVariable("TEMP");
+            return temp + Path.DirectorySeparatorChar + Guid.NewGuid().ToString() + ".jpg";
         }
 
         public static System.Drawing.Image GetImage(string path)

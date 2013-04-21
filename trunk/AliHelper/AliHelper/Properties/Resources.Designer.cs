@@ -102,6 +102,13 @@ namespace AliHelper.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap choose {
+            get {
+                object obj = ResourceManager.GetObject("choose", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap colorize {
             get {
                 object obj = ResourceManager.GetObject("colorize", resourceCulture);
@@ -119,6 +126,13 @@ namespace AliHelper.Properties {
         internal static System.Drawing.Bitmap customer_s {
             get {
                 object obj = ResourceManager.GetObject("customer_s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap delete1 {
+            get {
+                object obj = ResourceManager.GetObject("delete1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -242,6 +256,13 @@ namespace AliHelper.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap paste {
+            get {
+                object obj = ResourceManager.GetObject("paste", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap price_b {
             get {
                 object obj = ResourceManager.GetObject("price_b", resourceCulture);
@@ -343,6 +364,13 @@ namespace AliHelper.Properties {
         internal static System.Drawing.Bitmap s_wizard {
             get {
                 object obj = ResourceManager.GetObject("s_wizard", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Screenshot {
+            get {
+                object obj = ResourceManager.GetObject("Screenshot", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

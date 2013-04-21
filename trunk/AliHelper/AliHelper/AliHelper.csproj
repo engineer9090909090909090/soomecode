@@ -121,6 +121,12 @@
     <Compile Include="Controls\DropDownControlBase.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\ImageSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ImageSelector.Designer.cs">
+      <DependentUpon>ImageSelector.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MyButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -330,6 +336,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Alibaba\TopFiveQueryForm.resx">
       <DependentUpon>TopFiveQueryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ImageSelector.resx">
+      <DependentUpon>ImageSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MyItem\CategoriesForm.resx">
       <DependentUpon>CategoriesForm.cs</DependentUpon>
@@ -631,6 +640,10 @@
     <Content Include="KindEditor\skins\common\rm.gif" />
     <Content Include="KindEditor\skins\default.css" />
     <Content Include="KindEditor\skins\default\default.gif" />
+    <None Include="Resources\paste.png" />
+    <None Include="Resources\choose.png" />
+    <None Include="Resources\delete1.png" />
+    <None Include="Resources\Screenshot.png" />
     <None Include="Resources\sms_image.jpg" />
     <None Include="Resources\open.png" />
     <None Include="Resources\price_b.png" />
