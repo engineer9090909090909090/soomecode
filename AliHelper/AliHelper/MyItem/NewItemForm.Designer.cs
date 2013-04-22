@@ -30,6 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewItemForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.imageSelector = new AliHelper.ImageSelector();
+            this.CategoryTreeBox = new ComboTreeBox();
+            this.ProductPrice = new AliHelper.NumericTextbox();
             this.ProductStatus = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
             this.Minimum = new System.Windows.Forms.TextBox();
@@ -63,9 +66,6 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.CannelButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
-            this.imageSelector = new AliHelper.ImageSelector();
-            this.CategoryTreeBox = new ComboTreeBox();
-            this.ProductPrice = new AliHelper.NumericTextbox();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.InfoTab.SuspendLayout();
@@ -109,6 +109,43 @@
             this.groupBox1.Size = new System.Drawing.Size(802, 468);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
+            // 
+            // imageSelector
+            // 
+            this.imageSelector.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("imageSelector.BackgroundImage")));
+            this.imageSelector.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imageSelector.Image = null;
+            this.imageSelector.ImageFile = null;
+            this.imageSelector.Location = new System.Drawing.Point(399, 60);
+            this.imageSelector.Name = "imageSelector";
+            this.imageSelector.OpenFileDirectory = null;
+            this.imageSelector.ShowMenu = true;
+            this.imageSelector.Size = new System.Drawing.Size(125, 125);
+            this.imageSelector.TabIndex = 24;
+            // 
+            // CategoryTreeBox
+            // 
+            this.CategoryTreeBox.DroppedDown = false;
+            this.CategoryTreeBox.Location = new System.Drawing.Point(100, 60);
+            this.CategoryTreeBox.Name = "CategoryTreeBox";
+            this.CategoryTreeBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.CategoryTreeBox.SelectedNode = null;
+            this.CategoryTreeBox.Size = new System.Drawing.Size(250, 20);
+            this.CategoryTreeBox.TabIndex = 2;
+            this.CategoryTreeBox.SelectedNodeChanged += new System.EventHandler(this.CategoryTreeBox_SelectedNodeChanged);
+            // 
+            // ProductPrice
+            // 
+            this.ProductPrice.CommaFormat = false;
+            this.ProductPrice.CurrencyFormat = false;
+            this.ProductPrice.DecimalPrecision = 0;
+            this.ProductPrice.Location = new System.Drawing.Point(98, 137);
+            this.ProductPrice.Name = "ProductPrice";
+            this.ProductPrice.PercentFormat = false;
+            this.ProductPrice.ReadOnly = false;
+            this.ProductPrice.Size = new System.Drawing.Size(227, 24);
+            this.ProductPrice.TabIndex = 4;
+            this.ProductPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
             // ProductStatus
             // 
@@ -448,43 +485,6 @@
             this.SaveButton.UseVisualStyleBackColor = true;
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
-            // imageSelector
-            // 
-            this.imageSelector.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("imageSelector.BackgroundImage")));
-            this.imageSelector.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imageSelector.Image = null;
-            this.imageSelector.ImageFile = null;
-            this.imageSelector.Location = new System.Drawing.Point(399, 60);
-            this.imageSelector.Name = "imageSelector";
-            this.imageSelector.OpenFileDirectory = null;
-            this.imageSelector.ShowMenu = true;
-            this.imageSelector.Size = new System.Drawing.Size(125, 125);
-            this.imageSelector.TabIndex = 24;
-            // 
-            // CategoryTreeBox
-            // 
-            this.CategoryTreeBox.DroppedDown = false;
-            this.CategoryTreeBox.Location = new System.Drawing.Point(100, 60);
-            this.CategoryTreeBox.Name = "CategoryTreeBox";
-            this.CategoryTreeBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.CategoryTreeBox.SelectedNode = null;
-            this.CategoryTreeBox.Size = new System.Drawing.Size(250, 20);
-            this.CategoryTreeBox.TabIndex = 2;
-            this.CategoryTreeBox.SelectedNodeChanged += new System.EventHandler(this.CategoryTreeBox_SelectedNodeChanged);
-            // 
-            // ProductPrice
-            // 
-            this.ProductPrice.CommaFormat = false;
-            this.ProductPrice.CurrencyFormat = false;
-            this.ProductPrice.DecimalPrecision = 0;
-            this.ProductPrice.Location = new System.Drawing.Point(98, 137);
-            this.ProductPrice.Name = "ProductPrice";
-            this.ProductPrice.PercentFormat = false;
-            this.ProductPrice.ReadOnly = false;
-            this.ProductPrice.Size = new System.Drawing.Size(227, 24);
-            this.ProductPrice.TabIndex = 4;
-            this.ProductPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            // 
             // NewItemForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -493,6 +493,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.MaximizeBox = false;
             this.Name = "NewItemForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "新增产品";
             this.Load += new System.EventHandler(this.NewItemForm_Load);
             this.groupBox1.ResumeLayout(false);

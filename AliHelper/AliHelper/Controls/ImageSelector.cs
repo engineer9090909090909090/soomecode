@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using CSharpWin_JD.CaptureImage;
 
 namespace AliHelper
 {
@@ -99,7 +100,34 @@ namespace AliHelper
 
         private void ScreenshotMenuItem_Click(object sender, EventArgs e)
         {
-
+           
+            if (this.ParentForm.Visible)
+            {
+                this.ParentForm.Hide();
+            }
+            if (ParentForm.ParentForm != null && ParentForm.ParentForm.Visible)
+            {
+                ParentForm.ParentForm.Hide();
+            }
+            System.Threading.Thread.Sleep(30);
+            CaptureImageTool capture = new CaptureImageTool();
+            if (capture.ShowDialog() == DialogResult.OK)
+            {
+                Image photo = capture.Image;
+                string tmpImage = FileUtils.GetNewTempImagePath();
+                photo.Save(tmpImage);
+                photo.Dispose();
+                this.ImageFile = tmpImage;
+            }
+            capture.Dispose();
+            if (ParentForm.ParentForm != null && !ParentForm.ParentForm.Visible)
+            {
+                ParentForm.ParentForm.Show();
+            }
+            if (!ParentForm.Visible)
+            {
+                ParentForm.Show();
+            }
         }
 
         private void CleanMenuItem_Click(object sender, EventArgs e)
