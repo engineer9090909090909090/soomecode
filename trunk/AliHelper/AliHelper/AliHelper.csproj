@@ -54,6 +54,9 @@
     <Reference Include="Aspose.Cells">
       <HintPath>..\..\lib\Aspose\Aspose.Cells.dll</HintPath>
     </Reference>
+    <Reference Include="CaptureImageTool">
+      <HintPath>..\..\lib\CaptureImageTool.dll</HintPath>
+    </Reference>
     <Reference Include="Guifreaks.Common">
       <HintPath>..\..\lib\Guifreaks.Common.dll</HintPath>
     </Reference>
