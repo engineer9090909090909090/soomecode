@@ -102,8 +102,7 @@ namespace AliHelper.MyItem
             foreach (Supplier item in list)
             {
                 SupplierGrid.Rows[r].Tag = item.Id;
-                SupplierGrid.Rows[r].Height = 25;
-
+                SupplierGrid.Rows[r].Height = 35;
                 SupplierGrid[r, 0] = new SourceGrid.Cells.Cell(item.Name);
                 SupplierGrid[r, 0].AddController(clickEvent);
                 SupplierGrid[r, 1] = new SourceGrid.Cells.Cell(item.Contact);

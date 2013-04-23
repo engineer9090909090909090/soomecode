@@ -31,21 +31,21 @@
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.CateTreeView = new System.Windows.Forms.TreeView();
-            this.NewTopButton = new System.Windows.Forms.Button();
-            this.CategoryGroup = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.CategoryName = new System.Windows.Forms.TextBox();
-            this.CancelButton = new System.Windows.Forms.Button();
-            this.ConfirmButton = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.NewChildMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RenameMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DeleMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MoveUpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MoveDownMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.NewTopButton = new System.Windows.Forms.Button();
+            this.CategoryGroup = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.CategoryName = new System.Windows.Forms.TextBox();
+            this.CancelButton = new System.Windows.Forms.Button();
+            this.ConfirmButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
-            this.CategoryGroup.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
+            this.CategoryGroup.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -67,6 +67,52 @@
             this.CateTreeView.Size = new System.Drawing.Size(280, 502);
             this.CateTreeView.TabIndex = 0;
             this.CateTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.CateTreeView_NodeMouseClick);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.NewChildMenuItem,
+            this.RenameMenuItem,
+            this.DeleMenuItem,
+            this.MoveUpMenuItem,
+            this.MoveDownMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(150, 114);
+            // 
+            // NewChildMenuItem
+            // 
+            this.NewChildMenuItem.Name = "NewChildMenuItem";
+            this.NewChildMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.NewChildMenuItem.Text = "增加子分类(&N)";
+            this.NewChildMenuItem.Click += new System.EventHandler(this.NewChildMenuItem_Click);
+            // 
+            // RenameMenuItem
+            // 
+            this.RenameMenuItem.Name = "RenameMenuItem";
+            this.RenameMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.RenameMenuItem.Text = "重命名分类(&R)";
+            this.RenameMenuItem.Click += new System.EventHandler(this.RenameMenuItem_Click);
+            // 
+            // DeleMenuItem
+            // 
+            this.DeleMenuItem.Name = "DeleMenuItem";
+            this.DeleMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.DeleMenuItem.Text = "删除分类(D)";
+            this.DeleMenuItem.Click += new System.EventHandler(this.DeleMenuItem_Click);
+            // 
+            // MoveUpMenuItem
+            // 
+            this.MoveUpMenuItem.Name = "MoveUpMenuItem";
+            this.MoveUpMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.MoveUpMenuItem.Text = "上移(&U)";
+            this.MoveUpMenuItem.Click += new System.EventHandler(this.MoveUpMenuItem_Click);
+            // 
+            // MoveDownMenuItem
+            // 
+            this.MoveDownMenuItem.Name = "MoveDownMenuItem";
+            this.MoveDownMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.MoveDownMenuItem.Text = "下移(&M)";
+            this.MoveDownMenuItem.Click += new System.EventHandler(this.MoveDownMenuItem_Click);
             // 
             // NewTopButton
             // 
@@ -126,52 +172,6 @@
             this.ConfirmButton.UseVisualStyleBackColor = true;
             this.ConfirmButton.Click += new System.EventHandler(this.ConfirmButton_Click);
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.NewChildMenuItem,
-            this.RenameMenuItem,
-            this.DeleMenuItem,
-            this.MoveUpMenuItem,
-            this.MoveDownMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(150, 114);
-            // 
-            // NewChildMenuItem
-            // 
-            this.NewChildMenuItem.Name = "NewChildMenuItem";
-            this.NewChildMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.NewChildMenuItem.Text = "增加子分类(&N)";
-            this.NewChildMenuItem.Click += new System.EventHandler(this.NewChildMenuItem_Click);
-            // 
-            // RenameMenuItem
-            // 
-            this.RenameMenuItem.Name = "RenameMenuItem";
-            this.RenameMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.RenameMenuItem.Text = "重命名分类(&R)";
-            this.RenameMenuItem.Click += new System.EventHandler(this.RenameMenuItem_Click);
-            // 
-            // DeleMenuItem
-            // 
-            this.DeleMenuItem.Name = "DeleMenuItem";
-            this.DeleMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.DeleMenuItem.Text = "删除分类(D)";
-            this.DeleMenuItem.Click += new System.EventHandler(this.DeleMenuItem_Click);
-            // 
-            // MoveUpMenuItem
-            // 
-            this.MoveUpMenuItem.Name = "MoveUpMenuItem";
-            this.MoveUpMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.MoveUpMenuItem.Text = "上移(&U)";
-            this.MoveUpMenuItem.Click += new System.EventHandler(this.MoveUpMenuItem_Click);
-            // 
-            // MoveDownMenuItem
-            // 
-            this.MoveDownMenuItem.Name = "MoveDownMenuItem";
-            this.MoveDownMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.MoveDownMenuItem.Text = "下移(&M)";
-            this.MoveDownMenuItem.Click += new System.EventHandler(this.MoveDownMenuItem_Click);
-            // 
             // CategoriesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -183,12 +183,13 @@
             this.Name = "CategoriesForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "产品自定义分类管理";
             this.Load += new System.EventHandler(this.CategoriesForm_Load);
             this.groupBox1.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.CategoryGroup.ResumeLayout(false);
             this.CategoryGroup.PerformLayout();
-            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

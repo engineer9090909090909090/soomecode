@@ -170,6 +170,7 @@
             this.Name = "SupplierForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "编辑供应商信息";
             this.Load += new System.EventHandler(this.SupplierForm_Load);
             this.groupBox1.ResumeLayout(false);

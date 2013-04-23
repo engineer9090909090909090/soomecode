@@ -30,14 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewItemForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.imageSelector = new AliHelper.ImageSelector();
-            this.CategoryTreeBox = new ComboTreeBox();
-            this.ProductPrice = new AliHelper.NumericTextbox();
             this.ProductStatus = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
             this.Minimum = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.AddImageButton = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -66,6 +62,11 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.CannelButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
+            this.imageSelector2 = new AliHelper.ImageSelector();
+            this.imageSelector1 = new AliHelper.ImageSelector();
+            this.imageSelector = new AliHelper.ImageSelector();
+            this.CategoryTreeBox = new ComboTreeBox();
+            this.ProductPrice = new AliHelper.NumericTextbox();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.InfoTab.SuspendLayout();
@@ -76,6 +77,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.imageSelector2);
+            this.groupBox1.Controls.Add(this.imageSelector1);
             this.groupBox1.Controls.Add(this.imageSelector);
             this.groupBox1.Controls.Add(this.CategoryTreeBox);
             this.groupBox1.Controls.Add(this.ProductPrice);
@@ -83,7 +86,6 @@
             this.groupBox1.Controls.Add(this.label14);
             this.groupBox1.Controls.Add(this.Minimum);
             this.groupBox1.Controls.Add(this.label13);
-            this.groupBox1.Controls.Add(this.AddImageButton);
             this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.label10);
@@ -106,46 +108,9 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(6, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(802, 468);
+            this.groupBox1.Size = new System.Drawing.Size(851, 468);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            // 
-            // imageSelector
-            // 
-            this.imageSelector.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("imageSelector.BackgroundImage")));
-            this.imageSelector.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imageSelector.Image = null;
-            this.imageSelector.ImageFile = null;
-            this.imageSelector.Location = new System.Drawing.Point(399, 60);
-            this.imageSelector.Name = "imageSelector";
-            this.imageSelector.OpenFileDirectory = null;
-            this.imageSelector.ShowMenu = true;
-            this.imageSelector.Size = new System.Drawing.Size(125, 125);
-            this.imageSelector.TabIndex = 24;
-            // 
-            // CategoryTreeBox
-            // 
-            this.CategoryTreeBox.DroppedDown = false;
-            this.CategoryTreeBox.Location = new System.Drawing.Point(100, 60);
-            this.CategoryTreeBox.Name = "CategoryTreeBox";
-            this.CategoryTreeBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.CategoryTreeBox.SelectedNode = null;
-            this.CategoryTreeBox.Size = new System.Drawing.Size(250, 20);
-            this.CategoryTreeBox.TabIndex = 2;
-            this.CategoryTreeBox.SelectedNodeChanged += new System.EventHandler(this.CategoryTreeBox_SelectedNodeChanged);
-            // 
-            // ProductPrice
-            // 
-            this.ProductPrice.CommaFormat = false;
-            this.ProductPrice.CurrencyFormat = false;
-            this.ProductPrice.DecimalPrecision = 0;
-            this.ProductPrice.Location = new System.Drawing.Point(98, 137);
-            this.ProductPrice.Name = "ProductPrice";
-            this.ProductPrice.PercentFormat = false;
-            this.ProductPrice.ReadOnly = false;
-            this.ProductPrice.Size = new System.Drawing.Size(227, 24);
-            this.ProductPrice.TabIndex = 4;
-            this.ProductPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
             // ProductStatus
             // 
@@ -184,17 +149,6 @@
             this.label13.Size = new System.Drawing.Size(65, 12);
             this.label13.TabIndex = 0;
             this.label13.Text = "最小订量：";
-            // 
-            // AddImageButton
-            // 
-            this.AddImageButton.Location = new System.Drawing.Point(562, 20);
-            this.AddImageButton.Margin = new System.Windows.Forms.Padding(50, 3, 3, 3);
-            this.AddImageButton.Name = "AddImageButton";
-            this.AddImageButton.Size = new System.Drawing.Size(234, 23);
-            this.AddImageButton.TabIndex = 11;
-            this.AddImageButton.Text = "添加更多图片";
-            this.AddImageButton.UseVisualStyleBackColor = true;
-            this.AddImageButton.Click += new System.EventHandler(this.AddImageButton_Click);
             // 
             // label12
             // 
@@ -244,6 +198,7 @@
             // 
             // PriceCate
             // 
+            this.PriceCate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.PriceCate.FormattingEnabled = true;
             this.PriceCate.Location = new System.Drawing.Point(99, 182);
             this.PriceCate.Name = "PriceCate";
@@ -263,9 +218,9 @@
             // 
             // ImageListView
             // 
-            this.ImageListView.Location = new System.Drawing.Point(562, 51);
+            this.ImageListView.Location = new System.Drawing.Point(562, 22);
             this.ImageListView.Name = "ImageListView";
-            this.ImageListView.Size = new System.Drawing.Size(234, 401);
+            this.ImageListView.Size = new System.Drawing.Size(283, 430);
             this.ImageListView.TabIndex = 12;
             this.ImageListView.UseCompatibleStateImageBehavior = false;
             // 
@@ -397,7 +352,7 @@
             this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(822, 504);
+            this.tabControl1.Size = new System.Drawing.Size(871, 504);
             this.tabControl1.TabIndex = 1;
             // 
             // InfoTab
@@ -407,7 +362,7 @@
             this.InfoTab.Name = "InfoTab";
             this.InfoTab.Padding = new System.Windows.Forms.Padding(3);
             this.InfoTab.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.InfoTab.Size = new System.Drawing.Size(814, 479);
+            this.InfoTab.Size = new System.Drawing.Size(863, 479);
             this.InfoTab.TabIndex = 0;
             this.InfoTab.Text = "基本信息";
             this.InfoTab.UseVisualStyleBackColor = true;
@@ -418,7 +373,7 @@
             this.DetailTab.Location = new System.Drawing.Point(4, 21);
             this.DetailTab.Name = "DetailTab";
             this.DetailTab.Padding = new System.Windows.Forms.Padding(3);
-            this.DetailTab.Size = new System.Drawing.Size(814, 479);
+            this.DetailTab.Size = new System.Drawing.Size(863, 479);
             this.DetailTab.TabIndex = 1;
             this.DetailTab.Text = "产品详情";
             this.DetailTab.UseVisualStyleBackColor = true;
@@ -429,7 +384,7 @@
             this.webBrowser1.Location = new System.Drawing.Point(3, 3);
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(808, 473);
+            this.webBrowser1.Size = new System.Drawing.Size(857, 473);
             this.webBrowser1.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -447,7 +402,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(822, 534);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(871, 534);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // flowLayoutPanel1
@@ -458,12 +413,12 @@
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 504);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(822, 30);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(871, 30);
             this.flowLayoutPanel1.TabIndex = 2;
             // 
             // CannelButton
             // 
-            this.CannelButton.Location = new System.Drawing.Point(667, 3);
+            this.CannelButton.Location = new System.Drawing.Point(716, 3);
             this.CannelButton.Margin = new System.Windows.Forms.Padding(80, 3, 3, 3);
             this.CannelButton.Name = "CannelButton";
             this.CannelButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -475,7 +430,7 @@
             // 
             // SaveButton
             // 
-            this.SaveButton.Location = new System.Drawing.Point(569, 3);
+            this.SaveButton.Location = new System.Drawing.Point(618, 3);
             this.SaveButton.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -485,11 +440,74 @@
             this.SaveButton.UseVisualStyleBackColor = true;
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
+            // imageSelector2
+            // 
+            this.imageSelector2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("imageSelector2.BackgroundImage")));
+            this.imageSelector2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imageSelector2.Image = null;
+            this.imageSelector2.ImageFile = null;
+            this.imageSelector2.Location = new System.Drawing.Point(710, 30);
+            this.imageSelector2.Name = "imageSelector2";
+            this.imageSelector2.OpenFileDirectory = null;
+            this.imageSelector2.ShowMenu = true;
+            this.imageSelector2.Size = new System.Drawing.Size(125, 125);
+            this.imageSelector2.TabIndex = 26;
+            // 
+            // imageSelector1
+            // 
+            this.imageSelector1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("imageSelector1.BackgroundImage")));
+            this.imageSelector1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imageSelector1.Image = null;
+            this.imageSelector1.ImageFile = null;
+            this.imageSelector1.Location = new System.Drawing.Point(573, 31);
+            this.imageSelector1.Name = "imageSelector1";
+            this.imageSelector1.OpenFileDirectory = null;
+            this.imageSelector1.ShowMenu = true;
+            this.imageSelector1.Size = new System.Drawing.Size(125, 125);
+            this.imageSelector1.TabIndex = 25;
+            // 
+            // imageSelector
+            // 
+            this.imageSelector.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("imageSelector.BackgroundImage")));
+            this.imageSelector.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imageSelector.Image = null;
+            this.imageSelector.ImageFile = null;
+            this.imageSelector.Location = new System.Drawing.Point(399, 60);
+            this.imageSelector.Name = "imageSelector";
+            this.imageSelector.OpenFileDirectory = null;
+            this.imageSelector.ShowMenu = true;
+            this.imageSelector.Size = new System.Drawing.Size(125, 125);
+            this.imageSelector.TabIndex = 24;
+            // 
+            // CategoryTreeBox
+            // 
+            this.CategoryTreeBox.DroppedDown = false;
+            this.CategoryTreeBox.Location = new System.Drawing.Point(100, 60);
+            this.CategoryTreeBox.Name = "CategoryTreeBox";
+            this.CategoryTreeBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.CategoryTreeBox.SelectedNode = null;
+            this.CategoryTreeBox.Size = new System.Drawing.Size(250, 20);
+            this.CategoryTreeBox.TabIndex = 2;
+            this.CategoryTreeBox.SelectedNodeChanged += new System.EventHandler(this.CategoryTreeBox_SelectedNodeChanged);
+            // 
+            // ProductPrice
+            // 
+            this.ProductPrice.CommaFormat = false;
+            this.ProductPrice.CurrencyFormat = false;
+            this.ProductPrice.DecimalPrecision = 0;
+            this.ProductPrice.Location = new System.Drawing.Point(98, 137);
+            this.ProductPrice.Name = "ProductPrice";
+            this.ProductPrice.PercentFormat = false;
+            this.ProductPrice.ReadOnly = false;
+            this.ProductPrice.Size = new System.Drawing.Size(227, 24);
+            this.ProductPrice.TabIndex = 4;
+            this.ProductPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            // 
             // NewItemForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(822, 534);
+            this.ClientSize = new System.Drawing.Size(871, 534);
             this.Controls.Add(this.tableLayoutPanel1);
             this.MaximizeBox = false;
             this.Name = "NewItemForm";
@@ -537,7 +555,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Button AddImageButton;
         private System.Windows.Forms.WebBrowser webBrowser1;
         private NumericTextbox Price;
         private System.Windows.Forms.TextBox Minimum;
@@ -547,5 +564,7 @@
         private NumericTextbox ProductPrice;
         private ComboTreeBox CategoryTreeBox;
         private ImageSelector imageSelector;
+        private ImageSelector imageSelector2;
+        private ImageSelector imageSelector1;
     }
 }
