@@ -187,8 +187,11 @@ namespace Database
         {
             string sql = "SELECT Id,CateName, UsePrice1, Price1Name, Price1Val, UsePrice2, Price2Name, Price2Val, UsePrice3, Price3Name, Price3Val, ";
             sql = sql + " UsePrice4, Price4Name, Price4Val, UsePrice5, Price5Name, Price5Val, Status FROM PriceCate";
-            query.RecordCount = dbHelper.GetItemCount(sql, null);
-            sql = sql + " order by id asc limit " + query.Start + ", " + query.PageSize;
+            if (!query.IsExport)
+            {
+                query.RecordCount = dbHelper.GetItemCount(sql, null);
+                sql = sql + " order by id asc limit " + query.Start + ", " + query.PageSize;
+            }
             DataTable dt = dbHelper.ExecuteDataTable(sql, null);
             query.Result = DataTableToPriceCateList(dt);
             return query;
@@ -220,7 +223,7 @@ namespace Database
 
                 kw.UsePrice5 = Convert.ToBoolean(row["UsePrice5"]);
                 kw.Price5Name = (string)row["Price5Name"];
-                kw.Price5Val = Convert.ToDouble(row["Price1Va5"]);
+                kw.Price5Val = Convert.ToDouble(row["Price5Val"]);
                 kw.Status = (string)row["Status"];
                 list.Add(kw);
             }
@@ -245,7 +248,7 @@ namespace Database
                           + "values(@CateName, @UsePrice1, @Price1Name,@Price1Val, @UsePrice2, @Price2Name, @Price2Val, @UsePrice3, @Price3Name, @Price3Val,"
                           + "@UsePrice4, @Price4Name, @Price4Val, @UsePrice5, @Price5Name, @Price5Val, @Status)";
             string UpdSql = @"Update PriceCate SET CateName=@CateName,UsePrice1=@UsePrice1, Price1Name=@Price1Name, Price1Val=@Price1Val, "
-                            + "UsePrice2=@UsePrice2, Price2Name=@Price2Name, Price2Val=@Price2Val, UsePrice3=@UsePrice3, Price3Name=@UsePrice3,"
+                            + "UsePrice2=@UsePrice2, Price2Name=@Price2Name, Price2Val=@Price2Val, UsePrice3=@UsePrice3, Price3Name=@Price3Name,"
                             + "Price3Val=@Price3Val, UsePrice4=@UsePrice4, Price4Name=@Price4Name, Price4Val=@Price4Val, UsePrice5=@UsePrice5,  "
                             + "Price5Name=@Price5Name,Price5Val=@Price5Val, Status=@Status WHERE Id = @Id";
             MySqlParameter[] parameter = new MySqlParameter[]

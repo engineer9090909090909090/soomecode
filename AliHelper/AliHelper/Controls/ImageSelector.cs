@@ -19,8 +19,9 @@ namespace AliHelper
             InitializeComponent();
         }
 
+        [Category("自定义属性"), Description("是否显示右键菜单")]
         public bool ShowMenu { set; get; }
-
+        [Category("自定义属性"), Description("Image")]
         public Image Image
         {
             get
@@ -39,7 +40,7 @@ namespace AliHelper
                 this.BackgroundImage = value;
             }
         }
-
+        [Category("自定义属性"), Description("ImageFile")]
         public string ImageFile
         {
             get
@@ -60,7 +61,7 @@ namespace AliHelper
                 }
             }
         }
-
+        [Category("自定义属性"), Description("Default OpenFile Directory")]
         public string OpenFileDirectory { set; get; }
         
         private void FileSelectMenuItem_Click(object sender, EventArgs e)
@@ -136,7 +137,7 @@ namespace AliHelper
             this.ImageFile = string.Empty;
         }
 
-        void f_Click(object sender, EventArgs e)
+        private void f_Click(object sender, EventArgs e)
         {
             Form f = (Form)sender;
             f.Close();

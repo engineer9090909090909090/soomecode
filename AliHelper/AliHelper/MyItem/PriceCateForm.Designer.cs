@@ -386,6 +386,7 @@
             this.Name = "PriceCateForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "新增价格种类";
             this.Load += new System.EventHandler(this.PriceCateForm_Load);
             this.groupBox1.ResumeLayout(false);
