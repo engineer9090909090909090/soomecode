@@ -1,4 +1,4 @@
-﻿namespace AliHelper.MyItem
+﻿namespace AliHelper
 {
     partial class MyItemsListView
     {
@@ -106,6 +106,7 @@
             this.FinDetailQueryBtn.TabIndex = 8;
             this.FinDetailQueryBtn.Text = "查询(&Q)";
             this.FinDetailQueryBtn.UseVisualStyleBackColor = true;
+            this.FinDetailQueryBtn.Click += new System.EventHandler(this.FinDetailQueryBtn_Click);
             // 
             // ProductName
             // 
@@ -150,13 +151,14 @@
             this.pager.TabIndex = 4;
             this.pager.PageIndexChanged += new System.EventHandler(this.pager_PageIndexChanged);
             // 
-            // MyItemsList
+            // MyItemsListView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "MyItemsList";
+            this.Name = "MyItemsListView";
             this.Size = new System.Drawing.Size(783, 482);
+            this.Load += new System.EventHandler(this.MyItemsListView_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FinDetailGroup)).EndInit();

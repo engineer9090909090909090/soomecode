@@ -287,7 +287,7 @@ namespace Database
             dbHelper.ExecuteNonQuery("delete from PriceCate WHERE Id = " + Id);
         }
 
-        public void InsertOrUpdateProduct(Product item)
+        public int InsertOrUpdateProduct(Product item)
         {
             string InsSql = @"INSERT INTO Product(CategoryId, Name, Model, Price,PriceCate, Minimum,Size, Weight, Packing,Description, Sort,Status,CreatedTime,ModifiedTime)"
                             + "values(@CategoryId, @Name, @Model, @Price,@PriceCate, @Minimum,@Size, @Weight, @Packing,@Description, @Sort,@Status,@CreatedTime,@ModifiedTime)";
@@ -314,12 +314,23 @@ namespace Database
             };
             if (item.Id == 0)
             {
-                dbHelper.ExecuteNonQuery(InsSql, parameter);
+                using (MySqlConnection connection = dbHelper.GetConnection())
+                {
+                    connection.Open();
+                    using (DbTransaction transaction = connection.BeginTransaction())
+                    {
+                        dbHelper.ExecuteNonQuery(transaction, InsSql, parameter);
+                        item.Id = dbHelper.GetLastInsertId(transaction);
+                        transaction.Commit();
+                    }
+                }
             }
             else
             {
                 dbHelper.ExecuteNonQuery(UpdSql, parameter);
+                return item.Id;
             }
+            return item.Id;
         }
 
         public Product GetProductById(int id)
@@ -352,6 +363,7 @@ namespace Database
                 info.Sort = Convert.ToInt32(row["Sort"]);
                 info.Status = (string)row["Status"];
                 info.Description = (string)row["Description"];
+                info.Image = GetMainImageByProductId(info.Id);
                 list.Add(info);
             }
             return list;
@@ -359,7 +371,7 @@ namespace Database
 
         public QueryObject<Product> GetProducts(QueryObject<Product> query)
         {
-            string sql = "select Id, CategoryId, Name, Model, Price,PriceCate, Minimum,Size, Weight, Packing,Sort,Status FROM Product where 1 = 1 ";
+            string sql = "select Id, CategoryId, Name, Model, Price,PriceCate, Minimum,Size, Weight,Description, Packing,Sort,Status FROM Product where 1 = 1 ";
             List<MySqlParameter> QueryParameters = new List<MySqlParameter>();
             if (query.Condition != null)
             {
@@ -429,6 +441,25 @@ namespace Database
         public void DeleteProductImage(int ProductImageId)
         {
             dbHelper.ExecuteNonQuery("delete from Product_Image WHERE Id = " + ProductImageId);
+        }
+
+        private ProductImage GetMainImageByProductId(int ProductId)
+        {
+            string sql = "SELECT Id, ProductId, Image,IsMain,CreatedTime,ModifiedTime "
+                       + " FROM Product_Image where ProductId = "
+                       + ProductId + " and IsMain = 1 limit 0,1";
+            DataTable dt = dbHelper.ExecuteDataTable(sql, null);
+            foreach (DataRow row in dt.Rows)
+            {
+                ProductImage kw = new ProductImage();
+                kw.Id = Convert.ToInt32(row["Id"]);
+                kw.ProductId = Convert.ToInt32(row["ProductId"]);
+                kw.IsMain = Convert.ToBoolean(row["IsMain"]);
+                kw.CreatedTime = Convert.ToDateTime(row["CreatedTime"]);
+                kw.ModifiedTime = Convert.ToDateTime(row["ModifiedTime"]);
+                return kw;
+            }
+            return null;
         }
 
         public List<ProductImage> GetImagesInfoByProductId(int ProductId)

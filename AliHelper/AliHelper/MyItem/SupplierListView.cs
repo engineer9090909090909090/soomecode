@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Soomes;
 
-namespace AliHelper.MyItem
+namespace AliHelper
 {
     public partial class SupplierListView : UserControl
     {
