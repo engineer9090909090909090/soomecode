@@ -29,10 +29,17 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewItemForm));
+            ComboTreeNode comboTreeNode1 = new ComboTreeNode();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.Minimum = new AliHelper.NumericTextbox();
+            this.imageSelector2 = new AliHelper.ImageSelector();
+            this.imageSelector1 = new AliHelper.ImageSelector();
+            this.imageSelector = new AliHelper.ImageSelector();
+            this.CategoryTreeBox = new ComboTreeBox();
+            this.ProductPrice = new AliHelper.NumericTextbox();
             this.ProductStatus = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.Minimum = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -62,11 +69,7 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.CannelButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
-            this.imageSelector2 = new AliHelper.ImageSelector();
-            this.imageSelector1 = new AliHelper.ImageSelector();
-            this.imageSelector = new AliHelper.ImageSelector();
-            this.CategoryTreeBox = new ComboTreeBox();
-            this.ProductPrice = new AliHelper.NumericTextbox();
+            this.numericTextbox1 = new AliHelper.NumericTextbox();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.InfoTab.SuspendLayout();
@@ -77,6 +80,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label15);
+            this.groupBox1.Controls.Add(this.Minimum);
             this.groupBox1.Controls.Add(this.imageSelector2);
             this.groupBox1.Controls.Add(this.imageSelector1);
             this.groupBox1.Controls.Add(this.imageSelector);
@@ -84,7 +89,6 @@
             this.groupBox1.Controls.Add(this.ProductPrice);
             this.groupBox1.Controls.Add(this.ProductStatus);
             this.groupBox1.Controls.Add(this.label14);
-            this.groupBox1.Controls.Add(this.Minimum);
             this.groupBox1.Controls.Add(this.label13);
             this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.label11);
@@ -112,6 +116,94 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(329, 268);
+            this.label15.Name = "label15";
+            this.label15.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label15.Size = new System.Drawing.Size(23, 12);
+            this.label15.TabIndex = 28;
+            this.label15.Text = "PCS";
+            // 
+            // Minimum
+            // 
+            this.Minimum.CommaFormat = false;
+            this.Minimum.CurrencyFormat = false;
+            this.Minimum.DecimalPrecision = 0;
+            this.Minimum.Location = new System.Drawing.Point(100, 263);
+            this.Minimum.Name = "Minimum";
+            this.Minimum.PercentFormat = false;
+            this.Minimum.ReadOnly = false;
+            this.Minimum.Size = new System.Drawing.Size(227, 24);
+            this.Minimum.TabIndex = 8;
+            this.Minimum.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            // 
+            // imageSelector2
+            // 
+            this.imageSelector2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("imageSelector2.BackgroundImage")));
+            this.imageSelector2.Image = null;
+            this.imageSelector2.ImageFile = null;
+            this.imageSelector2.Location = new System.Drawing.Point(709, 28);
+            this.imageSelector2.Name = "imageSelector2";
+            this.imageSelector2.OpenFileDirectory = null;
+            this.imageSelector2.ShowMenu = true;
+            this.imageSelector2.Size = new System.Drawing.Size(125, 125);
+            this.imageSelector2.TabIndex = 26;
+            // 
+            // imageSelector1
+            // 
+            this.imageSelector1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("imageSelector1.BackgroundImage")));
+            this.imageSelector1.Image = null;
+            this.imageSelector1.ImageFile = null;
+            this.imageSelector1.Location = new System.Drawing.Point(573, 29);
+            this.imageSelector1.Name = "imageSelector1";
+            this.imageSelector1.OpenFileDirectory = null;
+            this.imageSelector1.ShowMenu = true;
+            this.imageSelector1.Size = new System.Drawing.Size(125, 125);
+            this.imageSelector1.TabIndex = 25;
+            // 
+            // imageSelector
+            // 
+            this.imageSelector.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("imageSelector.BackgroundImage")));
+            this.imageSelector.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.imageSelector.Image = null;
+            this.imageSelector.ImageFile = null;
+            this.imageSelector.Location = new System.Drawing.Point(399, 60);
+            this.imageSelector.Name = "imageSelector";
+            this.imageSelector.OpenFileDirectory = null;
+            this.imageSelector.ShowMenu = true;
+            this.imageSelector.Size = new System.Drawing.Size(125, 125);
+            this.imageSelector.TabIndex = 4;
+            // 
+            // CategoryTreeBox
+            // 
+            this.CategoryTreeBox.DroppedDown = false;
+            this.CategoryTreeBox.Location = new System.Drawing.Point(100, 60);
+            this.CategoryTreeBox.Name = "CategoryTreeBox";
+            comboTreeNode1.Expanded = false;
+            comboTreeNode1.Text = "";
+            this.CategoryTreeBox.Nodes.Add(comboTreeNode1);
+            this.CategoryTreeBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.CategoryTreeBox.SelectedNode = null;
+            this.CategoryTreeBox.Size = new System.Drawing.Size(250, 20);
+            this.CategoryTreeBox.TabIndex = 2;
+            this.CategoryTreeBox.TopNode = comboTreeNode1;
+            this.CategoryTreeBox.SelectedNodeChanged += new System.EventHandler(this.CategoryTreeBox_SelectedNodeChanged);
+            // 
+            // ProductPrice
+            // 
+            this.ProductPrice.CommaFormat = false;
+            this.ProductPrice.CurrencyFormat = false;
+            this.ProductPrice.DecimalPrecision = 0;
+            this.ProductPrice.Location = new System.Drawing.Point(98, 137);
+            this.ProductPrice.Name = "ProductPrice";
+            this.ProductPrice.PercentFormat = false;
+            this.ProductPrice.ReadOnly = false;
+            this.ProductPrice.Size = new System.Drawing.Size(227, 24);
+            this.ProductPrice.TabIndex = 5;
+            this.ProductPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            // 
             // ProductStatus
             // 
             this.ProductStatus.FormattingEnabled = true;
@@ -119,7 +211,7 @@
             this.ProductStatus.Name = "ProductStatus";
             this.ProductStatus.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ProductStatus.Size = new System.Drawing.Size(426, 20);
-            this.ProductStatus.TabIndex = 10;
+            this.ProductStatus.TabIndex = 11;
             // 
             // label14
             // 
@@ -130,15 +222,6 @@
             this.label14.Size = new System.Drawing.Size(65, 12);
             this.label14.TabIndex = 0;
             this.label14.Text = "状　　态：";
-            // 
-            // Minimum
-            // 
-            this.Minimum.Location = new System.Drawing.Point(99, 263);
-            this.Minimum.Name = "Minimum";
-            this.Minimum.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.Minimum.Size = new System.Drawing.Size(425, 21);
-            this.Minimum.TabIndex = 7;
-            this.Minimum.Text = "100";
             // 
             // label13
             // 
@@ -204,7 +287,7 @@
             this.PriceCate.Name = "PriceCate";
             this.PriceCate.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.PriceCate.Size = new System.Drawing.Size(250, 20);
-            this.PriceCate.TabIndex = 5;
+            this.PriceCate.TabIndex = 6;
             // 
             // label8
             // 
@@ -249,7 +332,7 @@
             this.Packing.Name = "Packing";
             this.Packing.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Packing.Size = new System.Drawing.Size(425, 65);
-            this.Packing.TabIndex = 9;
+            this.Packing.TabIndex = 10;
             // 
             // Weight
             // 
@@ -257,7 +340,7 @@
             this.Weight.Name = "Weight";
             this.Weight.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Weight.Size = new System.Drawing.Size(425, 21);
-            this.Weight.TabIndex = 8;
+            this.Weight.TabIndex = 9;
             // 
             // Size
             // 
@@ -265,7 +348,7 @@
             this.Size.Name = "Size";
             this.Size.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Size.Size = new System.Drawing.Size(425, 21);
-            this.Size.TabIndex = 6;
+            this.Size.TabIndex = 7;
             // 
             // ProductModel
             // 
@@ -440,68 +523,18 @@
             this.SaveButton.UseVisualStyleBackColor = true;
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
-            // imageSelector2
+            // numericTextbox1
             // 
-            this.imageSelector2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("imageSelector2.BackgroundImage")));
-            this.imageSelector2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imageSelector2.Image = null;
-            this.imageSelector2.ImageFile = null;
-            this.imageSelector2.Location = new System.Drawing.Point(710, 30);
-            this.imageSelector2.Name = "imageSelector2";
-            this.imageSelector2.OpenFileDirectory = null;
-            this.imageSelector2.ShowMenu = true;
-            this.imageSelector2.Size = new System.Drawing.Size(125, 125);
-            this.imageSelector2.TabIndex = 26;
-            // 
-            // imageSelector1
-            // 
-            this.imageSelector1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("imageSelector1.BackgroundImage")));
-            this.imageSelector1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imageSelector1.Image = null;
-            this.imageSelector1.ImageFile = null;
-            this.imageSelector1.Location = new System.Drawing.Point(573, 31);
-            this.imageSelector1.Name = "imageSelector1";
-            this.imageSelector1.OpenFileDirectory = null;
-            this.imageSelector1.ShowMenu = true;
-            this.imageSelector1.Size = new System.Drawing.Size(125, 125);
-            this.imageSelector1.TabIndex = 25;
-            // 
-            // imageSelector
-            // 
-            this.imageSelector.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("imageSelector.BackgroundImage")));
-            this.imageSelector.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imageSelector.Image = null;
-            this.imageSelector.ImageFile = null;
-            this.imageSelector.Location = new System.Drawing.Point(399, 60);
-            this.imageSelector.Name = "imageSelector";
-            this.imageSelector.OpenFileDirectory = null;
-            this.imageSelector.ShowMenu = true;
-            this.imageSelector.Size = new System.Drawing.Size(125, 125);
-            this.imageSelector.TabIndex = 24;
-            // 
-            // CategoryTreeBox
-            // 
-            this.CategoryTreeBox.DroppedDown = false;
-            this.CategoryTreeBox.Location = new System.Drawing.Point(100, 60);
-            this.CategoryTreeBox.Name = "CategoryTreeBox";
-            this.CategoryTreeBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.CategoryTreeBox.SelectedNode = null;
-            this.CategoryTreeBox.Size = new System.Drawing.Size(250, 20);
-            this.CategoryTreeBox.TabIndex = 2;
-            this.CategoryTreeBox.SelectedNodeChanged += new System.EventHandler(this.CategoryTreeBox_SelectedNodeChanged);
-            // 
-            // ProductPrice
-            // 
-            this.ProductPrice.CommaFormat = false;
-            this.ProductPrice.CurrencyFormat = false;
-            this.ProductPrice.DecimalPrecision = 0;
-            this.ProductPrice.Location = new System.Drawing.Point(98, 137);
-            this.ProductPrice.Name = "ProductPrice";
-            this.ProductPrice.PercentFormat = false;
-            this.ProductPrice.ReadOnly = false;
-            this.ProductPrice.Size = new System.Drawing.Size(227, 24);
-            this.ProductPrice.TabIndex = 4;
-            this.ProductPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.numericTextbox1.CommaFormat = false;
+            this.numericTextbox1.CurrencyFormat = false;
+            this.numericTextbox1.DecimalPrecision = 0;
+            this.numericTextbox1.Location = new System.Drawing.Point(100, 263);
+            this.numericTextbox1.Name = "numericTextbox1";
+            this.numericTextbox1.PercentFormat = false;
+            this.numericTextbox1.ReadOnly = false;
+            this.numericTextbox1.Size = new System.Drawing.Size(227, 24);
+            this.numericTextbox1.TabIndex = 27;
+            this.numericTextbox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
             // NewItemForm
             // 
@@ -557,7 +590,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.WebBrowser webBrowser1;
         private NumericTextbox Price;
-        private System.Windows.Forms.TextBox Minimum;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ComboBox ProductStatus;
         private System.Windows.Forms.Label label14;
@@ -566,5 +598,8 @@
         private ImageSelector imageSelector;
         private ImageSelector imageSelector2;
         private ImageSelector imageSelector1;
+        private System.Windows.Forms.Label label15;
+        private NumericTextbox Minimum;
+        private NumericTextbox numericTextbox1;
     }
 }

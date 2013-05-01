@@ -13,7 +13,6 @@ using Soomes;
 using System.Collections;
 using System.Resources;
 using System.Reflection;
-using AliHelper.MyItem;
 
 namespace AliHelper
 {
@@ -985,6 +984,8 @@ namespace AliHelper
                 LoadMyItemsListView();
                 TreeNode currentNode = e.Node;
                 MyItemsListView view = (MyItemsListView)Explorer.Controls[0];
+                view.selectedCategory = (Categories)currentNode.Tag;
+                view.BindDataWithPage(1);
             }
         }
     }

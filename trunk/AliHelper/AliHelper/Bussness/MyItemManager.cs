@@ -12,6 +12,7 @@ namespace AliHelper
         public IProductDao productDao;
         static public event NewEditItemEvent OnEditCategoryEvent;
         static public event NewEditItemEvent OnEditPriceCateEvent;
+        static public event NewEditItemEvent OnEditProductEvent;
 
         public virtual void FireEditCategoryEvent(object o)
         {
@@ -28,6 +29,15 @@ namespace AliHelper
             {
                 ItemEventArgs e = new ItemEventArgs(o);
                 OnEditPriceCateEvent(this, e);
+            }
+        }
+
+        public virtual void FireEditProductEvent(object o)
+        {
+            if (MyItemManager.OnEditProductEvent != null)
+            {
+                ItemEventArgs e = new ItemEventArgs(o);
+                OnEditProductEvent(this, e);
             }
         }
 
@@ -97,9 +107,21 @@ namespace AliHelper
             FireEditPriceCateEvent(Id);
         }
 
-        public void InsertOrUpdateProduct(Product item)
+        public int InsertOrUpdateProduct(Product item, List<ProductImage> imageFiles)
         {
-            productDao.InsertOrUpdateProduct(item);
+            int productId = productDao.InsertOrUpdateProduct(item);
+            if (imageFiles != null && imageFiles.Count > 0)
+            {
+                foreach(ProductImage image in imageFiles)
+                {
+                    if (image.Id == 0)
+                    {
+                        image.ProductId = productId;
+                        productDao.InsertProductImage(image);
+                    }
+                }
+            }
+            return productId;
         }
 
         public Product GetProductById(int id)

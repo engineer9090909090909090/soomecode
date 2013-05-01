@@ -56,6 +56,7 @@ namespace Soomes
         public string Status { set; get; }
         public DateTime CreatedTime { set; get; }
         public DateTime ModifiedTime { set; get; }
+        public ProductImage Image { set; get; }
     }
     public class ProductImage
     {

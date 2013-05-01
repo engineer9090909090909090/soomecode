@@ -44,6 +44,16 @@ namespace AliHelper
             return imageDir;
         }
 
+        public static string GetMyItemImage(int productId, int imageId)
+        {
+            string imageDir = GetUserDataFolder() + Path.DirectorySeparatorChar + Constants.MyItemImages;
+            if (!Directory.Exists(imageDir))
+            {
+                Directory.CreateDirectory(imageDir);
+            }
+            return imageDir + Path.DirectorySeparatorChar + productId + "_" + imageId + ".jpg";
+        }
+
         public static string GetAppDataFolder()
         {
             string AppDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
@@ -164,6 +174,68 @@ namespace AliHelper
         public static Color GetColor(double amount)
         {
             return (amount > 0) ? Color.Blue : Color.Red;
+        }
+
+
+        public static Image BufferToImage(byte[] Buffer)
+        {
+            if (Buffer == null || Buffer.Length == 0) { return null; }
+            byte[] data = null;
+            Image oImage = null;
+            Bitmap oBitmap = null;
+            data = (byte[])Buffer.Clone();//建立副本
+            try
+            {
+                MemoryStream oMemoryStream = new MemoryStream(Buffer);//設定資料流位置
+                oMemoryStream.Position = 0;
+                oImage = System.Drawing.Image.FromStream(oMemoryStream);
+                oBitmap = new Bitmap(oImage);//建立副本
+            }
+            catch
+            {
+                throw;
+            }
+            return oBitmap;
+        }
+
+        /// <summary>
+        /// 將 Image 轉換為 Byte 陣列。
+        /// </summary>
+        /// <param name="Image">Image 。</param>
+        /// <param name="imageFormat">指定影像格式。System.Drawing.Imaging.ImageFormat.JPEG</param>  
+        public static byte[] ImageToBuffer(Image Image, System.Drawing.Imaging.ImageFormat imageFormat)
+        {
+            if (Image == null) { return null; }
+            byte[] data = null;
+            using (MemoryStream oMemoryStream = new MemoryStream())
+            {
+                using (Bitmap oBitmap = new Bitmap(Image))//建立副本
+                {
+                    //儲存圖片到 MemoryStream 物件，並且指定儲存影像之格式
+                    oBitmap.Save(oMemoryStream, imageFormat);//設定資料流位置
+                    oMemoryStream.Position = 0; //設定 buffer 長度
+                    data = new byte[oMemoryStream.Length];//將資料寫入 buffer
+                    oMemoryStream.Read(data, 0, Convert.ToInt32(oMemoryStream.Length));
+                    oMemoryStream.Flush();//將所有緩衝區的資料寫入資料流
+                }
+            }
+            return data;
+        }
+
+        public static byte[] ImageFileToToBuffer(string imageFile)
+        {
+            if (string.IsNullOrEmpty(imageFile) || !File.Exists(imageFile))
+            {
+                return null;
+            }
+            return FileUtils.ImageToBuffer(Image.FromFile(imageFile), System.Drawing.Imaging.ImageFormat.Jpeg);
+        }
+
+        public static void BufferToImageFile( byte[] buffer, string imageFile)
+        {
+            Image image = FileUtils.BufferToImage(buffer);
+            image.Save(imageFile);
+            image.Dispose();
         }
     }
 }

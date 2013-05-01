@@ -32,7 +32,7 @@ namespace Database
 
         void DeletePriceCate(int Id);
 
-        void InsertOrUpdateProduct(Product item);
+        int InsertOrUpdateProduct(Product item);
 
         Product GetProductById(int id);
 

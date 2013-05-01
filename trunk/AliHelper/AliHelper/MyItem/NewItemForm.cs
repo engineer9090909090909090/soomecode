@@ -19,7 +19,7 @@ namespace AliHelper
         public NewItemForm()
         {
             InitializeComponent();
-            webBrowser1.Navigate(Application.StartupPath + "\\KindEditor\\Editor.htm");
+            webBrowser1.Navigate(Application.StartupPath + "\\KindEditor\\Editor1.htm");
             manager = new MyItemManager();
         }
 
@@ -30,6 +30,7 @@ namespace AliHelper
             this.ProductStatus.DataSource = manager.GetAppDicOptions(Constants.ProductStatus);
             this.PriceCate.DisplayMember = "CateName";
             this.PriceCate.ValueMember = "Id";
+            this.Minimum.Text = "100";
             QueryObject<PriceCate> query = new QueryObject<PriceCate>();
             query.IsExport = true;
             this.PriceCate.DataSource = manager.GetPriceCates(query).Result;
@@ -46,10 +47,10 @@ namespace AliHelper
             this.ProductName.Text = obj.Name;
             this.ProductModel.Text = obj.Model;
             this.Weight.Text = obj.Weight;
+            this.ProductPrice.Text = obj.Price.ToString("###0.00");
             this.Size.Text = obj.Size;
             this.Minimum.Text = obj.Minimum.ToString();
             this.Packing.Text = obj.Packing;
-            AliHelperUtils.LoadAppDicComboBoxValue(this.PriceCate, obj.PriceCate.ToString());
             AliHelperUtils.LoadAppDicComboBoxValue(this.ProductStatus, obj.Status);
             LoadPriceCateComboBoxValue(this.PriceCate, obj.PriceCate);
             this.selectedCategory = new Categories();
@@ -128,6 +129,11 @@ namespace AliHelper
                 MessageBox.Show("产品型号必须填写!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            if (string.IsNullOrEmpty(this.imageSelector.ImageFile))
+            {
+                MessageBox.Show("产品图片必须!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             Product item = new Product();
             item.Name = this.ProductName.Text.Trim();
             item.Model = this.ProductModel.Text.Trim();
@@ -141,6 +147,12 @@ namespace AliHelper
             item.Status = ((AppDic)this.ProductStatus.SelectedItem).Key;
             item.Description = (string)this.webBrowser1.Document.InvokeScript("GetData", null);
 
+            List<ProductImage> imageList = new List<ProductImage>();
+            ProductImage mainImage = new ProductImage();
+            mainImage.IsMain = true;
+            mainImage.Image = FileUtils.ImageFileToToBuffer(imageSelector.ImageFile);
+            imageList.Add(mainImage);
+            manager.InsertOrUpdateProduct(item, imageList);
 
             this.Close();
         }

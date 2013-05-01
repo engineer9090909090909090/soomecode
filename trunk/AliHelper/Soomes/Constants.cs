@@ -33,6 +33,8 @@ namespace Soomes
 
         public const string ProductImages = "ProductImages";
 
+        public const string MyItemImages = "MyItemImages";
+
         public const string IMAGE_DIR = "Images";
 
         public const string YES = "1";

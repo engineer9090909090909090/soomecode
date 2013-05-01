@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.myItemsList1 = new AliHelper.MyItem.MyItemsListView();
+            this.myItemsList1 = new AliHelper.MyItemsListView();
             this.SuspendLayout();
             // 
             // myItemsList1
@@ -55,7 +55,7 @@
 
         #endregion
 
-        private MyItem.MyItemsListView myItemsList1;
+        private MyItemsListView myItemsList1;
 
 
 
