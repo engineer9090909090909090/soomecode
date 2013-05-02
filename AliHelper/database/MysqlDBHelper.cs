@@ -291,11 +291,9 @@ namespace Database
                     if (reader.HasRows)
                     {
                         reader.Read();
-                        long len = reader.GetBytes(0, 0, null, 0, 0);//1是picture  
+                        long len = reader.GetBytes(0, 0, null, 0, 0);//第一列
                         buffer = new byte[len];
-                        len = reader.GetBytes(1, 0, buffer, 0, (int)(len - 1));
-                        //System.IO.MemoryStream ms = new System.IO.MemoryStream(buffer);
-                        //System.Drawing.Image iamge = System.Drawing.Image.FromStream(ms);
+                        len = reader.GetBytes(0, 0, buffer, 0, (int)(len - 1));
                     }
                 }
                 finally
