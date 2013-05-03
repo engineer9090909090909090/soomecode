@@ -64,6 +64,7 @@ namespace Soomes
         public int ProductId { set; get; }
         public bool IsMain { set; get; }
         public byte[] Image { set; get; }
+        public Int64 Size { set; get; }
         public DateTime CreatedTime { set; get; }
         public DateTime ModifiedTime { set; get; }
     }

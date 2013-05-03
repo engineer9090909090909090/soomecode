@@ -28,6 +28,7 @@ namespace Soomes
         public string AliID { get; set; }
         public string CsrfToken { get; set; }
         public string CheckCodeUrl { get; set; }
+        
 
         public Dictionary<string, string> DicTypeOptions { set; get; }
 
@@ -37,5 +38,11 @@ namespace Soomes
         public List<FormElement> SupplyUnitOptions { set; get; }
         public List<FormElement> SupplyPeriodOptions { set; get; }
         public List<FormElement> GroupListOptions { set; get; }
+
+
+        ///
+        //MyItem
+        ///
+        public Categories SelectedCategory { get; set; }
     }
 }
