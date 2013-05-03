@@ -42,7 +42,7 @@ namespace Database
 
         byte[] GetProductImage(int ProductImageId);
 
-        void InsertProductImage(ProductImage item);
+        void InsertOrProductImage(ProductImage item);
 
         void DeleteProductImage(int ProductImageId);
 

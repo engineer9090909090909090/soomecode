@@ -33,8 +33,8 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label15 = new System.Windows.Forms.Label();
             this.Minimum = new AliHelper.NumericTextbox();
-            this.imageSelector2 = new AliHelper.ImageSelector();
-            this.imageSelector1 = new AliHelper.ImageSelector();
+            this.ProductImage2 = new AliHelper.ImageSelector();
+            this.ProductImage1 = new AliHelper.ImageSelector();
             this.imageSelector = new AliHelper.ImageSelector();
             this.CategoryTreeBox = new ComboTreeBox();
             this.ProductPrice = new AliHelper.NumericTextbox();
@@ -47,7 +47,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.PriceCate = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.ImageListView = new System.Windows.Forms.ListView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.Packing = new System.Windows.Forms.TextBox();
@@ -70,21 +69,28 @@
             this.CannelButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
             this.numericTextbox1 = new AliHelper.NumericTextbox();
+            this.ProductImage4 = new AliHelper.ImageSelector();
+            this.ProductImage3 = new AliHelper.ImageSelector();
+            this.ProductImage6 = new AliHelper.ImageSelector();
+            this.ProductImage5 = new AliHelper.ImageSelector();
+            this.ImageGroup = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.InfoTab.SuspendLayout();
             this.DetailTab.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
+            this.ImageGroup.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.groupBox4);
+            this.groupBox1.Controls.Add(this.ImageGroup);
             this.groupBox1.Controls.Add(this.label15);
             this.groupBox1.Controls.Add(this.Minimum);
-            this.groupBox1.Controls.Add(this.imageSelector2);
-            this.groupBox1.Controls.Add(this.imageSelector1);
-            this.groupBox1.Controls.Add(this.imageSelector);
             this.groupBox1.Controls.Add(this.CategoryTreeBox);
             this.groupBox1.Controls.Add(this.ProductPrice);
             this.groupBox1.Controls.Add(this.ProductStatus);
@@ -96,7 +102,6 @@
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.PriceCate);
             this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.ImageListView);
             this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.Packing);
@@ -139,29 +144,29 @@
             this.Minimum.TabIndex = 8;
             this.Minimum.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
-            // imageSelector2
+            // ProductImage2
             // 
-            this.imageSelector2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("imageSelector2.BackgroundImage")));
-            this.imageSelector2.Image = null;
-            this.imageSelector2.ImageFile = null;
-            this.imageSelector2.Location = new System.Drawing.Point(709, 28);
-            this.imageSelector2.Name = "imageSelector2";
-            this.imageSelector2.OpenFileDirectory = null;
-            this.imageSelector2.ShowMenu = true;
-            this.imageSelector2.Size = new System.Drawing.Size(125, 125);
-            this.imageSelector2.TabIndex = 26;
+            this.ProductImage2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ProductImage2.BackgroundImage")));
+            this.ProductImage2.Image = null;
+            this.ProductImage2.ImageFile = null;
+            this.ProductImage2.Location = new System.Drawing.Point(144, 16);
+            this.ProductImage2.Name = "ProductImage2";
+            this.ProductImage2.OpenFileDirectory = null;
+            this.ProductImage2.ShowMenu = true;
+            this.ProductImage2.Size = new System.Drawing.Size(125, 125);
+            this.ProductImage2.TabIndex = 26;
             // 
-            // imageSelector1
+            // ProductImage1
             // 
-            this.imageSelector1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("imageSelector1.BackgroundImage")));
-            this.imageSelector1.Image = null;
-            this.imageSelector1.ImageFile = null;
-            this.imageSelector1.Location = new System.Drawing.Point(573, 29);
-            this.imageSelector1.Name = "imageSelector1";
-            this.imageSelector1.OpenFileDirectory = null;
-            this.imageSelector1.ShowMenu = true;
-            this.imageSelector1.Size = new System.Drawing.Size(125, 125);
-            this.imageSelector1.TabIndex = 25;
+            this.ProductImage1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ProductImage1.BackgroundImage")));
+            this.ProductImage1.Image = null;
+            this.ProductImage1.ImageFile = null;
+            this.ProductImage1.Location = new System.Drawing.Point(8, 17);
+            this.ProductImage1.Name = "ProductImage1";
+            this.ProductImage1.OpenFileDirectory = null;
+            this.ProductImage1.ShowMenu = true;
+            this.ProductImage1.Size = new System.Drawing.Size(125, 125);
+            this.ProductImage1.TabIndex = 25;
             // 
             // imageSelector
             // 
@@ -169,7 +174,7 @@
             this.imageSelector.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.imageSelector.Image = null;
             this.imageSelector.ImageFile = null;
-            this.imageSelector.Location = new System.Drawing.Point(399, 60);
+            this.imageSelector.Location = new System.Drawing.Point(14, 17);
             this.imageSelector.Name = "imageSelector";
             this.imageSelector.OpenFileDirectory = null;
             this.imageSelector.ShowMenu = true;
@@ -298,14 +303,6 @@
             this.label8.Size = new System.Drawing.Size(65, 12);
             this.label8.TabIndex = 0;
             this.label8.Text = "价格种类：";
-            // 
-            // ImageListView
-            // 
-            this.ImageListView.Location = new System.Drawing.Point(562, 22);
-            this.ImageListView.Name = "ImageListView";
-            this.ImageListView.Size = new System.Drawing.Size(283, 430);
-            this.ImageListView.TabIndex = 12;
-            this.ImageListView.UseCompatibleStateImageBehavior = false;
             // 
             // groupBox2
             // 
@@ -536,6 +533,77 @@
             this.numericTextbox1.TabIndex = 27;
             this.numericTextbox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
+            // ProductImage4
+            // 
+            this.ProductImage4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ProductImage4.BackgroundImage")));
+            this.ProductImage4.Image = null;
+            this.ProductImage4.ImageFile = null;
+            this.ProductImage4.Location = new System.Drawing.Point(144, 153);
+            this.ProductImage4.Name = "ProductImage4";
+            this.ProductImage4.OpenFileDirectory = null;
+            this.ProductImage4.ShowMenu = true;
+            this.ProductImage4.Size = new System.Drawing.Size(125, 125);
+            this.ProductImage4.TabIndex = 30;
+            // 
+            // ProductImage3
+            // 
+            this.ProductImage3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ProductImage3.BackgroundImage")));
+            this.ProductImage3.Image = null;
+            this.ProductImage3.ImageFile = null;
+            this.ProductImage3.Location = new System.Drawing.Point(8, 154);
+            this.ProductImage3.Name = "ProductImage3";
+            this.ProductImage3.OpenFileDirectory = null;
+            this.ProductImage3.ShowMenu = true;
+            this.ProductImage3.Size = new System.Drawing.Size(125, 125);
+            this.ProductImage3.TabIndex = 29;
+            // 
+            // ProductImage6
+            // 
+            this.ProductImage6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ProductImage6.BackgroundImage")));
+            this.ProductImage6.Image = null;
+            this.ProductImage6.ImageFile = null;
+            this.ProductImage6.Location = new System.Drawing.Point(144, 293);
+            this.ProductImage6.Name = "ProductImage6";
+            this.ProductImage6.OpenFileDirectory = null;
+            this.ProductImage6.ShowMenu = true;
+            this.ProductImage6.Size = new System.Drawing.Size(125, 125);
+            this.ProductImage6.TabIndex = 32;
+            // 
+            // ProductImage5
+            // 
+            this.ProductImage5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ProductImage5.BackgroundImage")));
+            this.ProductImage5.Image = null;
+            this.ProductImage5.ImageFile = null;
+            this.ProductImage5.Location = new System.Drawing.Point(8, 294);
+            this.ProductImage5.Name = "ProductImage5";
+            this.ProductImage5.OpenFileDirectory = null;
+            this.ProductImage5.ShowMenu = true;
+            this.ProductImage5.Size = new System.Drawing.Size(125, 125);
+            this.ProductImage5.TabIndex = 31;
+            // 
+            // ImageGroup
+            // 
+            this.ImageGroup.Controls.Add(this.ProductImage3);
+            this.ImageGroup.Controls.Add(this.ProductImage6);
+            this.ImageGroup.Controls.Add(this.ProductImage1);
+            this.ImageGroup.Controls.Add(this.ProductImage5);
+            this.ImageGroup.Controls.Add(this.ProductImage2);
+            this.ImageGroup.Controls.Add(this.ProductImage4);
+            this.ImageGroup.Location = new System.Drawing.Point(560, 20);
+            this.ImageGroup.Name = "ImageGroup";
+            this.ImageGroup.Size = new System.Drawing.Size(278, 432);
+            this.ImageGroup.TabIndex = 33;
+            this.ImageGroup.TabStop = false;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.imageSelector);
+            this.groupBox4.Location = new System.Drawing.Point(369, 50);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(153, 153);
+            this.groupBox4.TabIndex = 34;
+            this.groupBox4.TabStop = false;
+            // 
             // NewItemForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -554,6 +622,8 @@
             this.DetailTab.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
+            this.ImageGroup.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -581,7 +651,6 @@
         private System.Windows.Forms.Button CannelButton;
         private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ListView ImageListView;
         private System.Windows.Forms.ComboBox PriceCate;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label11;
@@ -596,10 +665,16 @@
         private NumericTextbox ProductPrice;
         private ComboTreeBox CategoryTreeBox;
         private ImageSelector imageSelector;
-        private ImageSelector imageSelector2;
-        private ImageSelector imageSelector1;
+        private ImageSelector ProductImage2;
+        private ImageSelector ProductImage1;
         private System.Windows.Forms.Label label15;
         private NumericTextbox Minimum;
         private NumericTextbox numericTextbox1;
+        private ImageSelector ProductImage6;
+        private ImageSelector ProductImage5;
+        private ImageSelector ProductImage4;
+        private ImageSelector ProductImage3;
+        private System.Windows.Forms.GroupBox ImageGroup;
+        private System.Windows.Forms.GroupBox groupBox4;
     }
 }

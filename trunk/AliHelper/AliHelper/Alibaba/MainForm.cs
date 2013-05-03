@@ -984,7 +984,7 @@ namespace AliHelper
                 LoadMyItemsListView();
                 TreeNode currentNode = e.Node;
                 MyItemsListView view = (MyItemsListView)Explorer.Controls[0];
-                view.selectedCategory = (Categories)currentNode.Tag;
+                view.SelectedCategory = (Categories)currentNode.Tag;
                 view.BindDataWithPage(1);
             }
         }

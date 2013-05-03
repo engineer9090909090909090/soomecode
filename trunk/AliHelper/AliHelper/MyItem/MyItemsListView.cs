@@ -16,7 +16,17 @@ namespace AliHelper
     {
         private MyItemManager myItemManager;
         private List<Product> list;
-        public Categories selectedCategory;
+        public Categories SelectedCategory
+        {
+            get 
+            {
+                return DataCache.Instance.SelectedCategory;
+            }
+            set
+            {
+                DataCache.Instance.SelectedCategory = value;
+            }
+        }
 
         public MyItemsListView()
         {
@@ -57,7 +67,7 @@ namespace AliHelper
             query.Condition = new Product();
             query.Condition.Name = this.ProductName.Text.Trim();
             query.Condition.Model = this.Model.Text.Trim();
-            query.Condition.CategoryId = selectedCategory.Id;
+            query.Condition.CategoryId = SelectedCategory.Id;
             QueryObject<Product> result = myItemManager.GetProducts(query);
             if (result.Result != null && result.Result.Count > 0)
             {
@@ -87,7 +97,6 @@ namespace AliHelper
             MyItemGrid.Rows[0].Height = 25;
             MyItemGrid[0, 0] = new MyHeader("图片");
             MyItemGrid[0, 0].Column.Width = 80;
-            MyItemGrid[0, 0].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
             MyItemGrid[0, 1] = new MyHeader("名称标题");
             MyItemGrid[0, 1].Column.Width = MyItemGrid.Width - 460;
             MyItemGrid[0, 1].AddController(new SourceGrid.Cells.Controllers.SortableHeader());
@@ -113,16 +122,8 @@ namespace AliHelper
                 Image image = AliHelper.Properties.Resources.no_image;
                 if (item.Image != null)
                 {
-                    string imageFile = FileUtils.GetMyItemImage(item.Id, item.Image.Id);
-                    if (!File.Exists(imageFile))
-                    {
-                        ThreadPool.QueueUserWorkItem(new WaitCallback(LoadingProductImage),
-                            new object[] { item, r, selectedCategory.Id });
-                    }
-                    else 
-                    {
-                        image = ImageUtils.ResizeImage(imageFile, 80, 80);
-                    }
+                    ThreadPool.QueueUserWorkItem(new WaitCallback(LoadingProductImage),
+                            new object[] { item, r, SelectedCategory.Id });
                 }
                 MyItemGrid[r, 0] = new SourceGrid.Cells.Image(image);
                 MyItemGrid[r, 0].AddController(clickEvent);
@@ -148,14 +149,11 @@ namespace AliHelper
             Product item = (Product)arg[0];
             int rowIndex = (int)arg[1];
             int categoryId = (int)arg[2];
-            if (categoryId != selectedCategory.Id)
+            if (categoryId != SelectedCategory.Id)
             {
                 return;
             }
-            string imageFile = FileUtils.GetMyItemImage(item.Id, item.Image.Id);
-            byte[] imageBuffer = myItemManager.GetProductImage(item.Image.Id);
-            FileUtils.BufferToImageFile(imageBuffer, imageFile);
-            imageBuffer = null;
+            string imageFile = myItemManager.GetProductImageFile(item.Id, item.Image);
             this.BeginInvoke(new Action(() =>
             {
                 MyItemGrid[rowIndex, 0].Value = ImageUtils.ResizeImage(imageFile, 80, 80);
@@ -185,8 +183,6 @@ namespace AliHelper
             f.UpdatedProduct = o;
             f.ShowDialog(this);
         }
-
-        
 
     }
 }

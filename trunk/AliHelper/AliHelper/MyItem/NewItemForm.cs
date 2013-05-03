@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Soomes;
 using System.Web;
+using System.IO;
 
 namespace AliHelper
 {
@@ -34,6 +35,11 @@ namespace AliHelper
             QueryObject<PriceCate> query = new QueryObject<PriceCate>();
             query.IsExport = true;
             this.PriceCate.DataSource = manager.GetPriceCates(query).Result;
+            this.selectedCategory = DataCache.Instance.SelectedCategory;
+            for (int i = 2; i <= 6; i++)
+            {
+                ImageGroup.Controls["ProductImage" + i].Visible = false;
+            }
             LoadUpdatedProduct(UpdatedProduct);
             LoadTreeView();
         }
@@ -55,6 +61,12 @@ namespace AliHelper
             LoadPriceCateComboBoxValue(this.PriceCate, obj.PriceCate);
             this.selectedCategory = new Categories();
             this.selectedCategory.Id = obj.CategoryId;
+            SetProductImages(obj);
+            if (obj.Image != null)
+            {
+                this.imageSelector.Tag = obj.Image;
+                this.imageSelector.ImageFile = manager.GetProductImageFile(obj.Id, obj.Image);
+            }
             this.webBrowser1.Document.InvokeScript("SetData", new object[] { HttpUtility.HtmlDecode(obj.Description) });
         }
         
@@ -134,27 +146,65 @@ namespace AliHelper
                 MessageBox.Show("产品图片必须!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            Product item = new Product();
+            Product item = null;
+            if (UpdatedProduct == null)
+            {
+                item = new Product();
+            }
+            else {
+                item = UpdatedProduct;
+            }
             item.Name = this.ProductName.Text.Trim();
             item.Model = this.ProductModel.Text.Trim();
             item.Price = Convert.ToDouble(this.ProductPrice.Text);
             item.CategoryId = selectedCategory.Id;
-
             item.Weight = this.Weight.Text.Trim();
             item.Size = this.Size.Text.Trim();
             item.Minimum = Convert.ToInt32(this.Minimum.Text.Trim());
             item.Packing = this.Packing.Text.Trim();
             item.Status = ((AppDic)this.ProductStatus.SelectedItem).Key;
             item.Description = (string)this.webBrowser1.Document.InvokeScript("GetData", null);
+            List<ProductImage> imageList = GetProductImages();
+            manager.InsertOrUpdateProduct(item, imageList);
+            this.Close();
+        }
 
+        private List<ProductImage> GetProductImages()
+        {
             List<ProductImage> imageList = new List<ProductImage>();
-            ProductImage mainImage = new ProductImage();
+            ProductImage mainImage = imageSelector.Tag != null ? (ProductImage)imageSelector.Tag : new ProductImage();
             mainImage.IsMain = true;
+            mainImage.Size = new FileInfo(imageSelector.ImageFile).Length;
             mainImage.Image = FileUtils.ImageFileToToBuffer(imageSelector.ImageFile);
             imageList.Add(mainImage);
-            manager.InsertOrUpdateProduct(item, imageList);
+            for (int i = 1; i <= 6; i++)
+            {
+                ImageSelector selector = (ImageSelector)ImageGroup.Controls["ProductImage" + i];
+                if (!string.IsNullOrEmpty(selector.ImageFile))
+                {
+                    ProductImage pImage = selector.Tag != null ? (ProductImage)selector.Tag : new ProductImage();
+                    pImage.IsMain = false;
+                    pImage.Size = new FileInfo(selector.ImageFile).Length;
+                    pImage.Image = FileUtils.ImageFileToToBuffer(selector.ImageFile);
+                    imageList.Add(pImage);
+                }
+            }
+            return imageList;
+        }
 
-            this.Close();
+        private void SetProductImages(Product item)
+        {
+            List<ProductImage> imageList = manager.GetImagesInfoByProductId(item.Id);
+            int index = 1;
+            foreach(ProductImage obj in imageList)
+            {
+                if (obj.IsMain) continue;
+                ImageSelector selector = (ImageSelector)ImageGroup.Controls["ProductImage" + index];
+                selector.ImageFile = manager.GetProductImageFile(item.Id, obj);
+                selector.Tag = obj;
+                selector.Visible = true;
+                index++;
+            }
         }
 
         private void CannelButton_Click(object sender, EventArgs e)

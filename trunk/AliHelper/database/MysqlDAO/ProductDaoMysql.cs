@@ -78,6 +78,7 @@ namespace Database
            + "`Id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,"
            + "`ProductId` integer not null,"
            + "`Image` BLOB not null,"
+           + "`Size` long not null,"
            + "`IsMain` Boolean not null default false,"
            + "`CreatedTime` datetime,"
            + "`ModifiedTime` datetime,"
@@ -422,20 +423,31 @@ namespace Database
             return dbHelper.GetBlogField("select Image FROM Product_Image where Id = " + ProductImageId);
         }
 
-        public void InsertProductImage(ProductImage item)
+        public void InsertOrProductImage(ProductImage item)
         {
-            string InsSql = @"INSERT INTO Product_Image(ProductId, Image,IsMain,CreatedTime,ModifiedTime)"
-                            + "values(@ProductId, @Image,@IsMain,@CreatedTime,@ModifiedTime)";
+            string InsSql = @"INSERT INTO Product_Image(ProductId, Image,Size, IsMain,CreatedTime,ModifiedTime)"
+                            + "values(@ProductId, @Image,@Size, @IsMain,@CreatedTime,@ModifiedTime)";
+            string UpdSql = @"Update Product_Image SET Size=@Size, Image=@Image, ModifiedTime=@ModifiedTime WHERE Id = @Id";
+            
             DateTime CurrentTime = DateTime.Now;
             MySqlParameter[] parameter = new MySqlParameter[]
             {
+                new MySqlParameter("@Id",item.Id),
                 new MySqlParameter("@ProductId",item.ProductId),
                 new MySqlParameter("@Image",item.Image), 
+                new MySqlParameter("@Size",item.Size), 
                 new MySqlParameter("@IsMain",item.IsMain),
                 new MySqlParameter("@CreatedTime",CurrentTime),
                 new MySqlParameter("@ModifiedTime",CurrentTime)
             };
-            dbHelper.ExecuteNonQuery(InsSql, parameter);
+            if (item.Id == 0)
+            {
+                dbHelper.ExecuteNonQuery(InsSql, parameter);
+            }
+            else 
+            {
+                dbHelper.ExecuteNonQuery(UpdSql, parameter);
+            }
         }
 
         public void DeleteProductImage(int ProductImageId)
@@ -445,7 +457,7 @@ namespace Database
 
         private ProductImage GetMainImageByProductId(int ProductId)
         {
-            string sql = "SELECT Id, ProductId, Image,IsMain,CreatedTime,ModifiedTime "
+            string sql = "SELECT Id, ProductId, Image,Size, IsMain,CreatedTime,ModifiedTime "
                        + " FROM Product_Image where ProductId = "
                        + ProductId + " and IsMain = 1 limit 0,1";
             DataTable dt = dbHelper.ExecuteDataTable(sql, null);
@@ -454,6 +466,7 @@ namespace Database
                 ProductImage kw = new ProductImage();
                 kw.Id = Convert.ToInt32(row["Id"]);
                 kw.ProductId = Convert.ToInt32(row["ProductId"]);
+                kw.Size = Convert.ToInt64(row["Size"]);
                 kw.IsMain = Convert.ToBoolean(row["IsMain"]);
                 kw.CreatedTime = Convert.ToDateTime(row["CreatedTime"]);
                 kw.ModifiedTime = Convert.ToDateTime(row["ModifiedTime"]);
@@ -466,8 +479,8 @@ namespace Database
         {
             List<MySqlParameter> parameters = new List<MySqlParameter>();
             parameters.Add(new MySqlParameter("@ProductId", ProductId));
-            string sql = "SELECT Id, ProductId, Image,IsMain,CreatedTime,ModifiedTime "
-                + " FROM Product_Image where ProductId = @ProductId order by IsMain desc CreatedTime asc";
+            string sql = "SELECT Id, ProductId, Image, Size, IsMain, CreatedTime, ModifiedTime "
+                + " FROM Product_Image where ProductId = @ProductId order by IsMain desc, Id asc";
             DataTable dt = dbHelper.ExecuteDataTable(sql, parameters.ToArray());
             List<ProductImage> list = new List<ProductImage>();
             foreach (DataRow row in dt.Rows)
@@ -475,6 +488,7 @@ namespace Database
                 ProductImage kw = new ProductImage();
                 kw.Id = Convert.ToInt32(row["Id"]);
                 kw.ProductId = Convert.ToInt32(row["ProductId"]);
+                kw.Size = Convert.ToInt64(row["Size"]);
                 kw.IsMain = Convert.ToBoolean(row["IsMain"]);
                 kw.CreatedTime = Convert.ToDateTime(row["CreatedTime"]);
                 kw.ModifiedTime = Convert.ToDateTime(row["ModifiedTime"]);

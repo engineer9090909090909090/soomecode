@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Database;
 using Soomes;
+using System.IO;
 
 namespace AliHelper
 {
@@ -110,6 +111,7 @@ namespace AliHelper
         public int InsertOrUpdateProduct(Product item, List<ProductImage> imageFiles)
         {
             int productId = productDao.InsertOrUpdateProduct(item);
+            List<ProductImage> orgiImageList = this.GetImagesInfoByProductId(item.Id);
             if (imageFiles != null && imageFiles.Count > 0)
             {
                 foreach(ProductImage image in imageFiles)
@@ -117,10 +119,30 @@ namespace AliHelper
                     if (image.Id == 0)
                     {
                         image.ProductId = productId;
-                        productDao.InsertProductImage(image);
+                        productDao.InsertOrProductImage(image);
+                    }
+                    else 
+                    {
+                        foreach (ProductImage orgi in orgiImageList)
+                        {
+                            if (orgi.Id == image.Id)
+                            {
+                                if (orgi.Size != image.Size)
+                                {
+                                    productDao.InsertOrProductImage(image);
+                                }
+                                orgiImageList.Remove(orgi);
+                                break;
+                            }
+                        }
                     }
                 }
             }
+            foreach (ProductImage orgi in orgiImageList)
+            {
+                productDao.DeleteProductImage(orgi.Id);
+            }
+            FireEditProductEvent(item);
             return productId;
         }
 
@@ -137,6 +159,7 @@ namespace AliHelper
         public void UpdateStatus(int productId, string status)
         {
             productDao.UpdateStatus(productId, status);
+            FireEditProductEvent(null);
         }
 
         public byte[] GetProductImage(int ProductImageId)
@@ -144,14 +167,26 @@ namespace AliHelper
             return productDao.GetProductImage(ProductImageId);
         }
 
-        public void InsertProductImage(ProductImage item)
+        public string GetProductImageFile(int ProductId, ProductImage image)
         {
-            productDao.InsertProductImage(item);
-        }
-
-        public void DeleteProductImage(int ProductImageId)
-        {
-            productDao.DeleteProductImage(ProductImageId);
+            string imageFile = FileUtils.GetMyItemImage(ProductId, image.Id);
+            if (File.Exists(imageFile))
+            {
+                Int64 size = new FileInfo(imageFile).Length;
+                if (size != image.Size)
+                {
+                    byte[] imageBuffer = this.GetProductImage(image.Id);
+                    FileUtils.BufferToImageFile(imageBuffer, imageFile);
+                    imageBuffer = null;
+                }
+            }
+            else
+            {
+                byte[] imageBuffer = this.GetProductImage(image.Id);
+                FileUtils.BufferToImageFile(imageBuffer, imageFile);
+                imageBuffer = null;
+            }
+            return imageFile;
         }
 
         public List<ProductImage> GetImagesInfoByProductId(int ProductId)
