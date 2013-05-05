@@ -74,7 +74,7 @@ namespace AliHelper
             else {
                 openFileDialog.InitialDirectory = OpenFileDirectory;
             }
-            openFileDialog.Filter = "图片文件|*.*|JPG文件|*.jpg|PNG文件|*.png";
+            openFileDialog.Filter = "图片文件|*.*|JPG文件|*.jpg|PNG文件|*.png|BMP文件|*.bmp";
             openFileDialog.Multiselect = false;
             openFileDialog.RestoreDirectory = false;
             openFileDialog.FilterIndex = 1;

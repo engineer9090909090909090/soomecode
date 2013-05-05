@@ -36,12 +36,8 @@ namespace AliHelper
             query.IsExport = true;
             this.PriceCate.DataSource = manager.GetPriceCates(query).Result;
             this.selectedCategory = DataCache.Instance.SelectedCategory;
-            for (int i = 2; i <= 6; i++)
-            {
-                ImageGroup.Controls["ProductImage" + i].Visible = false;
-            }
             LoadUpdatedProduct(UpdatedProduct);
-            LoadTreeView();
+            LoadCategoryTreeView();
         }
 
         protected void LoadUpdatedProduct(Product obj)
@@ -50,11 +46,11 @@ namespace AliHelper
             {
                 return;
             }
-            this.ProductName.Text = obj.Name;
+            this.PName.Text = obj.Name;
             this.ProductModel.Text = obj.Model;
             this.Weight.Text = obj.Weight;
             this.ProductPrice.Text = obj.Price.ToString("###0.00");
-            this.Size.Text = obj.Size;
+            this.Psize.Text = obj.Size;
             this.Minimum.Text = obj.Minimum.ToString();
             this.Packing.Text = obj.Packing;
             AliHelperUtils.LoadAppDicComboBoxValue(this.ProductStatus, obj.Status);
@@ -62,15 +58,10 @@ namespace AliHelper
             this.selectedCategory = new Categories();
             this.selectedCategory.Id = obj.CategoryId;
             SetProductImages(obj);
-            if (obj.Image != null)
-            {
-                this.imageSelector.Tag = obj.Image;
-                this.imageSelector.ImageFile = manager.GetProductImageFile(obj.Id, obj.Image);
-            }
             this.webBrowser1.Document.InvokeScript("SetData", new object[] { HttpUtility.HtmlDecode(obj.Description) });
         }
-        
-        public void LoadTreeView()
+
+        public void LoadCategoryTreeView()
         {
             CategoryTreeBox.Nodes.Clear();
             List<Categories> cates = manager.GetAllCategories();
@@ -131,7 +122,7 @@ namespace AliHelper
                 MessageBox.Show("产品分类必须选择!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (this.ProductName.Text.Trim() == null)
+            if (this.PName.Text.Trim() == null)
             {
                 MessageBox.Show("产品名称必须填写!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -154,12 +145,12 @@ namespace AliHelper
             else {
                 item = UpdatedProduct;
             }
-            item.Name = this.ProductName.Text.Trim();
+            item.Name = this.PName.Text.Trim();
             item.Model = this.ProductModel.Text.Trim();
             item.Price = Convert.ToDouble(this.ProductPrice.Text);
             item.CategoryId = selectedCategory.Id;
             item.Weight = this.Weight.Text.Trim();
-            item.Size = this.Size.Text.Trim();
+            item.Size = this.Psize.Text.Trim();
             item.Minimum = Convert.ToInt32(this.Minimum.Text.Trim());
             item.Packing = this.Packing.Text.Trim();
             item.Status = ((AppDic)this.ProductStatus.SelectedItem).Key;
@@ -194,6 +185,9 @@ namespace AliHelper
 
         private void SetProductImages(Product item)
         {
+            if (item == null) return;
+            imageSelector.Tag = item.Image;
+            imageSelector.ImageFile = manager.GetProductImageFile(item.Id, item.Image);
             List<ProductImage> imageList = manager.GetImagesInfoByProductId(item.Id);
             int index = 1;
             foreach(ProductImage obj in imageList)
@@ -202,7 +196,6 @@ namespace AliHelper
                 ImageSelector selector = (ImageSelector)ImageGroup.Controls["ProductImage" + index];
                 selector.ImageFile = manager.GetProductImageFile(item.Id, obj);
                 selector.Tag = obj;
-                selector.Visible = true;
                 index++;
             }
         }

@@ -192,20 +192,22 @@ namespace AliHelper
         public static string ResizeImageToLess1M(string fileName)
         {
             long size = new FileInfo(fileName).Length;
-            if (size / 1024 < 600)
+            if (size / 1024 > 300)
             {
-                return fileName;
+                long multiple = size / 1024 / 300;
+                string newImageFile = FileUtils.GetNewTempImagePath();
+                Bitmap oldBmp = new Bitmap(fileName);
+                int w = Convert.ToInt32(oldBmp.Size.Width / multiple);
+                int h = Convert.ToInt32(oldBmp.Size.Height / multiple);
+                Bitmap newBmp = ImageUtils.ResizeImage(oldBmp, w, h);
+                oldBmp.Dispose();
+                newBmp.Save(newImageFile, ImageFormat.Jpeg);
+                newBmp.Dispose();
+                return newImageFile;
             }
-            long multiple = size / 1024 / 500;
-            string newImageFile = FileUtils.GetNewTempImagePath();
-            Bitmap oldBmp = new Bitmap(fileName);
-            int w = Convert.ToInt32(oldBmp.Size.Width / multiple);
-            int h = Convert.ToInt32(oldBmp.Size.Height / multiple);
-            Bitmap newBmp = ImageUtils.ResizeImage(oldBmp, w, h);
-            oldBmp.Dispose();
-            newBmp.Save(newImageFile, ImageFormat.Jpeg);
-            newBmp.Dispose();
-            return newImageFile;
+
+            return fileName;
+
         }
     }
 }
