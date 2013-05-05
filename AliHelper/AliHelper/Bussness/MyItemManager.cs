@@ -119,7 +119,7 @@ namespace AliHelper
                     if (image.Id == 0)
                     {
                         image.ProductId = productId;
-                        productDao.InsertOrProductImage(image);
+                        productDao.InsertOrUpdateProductImage(image);
                     }
                     else 
                     {
@@ -129,7 +129,7 @@ namespace AliHelper
                             {
                                 if (orgi.Size != image.Size)
                                 {
-                                    productDao.InsertOrProductImage(image);
+                                    productDao.InsertOrUpdateProductImage(image);
                                 }
                                 orgiImageList.Remove(orgi);
                                 break;
@@ -167,23 +167,29 @@ namespace AliHelper
             return productDao.GetProductImage(ProductImageId);
         }
 
+
         public string GetProductImageFile(int ProductId, ProductImage image)
         {
-            string imageFile = FileUtils.GetMyItemImage(ProductId, image.Id);
+            string imageDir = FileUtils.GetUserDataFolder() + Path.DirectorySeparatorChar + Constants.MyItemImages;
+            if (!Directory.Exists(imageDir))
+            {
+                Directory.CreateDirectory(imageDir);
+            }
+            string imageFile = imageDir + Path.DirectorySeparatorChar + ProductId + "_" + image.Id + ".jpg";
             if (File.Exists(imageFile))
             {
                 Int64 size = new FileInfo(imageFile).Length;
                 if (size != image.Size)
                 {
                     byte[] imageBuffer = this.GetProductImage(image.Id);
-                    FileUtils.BufferToImageFile(imageBuffer, imageFile);
+                    FileUtils.ByteArrayToImageFile(imageBuffer, imageFile);
                     imageBuffer = null;
                 }
             }
             else
             {
                 byte[] imageBuffer = this.GetProductImage(image.Id);
-                FileUtils.BufferToImageFile(imageBuffer, imageFile);
+                FileUtils.ByteArrayToImageFile(imageBuffer, imageFile);
                 imageBuffer = null;
             }
             return imageFile;

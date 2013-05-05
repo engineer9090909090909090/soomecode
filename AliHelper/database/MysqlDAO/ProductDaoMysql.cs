@@ -77,11 +77,11 @@ namespace Database
              "CREATE TABLE IF NOT EXISTS Product_Image("
            + "`Id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,"
            + "`ProductId` integer not null,"
-           + "`Image` BLOB not null,"
+           + "`Image` LongBLOB not null,"
            + "`Size` long not null,"
            + "`IsMain` Boolean not null default false,"
-           + "`CreatedTime` datetime,"
-           + "`ModifiedTime` datetime,"
+           + "`CreatedTime` datetime not null,"
+           + "`ModifiedTime` datetime not null,"
            + "Index Index_ProductId (`ProductId`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ");
 
         }
@@ -423,7 +423,7 @@ namespace Database
             return dbHelper.GetBlogField("select Image FROM Product_Image where Id = " + ProductImageId);
         }
 
-        public void InsertOrProductImage(ProductImage item)
+        public void InsertOrUpdateProductImage(ProductImage item)
         {
             string InsSql = @"INSERT INTO Product_Image(ProductId, Image,Size, IsMain,CreatedTime,ModifiedTime)"
                             + "values(@ProductId, @Image,@Size, @IsMain,@CreatedTime,@ModifiedTime)";
@@ -434,12 +434,13 @@ namespace Database
             {
                 new MySqlParameter("@Id",item.Id),
                 new MySqlParameter("@ProductId",item.ProductId),
-                new MySqlParameter("@Image",item.Image), 
+                new MySqlParameter("@Image", item.Image), 
                 new MySqlParameter("@Size",item.Size), 
                 new MySqlParameter("@IsMain",item.IsMain),
                 new MySqlParameter("@CreatedTime",CurrentTime),
                 new MySqlParameter("@ModifiedTime",CurrentTime)
             };
+
             if (item.Id == 0)
             {
                 dbHelper.ExecuteNonQuery(InsSql, parameter);

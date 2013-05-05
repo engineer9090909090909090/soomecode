@@ -8,6 +8,7 @@ using System.Net;
 using Soomes;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Drawing.Imaging;
 
 
 namespace AliHelper
@@ -16,7 +17,7 @@ namespace AliHelper
     {
         public static string GetUserDataFolder()
         {
-            string AppDataFolder = Environment.CurrentDirectory + Path.DirectorySeparatorChar  + DataCache.Instance.AliID;
+            string AppDataFolder = Application.StartupPath + Path.DirectorySeparatorChar  + DataCache.Instance.AliID;
             if (!Directory.Exists(AppDataFolder))
             {
                 Directory.CreateDirectory(AppDataFolder);
@@ -43,16 +44,7 @@ namespace AliHelper
             }
             return imageDir;
         }
-
-        public static string GetMyItemImage(int productId, int imageId)
-        {
-            string imageDir = GetUserDataFolder() + Path.DirectorySeparatorChar + Constants.MyItemImages;
-            if (!Directory.Exists(imageDir))
-            {
-                Directory.CreateDirectory(imageDir);
-            }
-            return imageDir + Path.DirectorySeparatorChar + productId + "_" + imageId + ".jpg";
-        }
+        
 
         public static string GetAppDataFolder()
         {
@@ -175,67 +167,45 @@ namespace AliHelper
         {
             return (amount > 0) ? Color.Blue : Color.Red;
         }
+       
 
-
-        public static Image BufferToImage(byte[] Buffer)
+        public static byte[] ImageFileToByteArray(string fileName)
         {
-            if (Buffer == null || Buffer.Length == 0) { return null; }
-            byte[] data = null;
-            Image oImage = null;
-            Bitmap oBitmap = null;
-            data = (byte[])Buffer.Clone();//建立副本
-            try
-            {
-                MemoryStream oMemoryStream = new MemoryStream(Buffer);//設定資料流位置
-                oMemoryStream.Position = 0;
-                oImage = System.Drawing.Image.FromStream(oMemoryStream);
-                oBitmap = new Bitmap(oImage);//建立副本
-            }
-            catch
-            {
-                throw;
-            }
-            return oBitmap;
+            FileStream fs = new FileStream(fileName, FileMode.Open, System.IO.FileAccess.Read, FileShare.ReadWrite);
+            int streamLength = (int)fs.Length;
+            byte[] image = new byte[streamLength];
+            fs.Read(image, 0, streamLength);
+            fs.Close();
+            return image;
         }
 
-        /// <summary>
-        /// 將 Image 轉換為 Byte 陣列。
-        /// </summary>
-        /// <param name="Image">Image 。</param>
-        /// <param name="imageFormat">指定影像格式。System.Drawing.Imaging.ImageFormat.JPEG</param>  
-        public static byte[] ImageToBuffer(Image Image, System.Drawing.Imaging.ImageFormat imageFormat)
+
+        public static void ByteArrayToImageFile(byte[] byteArrayIn, string imageFile)
         {
-            if (Image == null) { return null; }
-            byte[] data = null;
-            using (MemoryStream oMemoryStream = new MemoryStream())
-            {
-                using (Bitmap oBitmap = new Bitmap(Image))//建立副本
-                {
-                    //儲存圖片到 MemoryStream 物件，並且指定儲存影像之格式
-                    oBitmap.Save(oMemoryStream, imageFormat);//設定資料流位置
-                    oMemoryStream.Position = 0; //設定 buffer 長度
-                    data = new byte[oMemoryStream.Length];//將資料寫入 buffer
-                    oMemoryStream.Read(data, 0, Convert.ToInt32(oMemoryStream.Length));
-                    oMemoryStream.Flush();//將所有緩衝區的資料寫入資料流
-                }
-            }
-            return data;
+            if (byteArrayIn == null || byteArrayIn.Length == 0) { return; }
+            MemoryStream ms = new MemoryStream(byteArrayIn);
+            Image returnImage = Image.FromStream(ms);
+            returnImage.Save(imageFile);
+            returnImage.Dispose();
         }
 
-        public static byte[] ImageFileToToBuffer(string imageFile)
+        public static string ResizeImageToLess1M(string fileName)
         {
-            if (string.IsNullOrEmpty(imageFile) || !File.Exists(imageFile))
+            long size = new FileInfo(fileName).Length;
+            if (size / 1024 < 600)
             {
-                return null;
+                return fileName;
             }
-            return FileUtils.ImageToBuffer(Image.FromFile(imageFile), System.Drawing.Imaging.ImageFormat.Jpeg);
-        }
-
-        public static void BufferToImageFile( byte[] buffer, string imageFile)
-        {
-            Image image = FileUtils.BufferToImage(buffer);
-            image.Save(imageFile);
-            image.Dispose();
+            long multiple = size / 1024 / 500;
+            string newImageFile = FileUtils.GetNewTempImagePath();
+            Bitmap oldBmp = new Bitmap(fileName);
+            int w = Convert.ToInt32(oldBmp.Size.Width / multiple);
+            int h = Convert.ToInt32(oldBmp.Size.Height / multiple);
+            Bitmap newBmp = ImageUtils.ResizeImage(oldBmp, w, h);
+            oldBmp.Dispose();
+            newBmp.Save(newImageFile, ImageFormat.Jpeg);
+            newBmp.Dispose();
+            return newImageFile;
         }
     }
 }
