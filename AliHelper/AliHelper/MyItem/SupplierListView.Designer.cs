@@ -87,7 +87,7 @@
             this.Remark.Location = new System.Drawing.Point(383, 24);
             this.Remark.Name = "Remark";
             this.Remark.Size = new System.Drawing.Size(225, 21);
-            this.Remark.TabIndex = 9;
+            this.Remark.TabIndex = 1;
             // 
             // label1
             // 
@@ -104,7 +104,7 @@
             this.QueryBtn.Location = new System.Drawing.Point(650, 23);
             this.QueryBtn.Name = "QueryBtn";
             this.QueryBtn.Size = new System.Drawing.Size(70, 23);
-            this.QueryBtn.TabIndex = 8;
+            this.QueryBtn.TabIndex = 2;
             this.QueryBtn.Text = "查询(&Q)";
             this.QueryBtn.UseVisualStyleBackColor = true;
             this.QueryBtn.Click += new System.EventHandler(this.QueryBtn_Click);

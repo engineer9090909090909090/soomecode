@@ -111,7 +111,7 @@ namespace AliHelper
                 SupplierGrid[r, 2].AddController(clickEvent);
                 SupplierGrid[r, 3] = new SourceGrid.Cells.Cell(item.Address);
                 SupplierGrid[r, 3].AddController(clickEvent);
-                SupplierGrid[r, 4] = new SourceGrid.Cells.Button("产品列表");
+                SupplierGrid[r, 4] = new SourceGrid.Cells.Link("产品列表");
                 SourceGrid.Cells.Controllers.Button buttonClickEvent = new SourceGrid.Cells.Controllers.Button();
                 buttonClickEvent.Executed += new EventHandler(CellButton_Click);
                 SupplierGrid[r, 4].Controller.AddController(buttonClickEvent);

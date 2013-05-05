@@ -87,7 +87,7 @@
             this.Model.Location = new System.Drawing.Point(319, 24);
             this.Model.Name = "Model";
             this.Model.Size = new System.Drawing.Size(122, 21);
-            this.Model.TabIndex = 9;
+            this.Model.TabIndex = 1;
             // 
             // label1
             // 
@@ -104,7 +104,7 @@
             this.FinDetailQueryBtn.Location = new System.Drawing.Point(650, 23);
             this.FinDetailQueryBtn.Name = "FinDetailQueryBtn";
             this.FinDetailQueryBtn.Size = new System.Drawing.Size(70, 23);
-            this.FinDetailQueryBtn.TabIndex = 8;
+            this.FinDetailQueryBtn.TabIndex = 2;
             this.FinDetailQueryBtn.Text = "查询(&Q)";
             this.FinDetailQueryBtn.UseVisualStyleBackColor = true;
             this.FinDetailQueryBtn.Click += new System.EventHandler(this.FinDetailQueryBtn_Click);

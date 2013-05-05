@@ -29,15 +29,11 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewItemForm));
-            ComboTreeNode comboTreeNode1 = new ComboTreeNode();
+            ComboTreeNode comboTreeNode2 = new ComboTreeNode();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.ImageGroup = new System.Windows.Forms.GroupBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.Minimum = new AliHelper.NumericTextbox();
-            this.ProductImage2 = new AliHelper.ImageSelector();
-            this.ProductImage1 = new AliHelper.ImageSelector();
-            this.imageSelector = new AliHelper.ImageSelector();
-            this.CategoryTreeBox = new ComboTreeBox();
-            this.ProductPrice = new AliHelper.NumericTextbox();
             this.ProductStatus = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
@@ -47,13 +43,12 @@
             this.label9 = new System.Windows.Forms.Label();
             this.PriceCate = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.Packing = new System.Windows.Forms.TextBox();
             this.Weight = new System.Windows.Forms.TextBox();
-            this.Size = new System.Windows.Forms.TextBox();
+            this.Psize = new System.Windows.Forms.TextBox();
             this.ProductModel = new System.Windows.Forms.TextBox();
-            this.ProductName = new System.Windows.Forms.TextBox();
+            this.PName = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -66,29 +61,32 @@
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.CannelButton = new System.Windows.Forms.Button();
+            this.CelButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
-            this.numericTextbox1 = new AliHelper.NumericTextbox();
-            this.ProductImage4 = new AliHelper.ImageSelector();
+            this.imageSelector = new AliHelper.ImageSelector();
             this.ProductImage3 = new AliHelper.ImageSelector();
             this.ProductImage6 = new AliHelper.ImageSelector();
+            this.ProductImage1 = new AliHelper.ImageSelector();
             this.ProductImage5 = new AliHelper.ImageSelector();
-            this.ImageGroup = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.ProductImage2 = new AliHelper.ImageSelector();
+            this.ProductImage4 = new AliHelper.ImageSelector();
+            this.Minimum = new AliHelper.NumericTextbox();
+            this.CategoryTreeBox = new ComboTreeBox();
+            this.ProductPrice = new AliHelper.NumericTextbox();
+            this.numericTextbox1 = new AliHelper.NumericTextbox();
             this.groupBox1.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.ImageGroup.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.InfoTab.SuspendLayout();
             this.DetailTab.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
-            this.ImageGroup.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.groupBox4);
-            this.groupBox1.Controls.Add(this.ImageGroup);
             this.groupBox1.Controls.Add(this.label15);
             this.groupBox1.Controls.Add(this.Minimum);
             this.groupBox1.Controls.Add(this.CategoryTreeBox);
@@ -102,13 +100,12 @@
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.PriceCate);
             this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.Packing);
             this.groupBox1.Controls.Add(this.Weight);
-            this.groupBox1.Controls.Add(this.Size);
+            this.groupBox1.Controls.Add(this.Psize);
             this.groupBox1.Controls.Add(this.ProductModel);
-            this.groupBox1.Controls.Add(this.ProductName);
+            this.groupBox1.Controls.Add(this.PName);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
@@ -117,9 +114,34 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(6, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(851, 468);
+            this.groupBox1.Size = new System.Drawing.Size(552, 468);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "基本信息";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.imageSelector);
+            this.groupBox4.Location = new System.Drawing.Point(369, 50);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(153, 153);
+            this.groupBox4.TabIndex = 34;
+            this.groupBox4.TabStop = false;
+            // 
+            // ImageGroup
+            // 
+            this.ImageGroup.Controls.Add(this.ProductImage3);
+            this.ImageGroup.Controls.Add(this.ProductImage6);
+            this.ImageGroup.Controls.Add(this.ProductImage1);
+            this.ImageGroup.Controls.Add(this.ProductImage5);
+            this.ImageGroup.Controls.Add(this.ProductImage2);
+            this.ImageGroup.Controls.Add(this.ProductImage4);
+            this.ImageGroup.Location = new System.Drawing.Point(571, 6);
+            this.ImageGroup.Name = "ImageGroup";
+            this.ImageGroup.Size = new System.Drawing.Size(283, 466);
+            this.ImageGroup.TabIndex = 33;
+            this.ImageGroup.TabStop = false;
+            this.ImageGroup.Text = "附加图片";
             // 
             // label15
             // 
@@ -130,84 +152,6 @@
             this.label15.Size = new System.Drawing.Size(23, 12);
             this.label15.TabIndex = 28;
             this.label15.Text = "PCS";
-            // 
-            // Minimum
-            // 
-            this.Minimum.CommaFormat = false;
-            this.Minimum.CurrencyFormat = false;
-            this.Minimum.DecimalPrecision = 0;
-            this.Minimum.Location = new System.Drawing.Point(100, 263);
-            this.Minimum.Name = "Minimum";
-            this.Minimum.PercentFormat = false;
-            this.Minimum.ReadOnly = false;
-            this.Minimum.Size = new System.Drawing.Size(227, 24);
-            this.Minimum.TabIndex = 8;
-            this.Minimum.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            // 
-            // ProductImage2
-            // 
-            this.ProductImage2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ProductImage2.BackgroundImage")));
-            this.ProductImage2.Image = null;
-            this.ProductImage2.ImageFile = null;
-            this.ProductImage2.Location = new System.Drawing.Point(144, 16);
-            this.ProductImage2.Name = "ProductImage2";
-            this.ProductImage2.OpenFileDirectory = null;
-            this.ProductImage2.ShowMenu = true;
-            this.ProductImage2.Size = new System.Drawing.Size(125, 125);
-            this.ProductImage2.TabIndex = 26;
-            // 
-            // ProductImage1
-            // 
-            this.ProductImage1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ProductImage1.BackgroundImage")));
-            this.ProductImage1.Image = null;
-            this.ProductImage1.ImageFile = null;
-            this.ProductImage1.Location = new System.Drawing.Point(8, 17);
-            this.ProductImage1.Name = "ProductImage1";
-            this.ProductImage1.OpenFileDirectory = null;
-            this.ProductImage1.ShowMenu = true;
-            this.ProductImage1.Size = new System.Drawing.Size(125, 125);
-            this.ProductImage1.TabIndex = 25;
-            // 
-            // imageSelector
-            // 
-            this.imageSelector.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("imageSelector.BackgroundImage")));
-            this.imageSelector.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.imageSelector.Image = null;
-            this.imageSelector.ImageFile = null;
-            this.imageSelector.Location = new System.Drawing.Point(14, 17);
-            this.imageSelector.Name = "imageSelector";
-            this.imageSelector.OpenFileDirectory = null;
-            this.imageSelector.ShowMenu = true;
-            this.imageSelector.Size = new System.Drawing.Size(125, 125);
-            this.imageSelector.TabIndex = 4;
-            // 
-            // CategoryTreeBox
-            // 
-            this.CategoryTreeBox.DroppedDown = false;
-            this.CategoryTreeBox.Location = new System.Drawing.Point(100, 60);
-            this.CategoryTreeBox.Name = "CategoryTreeBox";
-            comboTreeNode1.Expanded = false;
-            comboTreeNode1.Text = "";
-            this.CategoryTreeBox.Nodes.Add(comboTreeNode1);
-            this.CategoryTreeBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.CategoryTreeBox.SelectedNode = null;
-            this.CategoryTreeBox.Size = new System.Drawing.Size(250, 20);
-            this.CategoryTreeBox.TabIndex = 2;
-            this.CategoryTreeBox.TopNode = comboTreeNode1;
-            this.CategoryTreeBox.SelectedNodeChanged += new System.EventHandler(this.CategoryTreeBox_SelectedNodeChanged);
-            // 
-            // ProductPrice
-            // 
-            this.ProductPrice.CommaFormat = false;
-            this.ProductPrice.CurrencyFormat = false;
-            this.ProductPrice.DecimalPrecision = 0;
-            this.ProductPrice.Location = new System.Drawing.Point(98, 137);
-            this.ProductPrice.Name = "ProductPrice";
-            this.ProductPrice.PercentFormat = false;
-            this.ProductPrice.ReadOnly = false;
-            this.ProductPrice.Size = new System.Drawing.Size(227, 24);
-            this.ProductPrice.TabIndex = 5;
-            this.ProductPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
             // ProductStatus
             // 
@@ -304,14 +248,6 @@
             this.label8.TabIndex = 0;
             this.label8.Text = "价格种类：";
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Location = new System.Drawing.Point(543, 22);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(2, 430);
-            this.groupBox2.TabIndex = 0;
-            this.groupBox2.TabStop = false;
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -339,13 +275,13 @@
             this.Weight.Size = new System.Drawing.Size(425, 21);
             this.Weight.TabIndex = 9;
             // 
-            // Size
+            // Psize
             // 
-            this.Size.Location = new System.Drawing.Point(99, 221);
-            this.Size.Name = "Size";
-            this.Size.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.Size.Size = new System.Drawing.Size(425, 21);
-            this.Size.TabIndex = 7;
+            this.Psize.Location = new System.Drawing.Point(99, 221);
+            this.Psize.Name = "Psize";
+            this.Psize.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.Psize.Size = new System.Drawing.Size(425, 21);
+            this.Psize.TabIndex = 7;
             // 
             // ProductModel
             // 
@@ -355,13 +291,13 @@
             this.ProductModel.Size = new System.Drawing.Size(250, 21);
             this.ProductModel.TabIndex = 3;
             // 
-            // ProductName
+            // PName
             // 
-            this.ProductName.Location = new System.Drawing.Point(99, 22);
-            this.ProductName.Name = "ProductName";
-            this.ProductName.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.ProductName.Size = new System.Drawing.Size(425, 21);
-            this.ProductName.TabIndex = 1;
+            this.PName.Location = new System.Drawing.Point(99, 22);
+            this.PName.Name = "PName";
+            this.PName.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.PName.Size = new System.Drawing.Size(425, 21);
+            this.PName.TabIndex = 1;
             // 
             // label6
             // 
@@ -438,6 +374,7 @@
             // InfoTab
             // 
             this.InfoTab.Controls.Add(this.groupBox1);
+            this.InfoTab.Controls.Add(this.ImageGroup);
             this.InfoTab.Location = new System.Drawing.Point(4, 21);
             this.InfoTab.Name = "InfoTab";
             this.InfoTab.Padding = new System.Windows.Forms.Padding(3);
@@ -487,7 +424,7 @@
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Controls.Add(this.CannelButton);
+            this.flowLayoutPanel1.Controls.Add(this.CelButton);
             this.flowLayoutPanel1.Controls.Add(this.SaveButton);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 504);
@@ -496,17 +433,17 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(871, 30);
             this.flowLayoutPanel1.TabIndex = 2;
             // 
-            // CannelButton
+            // CelButton
             // 
-            this.CannelButton.Location = new System.Drawing.Point(716, 3);
-            this.CannelButton.Margin = new System.Windows.Forms.Padding(80, 3, 3, 3);
-            this.CannelButton.Name = "CannelButton";
-            this.CannelButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.CannelButton.Size = new System.Drawing.Size(75, 23);
-            this.CannelButton.TabIndex = 1;
-            this.CannelButton.Text = "取消(&C)";
-            this.CannelButton.UseVisualStyleBackColor = true;
-            this.CannelButton.Click += new System.EventHandler(this.CannelButton_Click);
+            this.CelButton.Location = new System.Drawing.Point(716, 3);
+            this.CelButton.Margin = new System.Windows.Forms.Padding(80, 3, 3, 3);
+            this.CelButton.Name = "CelButton";
+            this.CelButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.CelButton.Size = new System.Drawing.Size(75, 23);
+            this.CelButton.TabIndex = 1;
+            this.CelButton.Text = "取消(&C)";
+            this.CelButton.UseVisualStyleBackColor = true;
+            this.CelButton.Click += new System.EventHandler(this.CannelButton_Click);
             // 
             // SaveButton
             // 
@@ -519,6 +456,132 @@
             this.SaveButton.Text = "保存(&S)";
             this.SaveButton.UseVisualStyleBackColor = true;
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
+            // 
+            // imageSelector
+            // 
+            this.imageSelector.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("imageSelector.BackgroundImage")));
+            this.imageSelector.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.imageSelector.Image = null;
+            this.imageSelector.ImageFile = "";
+            this.imageSelector.Location = new System.Drawing.Point(14, 17);
+            this.imageSelector.Name = "imageSelector";
+            this.imageSelector.OpenFileDirectory = null;
+            this.imageSelector.ShowMenu = true;
+            this.imageSelector.Size = new System.Drawing.Size(125, 125);
+            this.imageSelector.TabIndex = 4;
+            // 
+            // ProductImage3
+            // 
+            this.ProductImage3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ProductImage3.BackgroundImage")));
+            this.ProductImage3.Image = null;
+            this.ProductImage3.ImageFile = "";
+            this.ProductImage3.Location = new System.Drawing.Point(13, 180);
+            this.ProductImage3.Name = "ProductImage3";
+            this.ProductImage3.OpenFileDirectory = null;
+            this.ProductImage3.ShowMenu = true;
+            this.ProductImage3.Size = new System.Drawing.Size(125, 125);
+            this.ProductImage3.TabIndex = 29;
+            // 
+            // ProductImage6
+            // 
+            this.ProductImage6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ProductImage6.BackgroundImage")));
+            this.ProductImage6.Image = null;
+            this.ProductImage6.ImageFile = "";
+            this.ProductImage6.Location = new System.Drawing.Point(152, 325);
+            this.ProductImage6.Name = "ProductImage6";
+            this.ProductImage6.OpenFileDirectory = null;
+            this.ProductImage6.ShowMenu = true;
+            this.ProductImage6.Size = new System.Drawing.Size(125, 125);
+            this.ProductImage6.TabIndex = 32;
+            // 
+            // ProductImage1
+            // 
+            this.ProductImage1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ProductImage1.BackgroundImage")));
+            this.ProductImage1.Image = null;
+            this.ProductImage1.ImageFile = "";
+            this.ProductImage1.Location = new System.Drawing.Point(12, 34);
+            this.ProductImage1.Name = "ProductImage1";
+            this.ProductImage1.OpenFileDirectory = null;
+            this.ProductImage1.ShowMenu = true;
+            this.ProductImage1.Size = new System.Drawing.Size(125, 125);
+            this.ProductImage1.TabIndex = 25;
+            // 
+            // ProductImage5
+            // 
+            this.ProductImage5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ProductImage5.BackgroundImage")));
+            this.ProductImage5.Image = null;
+            this.ProductImage5.ImageFile = "";
+            this.ProductImage5.Location = new System.Drawing.Point(14, 326);
+            this.ProductImage5.Name = "ProductImage5";
+            this.ProductImage5.OpenFileDirectory = null;
+            this.ProductImage5.ShowMenu = true;
+            this.ProductImage5.Size = new System.Drawing.Size(125, 125);
+            this.ProductImage5.TabIndex = 31;
+            // 
+            // ProductImage2
+            // 
+            this.ProductImage2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ProductImage2.BackgroundImage")));
+            this.ProductImage2.Image = null;
+            this.ProductImage2.ImageFile = "";
+            this.ProductImage2.Location = new System.Drawing.Point(148, 33);
+            this.ProductImage2.Name = "ProductImage2";
+            this.ProductImage2.OpenFileDirectory = null;
+            this.ProductImage2.ShowMenu = true;
+            this.ProductImage2.Size = new System.Drawing.Size(125, 125);
+            this.ProductImage2.TabIndex = 26;
+            // 
+            // ProductImage4
+            // 
+            this.ProductImage4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ProductImage4.BackgroundImage")));
+            this.ProductImage4.Image = null;
+            this.ProductImage4.ImageFile = "";
+            this.ProductImage4.Location = new System.Drawing.Point(151, 179);
+            this.ProductImage4.Name = "ProductImage4";
+            this.ProductImage4.OpenFileDirectory = null;
+            this.ProductImage4.ShowMenu = true;
+            this.ProductImage4.Size = new System.Drawing.Size(125, 125);
+            this.ProductImage4.TabIndex = 30;
+            // 
+            // Minimum
+            // 
+            this.Minimum.CommaFormat = false;
+            this.Minimum.CurrencyFormat = false;
+            this.Minimum.DecimalPrecision = 0;
+            this.Minimum.Location = new System.Drawing.Point(100, 263);
+            this.Minimum.Name = "Minimum";
+            this.Minimum.PercentFormat = false;
+            this.Minimum.ReadOnly = false;
+            this.Minimum.Size = new System.Drawing.Size(227, 24);
+            this.Minimum.TabIndex = 8;
+            this.Minimum.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            // 
+            // CategoryTreeBox
+            // 
+            this.CategoryTreeBox.DroppedDown = false;
+            this.CategoryTreeBox.Location = new System.Drawing.Point(100, 60);
+            this.CategoryTreeBox.Name = "CategoryTreeBox";
+            comboTreeNode2.Expanded = false;
+            comboTreeNode2.Text = "";
+            this.CategoryTreeBox.Nodes.Add(comboTreeNode2);
+            this.CategoryTreeBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.CategoryTreeBox.SelectedNode = null;
+            this.CategoryTreeBox.Size = new System.Drawing.Size(250, 20);
+            this.CategoryTreeBox.TabIndex = 2;
+            this.CategoryTreeBox.TopNode = comboTreeNode2;
+            this.CategoryTreeBox.SelectedNodeChanged += new System.EventHandler(this.CategoryTreeBox_SelectedNodeChanged);
+            // 
+            // ProductPrice
+            // 
+            this.ProductPrice.CommaFormat = false;
+            this.ProductPrice.CurrencyFormat = false;
+            this.ProductPrice.DecimalPrecision = 0;
+            this.ProductPrice.Location = new System.Drawing.Point(98, 137);
+            this.ProductPrice.Name = "ProductPrice";
+            this.ProductPrice.PercentFormat = false;
+            this.ProductPrice.ReadOnly = false;
+            this.ProductPrice.Size = new System.Drawing.Size(227, 24);
+            this.ProductPrice.TabIndex = 5;
+            this.ProductPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
             // numericTextbox1
             // 
@@ -533,83 +596,13 @@
             this.numericTextbox1.TabIndex = 27;
             this.numericTextbox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
-            // ProductImage4
-            // 
-            this.ProductImage4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ProductImage4.BackgroundImage")));
-            this.ProductImage4.Image = null;
-            this.ProductImage4.ImageFile = null;
-            this.ProductImage4.Location = new System.Drawing.Point(144, 153);
-            this.ProductImage4.Name = "ProductImage4";
-            this.ProductImage4.OpenFileDirectory = null;
-            this.ProductImage4.ShowMenu = true;
-            this.ProductImage4.Size = new System.Drawing.Size(125, 125);
-            this.ProductImage4.TabIndex = 30;
-            // 
-            // ProductImage3
-            // 
-            this.ProductImage3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ProductImage3.BackgroundImage")));
-            this.ProductImage3.Image = null;
-            this.ProductImage3.ImageFile = null;
-            this.ProductImage3.Location = new System.Drawing.Point(8, 154);
-            this.ProductImage3.Name = "ProductImage3";
-            this.ProductImage3.OpenFileDirectory = null;
-            this.ProductImage3.ShowMenu = true;
-            this.ProductImage3.Size = new System.Drawing.Size(125, 125);
-            this.ProductImage3.TabIndex = 29;
-            // 
-            // ProductImage6
-            // 
-            this.ProductImage6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ProductImage6.BackgroundImage")));
-            this.ProductImage6.Image = null;
-            this.ProductImage6.ImageFile = null;
-            this.ProductImage6.Location = new System.Drawing.Point(144, 293);
-            this.ProductImage6.Name = "ProductImage6";
-            this.ProductImage6.OpenFileDirectory = null;
-            this.ProductImage6.ShowMenu = true;
-            this.ProductImage6.Size = new System.Drawing.Size(125, 125);
-            this.ProductImage6.TabIndex = 32;
-            // 
-            // ProductImage5
-            // 
-            this.ProductImage5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ProductImage5.BackgroundImage")));
-            this.ProductImage5.Image = null;
-            this.ProductImage5.ImageFile = null;
-            this.ProductImage5.Location = new System.Drawing.Point(8, 294);
-            this.ProductImage5.Name = "ProductImage5";
-            this.ProductImage5.OpenFileDirectory = null;
-            this.ProductImage5.ShowMenu = true;
-            this.ProductImage5.Size = new System.Drawing.Size(125, 125);
-            this.ProductImage5.TabIndex = 31;
-            // 
-            // ImageGroup
-            // 
-            this.ImageGroup.Controls.Add(this.ProductImage3);
-            this.ImageGroup.Controls.Add(this.ProductImage6);
-            this.ImageGroup.Controls.Add(this.ProductImage1);
-            this.ImageGroup.Controls.Add(this.ProductImage5);
-            this.ImageGroup.Controls.Add(this.ProductImage2);
-            this.ImageGroup.Controls.Add(this.ProductImage4);
-            this.ImageGroup.Location = new System.Drawing.Point(560, 20);
-            this.ImageGroup.Name = "ImageGroup";
-            this.ImageGroup.Size = new System.Drawing.Size(278, 432);
-            this.ImageGroup.TabIndex = 33;
-            this.ImageGroup.TabStop = false;
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.imageSelector);
-            this.groupBox4.Location = new System.Drawing.Point(369, 50);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(153, 153);
-            this.groupBox4.TabIndex = 34;
-            this.groupBox4.TabStop = false;
-            // 
             // NewItemForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(871, 534);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "NewItemForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -617,13 +610,13 @@
             this.Load += new System.EventHandler(this.NewItemForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.ImageGroup.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.InfoTab.ResumeLayout(false);
             this.DetailTab.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
-            this.ImageGroup.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -637,20 +630,19 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox ProductName;
+        private System.Windows.Forms.TextBox PName;
         private System.Windows.Forms.TextBox ProductModel;
         private System.Windows.Forms.TextBox Packing;
         private System.Windows.Forms.TextBox Weight;
-        private System.Windows.Forms.TextBox Size;
+        private System.Windows.Forms.TextBox Psize;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage InfoTab;
         private System.Windows.Forms.TabPage DetailTab;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Button CannelButton;
+        private System.Windows.Forms.Button CelButton;
         private System.Windows.Forms.Button SaveButton;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ComboBox PriceCate;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label11;
