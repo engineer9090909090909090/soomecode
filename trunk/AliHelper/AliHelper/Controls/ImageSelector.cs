@@ -69,7 +69,7 @@ namespace AliHelper
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (string.IsNullOrEmpty(OpenFileDirectory))
             {
-                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.InitialDirectory = Environment.CurrentDirectory;
             }
             else {
                 openFileDialog.InitialDirectory = OpenFileDirectory;
@@ -80,8 +80,8 @@ namespace AliHelper
             openFileDialog.FilterIndex = 1;
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                
-                this.ImageFile = openFileDialog.FileName;
+                string openFile = openFileDialog.FileName;
+                this.ImageFile = FileUtils.ResizeImageToLess1M(openFile);
                 OpenFileDirectory = new FileInfo(this.ImageFile).DirectoryName;
             }
         }

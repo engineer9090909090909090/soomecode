@@ -175,7 +175,7 @@ namespace AliHelper
             ProductImage mainImage = imageSelector.Tag != null ? (ProductImage)imageSelector.Tag : new ProductImage();
             mainImage.IsMain = true;
             mainImage.Size = new FileInfo(imageSelector.ImageFile).Length;
-            mainImage.Image = FileUtils.ImageFileToToBuffer(imageSelector.ImageFile);
+            mainImage.Image = FileUtils.ImageFileToByteArray(imageSelector.ImageFile);
             imageList.Add(mainImage);
             for (int i = 1; i <= 6; i++)
             {
@@ -185,7 +185,7 @@ namespace AliHelper
                     ProductImage pImage = selector.Tag != null ? (ProductImage)selector.Tag : new ProductImage();
                     pImage.IsMain = false;
                     pImage.Size = new FileInfo(selector.ImageFile).Length;
-                    pImage.Image = FileUtils.ImageFileToToBuffer(selector.ImageFile);
+                    pImage.Image = FileUtils.ImageFileToByteArray(selector.ImageFile);
                     imageList.Add(pImage);
                 }
             }
