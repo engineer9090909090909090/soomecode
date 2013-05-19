@@ -43,6 +43,8 @@
             this.changeModel = new System.Windows.Forms.Button();
             this.BtnLogin = new System.Windows.Forms.Button();
             this.BtnCancel = new System.Windows.Forms.Button();
+            this.LoginType = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.loginPanel.SuspendLayout();
             this.LogPanel.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -57,7 +59,7 @@
             this.webBrowser1.Name = "webBrowser1";
             this.webBrowser1.ScriptErrorsSuppressed = true;
             this.webBrowser1.ScrollBarsEnabled = false;
-            this.webBrowser1.Size = new System.Drawing.Size(325, 163);
+            this.webBrowser1.Size = new System.Drawing.Size(325, 195);
             this.webBrowser1.TabIndex = 6;
             this.webBrowser1.Url = new System.Uri("", System.UriKind.Relative);
             this.webBrowser1.Visible = false;
@@ -69,7 +71,7 @@
             this.loginPanel.Controls.Add(this.webBrowser1);
             this.loginPanel.Location = new System.Drawing.Point(0, 0);
             this.loginPanel.Name = "loginPanel";
-            this.loginPanel.Size = new System.Drawing.Size(325, 163);
+            this.loginPanel.Size = new System.Drawing.Size(325, 195);
             this.loginPanel.TabIndex = 7;
             // 
             // LogPanel
@@ -78,11 +80,13 @@
             this.LogPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LogPanel.Location = new System.Drawing.Point(0, 0);
             this.LogPanel.Name = "LogPanel";
-            this.LogPanel.Size = new System.Drawing.Size(325, 163);
+            this.LogPanel.Size = new System.Drawing.Size(325, 195);
             this.LogPanel.TabIndex = 11;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.LoginType);
             this.groupBox1.Controls.Add(this.loadingImage);
             this.groupBox1.Controls.Add(this.labErrorMsg);
             this.groupBox1.Controls.Add(this.checkBox1);
@@ -92,14 +96,14 @@
             this.groupBox1.Controls.Add(this.cmbAccount);
             this.groupBox1.Location = new System.Drawing.Point(8, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(308, 158);
+            this.groupBox1.Size = new System.Drawing.Size(308, 190);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
             // loadingImage
             // 
             this.loadingImage.Image = global::AliHelper.Properties.Resources.loading;
-            this.loadingImage.Location = new System.Drawing.Point(39, 109);
+            this.loadingImage.Location = new System.Drawing.Point(39, 149);
             this.loadingImage.Name = "loadingImage";
             this.loadingImage.Size = new System.Drawing.Size(38, 37);
             this.loadingImage.TabIndex = 5;
@@ -118,7 +122,7 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(123, 108);
+            this.checkBox1.Location = new System.Drawing.Point(123, 148);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(96, 16);
             this.checkBox1.TabIndex = 3;
@@ -127,7 +131,7 @@
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(90, 74);
+            this.txtPassword.Location = new System.Drawing.Point(90, 114);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(200, 21);
@@ -138,7 +142,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(22, 81);
+            this.label2.Location = new System.Drawing.Point(22, 121);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 12);
             this.label2.TabIndex = 3;
@@ -147,7 +151,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(23, 33);
+            this.label1.Location = new System.Drawing.Point(23, 73);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 12);
             this.label1.TabIndex = 2;
@@ -156,7 +160,7 @@
             // cmbAccount
             // 
             this.cmbAccount.FormattingEnabled = true;
-            this.cmbAccount.Location = new System.Drawing.Point(91, 28);
+            this.cmbAccount.Location = new System.Drawing.Point(91, 69);
             this.cmbAccount.Name = "cmbAccount";
             this.cmbAccount.Size = new System.Drawing.Size(200, 20);
             this.cmbAccount.TabIndex = 0;
@@ -164,7 +168,7 @@
             // 
             // changeModel
             // 
-            this.changeModel.Location = new System.Drawing.Point(7, 169);
+            this.changeModel.Location = new System.Drawing.Point(9, 198);
             this.changeModel.Name = "changeModel";
             this.changeModel.Size = new System.Drawing.Size(127, 23);
             this.changeModel.TabIndex = 6;
@@ -174,7 +178,7 @@
             // 
             // BtnLogin
             // 
-            this.BtnLogin.Location = new System.Drawing.Point(160, 169);
+            this.BtnLogin.Location = new System.Drawing.Point(160, 198);
             this.BtnLogin.Name = "BtnLogin";
             this.BtnLogin.Size = new System.Drawing.Size(62, 23);
             this.BtnLogin.TabIndex = 4;
@@ -184,7 +188,7 @@
             // 
             // BtnCancel
             // 
-            this.BtnCancel.Location = new System.Drawing.Point(242, 169);
+            this.BtnCancel.Location = new System.Drawing.Point(242, 198);
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(57, 23);
             this.BtnCancel.TabIndex = 5;
@@ -192,11 +196,31 @@
             this.BtnCancel.UseVisualStyleBackColor = true;
             this.BtnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
+            // LoginType
+            // 
+            this.LoginType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.LoginType.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.LoginType.FormattingEnabled = true;
+            this.LoginType.Location = new System.Drawing.Point(90, 25);
+            this.LoginType.Name = "LoginType";
+            this.LoginType.Size = new System.Drawing.Size(200, 20);
+            this.LoginType.TabIndex = 6;
+            this.LoginType.SelectedIndexChanged += new System.EventHandler(this.LoginType_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(22, 29);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 12);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "类　型：";
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(322, 196);
+            this.ClientSize = new System.Drawing.Size(322, 226);
             this.Controls.Add(this.BtnCancel);
             this.Controls.Add(this.BtnLogin);
             this.Controls.Add(this.changeModel);
@@ -233,6 +257,8 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label labErrorMsg;
         private System.Windows.Forms.PictureBox loadingImage;
+        private System.Windows.Forms.ComboBox LoginType;
+        private System.Windows.Forms.Label label3;
     }
 }
 
