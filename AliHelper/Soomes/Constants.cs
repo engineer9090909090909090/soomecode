@@ -67,6 +67,8 @@ namespace Soomes
         public const string ProductTypeAll = "All_Product";
         public const string ProductTypeWin = "Windows_Product";
 
-        
+        public const string LoginUserType_Alibaba = "Alibaba";
+        public const string LoginUserType_Location = "Location";
+        public const string LoginUserType_Network = "Network";
     }
 }

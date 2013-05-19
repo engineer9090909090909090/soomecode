@@ -69,13 +69,20 @@ namespace AliHelper
             string url = string.Format(preUrl, userId, password, dmtrackPageid);
             string html = HttpHelper.GetHtml(url, cookieContainer);
             //System.Diagnostics.Trace.WriteLine("GetToken = " + html);
+            if (html.IndexOf("illegal_password") > 0)
+            {
+                throw new PasswordException("illegal_password");
+            }
             Regex r = new Regex("var xman_login_token={\"token\":\"(.*?)\"}");
             GroupCollection gc = r.Match(html).Groups;
             if (gc != null && gc.Count > 1)
             {
                 return gc[1].Value.Trim();
             }
-            return "";
+            else 
+            {
+                throw new ValidationException();
+            }
         }
 
         public string GetST(string token)

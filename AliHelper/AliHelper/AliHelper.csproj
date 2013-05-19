@@ -98,6 +98,7 @@
       <DependentUpon>TopFiveQueryForm.cs</DependentUpon>
     </Compile>
     <Compile Include="AliHelperEvent.cs" />
+    <Compile Include="Bussness\AliHelperException.cs" />
     <Compile Include="Bussness\BaseManager.cs" />
     <Compile Include="Bussness\FinOrderManager.cs" />
     <Compile Include="Bussness\ImpProductDetail.cs" />

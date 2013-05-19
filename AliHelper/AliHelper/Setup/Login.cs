@@ -28,6 +28,13 @@ namespace AliHelper
         private void LoginForm_Load(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false;
+            this.LoginType.DisplayMember = "Label";
+            this.LoginType.ValueMember = "Key";
+            List<AppDic> loginUserTypeList = new List<AppDic>();
+            loginUserTypeList.Add(new AppDic("", Constants.LoginUserType_Alibaba, "阿里国际站用户"));
+            loginUserTypeList.Add(new AppDic("", Constants.LoginUserType_Location, "本地系统用户"));
+            loginUserTypeList.Add(new AppDic("", Constants.LoginUserType_Network, "网络系统用户"));
+            this.LoginType.DataSource = loginUserTypeList;
             passporter = new Passporter2(this.webBrowser1);
         }
 
@@ -85,7 +92,7 @@ namespace AliHelper
             }
             else {
                 this.changeModel.Text = "切换到网页登录模式";
-                this.Size = new Size(330, 230);
+                this.Size = new Size(330, 260);
                 this.IsIELoginModel = false;
                 this.BtnLogin.Enabled = true;
                 this.BtnCancel.Enabled = true;
@@ -94,7 +101,7 @@ namespace AliHelper
                 this.webBrowser1.Visible = false;
                 this.LogPanel.Visible = true;
                 this.loginPanel.Size = new Size(325, 230);
-                this.changeModel.Location = new Point(9,169);
+                this.changeModel.Location = new Point(9,198);
                 this.Location = new Point(this.Location.X, this.Location.Y + 100);
             }
         }
@@ -134,7 +141,24 @@ namespace AliHelper
             bgWorker.DoWork -= new DoWorkEventHandler(bgWorker_DoWork);
             string account = this.cmbAccount.Text;
             string password = this.txtPassword.Text;
-            bool loginSuccess = passporter.DoLogin(account, password);
+            bool loginSuccess = false;
+            try
+            {
+                loginSuccess = passporter.DoLogin(account, password);
+            }
+            catch (ValidationException)
+            {
+                System.Diagnostics.Trace.WriteLine("ValidationException");
+                this.BeginInvoke(new Action(() =>
+                {
+                    ChangeModel_Click(null, null);
+                }));
+                return;
+            }
+            catch (PasswordException)
+            {
+                System.Diagnostics.Trace.WriteLine("PasswordException");
+            }
             this.loadingImage.Visible = false;
             this.changeModel.Enabled = true;
             if (loginSuccess)
@@ -153,6 +177,19 @@ namespace AliHelper
         private void BtnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void LoginType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedValue = (string)this.LoginType.SelectedValue;
+            if (selectedValue == Constants.LoginUserType_Alibaba)
+            {
+                this.changeModel.Enabled = true;
+            }
+            else 
+            {
+                this.changeModel.Enabled = false;
+            }
         }
 
     }
