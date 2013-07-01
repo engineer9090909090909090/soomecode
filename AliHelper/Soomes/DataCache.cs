@@ -28,6 +28,8 @@ namespace Soomes
         public string AliID { get; set; }
         public string CsrfToken { get; set; }
         public string CheckCodeUrl { get; set; }
+
+        public string CurrentLoginType { get; set; }
         
 
         public Dictionary<string, string> DicTypeOptions { set; get; }

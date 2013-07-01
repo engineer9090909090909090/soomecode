@@ -51,6 +51,7 @@
     <Compile Include="AliProduct.cs" />
     <Compile Include="CategroyNode.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="LoginUser.cs" />
     <Compile Include="DataCache.cs" />
     <Compile Include="Finance.cs" />
     <Compile Include="FormElement.cs" />
