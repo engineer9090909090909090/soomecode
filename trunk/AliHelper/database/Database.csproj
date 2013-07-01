@@ -53,6 +53,7 @@
     <Compile Include="Inteface\ILoginUserDao.cs" />
     <Compile Include="Inteface\ISupplierDao.cs" />
     <Compile Include="Inteface\IProductrDao.cs" />
+    <Compile Include="MysqlDAO\LoginUserDaoMysql.cs" />
     <Compile Include="MysqlDAO\SuplierDaoMysql.cs" />
     <Compile Include="MysqlDAO\ProductDaoMysql.cs" />
     <Compile Include="MysqlDBHelper.cs" />
