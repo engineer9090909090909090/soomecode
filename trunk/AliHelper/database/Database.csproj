@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Inteface\ILoginUserDao.cs" />
     <Compile Include="Inteface\ISupplierDao.cs" />
     <Compile Include="Inteface\IProductrDao.cs" />
     <Compile Include="MysqlDAO\SuplierDaoMysql.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="SqliteDAO\AppDicDAO.cs" />
     <Compile Include="DAOFactory.cs" />
     <Compile Include="SqliteDAO\AppConfigDAO.cs" />
+    <Compile Include="SqliteDAO\LoginUserDao.cs" />
     <Compile Include="SqliteDAO\FinanceDao.cs" />
     <Compile Include="SqliteDAO\OrderDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

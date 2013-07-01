@@ -31,9 +31,9 @@ namespace AliHelper
             this.LoginType.DisplayMember = "Label";
             this.LoginType.ValueMember = "Key";
             List<AppDic> loginUserTypeList = new List<AppDic>();
-            loginUserTypeList.Add(new AppDic("", Constants.LoginUserType_Alibaba, "阿里国际站用户"));
-            loginUserTypeList.Add(new AppDic("", Constants.LoginUserType_Location, "本地系统用户"));
+            loginUserTypeList.Add(new AppDic("", Constants.LoginUserType_Location, "单机个人用户"));
             loginUserTypeList.Add(new AppDic("", Constants.LoginUserType_Network, "网络系统用户"));
+            loginUserTypeList.Add(new AppDic("", Constants.LoginUserType_Alibaba, "阿里国际站用户"));
             this.LoginType.DataSource = loginUserTypeList;
             passporter = new Passporter2(this.webBrowser1);
         }
@@ -182,6 +182,7 @@ namespace AliHelper
         private void LoginType_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selectedValue = (string)this.LoginType.SelectedValue;
+            DataCache.Instance.CurrentLoginType = selectedValue;
             if (selectedValue == Constants.LoginUserType_Alibaba)
             {
                 this.changeModel.Enabled = true;
