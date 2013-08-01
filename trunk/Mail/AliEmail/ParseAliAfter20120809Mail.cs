@@ -28,137 +28,56 @@ namespace AliEmail
             {
                 messageText = messageInfo.ParentNode.InnerText.Replace("\t", "").Replace("\r\n", " ");
             }
-            this.productInfo = doc.DocumentNode.SelectSingleNode(@"//table[@style='color:#999;border-collapse:collapse; border-spacing:0;width:100%;font-family: Arial, Helvetica, sans-serif;font-size:12px;']");
-            this.cantactInfo = doc.DocumentNode.SelectSingleNode(@"//table/tr/td[@style='padding:10px;']");
+            HtmlNodeCollection links = doc.DocumentNode.SelectNodes(@"//a");
 
             object[] dataItem = new object[13];
             dataItem[0] = 0;
-            dataItem[1] = GetMsgIp();
-            dataItem[2] = GetOrigin();
-            dataItem[3] = GetProduct();
-            dataItem[4] = GetName();
-            dataItem[5] = GetMail();
-            dataItem[6] = GetCountry();
-            dataItem[7] = GetTelephone();
-            dataItem[8] = GetCompany();
-            dataItem[9] = GetAddress();
-            dataItem[10] = GetFax();
+            dataItem[1] = string.Empty;
+            dataItem[2] = string.Empty;
+            dataItem[3] = string.Empty;
+            dataItem[4] = GetName(links);
+            dataItem[5] = GetMail(subject);
+            dataItem[6] = string.Empty;
+            dataItem[7] = string.Empty;
+            dataItem[8] = string.Empty;
+            dataItem[9] = string.Empty;
+            dataItem[10] = string.Empty;
             dataItem[11] = string.Empty;
             dataItem[12] = string.Empty;
             return dataItem;
         }
-        private string GetMail()
+        private string GetMail(string subject)
         {
-            if (cantactInfo != null)
+            Regex r = new Regex(@"\[(.*?)\]");
+            GroupCollection gc = r.Match(subject).Groups;
+            if (gc != null && gc.Count > 1)
             {
-                string mail = cantactInfo.SelectSingleNode(@"table[2]/tbody/tr[5]/td[2]").InnerText.Trim();
-                if (!string.IsNullOrEmpty(mail))
+                return gc[1].Value.Trim();
+            }
+            return "";
+        }
+
+
+        private string GetName(HtmlNodeCollection links)
+        {
+            if (links != null)
+            {
+                foreach (HtmlNode n in links)
                 {
-                    mail = mail.Replace("\r\n", "").Replace("\t", "").Replace("&nbsp;","").Replace("[Unverified Email]","");
-                    return mail;
+                    if (n.Attributes["href"] == null) continue;
+
+                    string href = n.Attributes["href"].Value;
+                    if (href.StartsWith("http://message.alibaba.com/customer/customer_detail.htm") && n.InnerText.Trim()!="")
+                    {
+                        string name = n.InnerText;
+                        name = name.Replace("Mr. ", "").Replace("Ms. ", "");
+                        return name;
+                    }
                 }
             }
             return "";
         }
 
-        private string GetMsgIp()
-        {
-            if (messageText != null)
-            {
-                Regex r = new Regex("Message IP:(.*?)\\*");
-                GroupCollection gc = r.Match(messageText).Groups;
-                if (gc != null && gc.Count > 1)
-                {
-                    string msgIp = gc[1].Value.Trim()+"*";
-                    return msgIp;
-                }
-            }
-            return "";
-        }
-        private string GetOrigin()
-        {
-            if (messageText != null)
-            {
-                Regex r = new Regex("Registered Location and Message Origin:(.*?)Message Origin:");
-                GroupCollection gc = r.Match(messageText).Groups;
-                if (gc != null && gc.Count > 1)
-                {
-                    string msgIp = gc[1].Value.Trim();
-                    return msgIp;
-                }
-                r = new Regex("Message Origin:(.*?)Message IP:");
-                gc = r.Match(messageText).Groups;
-                if (gc != null && gc.Count > 1)
-                {
-                    string msgIp = gc[1].Value.Trim();
-                    return msgIp;
-                }
-            }
-            return "";
-        }
-        private string GetProduct()
-        {
-            if (productInfo != null && productInfo.SelectSingleNode(@"tbody/tr/td[2]/a/span") != null)
-            {
-                return productInfo.SelectSingleNode(@"tbody/tr/td[2]/a/span").InnerText.Trim();
-            }
-            return "";
-            
-        }
-
-        private string GetName()
-        {
-            if (cantactInfo != null)
-            {
-                string name= cantactInfo.SelectSingleNode(@"table/tbody/tr/td[2]/a/h4").InnerText.Trim();
-                name = name.Replace("Mr. ", "").Replace("Ms. ", "");
-                return name;
-            }
-            return "";
-        }
-
-        private string GetCountry()
-        {
-            if (cantactInfo != null)
-            {
-                return cantactInfo.SelectSingleNode(@"table[2]/tbody/tr[3]/td[2]").InnerText.Trim();
-            }
-            return "";
-        }
-        private string GetTelephone()
-        {
-            if (cantactInfo != null)
-            {
-                return cantactInfo.SelectSingleNode(@"table[2]/tbody/tr[6]/td[2]").InnerText.Trim();
-            }
-            return "";
-        }
-
-        private string GetCompany()
-        {
-            if (cantactInfo != null)
-            {
-                return cantactInfo.SelectSingleNode(@"table[2]/tbody/tr[2]/td[2]").InnerText.Trim();
-            }
-            return "";
-        }
-
-        private string GetAddress()
-        {
-            if (cantactInfo != null)
-            {
-                return cantactInfo.SelectSingleNode(@"table[2]/tbody/tr[4]/td[2]").InnerText.Trim();
-            }
-            return "";
-        }
-        private string GetFax()
-        {
-            if (cantactInfo != null)
-            {
-                return cantactInfo.SelectSingleNode(@"table[2]/tbody/tr[7]/td[2]").InnerText.Trim();
-            }
-            return "";
-        }
 
         public string getType()
         {
