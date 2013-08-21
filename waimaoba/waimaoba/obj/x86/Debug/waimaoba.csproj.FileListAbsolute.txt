@@ -1,0 +1,11 @@
+D:\soomecode\waimaoba\waimaoba\bin\Debug\waimaoba.exe
+D:\soomecode\waimaoba\waimaoba\bin\Debug\waimaoba.pdb
+D:\soomecode\waimaoba\waimaoba\bin\Debug\HtmlAgilityPack.dll
+D:\soomecode\waimaoba\waimaoba\bin\Debug\System.Data.SQLite.DLL
+D:\soomecode\waimaoba\waimaoba\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\soomecode\waimaoba\waimaoba\obj\x86\Debug\waimaoba.MainForm.resources
+D:\soomecode\waimaoba\waimaoba\obj\x86\Debug\waimaoba.Properties.Resources.resources
+D:\soomecode\waimaoba\waimaoba\obj\x86\Debug\GenerateResource-ResGen.read.1.tlog
+D:\soomecode\waimaoba\waimaoba\obj\x86\Debug\GenerateResource-ResGen.write.1.tlog
+D:\soomecode\waimaoba\waimaoba\obj\x86\Debug\waimaoba.exe
+D:\soomecode\waimaoba\waimaoba\obj\x86\Debug\waimaoba.pdb
