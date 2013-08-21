@@ -19,8 +19,17 @@ namespace com.soomes
                 url = url.Substring(0, url.Length-1);
             }
             HtmlWeb clinet = new HtmlWeb();
-            List<string> links = new List<string>();
             HtmlDocument document = clinet.Load(url);
+            string html = document.DocumentNode.InnerText;
+
+
+            WebParse webParse = new WaimaobaCompanyItemParse();
+            webParse.Parse(url, document);
+        }
+
+        public List<string> getLinks(string url, HtmlDocument document)
+        {
+            List<string> links = new List<string>();
             HtmlNodeCollection linkNodes = document.DocumentNode.SelectNodes("//a");
             foreach (HtmlNode linkNode in linkNodes)
             {
@@ -35,9 +44,9 @@ namespace com.soomes
                     if (currUrl.StartsWith("/"))
                     {
                         currFullUrl = url + currUrl;
-                        Console.WriteLine("localhstURL: "+ currFullUrl);
+                        Console.WriteLine("localhstURL: " + currFullUrl);
                     }
-                    else 
+                    else
                     {
                         Console.WriteLine(currFullUrl);
                     }
@@ -46,9 +55,8 @@ namespace com.soomes
                         links.Add(currFullUrl);
                     }
                 }
-                    
             }
-
+            return links;
         }
     }
 

@@ -20,7 +20,8 @@ namespace waimaoba
         private void search_Click(object sender, EventArgs e)
         {
             Searcher search = new Searcher();
-            search.DoSearch("http://buyer.waimaoba.com/company/fo/concern-soyuz-group-351448.html");
+            search.DoSearch("http://buyer.waimaoba.com/company/jd/shakii-international-ltd-355094.html");
+            search.DoSearch("http://104.waimaoba.com/company/bags-wear-llc-4");
         }
     }
 }

@@ -8,6 +8,6 @@ namespace com.soomes
 {
     interface WebParse
     {
-        void Parse(HtmlDocument document);
+        void Parse(string url, HtmlDocument document);
     }
 }
