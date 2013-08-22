@@ -21,13 +21,11 @@ namespace com.soomes
             HtmlWeb clinet = new HtmlWeb();
             HtmlDocument document = clinet.Load(url);
             string html = document.DocumentNode.InnerText;
-
-
             WebParse webParse = new WaimaobaCompanyItemParse();
             webParse.Parse(url, document);
         }
 
-        public List<string> getLinks(string url, HtmlDocument document)
+        public List<string> GetLinks(string url, HtmlDocument document)
         {
             List<string> links = new List<string>();
             HtmlNodeCollection linkNodes = document.DocumentNode.SelectNodes("//a");
