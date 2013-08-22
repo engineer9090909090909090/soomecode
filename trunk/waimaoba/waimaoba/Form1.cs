@@ -22,6 +22,13 @@ namespace waimaoba
             Searcher search = new Searcher();
             search.DoSearch("http://buyer.waimaoba.com/company/jd/shakii-international-ltd-355094.html");
             search.DoSearch("http://104.waimaoba.com/company/bags-wear-llc-4");
+
+            search.DoSearch("http://104.waimaoba.com/company/c2d-5");
+            search.DoSearch("http://104.waimaoba.com/company/life-style-limited-10");
+
+            search.DoSearch("http://105.waimaoba.com/company/suria-hwole-sales-1");
+            search.DoSearch("http://105.waimaoba.com/company/roda-sa");
+            search.DoSearch("http://105.waimaoba.com/company/succes-sa");
         }
     }
 }
