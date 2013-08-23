@@ -12,7 +12,16 @@ namespace com.soomes
     {
         public void Parse(string url, HtmlDocument document)
         {
+            if (url.IndexOf(".waimaoba.com") == -1)
+            {
+                return;
+            }
             BuyerInfo buyer = GetBuyerInfo(url, document);
+            if (string.IsNullOrEmpty(buyer.Email))
+            {
+                return;
+            }
+            DAOFactory.GetInstance().GetBuyerInfoDao().Insert(buyer);
         }
 
         public BuyerInfo GetBuyerInfo(string url, HtmlDocument document)
@@ -26,7 +35,7 @@ namespace com.soomes
                 {
                     buyerInfo.Type = "Buyer";
                     HtmlNodeCollection fieldsetNodes = document.DocumentNode.SelectNodes("//fieldset[@class='fieldgroup group-information']/table/tbody/tr/td[2]/div");
-                    if (fieldsetNodes.Count > 1)
+                    if (fieldsetNodes !=null && fieldsetNodes.Count > 1)
                     {
                         string companyInfo = HtmlUtils.GetHtmlNodeText(fieldsetNodes[0]);
                         HtmlUtils.Log("companyInfo==========================================\r\n" + companyInfo);
@@ -58,7 +67,7 @@ namespace com.soomes
                 {
                     buyerInfo.Type = "Company";
                     HtmlNodeCollection fieldsetNodes = document.DocumentNode.SelectNodes("//fieldset[@class='fieldgroup group-information']/table/tbody/tr/td[2]");
-                    if (fieldsetNodes.Count > 1)
+                    if (fieldsetNodes != null && fieldsetNodes.Count > 1)
                     {
                         string companyInfo = HtmlUtils.GetHtmlNodeText(fieldsetNodes[0]);
                         HtmlUtils.Log("companyInfo==========================================\r\n" + companyInfo);
@@ -95,7 +104,7 @@ namespace com.soomes
             {
                 buyerInfo.Type = "Inquiry";
                 HtmlNodeCollection fieldsetNodes = document.DocumentNode.SelectNodes("//fieldset[@class='fieldgroup group-information']/table/tbody/tr/td[2]");
-                if (fieldsetNodes.Count > 1)
+                if (fieldsetNodes != null && fieldsetNodes.Count > 1)
                 {
                     string companyInfo = HtmlUtils.GetHtmlNodeText(fieldsetNodes[0]);
                     HtmlUtils.Log("companyInfo==========================================\r\n" + companyInfo);

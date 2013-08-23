@@ -31,7 +31,7 @@
             this.search = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.SearchText = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.statusStrip1.SuspendLayout();
@@ -63,13 +63,13 @@
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(0, 17);
             // 
-            // textBox1
+            // SearchText
             // 
-            this.textBox1.Location = new System.Drawing.Point(76, 20);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(304, 21);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "http://www.waimaoba.com";
+            this.SearchText.Location = new System.Drawing.Point(76, 20);
+            this.SearchText.Name = "SearchText";
+            this.SearchText.Size = new System.Drawing.Size(304, 21);
+            this.SearchText.TabIndex = 2;
+            this.SearchText.Text = "http://www.waimaoba.com";
             // 
             // label1
             // 
@@ -82,7 +82,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.SearchText);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.search);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
@@ -115,7 +115,7 @@
         private System.Windows.Forms.Button search;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox SearchText;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
     }
