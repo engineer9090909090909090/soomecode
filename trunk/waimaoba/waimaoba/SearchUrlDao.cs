@@ -71,6 +71,10 @@ namespace com.soomes
 
         public void Insert(string url)
         {
+            if (ExistUrl(url))
+            {
+                return;
+            }
             string InsSql = @"Insert into SearchUrls ( Url) values(@Url)";
             SQLiteParameter[] parameter = new SQLiteParameter[]
             {

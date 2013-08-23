@@ -36,7 +36,7 @@ namespace com.soomes
             }
         }
 
-        public static BuyerInfoDao GetBuyerInfoDao()
+        public BuyerInfoDao GetBuyerInfoDao()
         {
             if (buyerInfoDao == null)
             {
@@ -45,7 +45,7 @@ namespace com.soomes
             return buyerInfoDao;
         }
 
-        public static SearchUrlDao GetSearchUrlDao()
+        public SearchUrlDao GetSearchUrlDao()
         {
             if (searchUrlDao == null)
             {

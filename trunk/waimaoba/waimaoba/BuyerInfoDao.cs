@@ -28,6 +28,7 @@ namespace com.soomes
             + "CompanyName varchar(100),"
             + "CompanyInfo varchar(500),"
             + "ContactInfo varchar(500),"
+            + "BuyerName varchar(100),"
             + "Url varchar(200),"
             + "UrlTitle varchar(500),"
             + "Email varchar(100) not null,"
@@ -74,7 +75,7 @@ namespace com.soomes
 
         public bool ExistEmail(string email)
         {
-            string sql = "SELECT count(1) FROM BuyerInfo where Email like %" + email + "%";
+            string sql = "SELECT count(1) FROM BuyerInfo where Email like '%" + email + "%'";
             int result = Convert.ToInt32(dbHelper.ExecuteScalar(sql, null));
             if (result > 0)
             {
@@ -86,6 +87,10 @@ namespace com.soomes
 
         public void Insert(BuyerInfo item)
         {
+            if (string.IsNullOrEmpty(item.Email) || ExistEmail(item.Email))
+            {
+                return;
+            }
             string InsSql = @"Insert into BuyerInfo(Type, CompanyName, CompanyInfo, Email,BuyerName, ContactInfo, Url, UrlTitle) "
                             + "values(@Type, @CompanyName, @CompanyInfo, @Email, @BuyerName, @ContactInfo, @Url, @UrlTitle)";
 
