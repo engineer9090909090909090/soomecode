@@ -5,6 +5,7 @@ using System.Net;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Web;
+using HtmlAgilityPack;
 
 namespace com.soomes
 {
@@ -57,5 +58,22 @@ namespace com.soomes
             return emailList;
         }
 
+        public static string GetHtmlNodeText(HtmlNode node)
+        {
+            if (node == null)
+            {
+                return string.Empty;
+            }
+            string text = node.InnerText.Replace("&nbsp;", " ");
+            text = HttpUtility.HtmlDecode(text).Trim();
+            text = text.Replace("  ", "").Replace("\t", "");
+
+            return text;
+        }
+
+        public static void Log(string text)
+        {
+            Console.WriteLine(text);
+        }
     }
 }
