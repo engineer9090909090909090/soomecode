@@ -3,17 +3,52 @@ using System.Collections.Generic;
 using System.Text;
 using HtmlAgilityPack;
 using System.Text.RegularExpressions;
+using System.Net;
 
 namespace com.soomes
 {
-    class Searcher
+
+    public delegate void SearchEvent(object sender, SearchEventArgs e);
+
+    public class SearchEventArgs : EventArgs
+    {
+        public string Msg;
+        public SearchEventArgs(string _msg)
+        {
+            this.Msg = _msg;
+        }
+    }
+
+    public class Searcher
     {
         private int SearchDepth;
+        private HtmlWeb webClient;
         private HtmlDocument document;
+        private WebParse webParse;
+        public event SearchEvent DoSearchEvent;
+        public bool IsStop;
+
         public Searcher(int searchDepth)
         {
             this.SearchDepth = searchDepth;
+            this.IsStop = false;
+            this.webClient = new HtmlWeb();
+            HtmlWeb.PreRequestHandler handler = delegate(HttpWebRequest request)
+            {
+
+                request.Headers[HttpRequestHeader.AcceptEncoding] = "gzip, deflate";
+                request.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
+                request.CookieContainer = new System.Net.CookieContainer();
+                return true;
+            };
+            this.webClient.PreRequest += handler;
             this.document = new HtmlDocument();
+            this.webParse = new WaimaobaCompanyItemParse();
+        }
+
+        public void Stop()
+        {
+            this.IsStop = true;
         }
 
         public void DoSearch(string url)
@@ -24,10 +59,6 @@ namespace com.soomes
 
         private void DoSearch(string url, int depth)
         {
-            if (depth > this.SearchDepth)
-            {
-                return;
-            }
             if (!url.ToLower().StartsWith("http://"))
             {
                 return;
@@ -40,51 +71,85 @@ namespace com.soomes
             {
                 return;
             }
-
-            try
-            {
-                
-                string html = HttpHelper.GetHtml(url);
-                document.LoadHtml(html);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return;
-            }
-            List<string> links = GetLinks(url, document);
+            
             if (url.IndexOf(".waimaoba.com") >= 0)
             {
-                WebParse webParse = new WaimaobaCompanyItemParse();
+
+                try
+                {
+                    document = this.webClient.Load(url);
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Trace.WriteLine("Open " + url + "\r\n " + e.Message);
+                    DAOFactory.GetInstance().GetSearchUrlDao().Insert(url);
+                    return;
+                }
                 webParse.Parse(url, document);
                 DAOFactory.GetInstance().GetSearchUrlDao().Insert(url);
+                List<string> documentLinks = new List<string>();
+                GetLinks(url, document, ref documentLinks);
+                List<string> childrenLinks = new List<string>();
+                foreach (string link in documentLinks)
+                {
+                    if (DAOFactory.GetInstance().GetSearchUrlDao().ExistUrl(link))
+                    {
+                        continue;
+                    }
+                    Console.WriteLine(link);
+                    SearchingEvent(link);
+                    try
+                    {
+                        document = this.webClient.Load(link);
+                    }
+                    catch (Exception e)
+                    {
+                        System.Diagnostics.Trace.WriteLine("Open " + link + "\r\n " + e.Message);
+                        DAOFactory.GetInstance().GetSearchUrlDao().Insert(url);
+                        continue;
+                    }
+                    webParse.Parse(link, document);
+                    DAOFactory.GetInstance().GetSearchUrlDao().Insert(link);
+                    GetLinks(link, document, ref childrenLinks);
+                    if (this.IsStop)
+                    {
+                        return;
+                    }
+                }
+                documentLinks.Clear();
+                documentLinks = null;
+                foreach (string childLink in childrenLinks)
+                {
+                    if (DAOFactory.GetInstance().GetSearchUrlDao().ExistUrl(childLink))
+                    {
+                        continue;
+                    }
+                    DoSearch(childLink, depth + 1);
+                    if (this.IsStop)
+                    {
+                        return;
+                    }
+                }
 
-                foreach (string link in links)
-                {
-                    webParse.Parse(url, document);
-                    DAOFactory.GetInstance().GetSearchUrlDao().Insert(url);
-                }
-                foreach (string link in links)
-                {
-                    DoSearch(link, depth + 1);
-                }
+                childrenLinks.Clear();
+                childrenLinks = null;
             }
+            
         }
 
-        public List<string> GetLinks(string url, HtmlDocument document)
+        public void GetLinks(string url, HtmlDocument document, ref List<string> links)
         {
-            List<string> links = new List<string>();
             HtmlNodeCollection linkNodes = document.DocumentNode.SelectNodes("//a");
             if (linkNodes == null)
             {
-                return links;
+                return;
             }
             foreach (HtmlNode linkNode in linkNodes)
             {
                 if (linkNode.Attributes["href"] != null)
                 {
                     string currUrl = linkNode.Attributes["href"].Value;
-                    if (currUrl == "" || currUrl == "#")
+                    if (currUrl == "" || currUrl == "#" || currUrl.StartsWith("#"))
                     {
                         continue;
                     }
@@ -104,7 +169,15 @@ namespace com.soomes
                     }
                 }
             }
-            return links;
+        }
+
+        public virtual void SearchingEvent(string msg)
+        {
+            if (DoSearchEvent != null)
+            {
+                SearchEventArgs e = new SearchEventArgs(msg);
+                DoSearchEvent(this, e);
+            }
         }
     }
 

@@ -15,8 +15,6 @@ namespace com.soomes
 
         public string CompanyInfo { set; get; }
 
-        public string Email { set; get; }
-
         public string BuyerName { set; get; }
 
         public string ContactInfo { set; get; }
@@ -28,5 +26,7 @@ namespace com.soomes
         public int Status { set; get; }
 
         public List<string> Emails { set; get; }
+
+        public string Mail { set; get; }
     }
 }

@@ -16,9 +16,14 @@ namespace com.soomes
             {
                 return;
             }
-            BuyerInfo buyer = GetBuyerInfo(url, document);
-            if (string.IsNullOrEmpty(buyer.Email))
+            if ((url.IndexOf("/company/") == -1 && url.IndexOf("/inquiry/") == -1 && url.IndexOf("/content/") == -1))
             {
+                return;
+            }
+            BuyerInfo buyer = GetBuyerInfo(url, document);
+            if (buyer.Emails.Count == 0)
+            {
+                Console.WriteLine("Cannot get the email, Url = " + url);
                 return;
             }
             DAOFactory.GetInstance().GetBuyerInfoDao().Insert(buyer);
@@ -50,17 +55,26 @@ namespace com.soomes
                         HtmlUtils.Log("contactInfo==========================================\r\n" + contactInfo);
                         buyerInfo.ContactInfo = contactInfo;
 
-                        List<string> emails = HtmlUtils.getEmails(contactInfo);//Emails
-
-                        node1 = fieldsetNodes[1].SelectSingleNode("div[2]");//Contact person
-                        string person = HtmlUtils.GetHtmlNodeText(node1);
-                        HtmlUtils.Log("person==========================================\r\n" + person);
-                        buyerInfo.BuyerName = person;
-
-                        node1 = fieldsetNodes[1].SelectSingleNode("div[12]");//Email Address 
-                        string email = HtmlUtils.GetHtmlNodeText(node1);
-                        HtmlUtils.Log("email==========================================\r\n" + email);
-                        buyerInfo.Email = email;
+                        buyerInfo.Emails = HtmlUtils.getEmails(contactInfo);//Emails
+                        Regex r = new Regex(@"Contact Person \(联系人\):(.*?)\n");
+                        GroupCollection gc = r.Match(contactInfo).Groups;
+                        if (gc != null && gc.Count > 1)
+                        {
+                            string person = gc[1].Value.Trim();
+                            HtmlUtils.Log("person==========================================\r\n" + person);
+                            buyerInfo.BuyerName = person;
+                        }
+                        if (string.IsNullOrEmpty(buyerInfo.BuyerName))
+                        {
+                            r = new Regex(@"Contact Person:(.*?)\n");
+                            gc = r.Match(contactInfo).Groups;
+                            if (gc != null && gc.Count > 1)
+                            {
+                                string person = gc[1].Value.Trim();
+                                HtmlUtils.Log("person==========================================\r\n" + person);
+                                buyerInfo.BuyerName = person;
+                            }
+                        }
                     }
                 }
                 else
@@ -83,7 +97,7 @@ namespace com.soomes
                         HtmlUtils.Log("contactInfo==========================================\r\n" + contactInfo);
                         buyerInfo.ContactInfo = contactInfo;
 
-                        Regex r = new Regex("Contact Person:(.*?)\\n");
+                        Regex r = new Regex(@"Contact Person:(.*?)\n");
                         GroupCollection gc = r.Match(contactInfo).Groups;
                         if (gc != null && gc.Count > 1)
                         {
@@ -91,11 +105,7 @@ namespace com.soomes
                             HtmlUtils.Log("person==========================================\r\n" + person);
                             buyerInfo.BuyerName = person;
                         }
-                        List<string> emails = HtmlUtils.getEmails(contactInfo);
-                        node1 = fieldsetNodes[1].SelectSingleNode("div[2]/div[2]");//Email Address 
-                        string email = HtmlUtils.GetHtmlNodeText(node1);
-                        HtmlUtils.Log("email==========================================\r\n" + email);
-                        buyerInfo.Email = email;
+                        buyerInfo.Emails = HtmlUtils.getEmails(contactInfo);
                     }
                 }
             }
@@ -115,7 +125,7 @@ namespace com.soomes
                     HtmlUtils.Log("contactInfo==========================================\r\n" + contactInfo);
                     buyerInfo.ContactInfo = contactInfo;
 
-                    Regex r = new Regex("Contact Person:(.*?)\\n");
+                    Regex r = new Regex(@"Contact Person:(.*?)\n");
                     GroupCollection gc = r.Match(contactInfo).Groups;
                     if (gc != null && gc.Count > 1)
                     {
@@ -123,7 +133,7 @@ namespace com.soomes
                         HtmlUtils.Log("person==========================================\r\n" + person);
                         buyerInfo.BuyerName = person;
                     }
-                    r = new Regex("Company:(.*?)\\n");
+                    r = new Regex(@"Company:(.*?)\n");
                     gc = r.Match(contactInfo).Groups;
                     if (gc != null && gc.Count > 1)
                     {
@@ -133,7 +143,7 @@ namespace com.soomes
                     }
                     if (string.IsNullOrEmpty(buyerInfo.CompanyName))
                     {
-                        r = new Regex("Co:(.*?)\\n");
+                        r = new Regex(@"Co:(.*?)\n");
                         gc = r.Match(contactInfo).Groups;
                         if (gc != null && gc.Count > 1)
                         {
@@ -142,12 +152,7 @@ namespace com.soomes
                             buyerInfo.CompanyName = company;
                         }
                     }
-
-                    List<string> emails = HtmlUtils.getEmails(contactInfo);
-                    node1 = fieldsetNodes[1].SelectSingleNode("div[2]/div[2]");//Email Address 
-                    string email = HtmlUtils.GetHtmlNodeText(node1);
-                    HtmlUtils.Log("email==========================================\r\n" + email);
-                    buyerInfo.Email = email;
+                    buyerInfo.Emails = HtmlUtils.getEmails(contactInfo);
                 }
 
             }

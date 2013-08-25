@@ -31,7 +31,7 @@ namespace com.soomes
             + "BuyerName varchar(100),"
             + "Url varchar(200),"
             + "UrlTitle varchar(500),"
-            + "Email varchar(100) not null,"
+            + "Mail varchar(100) not null,"
             + "Status integer default 0)");
 
             dbHelper.ExecuteNonQuery("Create Index  IF NOT EXISTS Index_key on BuyerInfo(Email);");
@@ -45,7 +45,7 @@ namespace com.soomes
 
         public List<BuyerInfo> GetBuyerInforList(QueryObject<BuyerInfo> query)
         {
-            string sql = "SELECT Id, Type, CompanyName, CompanyInfo, Email,BuyerName, ContactInfo, Url, UrlTitle, Status FROM BuyerInfo";
+            string sql = "SELECT Id, Type, CompanyName, CompanyInfo, Mail,BuyerName, ContactInfo, Url, UrlTitle, Status FROM BuyerInfo";
             if (query.IsPager)
             {
                 query.RecordCount = dbHelper.GetItemCount(sql, null);
@@ -60,12 +60,11 @@ namespace com.soomes
                 kw.Type = (string)row["Type"];
                 kw.CompanyName = (string)row["CompanyName"];
                 kw.CompanyInfo = (string)row["CompanyInfo"];
-                kw.Email = (string)row["Email"];
+                kw.Mail = (string)row["Mail"];
                 kw.BuyerName = (string)row["BuyerName"];
                 kw.ContactInfo = (string)row["ContactInfo"];
                 kw.Url = (string)row["Url"];
                 kw.UrlTitle = (string)row["UrlTitle"];
-                kw.Email = (string)row["Email"];
                 kw.Status = Convert.ToInt32(row["Status"]);
                 list.Add(kw);
             }
@@ -75,7 +74,7 @@ namespace com.soomes
 
         public bool ExistEmail(string email)
         {
-            string sql = "SELECT count(1) FROM BuyerInfo where Email like '%" + email + "%'";
+            string sql = "SELECT count(1) FROM BuyerInfo where Mail = '" + email.Trim() + "'";
             int result = Convert.ToInt32(dbHelper.ExecuteScalar(sql, null));
             if (result > 0)
             {
@@ -87,25 +86,34 @@ namespace com.soomes
 
         public void Insert(BuyerInfo item)
         {
-            if (string.IsNullOrEmpty(item.Email) || ExistEmail(item.Email))
+            if (item.Emails.Count == 0)
             {
                 return;
             }
-            string InsSql = @"Insert into BuyerInfo(Type, CompanyName, CompanyInfo, Email,BuyerName, ContactInfo, Url, UrlTitle) "
-                            + "values(@Type, @CompanyName, @CompanyInfo, @Email, @BuyerName, @ContactInfo, @Url, @UrlTitle)";
+            string InsSql = @"Insert into BuyerInfo(Type, CompanyName, CompanyInfo, Mail,BuyerName, ContactInfo, Url, UrlTitle) "
+                            + "values(@Type, @CompanyName, @CompanyInfo, @Mail, @BuyerName, @ContactInfo, @Url, @UrlTitle)";
 
+
+            foreach (string mail in item.Emails)
+            {
+                if (ExistEmail(mail))
+                {
+                    continue;
+                }
                 SQLiteParameter[] parameter = new SQLiteParameter[]
                 {
                     new SQLiteParameter("@Type",item.Type),
                     new SQLiteParameter("@CompanyName",item.CompanyName),
                     new SQLiteParameter("@CompanyInfo",item.CompanyInfo),
-                    new SQLiteParameter("@Email",item.Email),
+                    new SQLiteParameter("@Mail", mail),
                     new SQLiteParameter("@BuyerName",item.BuyerName),
                     new SQLiteParameter("@ContactInfo",item.ContactInfo), 
                     new SQLiteParameter("@Url",item.Url),
                     new SQLiteParameter("@UrlTitle",item.UrlTitle)
                 };
                 dbHelper.ExecuteNonQuery(InsSql, parameter);
+            }
+                
         }
     }
 }

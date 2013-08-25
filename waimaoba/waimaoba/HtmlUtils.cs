@@ -64,11 +64,39 @@ namespace com.soomes
             {
                 return string.Empty;
             }
-            string text = node.InnerText.Replace("&nbsp;", " ");
-            text = HttpUtility.HtmlDecode(text).Trim();
-            text = text.Replace("  ", "").Replace("\t", "");
 
-            return text;
+            string Htmlstring = node.InnerHtml;
+            Htmlstring = Regex.Replace(Htmlstring, @"\r\n", "", RegexOptions.IgnoreCase);
+            Htmlstring = Regex.Replace(Htmlstring, "  ", "", RegexOptions.IgnoreCase);
+            Htmlstring = Regex.Replace(Htmlstring, "\t", "", RegexOptions.IgnoreCase);
+            Htmlstring = Regex.Replace(Htmlstring, @"<script[^>]*?>.*?</script>", "", RegexOptions.IgnoreCase);
+            Htmlstring = Regex.Replace(Htmlstring, @"<br>", "\n", RegexOptions.IgnoreCase);
+            Htmlstring = Regex.Replace(Htmlstring, @"<br/>", "\n", RegexOptions.IgnoreCase);
+            Htmlstring = Regex.Replace(Htmlstring, @"</p>", "\n", RegexOptions.IgnoreCase);
+            Htmlstring = Regex.Replace(Htmlstring, @"<(.[^>]*)>", "", RegexOptions.IgnoreCase);
+            Htmlstring = Regex.Replace(Htmlstring, @"-->", "", RegexOptions.IgnoreCase);   
+            Htmlstring = Regex.Replace(Htmlstring, @"<!--.*", "", RegexOptions.IgnoreCase);
+            Htmlstring = Regex.Replace(Htmlstring, @"&(quot|#34);", "/", RegexOptions.IgnoreCase);   
+            Htmlstring = Regex.Replace(Htmlstring, @"&(amp|#38);", "&", RegexOptions.IgnoreCase);   
+            Htmlstring = Regex.Replace(Htmlstring, @"&(lt|#60);", "<", RegexOptions.IgnoreCase);   
+            Htmlstring = Regex.Replace(Htmlstring, @"&(gt|#62);", ">", RegexOptions.IgnoreCase);   
+            Htmlstring = Regex.Replace(Htmlstring, @"&(nbsp|#160);", " ", RegexOptions.IgnoreCase);   
+            Htmlstring = Regex.Replace(Htmlstring, @"&(iexcl|#161);", "/xa1", RegexOptions.IgnoreCase);   
+            Htmlstring = Regex.Replace(Htmlstring, @"&(cent|#162);", "/xa2", RegexOptions.IgnoreCase);   
+            Htmlstring = Regex.Replace(Htmlstring, @"&(pound|#163);", "/xa3", RegexOptions.IgnoreCase);   
+            Htmlstring = Regex.Replace(Htmlstring, @"&(copy|#169);", "/xa9", RegexOptions.IgnoreCase);   
+            Htmlstring = Regex.Replace(Htmlstring, @"&#(/d+);", "", RegexOptions.IgnoreCase);
+            Htmlstring.Replace("<", "");   
+            Htmlstring.Replace(">", "");
+            Htmlstring = HttpUtility.HtmlDecode(Htmlstring).Trim();
+
+
+            /*
+            string Htmlstring = node.InnerText.Replace("&nbsp;", " ");
+            Htmlstring = HttpUtility.HtmlDecode(text).Trim();
+            Htmlstring = Htmlstring.Replace("  ", "").Replace("\t", "");
+            */
+            return Htmlstring;
         }
 
         public static void Log(string text)
