@@ -4,6 +4,7 @@ using System.Text;
 using System.Net; 
 using System.IO;
 using System.Net.NetworkInformation;
+using System.IO.Compression;
 
 namespace com.soomes
 
@@ -56,6 +57,7 @@ namespace com.soomes
                 httpWebRequest.ContentType = ContentType;
                 httpWebRequest.Accept = Accept;
                 httpWebRequest.UserAgent = UserAgent;
+                httpWebRequest.Headers.Add("Accept-Encoding", "gzip,deflate");
                 if (!string.IsNullOrEmpty(referer)) httpWebRequest.Referer = referer;
                 if (IsPost)  //如果是Post递交数据，则写入传的字符串数据 
                 {
@@ -67,6 +69,14 @@ namespace com.soomes
                 }
                 httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse();//开始获取响应流 
                 Stream responseStream = httpWebResponse.GetResponseStream();
+                if (httpWebResponse.ContentEncoding.ToLower().Contains("gzip"))
+                {
+                    responseStream = new GZipStream(responseStream, CompressionMode.Decompress);
+                }
+                else if (httpWebResponse.ContentEncoding.ToLower().Contains("deflate"))
+                {
+                    responseStream = new DeflateStream(responseStream, CompressionMode.Decompress);
+                }
                 StreamReader streamReader = new StreamReader(responseStream, encoding);
                 html = streamReader.ReadToEnd();//注意这里是直接将所有的字节从头读到尾，也可以一行一行的控制，节省时间 
                 streamReader.Close();
@@ -80,11 +90,16 @@ namespace com.soomes
                 //到这里为止，所有的对象都要释放掉，以免内存像滚雪球一样
                 return html;
             }
-            catch(Exception e)
+            catch (WebException e)
             {
                 DefaultConnectionLimit--;
                 System.Diagnostics.Trace.WriteLine("Open " + url + "\r\n " + e.Message);
                 //我这里就没做任何处理了，这里最好还是处理一下
+                if (e.Status == WebExceptionStatus.ProtocolError)
+                {
+                    Console.WriteLine("Status Code : {0}", ((HttpWebResponse)e.Response).StatusCode);
+                    Console.WriteLine("Status Description : {0}", ((HttpWebResponse)e.Response).StatusDescription);
+                }
                 return string.Empty;
             }
         }
