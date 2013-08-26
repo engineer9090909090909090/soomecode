@@ -10,6 +10,13 @@ namespace com.soomes
 {
     class WaimaobaCompanyItemParse : WebParse
     {
+        private Log loger;
+
+        public WaimaobaCompanyItemParse()
+        {
+            this.loger = new Log(@".\log\", LogType.Daily);
+        }
+
         public void Parse(string url, HtmlDocument document)
         {
             if (url.IndexOf(".waimaoba.com") == -1)
@@ -23,7 +30,7 @@ namespace com.soomes
             BuyerInfo buyer = GetBuyerInfo(url, document);
             if (buyer.Emails.Count == 0)
             {
-                Console.WriteLine("Cannot get the email, Url = " + url);
+                loger.Write("Cannot get the email, Url = " + url, MsgType.Error);
                 return;
             }
             DAOFactory.GetInstance().GetBuyerInfoDao().Insert(buyer);
@@ -159,6 +166,9 @@ namespace com.soomes
             return buyerInfo;
         }
 
-
+        public void Dispose()
+        {
+            this.loger.Dispose();
+        }
     }
 }

@@ -6,7 +6,7 @@ using HtmlAgilityPack;
 
 namespace com.soomes
 {
-    interface WebParse
+    interface WebParse: IDisposable
     {
         void Parse(string url, HtmlDocument document);
     }

@@ -33,8 +33,8 @@ namespace waimaoba
         {
             searcher = new Searcher(20);
             searcher.DoSearchEvent += new SearchEvent(search_DoSearchEvent);
-            //search.DoSearch(this.SearchText.Text);
-            searcher.DoSearch("http://buyer.waimaoba.com/company/xh/discovery-info-plus-355051.html");
+            searcher.DoSearch(this.SearchText.Text);
+            //searcher.DoSearch("http://buyer.waimaoba.com/company/xh/discovery-info-plus-355051.html");
             //search.DoSearch("http://buyer.waimaoba.com/company/lk/getelec-259210.html");
 
         }
