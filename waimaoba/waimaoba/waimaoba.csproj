@@ -52,7 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuyerInfo.cs" />
+    <Compile Include="FileUtils.cs" />
     <Compile Include="HttpHelper.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="SearchUrlDao.cs" />
     <Compile Include="DAOFactory.cs" />
     <Compile Include="Form1.cs">

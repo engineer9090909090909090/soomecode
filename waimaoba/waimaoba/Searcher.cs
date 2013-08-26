@@ -26,13 +26,15 @@ namespace com.soomes
         private HtmlDocument document;
         private WebParse webParse;
         public event SearchEvent DoSearchEvent;
-        public bool IsStop;
+        private bool IsStop;
+        private Log loger;
 
         public Searcher(int searchDepth)
         {
             this.SearchDepth = searchDepth;
             this.IsStop = false;
             this.webClient = new HtmlWeb();
+            this.loger = new Log(FileUtils.GetLogFolder(), LogType.Daily);
             HtmlWeb.PreRequestHandler handler = delegate(HttpWebRequest request)
             {
 
@@ -54,6 +56,8 @@ namespace com.soomes
         public void DoSearch(string url)
         {
             DoSearch(url, 0);
+            this.webParse.Dispose();
+            loger.Dispose();
         }
         
 
@@ -81,7 +85,7 @@ namespace com.soomes
                 }
                 catch (Exception e)
                 {
-                    System.Diagnostics.Trace.WriteLine("Open " + url + "\r\n " + e.Message);
+                    loger.Write("Open " + url + @"\r\n " + e.Message, MsgType.Error);
                     DAOFactory.GetInstance().GetSearchUrlDao().Insert(url);
                     return;
                 }
@@ -96,7 +100,7 @@ namespace com.soomes
                     {
                         continue;
                     }
-                    Console.WriteLine(link);
+                    loger.Write(link, MsgType.Info);
                     SearchingEvent(link);
                     try
                     {
@@ -104,7 +108,7 @@ namespace com.soomes
                     }
                     catch (Exception e)
                     {
-                        System.Diagnostics.Trace.WriteLine("Open " + link + "\r\n " + e.Message);
+                        loger.Write("Open " + link + @"\r\n " + e.Message, MsgType.Error);
                         DAOFactory.GetInstance().GetSearchUrlDao().Insert(url);
                         continue;
                     }
@@ -130,7 +134,6 @@ namespace com.soomes
                         return;
                     }
                 }
-
                 childrenLinks.Clear();
                 childrenLinks = null;
             }
