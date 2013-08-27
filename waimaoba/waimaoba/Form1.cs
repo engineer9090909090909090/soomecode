@@ -33,9 +33,11 @@ namespace waimaoba
         {
             searcher = new Searcher(20);
             searcher.DoSearchEvent += new SearchEvent(search_DoSearchEvent);
-            searcher.DoSearch(this.SearchText.Text);
+            //searcher.DoSearch(this.SearchText.Text);
             //searcher.DoSearch("http://buyer.waimaoba.com/company/xh/discovery-info-plus-355051.html");
             //search.DoSearch("http://buyer.waimaoba.com/company/lk/getelec-259210.html");
+            searcher.DoSearch("http://buyer.waimaoba.com/company/bh/hanen-electric-inc-186548.html");
+
 
         }
         private delegate void InvokeDelegate(string msg);

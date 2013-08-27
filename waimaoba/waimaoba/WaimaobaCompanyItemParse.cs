@@ -83,6 +83,9 @@ namespace com.soomes
                             }
                         }
                     }
+                    HtmlNode categoryNode = document.DocumentNode.SelectSingleNode("//fieldset[@class='fieldgroup group-industry']/table/tbody/tr/td/div/div[2]");
+                    string categoryInfo = HtmlUtils.GetHtmlNodeText(categoryNode);
+                    buyerInfo.Category = categoryInfo;
                 }
                 else
                 {
@@ -114,6 +117,9 @@ namespace com.soomes
                         }
                         buyerInfo.Emails = HtmlUtils.getEmails(contactInfo);
                     }
+                    HtmlNode categoryNode = document.DocumentNode.SelectSingleNode("//fieldset[@class='fieldgroup group-industry']/table/tbody/tr/td/div/div/div[2]");
+                    string categoryInfo = HtmlUtils.GetHtmlNodeText(categoryNode);
+                    buyerInfo.Category = categoryInfo;
                 }
             }
 
@@ -161,6 +167,9 @@ namespace com.soomes
                     }
                     buyerInfo.Emails = HtmlUtils.getEmails(contactInfo);
                 }
+                HtmlNode categoryNode = document.DocumentNode.SelectSingleNode("//fieldset[@class='fieldgroup group-industry']/table/tbody/tr/td/div/div[2]");
+                string categoryInfo = HtmlUtils.GetHtmlNodeText(categoryNode);
+                buyerInfo.Category = categoryInfo;
 
             }
             return buyerInfo;

@@ -17,6 +17,8 @@ namespace com.soomes
 
         public string BuyerName { set; get; }
 
+        public string Category { set; get; }
+
         public string ContactInfo { set; get; }
 
         public string Url { set; get; }
