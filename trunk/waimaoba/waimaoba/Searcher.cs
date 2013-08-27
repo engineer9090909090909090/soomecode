@@ -160,11 +160,10 @@ namespace com.soomes
                     if (currUrl.StartsWith("/"))
                     {
                         currFullUrl = "http://" + new Uri(url).Host + currUrl;
-                        HtmlUtils.Log(currFullUrl);
                     }
-                    else
+                    if (currFullUrl.EndsWith("/"))
                     {
-                        HtmlUtils.Log(currFullUrl);
+                        currFullUrl = currFullUrl.Substring(0, currFullUrl.Length - 1);
                     }
                     if (!links.Contains(currFullUrl))
                     {

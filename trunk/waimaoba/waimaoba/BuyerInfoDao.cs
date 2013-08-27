@@ -28,6 +28,7 @@ namespace com.soomes
             + "CompanyName varchar(100),"
             + "CompanyInfo varchar(500),"
             + "ContactInfo varchar(500),"
+            + "Category varchar(100) not null,"
             + "BuyerName varchar(100),"
             + "Url varchar(200),"
             + "UrlTitle varchar(500),"
@@ -45,7 +46,7 @@ namespace com.soomes
 
         public List<BuyerInfo> GetBuyerInforList(QueryObject<BuyerInfo> query)
         {
-            string sql = "SELECT Id, Type, CompanyName, CompanyInfo, Mail,BuyerName, ContactInfo, Url, UrlTitle, Status FROM BuyerInfo";
+            string sql = "SELECT Id, Type, CompanyName, CompanyInfo, Category, Mail,BuyerName, ContactInfo, Url, UrlTitle, Status FROM BuyerInfo";
             if (query.IsPager)
             {
                 query.RecordCount = dbHelper.GetItemCount(sql, null);
@@ -60,6 +61,7 @@ namespace com.soomes
                 kw.Type = (string)row["Type"];
                 kw.CompanyName = (string)row["CompanyName"];
                 kw.CompanyInfo = (string)row["CompanyInfo"];
+                kw.Category = (string)row["Category"];
                 kw.Mail = (string)row["Mail"];
                 kw.BuyerName = (string)row["BuyerName"];
                 kw.ContactInfo = (string)row["ContactInfo"];
@@ -90,8 +92,8 @@ namespace com.soomes
             {
                 return;
             }
-            string InsSql = @"Insert into BuyerInfo(Type, CompanyName, CompanyInfo, Mail,BuyerName, ContactInfo, Url, UrlTitle) "
-                            + "values(@Type, @CompanyName, @CompanyInfo, @Mail, @BuyerName, @ContactInfo, @Url, @UrlTitle)";
+            string InsSql = @"Insert into BuyerInfo(Type, CompanyName, CompanyInfo, Category, Mail,BuyerName, ContactInfo, Url, UrlTitle) "
+                            + "values(@Type, @CompanyName, @CompanyInfo, @Category, @Mail, @BuyerName, @ContactInfo, @Url, @UrlTitle)";
 
 
             foreach (string mail in item.Emails)
@@ -105,6 +107,7 @@ namespace com.soomes
                     new SQLiteParameter("@Type",item.Type),
                     new SQLiteParameter("@CompanyName",item.CompanyName),
                     new SQLiteParameter("@CompanyInfo",item.CompanyInfo),
+                    new SQLiteParameter("@Category",string.IsNullOrEmpty(item.Category)?"-":item.Category),
                     new SQLiteParameter("@Mail", mail),
                     new SQLiteParameter("@BuyerName",item.BuyerName),
                     new SQLiteParameter("@ContactInfo",item.ContactInfo), 

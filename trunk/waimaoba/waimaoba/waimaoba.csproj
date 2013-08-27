@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.Cells">
+      <HintPath>..\..\lib\Aspose\Aspose.Cells.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\..\lib\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -52,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuyerInfo.cs" />
+    <Compile Include="ExportExcel.cs" />
     <Compile Include="FileUtils.cs" />
     <Compile Include="HttpHelper.cs" />
     <Compile Include="Log.cs" />
