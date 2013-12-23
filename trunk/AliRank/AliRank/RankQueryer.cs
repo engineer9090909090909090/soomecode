@@ -12,17 +12,16 @@ namespace AliRank
 {
     
 
-    class RankQueryer
+    public class RankQueryer
     {
         public event RankSearchEndEvent OnRankSearchEndEvent;
         public event RankSearchingEvent OnRankSearchingEvent;
 
-        private string SEARCH_URL = "http://www.alibaba.com/products/F0/{0}/----------------------38/{1}.html";
-        private string PERCENT_PATH = "//div[@class='percent-wrap']";
-        private string SUBJECT_PATH = "div[@class='attr']/h2/a[@class='qrPTitle']";
-        private string AD_PATH = "//div[@class='list-items AD']";
-        private string P4P_PATH = "//div[@class='list-items  p4p']";
-        private string P4PV2_PATH = "//div[@class='list-items  p4pv2']";
+        public string SEARCH_URL = "http://www.alibaba.com/products/F0/{0}/----------------------38/{1}.html";
+        public static string PRODUCT_LINK_PATH = "//div[@class='content']/div[@class='cwrap']/div[@class='ctop']/div[@class='corp']/h2/a";
+        private string AD_PATH = "//div[@class='ls-icon ls-item AD']";
+        private string P4P_PATH = "//div[@class='ls-icon ls-item  p4p']";
+        private string P4PV2_PATH = "//div[@class='ls-icon ls-item ']";
         private ShowcaseRankInfo item;
 
         public RankQueryer() 
@@ -84,31 +83,18 @@ namespace AliRank
                             item.KeyP4Num = item.KeyP4Num + p4pv2Nodes.Count;
                         }
                     }
-                    string comUrlPath = "//div[@class='supplier']/span/a[@href='" + companyUrl.ToLower() + "']";
-                    HtmlNodeCollection comUrlNode = document.DocumentNode.SelectNodes(comUrlPath);
-                    if (comUrlNode == null || comUrlNode.Count == 0)
-                    {
-                        continue;
-                    }
-                    comUrlPath = "div[@class='supplier']/span/a[@href='" + companyUrl.ToLower() + "']";
-                    HtmlNodeCollection nodes = document.DocumentNode.SelectNodes(PERCENT_PATH);
+
+                    HtmlNodeCollection nodes = document.DocumentNode.SelectNodes(PRODUCT_LINK_PATH);
                     for (int k = 0; k < nodes.Count; k++)
                     {
-                        HtmlNode percentNode = nodes[k];
-                        HtmlNode companyNode = percentNode.SelectSingleNode(comUrlPath);
-                        if (companyNode != null)
+                        HtmlNode aLinkNode = nodes[k];
+                        string proId = aLinkNode.Attributes["data-pid"].Value;
+                        int rankProductId = Convert.ToInt32(proId);
+                        if (rankProductId == item.ProductId)
                         {
-                            HtmlNode aLinkNode = percentNode.SelectSingleNode(SUBJECT_PATH);
-                            string lsubject = aLinkNode.Id.ToLower();
-                            string productName = aLinkNode.InnerText;
-                            string proId = lsubject.Replace("lsubject_", "");
-                            int rankProductId = Convert.ToInt32(proId);
-                            if (rankProductId == item.ProductId)
-                            {
-                                item.Rank = i * 38 + (k + 1);
-                                item.ProductName = productName;
-                                break;
-                            }
+                            item.Rank = i * 38 + (k + 1);
+                            item.ProductName = aLinkNode.Attributes["title"].Value;
+                            break;
                         }
                     }
                     if (item.Rank > 0)

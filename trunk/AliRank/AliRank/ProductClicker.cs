@@ -110,21 +110,32 @@ namespace AliRank
 
         void browser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            //WebBrowser browser = (WebBrowser)sender;
             if (browser.ReadyState != System.Windows.Forms.WebBrowserReadyState.Complete)
                 return;
             if (e.Url.ToString() != browser.Url.ToString())
                 return;
             if (browser.Url.ToString() == currentRequestUrl)
             {
-                HtmlElement productLink = browser.Document.GetElementById("lsubject_" + this.item.ProductId);
+                string productLink = string.Empty;
+                HtmlAgilityPack.HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
+                document.LoadHtml(browser.Document.ToString());
+                HtmlNodeCollection nodes = document.DocumentNode.SelectNodes(RankQueryer.PRODUCT_LINK_PATH);
+                for (int k = 0; k < nodes.Count; k++)
+                {
+                    HtmlNode aLinkNode = nodes[k];
+                    string proId = aLinkNode.Attributes["data-pid"].Value;
+                    int rankProductId = Convert.ToInt32(proId);
+                    if (rankProductId == item.ProductId)
+                    {
+                        productLink = aLinkNode.Attributes["href"].Value;
+                        break;
+                    }
+                }
+
                 if (productLink != null)
                 {
-                    browser.Document.InvokeScript("onProductClick", new string[] { item.ProductId.ToString() });
-                    //productLink.InvokeMember("click");
-                    currentRequestUrl = productLink.GetAttribute("href").ToString();
+                    currentRequestUrl = productLink;
                     IEHandleUtils.Navigate(browser, currentRequestUrl, null, additionalHeaders);
-                   // browser.Navigate(currentRequestUrl, "_self", null, additionalHeaders);
                 }
                 else
                 {
@@ -137,7 +148,6 @@ namespace AliRank
                         ClickingEvent(item, "Enforce clicking " + currentRequestUrl);
                         browser.Document.InvokeScript("onProductClick", new string[] { item.ProductId.ToString() });
                         IEHandleUtils.Navigate(browser, currentRequestUrl, null, additionalHeaders);
-                        //browser.Navigate(currentRequestUrl, "_self", null, additionalHeaders);
                     }
                     else
                     {
@@ -146,7 +156,6 @@ namespace AliRank
                         Thread.Sleep(new Random().Next(1000, 10000));
                         ClickingEvent(item, @"Clicking " + currentRequestUrl);
                         IEHandleUtils.Navigate(browser, currentRequestUrl, null, additionalHeaders);
-                       // browser.Navigate(currentRequestUrl, "_self", null, additionalHeaders);
                     }
                 }
             }
