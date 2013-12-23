@@ -12,7 +12,8 @@ namespace AliRank
 {
     class ShowcaseQueryer:IDisposable
     {
-        private static string KeywordExpressions = "var kw = encodeURIComponent\\(\\\"(.*?)\\\"\\);";
+        private static string KeywordExpressions = "JSRUNDATA.productDetail.data.keywords = '(.*?)';";
+        private static string PIDExpressions = ",pid:'(.*?)',sid:";
         private List<ShowcaseRankInfo> showCaseProducts = new List<ShowcaseRankInfo>();
         private int iCount = 0;
         private int MaxCount = 10;
@@ -23,7 +24,7 @@ namespace AliRank
         {
             HtmlWeb clinet = new HtmlWeb();
             HtmlDocument document = clinet.Load(companyUrl);
-            HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//div[@class='featureSelectProduct']");
+            HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//div[@id='products-show-normal']/ul/li/div[@class='products-small-info']");
 
             if (nodes != null)
             {
@@ -31,13 +32,11 @@ namespace AliRank
                 {
                     ShowcaseRankInfo item = new ShowcaseRankInfo();
                     item.CompanyUrl = companyUrl;
-                    string proId = node.Id.Replace("featureSelectProduct", "");
-                    item.ProductId = Convert.ToInt32(proId);
-                    HtmlNode linkNode = node.SelectSingleNode("div[@class='featureSelectProductName']/a");
+                    HtmlNode linkNode = node.SelectSingleNode("div[@class='product-info']/a");
                     item.ProductName = linkNode.InnerText;
                     item.ProductUrl = linkNode.Attributes["href"].Value;
-                    HtmlNode imgNode = node.SelectSingleNode("div[@class='featureSelectProductPhoto']/div/a/img");
-                    item.Image = imgNode.Attributes["src"].Value;
+                    HtmlNode imgNode = node.SelectSingleNode("div[@class='products-img savm']/a/img");
+                    item.Image = imgNode.Attributes["data-src"].Value;
                     showCaseProducts.Add(item);
                 }
             }
@@ -86,12 +85,34 @@ namespace AliRank
             ShowcaseRankInfo productItem = showCaseProducts[index];
             string url = productItem.CompanyUrl + productItem.ProductUrl;
             string ProductPageHtml = HtmlUtils.getContent(url);
-            string jsKwString = Regex.Match(ProductPageHtml, KeywordExpressions, RegexOptions.IgnoreCase).Groups[1].Value;
+            HtmlDocument document = new HtmlDocument();
+            document.LoadHtml(ProductPageHtml);
+            HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//div[@class='related-keywords-box clearfix']/ul/li/a");
+            string jsKwString = string.Empty;
+            if (nodes != null)
+            {
+                jsKwString = nodes[0].InnerText;
+                if (nodes[1] != null)
+                {
+                    jsKwString = jsKwString + "," + nodes[1].InnerText;
+                }
+                if (nodes[2] != null)
+                {
+                    jsKwString = jsKwString + "," + nodes[2].InnerText;
+                }
+            }
             if (!string.IsNullOrEmpty(jsKwString))
             {
                 productItem.MainKey = jsKwString;
                 System.Diagnostics.Trace.WriteLine(url + " = " + jsKwString);
             }
+            string pidString = Regex.Match(ProductPageHtml, PIDExpressions, RegexOptions.IgnoreCase).Groups[1].Value;
+            if (!string.IsNullOrEmpty(pidString))
+            {
+                productItem.ProductId = Convert.ToInt32(pidString);
+            }
+            
+
             ProductPageHtml = null;
             Interlocked.Increment(ref iCount);
             if (iCount == MaxCount)
