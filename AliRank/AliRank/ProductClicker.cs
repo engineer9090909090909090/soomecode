@@ -165,14 +165,6 @@ namespace AliRank
             {
                 item.Clicked = item.Clicked + 1;
                 ClickedEvent(item, "This product has been successfully click.");
-                // 新增询盘代码2014-03-30
-                /*
-                if (this.canInquiry)
-                {
-                    HtmlElement messageLink = browser.Document.Forms[].Name("position2");
-
-                }
-                */
                 if (this.canInquiry)
                 {
                     string messageUrl = "http://message.alibaba.com/msgsend/contact.htm?action=contact_action&domain=1&id="+ this.item.ProductId +"&tracelog=tracedetailfeedback";
@@ -207,7 +199,6 @@ namespace AliRank
                 string headers = additionalHeaders + Environment.NewLine + 
                        "Content-Type: application/x-www-form-urlencoded" + Environment.NewLine;
                 IEHandleUtils.Navigate(browser, postUrl, postString, headers);
-                //browser.Navigate(postUrl, "_self", postData, Headers);
             }
             if (browser.Url.ToString().IndexOf(INQUIRY_SUCCESS) >= 0)
             {
@@ -221,7 +212,6 @@ namespace AliRank
                 InquiryEndEvent(info, "This product has been send a Rank Inquiry.");
                 browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
                 IEHandleUtils.Navigate(browser, LOGOUT_URL, null, additionalHeaders);
-                //browser.Navigate(LOGOUT_URL, "_self", null, additionalHeaders);
                 eventX.Set();
             }
         }

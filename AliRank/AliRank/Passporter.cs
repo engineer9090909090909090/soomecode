@@ -11,7 +11,7 @@ namespace AliRank
 {
     class Passporter
     {
-       
+
         private string loginUrl = "https://login.alibaba.com/";
         string homeUrl = "http://www.alibaba.com/";
 
@@ -19,7 +19,7 @@ namespace AliRank
         ManualResetEvent eventX = new ManualResetEvent(false);
         private string UserName;
         private string Password;
-        //private bool LoginSuccess = true;
+        private bool LoginSuccess = true;
         public Passporter(WebBrowser b)
         {
             browser = b;
@@ -29,6 +29,8 @@ namespace AliRank
         {
             this.UserName = account.Account;
             this.Password = account.Password;
+            browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_LogoinCompleted);
+            browser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(browser_LogoinCompleted);
 
             string html = HttpHelper.GetHtml(loginUrl);
             string dmtrackPageid = GetDmtrackPageid(html);
@@ -47,7 +49,42 @@ namespace AliRank
                 return false;
             }
             CookieContainer cookieContainer = new CookieContainer();
-            return GetLoginUrl(this.UserName, this.Password, dmtrackPageid, st, ref cookieContainer);
+            bool logined = GetLoginUrl(this.UserName, this.Password, dmtrackPageid, st, ref cookieContainer);
+            if (logined == false)
+            {
+                return false;
+            }
+            List<Cookie> cookies = IEHandleUtils.GetAllCookies(cookieContainer);
+            string cookie_string = string.Empty;
+            foreach (Cookie cookie in cookies)
+            {
+                string cookstring = cookie.Name + "=" + cookie.Value + ";";
+                //System.Diagnostics.Trace.WriteLine(cookie.Domain.ToString() + " = " + cookstring);
+                cookie_string = cookstring + cookie_string;
+                IEHandleUtils.InternetSetCookie(homeUrl, cookie.Name, cookie.Value);
+            }
+            ShareCookie.Instance.LoginCookie = cookie_string;
+            ShareCookie.Instance.LoginCookies = cookies;
+            browser.Navigate(homeUrl, "_self", null, Constants.UserAgent);
+
+            eventX.WaitOne(Timeout.Infinite, true);
+            Console.WriteLine("登录线程结束！");
+            return LoginSuccess;
+        }
+
+        void browser_LogoinCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            WebBrowser browser = (WebBrowser)sender;
+            if (browser.ReadyState != System.Windows.Forms.WebBrowserReadyState.Complete)
+                return;
+            if (e.Url.ToString() != browser.Url.ToString())
+                return;
+            if (e.Url.ToString() == homeUrl)
+            {
+                browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_LogoinCompleted);
+                LoginSuccess = true;
+                eventX.Set();
+            }
         }
 
 
