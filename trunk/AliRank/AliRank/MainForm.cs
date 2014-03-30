@@ -893,7 +893,7 @@ namespace AliRank
                 clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
                 clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
                 clicker.OnInquiryEndEvent += new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
-
+/*
                 toolStripStatusLabel1.Text = "做一个产品辅助点击。";
                 productList = keywordDAO.GetClickProducts();
                 if (productList != null && productList.Count > 0)
@@ -906,7 +906,7 @@ namespace AliRank
                         Monitor.Wait(padlock, TimeSpan.FromSeconds(3));
                     }
                 }
-
+*/
                 if (productItem != null)
                 {
                     if (IsStop) { break; }
@@ -919,7 +919,7 @@ namespace AliRank
                         Monitor.Wait(padlock, TimeSpan.FromSeconds(3));
                     }
                 }
-
+/*
                 toolStripStatusLabel1.Text = "做一个产品辅助点击。";
                 productList = keywordDAO.GetClickProducts();
                 if (productList != null && productList.Count > 0)
@@ -932,6 +932,7 @@ namespace AliRank
                         Monitor.Wait(padlock, TimeSpan.FromSeconds(3));
                     }
                 }
+ * */
                 clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
                 clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
                 clicker.OnInquiryEndEvent -= new RankInquiryEndEvent(clicker_OnInquiryEndEvent);

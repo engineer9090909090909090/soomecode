@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.RemoteDbCheck = new System.Windows.Forms.RadioButton();
-            this.LocalDbCheck = new System.Windows.Forms.RadioButton();
             this.MySqlSetGroup = new System.Windows.Forms.GroupBox();
             this.ErrorMsg = new System.Windows.Forms.Label();
             this.ConnTestButton = new System.Windows.Forms.Button();
@@ -46,29 +44,6 @@
             this.MySqlSetGroup.SuspendLayout();
             this.SuspendLayout();
             // 
-            // RemoteDbCheck
-            // 
-            this.RemoteDbCheck.AutoSize = true;
-            this.RemoteDbCheck.Location = new System.Drawing.Point(192, 18);
-            this.RemoteDbCheck.Name = "RemoteDbCheck";
-            this.RemoteDbCheck.Size = new System.Drawing.Size(137, 16);
-            this.RemoteDbCheck.TabIndex = 1;
-            this.RemoteDbCheck.Text = "使用远程MySql数据库";
-            this.RemoteDbCheck.UseVisualStyleBackColor = true;
-            // 
-            // LocalDbCheck
-            // 
-            this.LocalDbCheck.AutoSize = true;
-            this.LocalDbCheck.Checked = true;
-            this.LocalDbCheck.Location = new System.Drawing.Point(47, 17);
-            this.LocalDbCheck.Name = "LocalDbCheck";
-            this.LocalDbCheck.Size = new System.Drawing.Size(107, 16);
-            this.LocalDbCheck.TabIndex = 0;
-            this.LocalDbCheck.TabStop = true;
-            this.LocalDbCheck.Text = "使用本地数据库";
-            this.LocalDbCheck.UseVisualStyleBackColor = true;
-            this.LocalDbCheck.CheckedChanged += new System.EventHandler(this.DbCheck_CheckedChanged);
-            // 
             // MySqlSetGroup
             // 
             this.MySqlSetGroup.Controls.Add(this.ErrorMsg);
@@ -81,7 +56,7 @@
             this.MySqlSetGroup.Controls.Add(this.label3);
             this.MySqlSetGroup.Controls.Add(this.label2);
             this.MySqlSetGroup.Controls.Add(this.label1);
-            this.MySqlSetGroup.Location = new System.Drawing.Point(12, 50);
+            this.MySqlSetGroup.Location = new System.Drawing.Point(10, 7);
             this.MySqlSetGroup.Name = "MySqlSetGroup";
             this.MySqlSetGroup.Size = new System.Drawing.Size(471, 245);
             this.MySqlSetGroup.TabIndex = 1;
@@ -92,14 +67,14 @@
             // 
             this.ErrorMsg.AutoSize = true;
             this.ErrorMsg.ForeColor = System.Drawing.Color.Red;
-            this.ErrorMsg.Location = new System.Drawing.Point(82, 179);
+            this.ErrorMsg.Location = new System.Drawing.Point(54, 213);
             this.ErrorMsg.Name = "ErrorMsg";
             this.ErrorMsg.Size = new System.Drawing.Size(0, 12);
             this.ErrorMsg.TabIndex = 10;
             // 
             // ConnTestButton
             // 
-            this.ConnTestButton.Location = new System.Drawing.Point(191, 203);
+            this.ConnTestButton.Location = new System.Drawing.Point(189, 174);
             this.ConnTestButton.Name = "ConnTestButton";
             this.ConnTestButton.Size = new System.Drawing.Size(224, 23);
             this.ConnTestButton.TabIndex = 8;
@@ -177,7 +152,7 @@
             // 
             // SaveButton
             // 
-            this.SaveButton.Location = new System.Drawing.Point(144, 301);
+            this.SaveButton.Location = new System.Drawing.Point(122, 262);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(75, 23);
             this.SaveButton.TabIndex = 9;
@@ -187,7 +162,7 @@
             // 
             // CancelBtn
             // 
-            this.CancelBtn.Location = new System.Drawing.Point(270, 301);
+            this.CancelBtn.Location = new System.Drawing.Point(254, 262);
             this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.Size = new System.Drawing.Size(75, 23);
             this.CancelBtn.TabIndex = 11;
@@ -199,9 +174,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(495, 333);
-            this.Controls.Add(this.RemoteDbCheck);
-            this.Controls.Add(this.LocalDbCheck);
+            this.ClientSize = new System.Drawing.Size(495, 292);
             this.Controls.Add(this.CancelBtn);
             this.Controls.Add(this.MySqlSetGroup);
             this.Controls.Add(this.SaveButton);
@@ -215,14 +188,11 @@
             this.MySqlSetGroup.ResumeLayout(false);
             this.MySqlSetGroup.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.RadioButton RemoteDbCheck;
-        private System.Windows.Forms.RadioButton LocalDbCheck;
         private System.Windows.Forms.GroupBox MySqlSetGroup;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;

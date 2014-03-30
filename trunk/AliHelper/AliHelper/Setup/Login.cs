@@ -185,12 +185,26 @@ namespace AliHelper
             DataCache.Instance.CurrentLoginType = selectedValue;
             if (selectedValue == Constants.LoginUserType_Alibaba)
             {
-                this.changeModel.Enabled = true;
+                this.changeModel.Visible = true;
+                this.DbSetBtn.Visible = false;
             }
-            else 
+            else if (selectedValue == Constants.LoginUserType_Network)
             {
-                this.changeModel.Enabled = false;
+                this.DbSetBtn.Visible = true;
+                this.changeModel.Visible = false;
             }
+            else
+            {
+                this.changeModel.Visible = false;
+                this.DbSetBtn.Visible = false;
+            }
+        }
+
+        private void DbSetBtn_Click(object sender, EventArgs e)
+        {
+            DbsetForm f = new DbsetForm();
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog(this);
         }
 
     }

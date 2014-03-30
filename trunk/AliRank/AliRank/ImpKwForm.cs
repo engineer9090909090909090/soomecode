@@ -52,7 +52,7 @@ namespace AliRank
             string url = this.textBox1.Text;
             ShowcaseQueryer searcher = new ShowcaseQueryer();
             url = url.Replace(".en.alibaba.com/", ".en.alibaba.com");
-            ProductsList = searcher.Seacher(url);
+            ProductsList = searcher.Seacher1(url);
             UpdateListView(ProductsList);
             searcher.Dispose();
             searcher = null;

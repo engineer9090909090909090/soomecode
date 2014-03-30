@@ -33,6 +33,8 @@
             this.loginPanel = new System.Windows.Forms.Panel();
             this.LogPanel = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.LoginType = new System.Windows.Forms.ComboBox();
             this.loadingImage = new System.Windows.Forms.PictureBox();
             this.labErrorMsg = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -43,8 +45,7 @@
             this.changeModel = new System.Windows.Forms.Button();
             this.BtnLogin = new System.Windows.Forms.Button();
             this.BtnCancel = new System.Windows.Forms.Button();
-            this.LoginType = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.DbSetBtn = new System.Windows.Forms.Button();
             this.loginPanel.SuspendLayout();
             this.LogPanel.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -100,6 +101,26 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(22, 29);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 12);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "类　型：";
+            // 
+            // LoginType
+            // 
+            this.LoginType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.LoginType.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.LoginType.FormattingEnabled = true;
+            this.LoginType.Location = new System.Drawing.Point(90, 25);
+            this.LoginType.Name = "LoginType";
+            this.LoginType.Size = new System.Drawing.Size(200, 20);
+            this.LoginType.TabIndex = 6;
+            this.LoginType.SelectedIndexChanged += new System.EventHandler(this.LoginType_SelectedIndexChanged);
+            // 
             // loadingImage
             // 
             this.loadingImage.Image = global::AliHelper.Properties.Resources.loading;
@@ -114,7 +135,7 @@
             // 
             this.labErrorMsg.AutoSize = true;
             this.labErrorMsg.ForeColor = System.Drawing.Color.Red;
-            this.labErrorMsg.Location = new System.Drawing.Point(88, 134);
+            this.labErrorMsg.Location = new System.Drawing.Point(92, 170);
             this.labErrorMsg.Name = "labErrorMsg";
             this.labErrorMsg.Size = new System.Drawing.Size(0, 12);
             this.labErrorMsg.TabIndex = 4;
@@ -196,31 +217,22 @@
             this.BtnCancel.UseVisualStyleBackColor = true;
             this.BtnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
-            // LoginType
+            // DbSetBtn
             // 
-            this.LoginType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.LoginType.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.LoginType.FormattingEnabled = true;
-            this.LoginType.Location = new System.Drawing.Point(90, 25);
-            this.LoginType.Name = "LoginType";
-            this.LoginType.Size = new System.Drawing.Size(200, 20);
-            this.LoginType.TabIndex = 6;
-            this.LoginType.SelectedIndexChanged += new System.EventHandler(this.LoginType_SelectedIndexChanged);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(22, 29);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 12);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "类　型：";
+            this.DbSetBtn.Location = new System.Drawing.Point(9, 198);
+            this.DbSetBtn.Name = "DbSetBtn";
+            this.DbSetBtn.Size = new System.Drawing.Size(127, 23);
+            this.DbSetBtn.TabIndex = 8;
+            this.DbSetBtn.Text = "数据库连接设置";
+            this.DbSetBtn.UseVisualStyleBackColor = true;
+            this.DbSetBtn.Click += new System.EventHandler(this.DbSetBtn_Click);
             // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(322, 226);
+            this.Controls.Add(this.DbSetBtn);
             this.Controls.Add(this.BtnCancel);
             this.Controls.Add(this.BtnLogin);
             this.Controls.Add(this.changeModel);
@@ -259,6 +271,7 @@
         private System.Windows.Forms.PictureBox loadingImage;
         private System.Windows.Forms.ComboBox LoginType;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button DbSetBtn;
     }
 }
 

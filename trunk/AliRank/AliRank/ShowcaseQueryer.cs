@@ -45,8 +45,8 @@ namespace AliRank
             {
                 return showCaseProducts;
             }
-            ThreadPool.SetMinThreads(3, 40);
-            ThreadPool.SetMaxThreads(6, 200);
+            ThreadPool.SetMinThreads(1, 40);
+            ThreadPool.SetMaxThreads(1, 200);
             for (int i = 0; i < MaxCount; i++)
             {
                  
@@ -127,7 +127,90 @@ namespace AliRank
             showCaseProducts = null;
             eventX = null;
         }
-    }
 
-    
+
+
+
+
+
+        public List<ShowcaseRankInfo> Seacher1(string companyUrl)
+        {
+            HtmlWeb clinet = new HtmlWeb();
+            HtmlDocument document = clinet.Load(companyUrl);
+            HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//div[@id='products-show-normal']/ul/li/div[@class='products-small-info']");
+
+            if (nodes != null)
+            {
+                foreach (HtmlNode node in nodes)
+                {
+                    ShowcaseRankInfo item = new ShowcaseRankInfo();
+                    item.CompanyUrl = companyUrl;
+                    HtmlNode linkNode = node.SelectSingleNode("div[@class='product-info']/a");
+                    item.ProductName = linkNode.InnerText;
+                    item.ProductUrl = linkNode.Attributes["href"].Value;
+                    HtmlNode imgNode = node.SelectSingleNode("div[@class='products-img savm']/a/img");
+                    item.Image = imgNode.Attributes["data-src"].Value;
+                    showCaseProducts.Add(item);
+                }
+            }
+            WebClient webClient = new WebClient();
+            foreach (ShowcaseRankInfo productItem in showCaseProducts)
+            {
+                try
+                {
+                    ParseProductHtml(productItem, document, clinet);
+                    string imageFile = FileUtils.GetImageFolder() + Path.DirectorySeparatorChar + productItem.ProductId + ".jpg";
+                    if (File.Exists(imageFile)) File.Delete(imageFile);
+                    webClient.DownloadFile(productItem.Image, imageFile);
+                    productItem.ProductImg = imageFile;
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Trace.WriteLine(e.InnerException.Message);
+                    productItem.ProductImg = "";
+                }
+            }
+            webClient.Dispose();
+            document = null;
+            clinet = null;
+            Console.WriteLine("橱窗产品解析结束！");
+            return showCaseProducts;
+        }
+
+
+    private void ParseProductHtml(ShowcaseRankInfo productItem, HtmlDocument document, HtmlWeb clinet)
+        {
+            string url = productItem.CompanyUrl + productItem.ProductUrl;
+            document = clinet.Load(url);
+            string ProductPageHtml = document.DocumentNode.InnerHtml;
+            document.LoadHtml(ProductPageHtml);
+            HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//div[@class='related-keywords-box clearfix']/ul/li/a");
+            string jsKwString = string.Empty;
+            if (nodes != null)
+            {
+                jsKwString = nodes[0].InnerText;
+                if (nodes[1] != null)
+                {
+                    jsKwString = jsKwString + "," + nodes[1].InnerText;
+                }
+                if (nodes[2] != null)
+                {
+                    jsKwString = jsKwString + "," + nodes[2].InnerText;
+                }
+            }
+            if (!string.IsNullOrEmpty(jsKwString))
+            {
+                productItem.MainKey = jsKwString;
+                System.Diagnostics.Trace.WriteLine(url + " = " + jsKwString);
+            }
+            string pidString = Regex.Match(ProductPageHtml, PIDExpressions, RegexOptions.IgnoreCase).Groups[1].Value;
+            if (!string.IsNullOrEmpty(pidString))
+            {
+                productItem.ProductId = Convert.ToInt32(pidString);
+            }
+            ProductPageHtml = null;
+            document = null;
+        }
+
+    }
 }
