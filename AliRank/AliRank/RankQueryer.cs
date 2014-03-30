@@ -18,6 +18,7 @@ namespace AliRank
         public event RankSearchingEvent OnRankSearchingEvent;
 
         public string SEARCH_URL = "http://www.alibaba.com/products/F0/{0}/----------------------38/{1}.html";
+
         public static string PRODUCT_LINK_PATH = "//div[@class='content']/div[@class='cwrap']/div[@class='ctop']/div[@class='corp']/h2/a";
         private string AD_PATH = "//div[@class='ls-icon ls-item AD']";
         private string P4P_PATH = "//div[@class='ls-icon ls-item  p4p']";

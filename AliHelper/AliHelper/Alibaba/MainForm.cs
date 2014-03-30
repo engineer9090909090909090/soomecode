@@ -848,13 +848,6 @@ namespace AliHelper
             f.ShowDialog(this);
         }
 
-        private void DbsetToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DbsetForm f = new DbsetForm();
-            f.StartPosition = FormStartPosition.CenterParent;
-            f.ShowDialog(this);
-        }
-
         private void SupplierListButton_Click(object sender, EventArgs e)
         {
             LoadSupplierListView();

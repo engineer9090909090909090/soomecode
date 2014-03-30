@@ -40,7 +40,8 @@ namespace AliRank
         private InquiryMessages inquiryMessage;
         private bool canInquiry;
         private string clickKey = string.Empty;
-        private string currentRequestUrl;
+        private string searchProductUrl;
+        private string detailProductUrl;
         public ProductClicker(WebBrowser b) 
         {
             browser = b;
@@ -95,11 +96,11 @@ namespace AliRank
                 this.canInquiry = false;
             }
             this.clickKey = item.RankKeyword;
-            currentRequestUrl = string.Format(SEARCH_URL1, clickKey.Replace(" ", "+"));
-            ClickingEvent(item, @"Clicking " + currentRequestUrl);
+            searchProductUrl = string.Format(SEARCH_URL1, clickKey.Replace(" ", "+"));
+            ClickingEvent(item, @"Clicking " + searchProductUrl);
             browser.DocumentCompleted -= new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
             browser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(browser_DocumentCompleted);
-            IEHandleUtils.Navigate(browser, currentRequestUrl, null, additionalHeaders);
+            IEHandleUtils.Navigate(browser, searchProductUrl, null, additionalHeaders);
             //browser.Navigate(currentRequestUrl, "_self", null, additionalHeaders);
             eventX.WaitOne(Timeout.Infinite, true);
             item = null;
@@ -110,15 +111,17 @@ namespace AliRank
 
         void browser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
+            browser = (WebBrowser)sender;
             if (browser.ReadyState != System.Windows.Forms.WebBrowserReadyState.Complete)
                 return;
             if (e.Url.ToString() != browser.Url.ToString())
                 return;
-            if (browser.Url.ToString() == currentRequestUrl)
+            if (browser.Url.ToString() == searchProductUrl)
             {
-                string productLink = string.Empty;
+
+                detailProductUrl = null;
                 HtmlAgilityPack.HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
-                document.LoadHtml(browser.Document.ToString());
+                document.LoadHtml(browser.DocumentText);
                 HtmlNodeCollection nodes = document.DocumentNode.SelectNodes(RankQueryer.PRODUCT_LINK_PATH);
                 for (int k = 0; k < nodes.Count; k++)
                 {
@@ -127,15 +130,14 @@ namespace AliRank
                     int rankProductId = Convert.ToInt32(proId);
                     if (rankProductId == item.ProductId)
                     {
-                        productLink = aLinkNode.Attributes["href"].Value;
+                        detailProductUrl = aLinkNode.Attributes["href"].Value;
                         break;
                     }
                 }
 
-                if (productLink != null)
+                if (detailProductUrl != null && detailProductUrl != string.Empty)
                 {
-                    currentRequestUrl = productLink;
-                    IEHandleUtils.Navigate(browser, currentRequestUrl, null, additionalHeaders);
+                    IEHandleUtils.Navigate(browser, detailProductUrl, null, additionalHeaders);
                 }
                 else
                 {
@@ -144,31 +146,38 @@ namespace AliRank
                         this.canInquiry = false;
                         ClickedEvent(item, "The system does not find the product you need to click.");
                         string productUrl = item.ProductUrl.Substring(item.ProductUrl.LastIndexOf("/"));
-                        currentRequestUrl = PURL_PREFIX + item.ProductId + productUrl;
-                        ClickingEvent(item, "Enforce clicking " + currentRequestUrl);
+                        detailProductUrl = PURL_PREFIX + item.ProductId + productUrl;
+                        ClickingEvent(item, "Enforce clicking " + detailProductUrl);
                         browser.Document.InvokeScript("onProductClick", new string[] { item.ProductId.ToString() });
-                        IEHandleUtils.Navigate(browser, currentRequestUrl, null, additionalHeaders);
+                        IEHandleUtils.Navigate(browser, detailProductUrl, null, additionalHeaders);
                     }
                     else
                     {
                         currentPage++;
-                        currentRequestUrl = string.Format(SEARCH_URL2, clickKey.Replace(" ", "_"), currentPage);
+                        searchProductUrl = string.Format(SEARCH_URL2, clickKey.Replace(" ", "_"), currentPage);
                         Thread.Sleep(new Random().Next(1000, 10000));
-                        ClickingEvent(item, @"Clicking " + currentRequestUrl);
-                        IEHandleUtils.Navigate(browser, currentRequestUrl, null, additionalHeaders);
+                        ClickingEvent(item, @"Clicking " + searchProductUrl);
+                        IEHandleUtils.Navigate(browser, searchProductUrl, null, additionalHeaders);
                     }
                 }
             }
-            if (browser.Url.ToString().StartsWith(PURL_PREFIX + item.ProductId))
+            if (detailProductUrl != null && browser.Url.ToString() == detailProductUrl)
             {
                 item.Clicked = item.Clicked + 1;
                 ClickedEvent(item, "This product has been successfully click.");
-                HtmlElement messageLink = browser.Document.GetElementById("position2");
-                if (this.canInquiry && messageLink != null)
+                // 新增询盘代码2014-03-30
+                /*
+                if (this.canInquiry)
                 {
-                    string messageUrl = messageLink.GetAttribute("href").ToString();
+                    HtmlElement messageLink = browser.Document.Forms[].Name("position2");
+
+                }
+                */
+                if (this.canInquiry)
+                {
+                    string messageUrl = "http://message.alibaba.com/msgsend/contact.htm?action=contact_action&domain=1&id="+ this.item.ProductId +"&tracelog=tracedetailfeedback";
                     IEHandleUtils.Navigate(browser, messageUrl, null, additionalHeaders);
-                    //browser.Navigate(messageUrl, "_self", null, additionalHeaders);
+
                 }
                 else
                 {
@@ -179,7 +188,8 @@ namespace AliRank
             if (browser.Url.ToString().StartsWith(SEND_MESSAGE))
             {
                 string postUrl = "http://message.alibaba.com/msgsend/inquiry.htm";
-                string html = browser.Document.Body.InnerHtml;
+                //string html = browser.Document.Body.InnerHtml;
+                string html = browser.DocumentText;
                 string msgContent = inquiryMessage.Content + "\r\n." + DateTime.Now.ToString("yyyyMMddHHmmss");
                 int randomNumber = new Random().Next(1, 20) * 100;
                 string token = "_csrf_token_=" + browser.Document.All["_csrf_token_"].GetAttribute("value");

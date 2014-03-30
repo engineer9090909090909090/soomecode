@@ -33,7 +33,7 @@ namespace AliHelper
             }
             bool TestResult = ValidateConnection();
             string text = TestResult ? "数据库连接测试成功!" : "不能正常连接到指定数据库，请检查!";
-            MessageBox.Show(text);
+            this.ErrorMsg.Text = text;
         }
 
         private bool ValidateConnection()
@@ -51,11 +51,6 @@ namespace AliHelper
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            if (this.LocalDbCheck.Checked)
-            {
-                SaveToDb();
-                return;
-            }
             string server = this.Server.Text.Trim();
             string database = this.Database.Text.Trim();
             string username = this.Username.Text.Trim();
@@ -69,7 +64,7 @@ namespace AliHelper
             bool TestResult = ValidateConnection();
             if (!TestResult)
             {
-                MessageBox.Show("不能正常连接到指定数据库，请检查!");
+                this.ErrorMsg.Text = "不能正常连接到指定数据库，请检查!";
                 return;
             }
             SaveToDb();
@@ -77,13 +72,11 @@ namespace AliHelper
 
         private void SaveToDb()
         {
-            string dbType = this.LocalDbCheck.Checked ? "Sqlite" : "MySql";
             string server = this.Server.Text.Trim();
             string database = this.Database.Text.Trim();
             string username = this.Username.Text.Trim();
             string password = this.Password.Text.Trim();
-            manager.SetDbConfig(dbType, server, database, username, password);
-            Application.Exit();
+            //manager.SetDbConfig(dbType, server, database, username, password);
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
@@ -91,17 +84,6 @@ namespace AliHelper
             this.Close();
         }
 
-        private void DbCheck_CheckedChanged(object sender, EventArgs e)
-        {
-            if (this.LocalDbCheck.Checked)
-            {
-                MySqlSetGroup.Visible = false;
-            }
-            else 
-            {
-                MySqlSetGroup.Visible = true;
-            }
-        }
 
         private void DbsetForm_Load(object sender, EventArgs e)
         {
@@ -114,18 +96,6 @@ namespace AliHelper
             this.Database.Text = dbName;
             this.Username.Text = dbUser;
             this.Password.Text = dbPass;
-            if (dbType == Constants.DbType_MySql)
-            {
-                this.MySqlSetGroup.Visible = false;
-                this.LocalDbCheck.Checked = false;
-                this.RemoteDbCheck.Checked = true;
-            }
-            else 
-            {
-                this.MySqlSetGroup.Visible = false;
-                this.LocalDbCheck.Checked = true;
-                this.RemoteDbCheck.Checked = false;
-            }
         }
     }
 }

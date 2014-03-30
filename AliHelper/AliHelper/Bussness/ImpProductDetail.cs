@@ -25,6 +25,7 @@ namespace AliHelper
             HtmlDocument document = new HtmlDocument();
             document.LoadHtml(html);
             HtmlNode productFormEl = document.GetElementbyId("productForm");
+            if (productFormEl == null) return;
             DataCache.Instance.MinOrderUnitOptions = GetProductDetailOptions(productFormEl, "minOrderUnit");
             DataCache.Instance.MoneyTypeOptions = GetProductDetailOptions(productFormEl, "moneyType");
             DataCache.Instance.PriceUnitOptions = GetProductDetailOptions(productFormEl, "priceUnit");
