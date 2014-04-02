@@ -230,11 +230,14 @@ namespace AliRank
                 foreach (ShowcaseRankInfo item in productList)
                 {
                     DataRow row = dt.NewRow();
-                    if (string.IsNullOrEmpty(item.ProductImg) || !File.Exists(item.ProductImg))
+                    FileInfo productImage = new FileInfo(item.ProductImg);
+                    if (string.IsNullOrEmpty(item.ProductImg) || !productImage.Exists || productImage.Length == 0)
                     {
                         row["Image"] = global::AliRank.Properties.Resources.no_image; 
                     }else {
-                        row["Image"] = Image.FromFile(item.ProductImg, true);
+                        Image img1 = Image.FromFile(item.ProductImg);
+                        row["Image"] = new Bitmap(img1);
+                        img1.Dispose();
                     }
                     row["productName"] = item.ProductName;
                     row["productId"] = item.ProductId;
@@ -893,7 +896,7 @@ namespace AliRank
                 clicker.OnRankClickingEvent += new RankClickingEvent(clicker_OnRankClickingEvent);
                 clicker.OnRankClickEndEvent += new RankClickEndEvent(clicker_OnRankClickEndEvent);
                 clicker.OnInquiryEndEvent += new RankInquiryEndEvent(clicker_OnInquiryEndEvent);
-/*
+
                 toolStripStatusLabel1.Text = "做一个产品辅助点击。";
                 productList = keywordDAO.GetClickProducts();
                 if (productList != null && productList.Count > 0)
@@ -906,7 +909,7 @@ namespace AliRank
                         Monitor.Wait(padlock, TimeSpan.FromSeconds(3));
                     }
                 }
-*/
+
                 if (productItem != null)
                 {
                     if (IsStop) { break; }
@@ -919,7 +922,7 @@ namespace AliRank
                         Monitor.Wait(padlock, TimeSpan.FromSeconds(3));
                     }
                 }
-/*
+
                 toolStripStatusLabel1.Text = "做一个产品辅助点击。";
                 productList = keywordDAO.GetClickProducts();
                 if (productList != null && productList.Count > 0)
@@ -932,7 +935,7 @@ namespace AliRank
                         Monitor.Wait(padlock, TimeSpan.FromSeconds(3));
                     }
                 }
- * */
+
                 clicker.OnRankClickingEvent -= new RankClickingEvent(clicker_OnRankClickingEvent);
                 clicker.OnRankClickEndEvent -= new RankClickEndEvent(clicker_OnRankClickEndEvent);
                 clicker.OnInquiryEndEvent -= new RankInquiryEndEvent(clicker_OnInquiryEndEvent);

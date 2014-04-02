@@ -35,6 +35,9 @@
   <PropertyGroup>
     <ApplicationIcon>rank.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>AliRank.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Aspose.Cells">
       <HintPath>..\..\lib\Aspose\Aspose.Cells.dll</HintPath>
