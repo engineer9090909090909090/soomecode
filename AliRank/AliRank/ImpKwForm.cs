@@ -80,10 +80,13 @@ namespace AliRank
             {
                 ShowcaseRankInfo obj = productList[i];
                 ProductsDic.Add(obj.ProductId, obj);
-                Image img = global::AliRank.Properties.Resources.no_image; 
-                if (!string.IsNullOrEmpty(obj.ProductImg) && File.Exists(obj.ProductImg))
+                Image img = global::AliRank.Properties.Resources.no_image;
+                FileInfo productImage = new FileInfo(obj.ProductImg);
+                if (!string.IsNullOrEmpty(obj.ProductImg) && productImage.Exists && productImage.Length > 0)
                 {
-                    img = Image.FromFile(obj.ProductImg, true);
+                    Image img1 = Image.FromFile(obj.ProductImg);
+                    img = new Bitmap(img1);
+                    img1.Dispose();
                 }
                 imageList1.Images.Add(img);
                 ListViewItem item = new ListViewItem();

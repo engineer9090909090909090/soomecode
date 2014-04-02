@@ -136,7 +136,7 @@ namespace AliRank
         public List<ShowcaseRankInfo> Seacher1(string companyUrl)
         {
             HtmlWeb clinet = new HtmlWeb();
-            HtmlDocument document = clinet.Load(companyUrl);
+            HtmlDocument document = clinet.Load(companyUrl,"GET");
             HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//div[@id='products-show-normal']/ul/li/div[@class='products-small-info']");
 
             if (nodes != null)
@@ -160,7 +160,7 @@ namespace AliRank
                 {
                     ParseProductHtml(productItem, document, clinet);
                     string imageFile = FileUtils.GetImageFolder() + Path.DirectorySeparatorChar + productItem.ProductId + ".jpg";
-                    if (File.Exists(imageFile)) File.Delete(imageFile);
+                    //if (File.Exists(imageFile)) File.Delete(imageFile);
                     webClient.DownloadFile(productItem.Image, imageFile);
                     productItem.ProductImg = imageFile;
                 }
