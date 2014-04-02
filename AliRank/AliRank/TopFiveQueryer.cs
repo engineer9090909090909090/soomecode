@@ -10,20 +10,18 @@ using System.IO;
 
 namespace AliRank
 {
-    
-
     class TopFiveQueryer
     {
         public event TopFiveSearchEndEvent OnTopFiveSearchEndEvent;
         public event TopFiveSearchingEvent OnTopFiveSearchingEvent;
-        private string KeywordExpressions = "var kw = encodeURIComponent\\(\\\"(.*?)\\\"\\);";
+        private string KeywordExpressions = "gdata.define\\('keywords', '(.*?)'\\);";
         private string SEARCH_URL = "http://www.alibaba.com/trade/search?fsb=y&IndexArea=product_en&CatId=&SearchText={0}";
-        private string IMAGE_PATH = "div[@class='pic']/a/img";
-        private string SUBJECT_PATH = "div[@class='percent-wrap']/div[@class='attr']/h2/a[@class='qrPTitle']";
-        private string PATH = "//div[@class='list-items']";
-        private string AD_PATH = "//div[@class='list-items AD']";
-        private string P4P_PATH = "//div[@class='list-items  p4p']";
-        private string P4PV2_PATH = "//div[@class='list-items  p4pv2']";
+        private string IMAGE_PATH = "div[@class='item-main util-clearfix']/div[@class='image']/div[@class='img-thumb']/a/img";
+        private string PRODUCT_LINK_PATH = "div[@class='item-main util-clearfix']/div[@class='content']/div[@class='cwrap']/div[@class='ctop']/div[@class='corp']/h2/a";
+        private string PATH = "//div[@class='ls-icon ls-item']";
+        private string AD_PATH = "//div[@class='ls-icon ls-item AD']";
+        private string P4P_PATH = "//div[@class='ls-icon ls-item  p4p']";
+        private string P4PV2_PATH = "//div[@class='ls-icon ls-item  p4pv2']";
 
         public TopFiveQueryer() 
         {
@@ -71,8 +69,8 @@ namespace AliRank
             {
                 p4pNum = p4pNum + p4pv2Nodes.Count;
             }
-            int itemCount = itemNodes.Count;
-            int kcount = itemCount >= 10 ? 10 : itemCount;
+            int itemCount = (itemNodes != null) ?itemNodes.Count : 0;
+            int kcount = (itemCount >= 10) ? 10 : itemCount;
             for (int k = 0; k < kcount; k++)
             {
                 TopFiveInfo item = new TopFiveInfo();
@@ -81,8 +79,8 @@ namespace AliRank
                 HtmlNode percentNode = itemNodes[k];
 
                 HtmlNode ImageNode = percentNode.SelectSingleNode(IMAGE_PATH);
-                string src = ImageNode.Attributes["image-src"].Value;
-                string productId = ImageNode.Id.Replace("limage_", "");
+                string src = (ImageNode.Attributes["image-src"] != null) ? ImageNode.Attributes["image-src"].Value : ImageNode.Attributes["src"].Value;
+                string productId = percentNode.Attributes["data-ctrdot"].Value;
                 try
                 {
                     WebClient webClient = new WebClient();
@@ -98,7 +96,7 @@ namespace AliRank
                     item.Image = "";
                 }
 
-                HtmlNode aLinkNode = percentNode.SelectSingleNode(SUBJECT_PATH);
+                HtmlNode aLinkNode = percentNode.SelectSingleNode(PRODUCT_LINK_PATH);
                 item.Name = aLinkNode.InnerText;
                 item.Href = aLinkNode.Attributes["href"].Value;
                 HtmlDocument document1 = new HtmlWeb().Load(item.Href);
@@ -108,9 +106,9 @@ namespace AliRank
                 {
                     item.Key = jsKwString.Replace(",", ",\n");
                  }
-                string category = document1.DocumentNode.SelectSingleNode("//div[@class='crumb global']").InnerText;
+                string category = document1.DocumentNode.SelectSingleNode("//div[@class='ui-breadcrumb']").InnerText;
                 item.Category = category.Replace("\t", "").Replace("\n", "").Replace("&gt;", ">").Replace("  ", "").Replace("&amp;","&");
-                string descrption = document1.DocumentNode.SelectSingleNode("//div[@id='richTextDescription']").PreviousSibling.PreviousSibling.InnerHtml;
+                string descrption = document1.DocumentNode.SelectSingleNode("//div[@id='J-rich-text-description']").PreviousSibling.PreviousSibling.InnerHtml;
                 item.Desc = descrption.Replace("<br>", "");
                 ProductPageHtml = null;
                 document1 = null;
